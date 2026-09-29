@@ -110,7 +110,7 @@ window.TRANSLATIONS.fr = {
   skill_name_slowdown: 'Ralenti',
   skill_desc_slowdown: 'Réduit la vitesse de chute des runiques de 50% pendant 15s',
   skill_name_haste: 'Points Doubles',
-  skill_desc_haste: 'Vitesse 1.7× et points doublés (2×) pendant 15s',
+  skill_desc_haste: 'Vitesse +0.5 et points doublés (2×) pendant 15s',
   skill_name_speedlock: 'Verrou de Vitesse',
   skill_desc_speedlock: 'Bloque la vitesse à 1.0× pendant 60s',
   skill_name_dilation: 'Espacement',

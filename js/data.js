@@ -15,6 +15,7 @@ const CFG = {
   spawnMin: 500,
   spawnVariance: 650,
   freezerMaxItems: 3, // Limite máximo de rúnicos simultâneos na tela com Freezer ativo
+  hasteSpeedBonus: 0.5, // Aumento relativo (+0.5) de velocidade com a habilidade Pontos em Dobro
   padX: 14,
   progressPenalty: 3,
   startLives: 3,
@@ -1058,13 +1059,14 @@ const SKILLS_CONFIG = {
     icon: '⚡',
     name: 'Double Points',
     namePt: 'Pontos em Dobro',
-    desc: 'Speed 1.7× and 2× points multiplier for 15s',
-    descPt: 'Aumenta velocidade para 1.7× e dobra todos os pontos (2×) por 15s',
+    desc: '+0.5 speed and 2× points multiplier for 15s',
+    descPt: 'Aumenta velocidade em +0.5 e dobra todos os pontos (2×) por 15s',
     duration: 15000,
     basePrice: 240,
+    speedBonus: 0.5,
     color: '#FF9F1A',
     category: 'skill',
-    activateMsg: '⚡ HASTE ATIVO (15s)!',
+    activateMsg: '⚡ PONTOS EM DOBRO ATIVO (15s)!',
     expireMsg: '⚡ Pontos em dobro expirou',
     onActivate: () => {},
     onExpire: () => {}

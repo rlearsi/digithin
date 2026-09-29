@@ -445,7 +445,14 @@ function updateHUD() {
     }
   }
 
-  const mult = state.speedMultiplier || 1.0;
+  let mult = state.speedMultiplier || 1.0;
+  if ((state.activeTimers?.haste || 0) > 0) {
+    mult += (typeof CFG !== 'undefined' && CFG.hasteSpeedBonus) ? CFG.hasteSpeedBonus : 0.5;
+  }
+  if ((state.activeTimers?.slowdown || 0) > 0) {
+    mult *= 0.4;
+  }
+  mult = Math.round(mult * 100) / 100;
   const sx = (Math.abs(Math.round(mult * 100) - Math.round(mult * 10) * 10) > 0)
     ? mult.toFixed(2)
     : mult.toFixed(1);

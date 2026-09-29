@@ -110,7 +110,7 @@ window.TRANSLATIONS.de = {
   skill_name_slowdown: 'Zeitlupe',
   skill_desc_slowdown: 'Verringert die Fallgeschwindigkeit der Runen 15s lang um 50%',
   skill_name_haste: 'Doppelte Punkte',
-  skill_desc_haste: '1.7× Tempo und doppelte Punkte (2×) für 15s',
+  skill_desc_haste: '+0.5 Tempo und doppelte Punkte (2×) für 15s',
   skill_name_speedlock: 'Temposperre',
   skill_desc_speedlock: 'Sperrt das Tempo für 60s auf 1.0×',
   skill_name_dilation: 'Abstand',

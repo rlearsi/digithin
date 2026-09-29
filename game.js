@@ -886,7 +886,13 @@ function refillQueue() {
 
 function scheduleSpawn() {
   if (state.paused || state.phaseComplete) return;
-  const multVal  = state.speedMultiplier || 1.0;
+  let multVal  = state.speedMultiplier || 1.0;
+  if ((state.activeTimers?.haste || 0) > 0) {
+    multVal += (typeof CFG !== 'undefined' && CFG.hasteSpeedBonus) ? CFG.hasteSpeedBonus : 0.5;
+  }
+  if ((state.activeTimers?.slowdown || 0) > 0) {
+    multVal *= 0.4;
+  }
   let base       = Math.max(CFG.spawnMin, CFG.spawnBase / multVal);
   if ((state.activeTimers?.dilation || 0) > 0) {
     base *= 1.8; // Dilates spacing between runics
@@ -1051,11 +1057,15 @@ function gameLoop(ts) {
 
   if (timersChanged) renderSkills();
 
-  // Multipliers
+  // Multipliers & effective speed
   const isFrozen = (state.activeTimers.freezer || 0) > 0;
-  let mult = 1.0;
-  if ((state.activeTimers.slowdown || 0) > 0) mult *= 0.4;
-  if ((state.activeTimers.haste || 0) > 0)    mult *= 1.7;
+  let effectiveSpeed = state.speedMultiplier || 1.0;
+  if ((state.activeTimers.haste || 0) > 0) {
+    effectiveSpeed += (typeof CFG !== 'undefined' && CFG.hasteSpeedBonus) ? CFG.hasteSpeedBonus : 0.5;
+  }
+  if ((state.activeTimers.slowdown || 0) > 0) {
+    effectiveSpeed *= 0.4;
+  }
 
   // Freezer auto-cancel check
   checkFreezerAutoCancel();
@@ -1070,7 +1080,7 @@ function gameLoop(ts) {
     // Movement
     if (!isFrozen) {
       const spd = item.baseSpeed || CFG.baseSpeed;
-      item.y += spd * (state.speedMultiplier || 1.0) * mult * dt;
+      item.y += spd * effectiveSpeed * dt;
       item.el.style.top = item.y + 'px';
     }
 
@@ -1619,6 +1629,7 @@ function wildcardExplode(wildcardItem) {
   });
 
   state.activeItems = [];
+  if ((state.activeTimers?.haste || 0) > 0) totalPts = Math.floor(totalPts * 2);
   state.phasePts += totalPts;
   state.progress += totalPts;
 

@@ -200,7 +200,7 @@ Ao ser acionada, a habilidade **não é removida de imediato** da lista:
 | 🛡️ | **Imunidade** | <kbd>1</kbd>–<kbd>8</kbd> | 10s | Cria uma barreira de energia rúnica: rúnicos que caem **não tiram vidas**, e erros cometidos no teclado **não descontam pontos nem quebram o combo**. |
 | 🌀 | **Vórtice** | <kbd>1</kbd>–<kbd>8</kbd> | 10s | A cada **2 segundos**, o Vórtice consome automaticamente 1 rúnico em queda na esteira concedendo seus pontos integrais. **Proteção de foco:** nunca consome o que o jogador já começou a digitar. |
 | ⏱️ | **Slowdown** | <kbd>1</kbd>–<kbd>8</kbd> | 15s | Reduz a velocidade de descida de todos os rúnicos pela metade (50%) com anel atmosférico azul ao redor da tela. |
-| ⚡ | **Haste** | <kbd>1</kbd>–<kbd>8</kbd> | 15s | Aumenta a velocidade para **1.7×** mas **dobra todos os pontos recebidos (2×)** enquanto estiver ativo. |
+| ⚡ | **Haste** | <kbd>1</kbd>–<kbd>8</kbd> | 15s | Aumenta a velocidade em **+0.5** e **dobra todos os pontos recebidos (2×)** enquanto estiver ativo. |
 | 🔒 | **Trava Velocidade** | <kbd>1</kbd>–<kbd>8</kbd> | 60s | Mantém o multiplicador de velocidade travado em **1.0×** por 60 segundos, impedindo acelerações causadas por erros de digitação. |
 | 🌌 | **Espaçamento** | <kbd>1</kbd>–<kbd>8</kbd> | 45s | Aumenta o espaçamento vertical e o intervalo de tempo entre novos rúnicos gerados por 45 segundos, permitindo digitação mais ritmada e confortável. |
 
@@ -222,7 +222,7 @@ A **primeira Loja de Habilidades** se abre após a **fase 5** ser concluída, e 
 - 🛡️ **Imunidade (390 pts / 10s):** Escudo protetor contra danos e erros de digitação.
 - 🌀 **Vórtice (420 pts / 10s):** Consome 1 rúnico urgente a cada 2s concedendo seus pontos.
 - ⏱️ **Slowdown (240 pts / 15s):** Desaceleração de 50% na esteira com aura azul.
-- ⚡ **Haste (240 pts / 15s):** Pontos em dobro (2×) com velocidade 1.7×.
+- ⚡ **Haste (240 pts / 15s):** Pontos em dobro (2×) com aumento relativo de velocidade em +0.5.
 - 🔒 **Trava Velocidade (540 pts / 60s):** Trava a esteira em 1.0× por 1 minuto.
 - 🌌 **Espaçamento (480 pts / 45s):** Amplia a distância vertical e intervalo entre vocábulos por 45s.
 

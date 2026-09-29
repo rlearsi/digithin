@@ -111,7 +111,7 @@ window.TRANSLATIONS.pt = {
   skill_name_slowdown: 'Desaceleração',
   skill_desc_slowdown: 'Reduz a velocidade de queda dos rúnicos em 50% por 15s',
   skill_name_haste: 'Pontos em Dobro',
-  skill_desc_haste: 'Aumenta velocidade para 1.7× e dobra todos os pontos (2×) por 15s',
+  skill_desc_haste: 'Aumenta velocidade em +0.5 e dobra todos os pontos (2×) por 15s',
   skill_name_speedlock: 'Trava Velocidade',
   skill_desc_speedlock: 'Trava a velocidade em 1.0× por 60s, impedindo acelerações por erro',
   skill_name_dilation: 'Espaçamento',

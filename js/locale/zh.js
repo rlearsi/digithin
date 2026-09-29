@@ -110,7 +110,7 @@ window.TRANSLATIONS.zh = {
   skill_name_slowdown: '慢速',
   skill_desc_slowdown: '15秒内符文下落速度降低50%',
   skill_name_haste: '双倍积分',
-  skill_desc_haste: '15秒内速度提升至1.7倍且所有积分翻倍（2×）',
+  skill_desc_haste: '15秒内速度增加0.5且所有积分翻倍（2×）',
   skill_name_speedlock: '锁定速度',
   skill_desc_speedlock: '锁定速度在1.0×持续60秒，防止失误加速',
   skill_name_dilation: '拉开间距',

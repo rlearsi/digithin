@@ -110,7 +110,7 @@ window.TRANSLATIONS.ja = {
   skill_name_slowdown: 'スローモーション',
   skill_desc_slowdown: '15秒間、ルーンの落下速度を50%減速します',
   skill_name_haste: 'ポイント2倍',
-  skill_desc_haste: '15秒間、速度が1.7倍になり獲得スコアが2倍になります',
+  skill_desc_haste: '15秒間、速度が+0.5になり獲得スコアが2倍になります',
   skill_name_speedlock: 'スピード固定',
   skill_desc_speedlock: '60秒間、速度を1.0倍に固定し加速を防ぎます',
   skill_name_dilation: '間隔拡大',

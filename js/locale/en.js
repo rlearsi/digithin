@@ -110,7 +110,7 @@ window.TRANSLATIONS.en = {
   skill_name_slowdown: 'Slow-Mo',
   skill_desc_slowdown: 'Reduces runic fall speed by 50% for 15s',
   skill_name_haste: 'Double Points',
-  skill_desc_haste: 'Speed 1.7× and 2× points multiplier for 15s',
+  skill_desc_haste: '+0.5 speed and 2× points multiplier for 15s',
   skill_name_speedlock: 'Speed Lock',
   skill_desc_speedlock: 'Locks speed at 1.0× for 60s, preventing typo penalties',
   skill_name_dilation: 'Spacing',

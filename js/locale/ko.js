@@ -110,7 +110,7 @@ window.TRANSLATIONS.ko = {
   skill_name_slowdown: '슬로우 모션',
   skill_desc_slowdown: '15초 동안 룬 낙하 속도를 50% 감소시킵니다',
   skill_name_haste: '더블 포인트',
-  skill_desc_haste: '15초 동안 속도 1.7배 및 점수 2배가 적용됩니다',
+  skill_desc_haste: '15초 동안 속도 +0.5 및 점수 2배가 적용됩니다',
   skill_name_speedlock: '속도 고정',
   skill_desc_speedlock: '60초 동안 속도를 1.0배로 고정합니다',
   skill_name_dilation: '간격 확장',
