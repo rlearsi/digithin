@@ -1,0 +1,228 @@
+/* ======================================================
+   DIGITINHO — css/variables.css
+   Design System Tokens, Themes (Dark/Light) & Core Canvas
+   ====================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ======================================================
+   THEME DEFINITIONS: DARK (DEFAULT) & LIGHT
+   ====================================================== */
+:root {
+  --theme: 'dark';
+
+  /* Frosted Glass Surfaces (Translucent glass with vibrant refraction) */
+  --glass-surface: rgba(10, 16, 32, 0.35);
+  --glass-sidebar: rgba(10, 16, 32, 0.30);
+  --glass-column: rgba(7, 12, 26, 0.28);
+  --glass-queue: rgba(10, 16, 32, 0.40);
+
+  /* Frosted Glass Cards (Luminous Translucent Glass & Zero Borders) */
+  --glass-card: rgba(255, 255, 255, 0.16);
+  --glass-card-hover: rgba(255, 255, 255, 0.24);
+  --glass-card-border: transparent;
+  --glass-card-blur: blur(20px) saturate(180%);
+  --glass-sub-card: rgba(0, 0, 0, 0.28);
+
+  --glass-pill: rgba(255, 255, 255, 0.08);
+  --glass-btn-sec: rgba(255, 255, 255, 0.09);
+  --glass-hover: rgba(255, 255, 255, 0.12);
+  --glass-border: transparent;
+  --glass-inner-border: transparent;
+  --glass-highlight: rgba(255, 255, 255, 0.12);
+  --shadow-glass: 0 16px 40px rgba(0, 0, 0, 0.20);
+
+  --modal-bg: var(--glass-surface);
+  --pause-backdrop: rgba(0, 0, 0, 0.05);
+  --modal-backdrop: rgba(0, 0, 0, 0.08);
+
+  /* Padrão Clean Glass Overlay (Contagem Regressiva, Pause e Modais com Fundo Visível) */
+  --overlay-backdrop: rgba(0, 0, 0, 0.05);
+  --overlay-backdrop-blur: blur(2px);
+  --overlay-box-bg: var(--glass-surface);
+  --overlay-box-blur: blur(24px) saturate(200%);
+
+  /* Clean Typography Colors */
+  --t1: #F8FAFC;
+  --t2: #94A3B8;
+  --t3: #64748B;
+  --t4: #475569;
+
+  /* Saturated Joyful Palette */
+  --accent-primary: #4F46E5;
+  /* Vivid Indigo */
+  --accent-primary-hover: #6366F1;
+  --accent-cyan: #00A8FF;
+  /* Saturated Sky Cyan */
+  --accent-emerald: #2ED573;
+  /* Saturated Mint Emerald */
+  --accent-coral: #FF4757;
+  /* Saturated Coral Red */
+  --accent-orange: #FF793F;
+  /* Saturated Sunset Orange */
+  --accent-purple: #7C3AED;
+  /* Saturated Royal Purple */
+  --accent-pink: #EC4899;
+  /* Saturated Electric Pink */
+  --accent-amber: #FFA502;
+  /* Saturated Sunny Amber */
+
+  /* Vocábulos: Progressão por Temperatura de Cor (Fria -> Temperada -> Quente -> Incandescente) */
+  --tile-letter-bg: #2563EB;
+  /* ❄️ Frio: Azul Real (Letra) */
+  --tile-letter-txt: #FFFFFF;
+  --tile-syl-bg: #059669;
+  /* 🌿 Temperado: Verde Esmeralda (Sílaba) */
+  --tile-syl-txt: #FFFFFF;
+  --tile-word-bg: #D97706;
+  /* ☀️ Quente: Âmbar Dourado Solar (Palavra Inteira) */
+  --tile-word-txt: #FFFFFF;
+  --tile-magic-bg: #D946EF;
+  /* ⚡ Incandescente: Magenta Radiante Plasma (Palavra com Magia) */
+  --tile-magic-txt: #FFFFFF;
+  --tile-wild-bg: #8B5CF6;
+  /* 💥 Violeta Cósmico (Wildcard) */
+  --tile-wild-txt: #FFFFFF;
+  --tile-danger-bg: #DC2626;
+  /* 🚨 Perigo Fundo da Tela: Vermelho Alerta Vivo */
+
+  /* Shadows & Elevations */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.22);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.32);
+  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.42);
+  --shadow-tile: 0 4px 14px rgba(0, 0, 0, 0.30);
+  --shadow-ambient: rgba(0, 0, 0, 0.35);
+
+  --progress-bg: rgba(255, 255, 255, 0.1);
+
+  /* Typography */
+  --font: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-pill: 999px;
+}
+
+[data-theme="light"] {
+  --theme: 'light';
+
+  /* Glass Surfaces (Light Mode Translucent Frosted Crystal) */
+  --glass-surface: rgba(255, 255, 255, 0.42);
+  --glass-sidebar: rgba(255, 255, 255, 0.38);
+  --glass-column: rgba(255, 255, 255, 0.28);
+  --glass-queue: rgba(255, 255, 255, 0.48);
+
+  /* Frosted Glass Cards (Modo Claro) */
+  --glass-card: rgba(255, 255, 255, 0.65);
+  --glass-card-hover: rgba(255, 255, 255, 0.85);
+  --glass-card-border: transparent;
+  --glass-card-blur: blur(20px) saturate(180%);
+  --glass-sub-card: rgba(0, 0, 0, 0.07);
+
+  --glass-pill: rgba(255, 255, 255, 0.45);
+  --glass-btn-sec: rgba(255, 255, 255, 0.50);
+  --glass-hover: rgba(255, 255, 255, 0.65);
+  --glass-border: transparent;
+  --glass-inner-border: transparent;
+  --glass-highlight: rgba(255, 255, 255, 0.60);
+  --shadow-glass: 0 12px 32px rgba(15, 23, 42, 0.06);
+
+  --modal-bg: var(--glass-surface);
+  --pause-backdrop: rgba(255, 255, 255, 0.06);
+  --modal-backdrop: rgba(15, 23, 42, 0.08);
+
+  /* Padrão Clean Glass Overlay (Contagem Regressiva, Pause e Modais com Fundo Visível) */
+  --overlay-backdrop: rgba(255, 255, 255, 0.06);
+  --overlay-backdrop-blur: blur(2px);
+  --overlay-box-bg: var(--glass-surface);
+  --overlay-box-blur: blur(24px) saturate(200%);
+
+  --t1: #0F172A;
+  --t2: #334155;
+  --t3: #64748B;
+  --t4: #94A3B8;
+
+  /* Saturated Joyful Palette */
+  --accent-primary: #4F46E5;
+  --accent-primary-hover: #6366F1;
+  --accent-cyan: #0284C7;
+  --accent-emerald: #10B981;
+  --accent-coral: #FF4757;
+  --accent-orange: #EA580C;
+  --accent-purple: #7C3AED;
+  --accent-pink: #DB2777;
+  --accent-amber: #D97706;
+
+  /* Vocábulos: Progressão por Temperatura de Cor */
+  --tile-letter-bg: #2563EB;
+  --tile-letter-txt: #FFFFFF;
+  --tile-syl-bg: #059669;
+  --tile-syl-txt: #FFFFFF;
+  --tile-word-bg: #D97706;
+  --tile-word-txt: #FFFFFF;
+  --tile-magic-bg: #C026D3;
+  --tile-magic-txt: #FFFFFF;
+  --tile-wild-bg: #7C3AED;
+  --tile-wild-txt: #FFFFFF;
+  --tile-danger-bg: #DC2626;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 48px rgba(15, 23, 42, 0.12);
+  --shadow-tile: 0 4px 14px rgba(15, 23, 42, 0.18);
+  --shadow-ambient: rgba(15, 23, 42, 0.08);
+
+  --progress-bg: rgba(15, 23, 42, 0.08);
+}
+
+/* ======================================================
+   BASE HTML & BODY
+   ====================================================== */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  color: var(--t1);
+  font-family: var(--font);
+  overflow: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: color 0.25s ease;
+}
+
+#ambient-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#app {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Screen Viewport Base */
+.screen {
+  position: fixed;
+  inset: 0;
+  display: none;
+}
+
+.screen.active {
+  display: flex;
+}

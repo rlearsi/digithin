@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digitinho — Typing Game</title>
+  <meta name="description" content="Typing game: letters, syllables and words fall. Buy abilities, use wildcard words, and level up!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/gameplay.css" />
+  <link rel="stylesheet" href="css/modals.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <!-- Ambient Saturated Canvas (vibrant ambient landscape, mesh orbs & topography) -->
+  <canvas id="ambient-canvas" aria-hidden="true"></canvas>
+
+  <!-- ===== START SCREEN ===== -->
+  <div id="screen-start" class="screen active">
+    <div id="bg-deco" aria-hidden="true"></div>
+    <div class="start-wrap">
+      
+      <!-- Brand Header -->
+      <div class="start-brand">
+        <div class="start-logo"><span class="logo-main">Digitinho</span><span class="logo-dot">.</span></div>
+        <p class="start-sub" data-i18n="app_subtitle">Master the runic keyboard before words reach the abyss</p>
+      </div>
+
+      <!-- Hero Start Action -->
+      <div class="start-hero-action">
+        <button id="btn-start" class="hero-start-btn" onclick="startGame('classic')">
+          <span class="hero-play-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+          </span>
+          <span class="hero-start-text" data-i18n="btn_start">Start Game</span>
+        </button>
+      </div>
+
+      <!-- Game Modes Bento Grid -->
+      <div class="start-modes-section">
+        <div class="start-section-tag" data-i18n="start_game_modes">GAME MODES</div>
+        <div class="start-modes-grid">
+          
+          <button id="btn-training" class="mode-card" onclick="openTrainingModal()">
+            <div class="mode-card-icon mode-icon-purple">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              </svg>
+            </div>
+            <div class="mode-card-info">
+              <span class="mode-card-title" data-i18n="btn_training_short">Training</span>
+              <span class="mode-card-desc" data-i18n="btn_training_desc">Keyboard rows</span>
+            </div>
+          </button>
+
+          <button class="mode-card" onclick="startGame('zen')">
+            <div class="mode-card-icon mode-icon-cyan">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 2a10 10 0 0 0 0 20"/>
+                <circle cx="12" cy="7" r="1.5" fill="currentColor"/>
+                <circle cx="12" cy="17" r="1.5" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="mode-card-info">
+              <span class="mode-card-title" data-i18n="btn_zen_short">Zen Mode</span>
+              <span class="mode-card-desc" data-i18n="btn_zen_desc">No lives lost</span>
+            </div>
+          </button>
+
+          <button class="mode-card" onclick="startGame('timeattack')">
+            <div class="mode-card-icon mode-icon-amber">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div class="mode-card-info">
+              <span class="mode-card-title" data-i18n="btn_timeattack_short">Time Attack</span>
+              <span class="mode-card-desc" data-i18n="btn_timeattack_desc">60s sprint</span>
+            </div>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Quick Tools System Bar -->
+      <div class="start-system-bar">
+        <button class="system-bar-btn" onclick="showBiblioteca()" title="Library">
+          <svg class="btn-svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+            <path d="M6 6h10"/>
+            <path d="M6 10h10"/>
+            <path d="M4 19.5a2.5 2.5 0 0 1 2.5-2.5H20"/>
+          </svg>
+          <span data-i18n="btn_library">Library</span>
+        </button>
+
+        <button class="system-bar-btn" onclick="showConquistas()" title="Achievements">
+          <svg class="btn-svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+            <path d="M4 22h16"/>
+            <path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"/>
+            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+          </svg>
+          <span data-i18n="btn_achievements">Achievements</span>
+        </button>
+
+        <button class="system-bar-btn" onclick="openSettings(true)" title="Settings">
+          <svg class="btn-svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+          <span data-i18n="btn_settings">Settings</span>
+        </button>
+
+        <button class="system-bar-btn" onclick="openRulesModal()" title="How to Play">
+          <svg class="btn-svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          <span data-i18n="btn_rules">How to Play</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== GAME SCREEN ===== -->
+  <div id="screen-game" class="screen">
+
+    <!-- HUD (Centered Phase & Progress Bar, aligned to game column) -->
+    <div id="hud">
+      <div class="hud-center-block">
+        <div class="phase-tag"><span data-i18n="hud_phase">PHASE</span> <span id="phase-num">1</span></div>
+        <div id="progress-wrap"><div id="progress-fill"></div></div>
+        <div class="hud-progress-info">
+          <span id="progress-text">0 / 10</span>
+          <span id="zen-fixed-badge" class="zen-fixed-badge hidden" data-i18n="hud_zen_badge">🧘 Zen Mode: no lives lost</span>
+        </div>
+      </div>
+      <div id="hud-mobile-lives" class="hud-mobile-lives"></div>
+    </div>
+
+    <!-- Layout: Left | Game Column | Right -->
+    <div id="layout">
+
+      <!-- LEFT SIDEBAR: Unified Stats Dashboard -->
+      <div id="side-left">
+        <div class="side-card side-card-stats">
+          <div class="side-card-title-row">
+            <span class="side-title" data-i18n="hud_performance">PERFORMANCE DASHBOARD</span>
+            <span class="speed-badge" id="speed-display">1.0×</span>
+          </div>
+
+          <!-- VIDAS DO JOGADOR EM DESTAQUE -->
+          <div class="stat-hero-lives">
+            <div class="stat-hero-header">
+              <span class="stat-hero-lbl" id="hud-lives-lbl" data-i18n="hud_lives">LIVES</span>
+              <span class="stat-lives-count" id="lives-count-text">3 / 3</span>
+            </div>
+            <div id="lives-row" class="stat-hero-hearts"></div>
+          </div>
+
+          <!-- PONTUAÇÃO TOTAL EM DESTAQUE (10 CASAS) -->
+          <div class="stat-hero-score">
+            <div class="stat-hero-header">
+              <span class="stat-hero-lbl" data-i18n="hud_total_score">TOTAL SCORE</span>
+              <span class="stat-hero-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+                  <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+                  <path d="M4 22h16"/>
+                  <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+                  <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+                  <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+                </svg>
+              </span>
+            </div>
+            <div class="stat-hero-val-wrap">
+              <span class="stat-hero-val" id="hud-total">0000000000</span>
+            </div>
+          </div>
+
+          <!-- ACERTOS E ERROS -->
+          <div class="stats-unified-grid">
+            <div class="stat-box">
+              <span class="stat-box-lbl" data-i18n="hud_hits">HITS</span>
+              <span class="stat-box-val text-green" id="hits-display">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-box-lbl" data-i18n="hud_errors">ERRORS</span>
+              <span class="stat-box-val text-rose" id="errors-display">0</span>
+            </div>
+          </div>
+
+          <!-- PERFORMANCE: PPM / PRECISÃO / COMBO -->
+          <div class="stats-perf-grid">
+            <div class="stat-mini-box" title="Words Per Minute in real time">
+              <span class="smb-lbl" data-i18n="hud_wpm">WPM</span>
+              <span class="smb-val text-sky" id="wpm-display">0</span>
+            </div>
+            <div class="stat-mini-box" title="Typing Accuracy Rate">
+              <span class="smb-lbl" data-i18n="hud_accuracy">ACCURACY</span>
+              <span class="smb-val text-emerald" id="accuracy-display">100%</span>
+            </div>
+            <div class="stat-mini-box" title="Consecutive Streak">
+              <span class="smb-lbl" data-i18n="hud_combo">COMBO</span>
+              <span class="smb-val text-amber" id="combo-display">0×</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="side-card flex-grow">
+          <div class="side-card-header">
+            <span class="side-title" data-i18n="hud_discovered_words">DISCOVERED WORDS</span>
+            <button class="btn-link" onclick="showBiblioteca()" data-i18n="hud_view_all">View all</button>
+          </div>
+          <div id="words-list"></div>
+        </div>
+      </div>
+
+      <!-- Game column (Tetris-style) -->
+      <div id="game-column">
+        <div id="shield-aura" class="shield-aura"></div>
+        <!-- Boss Battle HUD Banner (Active on Boss phases) -->
+        <div id="boss-hud" class="boss-hud hidden">
+          <div class="boss-hud-top-laser"></div>
+          <div class="boss-hud-main">
+            <!-- Animated Monster / Robot Visual at the top -->
+            <div id="boss-figure-wrap" class="boss-figure-wrap" title="Guardian Boss">
+              <div id="boss-sprite" class="boss-sprite">
+                <!-- SVG / Animated Monster/Robot injected dynamically -->
+                <span id="boss-avatar" class="boss-avatar">🤖</span>
+              </div>
+              <div class="boss-thruster-flame"></div>
+            </div>
+            <div class="boss-info">
+              <div class="boss-title-row">
+                <span id="boss-name" class="boss-name">Cyber-Titan Lexis</span>
+                <span id="boss-badge" class="boss-badge">BOSS • ROBOT</span>
+              </div>
+              <div id="boss-desc" class="boss-desc">Solve the 3 runic riddles to defeat the guardian!</div>
+            </div>
+          </div>
+          <!-- Boss Health Points: ||| -->
+          <div class="boss-lives-col">
+            <div class="boss-lives-label">HEALTH POINTS:</div>
+            <div class="boss-hp-wrapper">
+              <div id="boss-hp-bars" class="boss-hp-bars" title="Boss HP">
+                <span class="boss-hp-bar active" data-idx="0">|</span>
+                <span class="boss-hp-bar active" data-idx="1">|</span>
+                <span class="boss-hp-bar active" data-idx="2">|</span>
+              </div>
+              <span id="boss-hp-text" class="boss-hp-text">|||</span>
+            </div>
+          </div>
+        </div>
+        <div id="game-area">
+          <div id="feedback-msg"></div>
+        </div>
+        <!-- Upcoming items queue -->
+        <div id="queue-bar">
+          <div class="queue-label-wrap">
+            <span class="queue-label" data-i18n="hud_upcoming">UPCOMING</span>
+          </div>
+          <div id="queue-items"></div>
+          <button id="btn-toggle-queue-pos" class="queue-pos-toggle-btn" onclick="toggleQueuePosition()" type="button" title="Toggle Queue Position">
+            <span class="queue-pos-icon">⬆️</span>
+            <span class="queue-pos-text">Top</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDEBAR: Skills -->
+      <div id="side-right">
+        <div class="side-card flex-grow">
+          <div class="side-title" data-i18n="hud_spells">SPELLS</div>
+          <div id="skills-container">
+            <div class="empty-hint" data-i18n="hud_spells_hint">Buy in shop<br/>or complete words <strong>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            </strong></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <input id="hidden-input" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="-1" aria-hidden="true" />
+
+    <!-- Pause overlay (frosted glass over game screen) -->
+    <div id="pause-overlay" class="hidden">
+      <div class="pause-box">
+        <!-- Main Pause Options -->
+        <div id="pause-main-view" class="pause-view">
+          <div class="pause-icon-badge">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="5" y="4" width="4.5" height="16" rx="1.5"/>
+              <rect x="14.5" y="4" width="4.5" height="16" rx="1.5"/>
+            </svg>
+          </div>
+          <h2 data-i18n="pause_title">Game Paused</h2>
+
+          <div class="pause-actions">
+            <button class="btn-primary" onclick="togglePause()">
+              <svg class="btn-svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M7 4.5v15a1 1 0 0 0 1.54.84l12-7.5a1 1 0 0 0 0-1.68l-12-7.5A1 1 0 0 0 7 4.5z"/>
+              </svg>
+              <span data-i18n="pause_resume">Continuar</span>
+            </button>
+            <button class="btn-secondary" onclick="showBiblioteca()">
+              <svg class="btn-svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                <path d="M6 6h10"/>
+                <path d="M6 10h10"/>
+                <path d="M4 19.5a2.5 2.5 0 0 1 2.5-2.5H20"/>
+              </svg>
+              <span data-i18n="pause_library">Biblioteca</span>
+            </button>
+            <button class="btn-secondary" onclick="showConquistas()">
+              <svg class="btn-svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+                <path d="M4 22h16"/>
+                <path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"/>
+                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+              </svg>
+              <span data-i18n="pause_achievements">Conquistas</span>
+            </button>
+            <button class="btn-secondary" onclick="openSettings()">
+              <svg class="btn-svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              <span data-i18n="pause_settings">Configurações</span>
+            </button>
+            <button id="btn-pause-back-training" class="btn-secondary hidden" style="display: none;" onclick="exitTrainingToMenu()">
+              <svg class="btn-svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              </svg>
+              <span data-i18n="pause_training_menu">Voltar ao Menu de Treino</span>
+            </button>
+            <button class="btn-secondary" onclick="confirmGoToMainMenu()">
+              <svg class="btn-svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+              <span data-i18n="pause_main_menu">Voltar pro Menu Principal</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- In-game Confirmation Dialog when clicking Return to Main Menu -->
+        <div id="pause-confirm-view" class="pause-view hidden">
+          <div class="pause-confirm-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <h2 class="pause-confirm-title" data-i18n="confirm_exit_title">Return to Main Menu?</h2>
+          <p class="pause-confirm-desc" data-i18n="confirm_exit_to_menu">Are you sure you want to quit the current game and return to the Main Menu? All progress in this phase will be lost.</p>
+
+          <div class="pause-actions">
+            <button class="btn-secondary" onclick="cancelExitConfirm()" style="width: 100%;">
+              <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M7 4.5v15a1 1 0 0 0 1.54.84l12-7.5a1 1 0 0 0 0-1.68l-12-7.5A1 1 0 0 0 7 4.5z"/>
+              </svg>
+              <span data-i18n="confirm_exit_cancel">Continuar Jogando</span>
+            </button>
+            <button class="btn-danger-confirm" onclick="executeExitToMainMenu()">
+              <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
+              <span data-i18n="confirm_exit_confirm">Sim, Voltar ao Menu</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Countdown Overlay when resuming from Pause ("3, 2, 1, VAI!") -->
+    <div id="countdown-overlay" class="countdown-overlay hidden">
+      <div class="countdown-box">
+        <span id="countdown-num" class="countdown-num">3</span>
+        <span class="countdown-hint" data-i18n="countdown_hint">Get your fingers ready!</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== MODAL: Phase complete ===== -->
+  <div id="modal-phase" class="modal hidden">
+    <div class="modal-box">
+      <div class="modal-emoji" id="phase-emoji">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <circle cx="12" cy="12" r="6"/>
+          <circle cx="12" cy="12" r="2"/>
+        </svg>
+      </div>
+      <div id="phase-rank-wrap" class="phase-rank-wrap">
+        <span class="phase-rank-label" data-i18n="modal_performance">PERFORMANCE:</span>
+        <span id="phase-rank-badge" class="phase-rank-badge rank-s">RANK S</span>
+      </div>
+      <h2 id="modal-phase-h">Phase 1 Complete!</h2>
+      <div class="modal-stats" id="modal-phase-stats"></div>
+      <div id="section-words" class="modal-section">
+        <div class="modal-section-lbl" data-i18n="modal_unlocked_words">Unlocked words</div>
+        <div id="unlocked-words-row"></div>
+      </div>
+      <div class="modal-phase-actions">
+        <button id="btn-next-phase" class="btn-primary" onclick="continueToNextPhase()">
+          <span data-i18n="modal_btn_next_phase">Next Phase →</span>
+        </button>
+        <button id="btn-phase-back-training" class="btn-secondary hidden" style="display: none;" onclick="exitTrainingToMenu()">
+          <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+          <span data-i18n="modal_btn_back_training">Back to Training Menu</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL: Shop ===== -->
+  <div id="modal-shop" class="modal hidden">
+    <div class="modal-box modal-shop-box">
+      <div class="modal-head-simple">
+        <div class="modal-head-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="21" r="1"/>
+            <circle cx="19" cy="21" r="1"/>
+            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+          </svg>
+        </div>
+        <div>
+          <h2 data-i18n="shop_title">Magic Shop</h2>
+          <p class="modal-sub" data-i18n="shop_sub">Upgrade your skills for upcoming phases</p>
+        </div>
+      </div>
+      <div class="shop-balance-card">
+        <div class="shop-balance-wrap">
+          <span class="sbc-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 7v10M9 9h6a2 2 0 0 1 0 4H9a2 2 0 0 0 0 4h6"/>
+            </svg>
+          </span>
+          <strong id="shop-balance" class="sbc-val">0000000000</strong>
+        </div>
+      </div>
+      <div id="shop-items-grid"></div>
+      <button class="btn-primary btn-shop-close" onclick="closeShop()">
+        <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <polygon points="5 3 19 12 5 21 5 3"/>
+        </svg>
+        <span data-i18n="shop_btn_continue">Continue Playing</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== MODAL: Game over (Modern Arcade Game Screen) ===== -->
+  <div id="modal-gameover" class="modal hidden modal-gameover-backdrop">
+    <div class="gameover-card">
+      <div class="go-badge-glow">
+        <span class="go-skull-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="12" r="1"/>
+            <circle cx="15" cy="12" r="1"/>
+            <path d="M8 20v2h8v-2"/>
+            <path d="m12.5 17-.5-1-.5 1h1z"/>
+            <path d="M16 20a2 2 0 0 0 1.56-3.25 8 8 0 1 0-11.12 0A2 2 0 0 0 8 20"/>
+          </svg>
+        </span>
+      </div>
+      <h1 class="go-main-title" data-i18n="go_title">GAME OVER</h1>
+      <p class="go-sub">Your runic journey has reached an end</p>
+
+      <div class="go-bento-grid">
+        <div class="go-bento-card go-card-highlight">
+          <span class="gbc-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+              <path d="M4 22h16"/>
+              <path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"/>
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+            </svg>
+          </span>
+          <span class="gbc-val" id="go-score">0000000000</span>
+          <span class="gbc-lbl" data-i18n="hud_total_score">TOTAL SCORE</span>
+          <div class="go-record-badge">
+            <span class="go-record-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#F59E0B">
+                <path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14v2H5v-2z"/>
+              </svg>
+            </span>
+            <span class="go-record-lbl" data-i18n="go_best_score">Recorde:</span>
+            <span class="go-record-val" id="go-best-score">0000000000</span>
+            <span id="go-new-record-tag" class="go-new-record-tag hidden">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:3px">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+              <span data-i18n="go_new_record_tag">NOVO RECORDE!</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Row 1: Acertos & Erros (mesma linha) -->
+        <div class="go-bento-card">
+          <span class="gbc-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <circle cx="12" cy="12" r="6"/>
+              <circle cx="12" cy="12" r="2"/>
+            </svg>
+          </span>
+          <span class="gbc-val text-green" id="go-hits">0</span>
+          <span class="gbc-lbl" data-i18n="hud_hits">HITS</span>
+        </div>
+        <div class="go-bento-card">
+          <span class="gbc-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F43F5E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+              <line x1="12" y1="9" x2="12" y2="13"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </span>
+          <span class="gbc-val text-rose" id="go-errors">0</span>
+          <span class="gbc-lbl" data-i18n="hud_errors">ERRORS</span>
+        </div>
+
+        <!-- Row 2: Fase Máxima & Palavras Descobertas (mesma linha) -->
+        <div class="go-bento-card">
+          <span class="gbc-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6366F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+              <line x1="4" y1="22" x2="4" y2="15"/>
+            </svg>
+          </span>
+          <span class="gbc-val" id="go-phase">1</span>
+          <span class="gbc-lbl" data-i18n="hud_max_phase">MAX PHASE</span>
+        </div>
+        <div class="go-bento-card">
+          <span class="gbc-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+              <path d="M6 6h10"/>
+              <path d="M6 10h10"/>
+              <path d="M4 19.5a2.5 2.5 0 0 1 2.5-2.5H20"/>
+            </svg>
+          </span>
+          <span class="gbc-val text-amber" id="go-words">0</span>
+          <span class="gbc-lbl" data-i18n="hud_discovered_words">DISCOVERED WORDS</span>
+        </div>
+      </div>
+
+      <div class="go-actions">
+        <button id="btn-go-continue" class="btn-go-continue hidden" onclick="useContinue()">
+          <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v10M9 9h6a2 2 0 0 1 0 4H9a2 2 0 0 0 0 4h6"/>
+          </svg>
+          <span data-i18n="go_use_continue">Usar Continue</span> (<strong id="go-continue-count">0</strong>)
+        </button>
+        <button class="btn-go-primary" onclick="restartGame()">
+          <svg class="btn-svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+          <span data-i18n="go_play_again">Play Again</span>
+        </button>
+        <div class="go-secondary-row">
+          <button class="btn-go-secondary" onclick="showBiblioteca()">
+            <svg class="btn-svg-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+              <path d="M6 6h10"/>
+              <path d="M6 10h10"/>
+              <path d="M4 19.5a2.5 2.5 0 0 1 2.5-2.5H20"/>
+            </svg>
+            <span data-i18n="pause_library">Biblioteca</span>
+          </button>
+          <button class="btn-go-secondary" onclick="showConquistas()">
+            <svg class="btn-svg-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+              <path d="M4 22h16"/>
+              <path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"/>
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+            </svg>
+            <span data-i18n="pause_achievements">Conquistas</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL: Biblioteca (Bestiário) ===== -->
+  <div id="modal-biblioteca" class="modal hidden">
+    <div class="modal-box modal-lib-box">
+      <div class="modal-lib-head">
+        <div class="modal-lib-title-row">
+          <div class="modal-head-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+              <path d="M6 6h10"/>
+              <path d="M6 10h10"/>
+              <path d="M4 19.5a2.5 2.5 0 0 1 2.5-2.5H20"/>
+            </svg>
+          </div>
+          <div>
+            <h2 data-i18n="lib_title">Runic Library</h2>
+            <p class="modal-sub" data-i18n="lib_sub">Collection of discovered words</p>
+          </div>
+        </div>
+        <div class="lib-counter-badge" id="lib-counter-badge">0 / 0 Discovered</div>
+      </div>
+      <div id="lib-words-grid" class="lib-words-grid"></div>
+      <button class="btn-secondary" onclick="closeBiblioteca()">
+        <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+        <span data-i18n="btn_back_to_game">Back to Game</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== MODAL: Conquistas & Selos (Achievements) ===== -->
+  <div id="modal-conquistas" class="modal hidden">
+    <div class="modal-box modal-achievements-box">
+      <div class="modal-lib-head">
+        <div class="modal-lib-title-row">
+          <div class="modal-head-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+              <path d="M4 22h16"/>
+              <path d="M10 14.66V17c0 .55-.45 1-1 1H7v4h10v-4h-2c-.55 0-1-.45-1-1v-2.34"/>
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+            </svg>
+          </div>
+          <div>
+            <h2 data-i18n="ach_title">Achievements & Badges</h2>
+            <p class="modal-sub" data-i18n="ach_sub">Your speed, precision and mastery milestones</p>
+          </div>
+        </div>
+        <div class="lib-counter-badge" id="achievements-counter-badge">0 / 6 Unlocked</div>
+      </div>
+      <div id="achievements-grid" class="achievements-grid"></div>
+      <button class="btn-secondary" onclick="closeConquistas()">
+        <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+        <span data-i18n="btn_back_to_game">Back to Game</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== MODAL: Como Jogar & Regras Rúnicas ===== -->
+  <div id="modal-rules" class="modal hidden">
+    <div class="modal-box modal-rules-box">
+      <div class="modal-lib-head">
+        <div class="modal-lib-title-row">
+          <div class="modal-head-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="modal-title" data-i18n="rules_title">How to Play & Runic Rules</h2>
+            <p class="modal-sub" data-i18n="app_subtitle">Master the runic keyboard before words reach the abyss</p>
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeRulesModal()">✕</button>
+      </div>
+
+      <div class="rules-card">
+        <div class="rule-row">
+          <svg class="rule-svg-icon rule-icon-cyan" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2" ry="2"/>
+            <line x1="6" y1="8" x2="6" y2="8"/>
+            <line x1="10" y1="8" x2="10" y2="8"/>
+            <line x1="14" y1="8" x2="14" y2="8"/>
+            <line x1="18" y1="8" x2="18" y2="8"/>
+            <line x1="6" y1="12" x2="6" y2="12"/>
+            <line x1="10" y1="12" x2="10" y2="12"/>
+            <line x1="14" y1="12" x2="14" y2="12"/>
+            <line x1="18" y1="12" x2="18" y2="12"/>
+            <line x1="7" y1="16" x2="17" y2="16"/>
+          </svg>
+          <span data-i18n="rule_typing"><strong>Keyboard Typing:</strong> Type letters, syllables and words before they hit the bottom of the screen</span>
+        </div>
+        <div class="rule-row">
+          <svg class="rule-svg-icon rule-icon-coral" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+            <polygon points="12 8 13.5 10.5 16 12 13.5 13.5 12 16 10.5 13.5 8 12 10.5 10.5 12 8"/>
+          </svg>
+          <span data-i18n="rule_wildcard"><strong>Wildcard Words:</strong> Instantly destroy all runics on screen simultaneously and absorb all their points</span>
+        </div>
+        <div class="rule-row">
+          <svg class="rule-svg-icon rule-icon-purple" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+            <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+            <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+          </svg>
+          <span data-i18n="rule_spells"><strong>Keys 1–8 (or click):</strong> Activate slow motion, freeze, spacing, shield and power spells</span>
+        </div>
+        <div class="rule-row">
+          <svg class="rule-svg-icon rule-icon-amber" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+          <span data-i18n="rule_combo"><strong>Combos & Fury Mode:</strong> Error-free streaks multiply your score up to 8×</span>
+        </div>
+        <div class="rule-row">
+          <svg class="rule-svg-icon rule-icon-rose" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+          </svg>
+          <span data-i18n="rule_danger"><strong>Lives & Danger:</strong> Runics at the bottom flash red and cost 1 life if dropped (3 lives in Classic)</span>
+        </div>
+      </div>
+
+      <div class="modal-rules-footer">
+        <button class="btn-primary" onclick="closeRulesModal()" data-i18n="btn_close_rules">Got It</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL: Treinamento por Linhas do Teclado ===== -->
+  <div id="modal-training" class="modal hidden">
+    <div class="modal-box modal-training-box">
+      <div class="modal-lib-head">
+        <div class="modal-lib-title-row">
+          <div class="modal-head-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+          </div>
+          <div>
+            <h2 data-i18n="training_title">Training: Keyboard Rows</h2>
+            <p class="modal-sub" data-i18n="training_sub">Build muscle memory without looking at keys</p>
+          </div>
+        </div>
+      </div>
+      <div class="training-notice-card">
+        <span class="tnc-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18h6"/>
+            <path d="M10 22h4"/>
+            <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>
+          </svg>
+        </span>
+        <span class="tnc-text" data-i18n="training_notice">In this practice mode you <strong>do not lose lives</strong>. Typo errors and fallen runics lower your <strong>Accuracy %</strong> and <strong>WPM</strong>.</span>
+      </div>
+      <div id="training-worlds-grid" class="training-worlds-grid"></div>
+      <button class="btn-secondary" onclick="closeTrainingModal()">
+        <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+        <span data-i18n="training_btn_back">Back</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== MODAL: Configurações ===== -->
+  <div id="modal-settings" class="modal hidden">
+    <div class="modal-box modal-settings-box">
+      <div class="modal-lib-head">
+        <div class="modal-lib-title-row">
+          <div class="modal-head-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+          </div>
+          <div>
+            <h2 data-i18n="settings_title">Settings</h2>
+            <p class="modal-sub" data-i18n="settings_sub">Game and interface adjustments</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-list">
+        <!-- Grupo 1: Geral & Interface -->
+        <div class="settings-group-card">
+          <div class="settings-group-header">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+            <span data-i18n="settings_cat_general">General &amp; Interface</span>
+          </div>
+
+          <!-- Setting: Language / Idioma -->
+          <div class="settings-opt-row">
+            <span class="settings-opt-label" data-i18n="settings_lang">Language / Idioma</span>
+            <select id="settings-lang-select" class="settings-opt-select" onchange="changeLanguage(this.value)">
+              <option value="en">English (US)</option>
+              <option value="pt">Português (BR)</option>
+              <option value="fr">Français</option>
+              <option value="de">Deutsch</option>
+              <option value="ja">日本語</option>
+              <option value="ko">한국어</option>
+              <option value="zh">简体中文</option>
+            </select>
+          </div>
+
+          <!-- Setting: Difficulty / Dificuldade -->
+          <div class="settings-opt-row">
+            <span class="settings-opt-label" data-i18n="settings_difficulty">Difficulty</span>
+            <select id="settings-difficulty-select" class="settings-opt-select" onchange="changeDifficulty(this.value)">
+              <option value="easy" data-i18n="diff_easy">Fácil</option>
+              <option value="normal" data-i18n="diff_normal">Médio</option>
+              <option value="hard" data-i18n="diff_hard">Difícil</option>
+            </select>
+          </div>
+
+          <!-- Setting: Sound SFX -->
+          <div class="settings-opt-row">
+            <span class="settings-opt-label" data-i18n="settings_sound">Sound Effects</span>
+            <button id="settings-sound-btn" class="settings-opt-toggle" onclick="toggleSound()" type="button" title="Toggle sound effects">
+              <span id="settings-sound-val">On</span>
+            </button>
+          </div>
+
+          <!-- Setting: Queue position -->
+          <div class="settings-opt-row">
+            <span class="settings-opt-label" data-i18n="settings_queue">Queue Position</span>
+            <button id="settings-queue-btn" class="settings-opt-toggle" onclick="toggleQueuePosition()" type="button" title="Change word conveyor position">
+              <span id="settings-queue-val">Top (Default)</span>
+            </button>
+          </div>
+
+          <!-- Setting: Theme toggle -->
+          <div class="settings-opt-row">
+            <span class="settings-opt-label" data-i18n="settings_theme">Interface Theme</span>
+            <button id="settings-theme-btn" class="settings-opt-toggle" onclick="toggleTheme()" type="button" title="Switch light or dark theme">
+              <span id="settings-theme-val">Dark</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Grupo 2: Batalhas de Chefão -->
+        <div class="settings-group-card">
+          <div class="settings-group-header">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.5 17.5 3 6V3h3l11.5 11.5"/>
+              <path d="m13 19 6-6"/>
+              <path d="m16 16 4 4"/>
+              <path d="m19 21 2-2"/>
+            </svg>
+            <span data-i18n="settings_cat_boss">Boss Battles</span>
+          </div>
+
+          <!-- Setting: Boss Battles Toggle -->
+          <div class="settings-opt-row">
+            <span class="settings-opt-label" data-i18n="settings_boss">Boss Battles</span>
+            <button id="settings-boss-btn" class="settings-opt-toggle" onclick="toggleBossBattlesSetting()" type="button" title="Enable or disable boss battles every 10 phases">
+              <span id="settings-boss-val">Every 10 Phases (Active)</span>
+            </button>
+          </div>
+
+          <!-- Setting: Test Boss Battle -->
+          <div class="settings-opt-row">
+            <span class="settings-opt-label" data-i18n="settings_test_boss">Test Boss Battle</span>
+            <button class="settings-opt-action-btn" onclick="testBossBattle()" type="button" title="Face a boss right now">
+              <svg class="btn-svg-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.5 17.5 3 6V3h3l11.5 11.5"/>
+                <path d="m13 19 6-6"/>
+                <path d="m16 16 4 4"/>
+                <path d="m19 21 2-2"/>
+              </svg>
+              <span data-i18n="settings_face_boss">Face Boss</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-secondary" style="width: 100%; margin-top: 14px;" onclick="closeSettings()">
+        <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+        <span data-i18n="settings_btn_back">Back</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== MODAL: Boss Battle Reward (Choose 1 of 3 skills) ===== -->
+  <div id="modal-boss-reward" class="modal hidden">
+    <div class="modal-box modal-boss-box">
+      <div class="boss-reward-badge-glow">
+        <span class="boss-reward-crown">👑</span>
+      </div>
+      <h2 class="boss-reward-title" data-i18n="boss_defeated_title">BOSS DEFEATED!</h2>
+      <div class="boss-reward-bonus-badge">🪙 +1.000 PTS</div>
+      <p class="boss-reward-sub" data-i18n="boss_defeated_sub">You masterfully solved all runic trials.</p>
+      <div class="boss-reward-prompt" data-i18n="boss_defeated_prompt">Choose 1 permanent bonus skill for upcoming phases:</div>
+      <div id="boss-skills-grid" class="boss-skills-grid"></div>
+    </div>
+  </div>
+
+  <!-- Fullscreen Celebratory Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Achievement Toast Notification -->
+  <div id="achievement-toast" class="achievement-toast hidden">
+    <div class="at-icon" id="at-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+        <path d="M4 22h16"/>
+        <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+        <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+      </svg>
+    </div>
+    <div class="at-content">
+      <div class="at-title" data-i18n="ach_status_unlocked">ACHIEVEMENT UNLOCKED!</div>
+      <div class="at-name" id="at-name">Swift Finger</div>
+      <div class="at-desc" id="at-desc">Reach 60 WPM</div>
+    </div>
+  </div>
+
+  <!-- Modular Scripts -->
+  <script src="js/ambient.js"></script>
+  <script src="js/audio.js"></script>
+  <!-- Locales -->
+  <script src="js/locale/en.js"></script>
+  <script src="js/locale/pt.js"></script>
+  <script src="js/locale/fr.js"></script>
+  <script src="js/locale/de.js"></script>
+  <script src="js/locale/ja.js"></script>
+  <script src="js/locale/ko.js"></script>
+  <script src="js/locale/zh.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/shop.js"></script>
+  <script src="js/library.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

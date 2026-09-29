@@ -1,0 +1,247 @@
+/* ======================================================
+   DIGITINHO — css/responsive.css
+   Responsive Layout Adaptations & Mobile Media Queries
+   ====================================================== */
+
+/* Mid-size Screens / Tablets */
+@media (max-width: 880px) {
+  #game-column {
+    flex: 0 0 340px;
+    width: 340px;
+  }
+  #side-left, #side-right {
+    flex: 0 0 160px;
+    width: 160px;
+  }
+  #hud {
+    max-width: 340px;
+    padding: 8px 14px;
+  }
+}
+
+/* Mobile Smartphones */
+@media (max-width: 700px) {
+  #side-left, #side-right {
+    display: none !important;
+  }
+  #layout {
+    padding: 8px;
+    gap: 8px;
+  }
+  #game-column {
+    flex: 1;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 18px;
+  }
+  #hud {
+    max-width: calc(100% - 16px);
+    margin: 8px auto 0 auto;
+    padding: 6px 12px;
+  }
+  .hud-mobile-lives {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 0.95rem;
+    margin-top: 4px;
+  }
+  #queue-bar {
+    height: 44px;
+    padding: 0 10px;
+  }
+  .qi {
+    min-width: 26px;
+    height: 26px;
+    font-size: 0.72rem;
+  }
+}
+
+/* Very Small Mobile Screens (max-width: 440px) */
+@media (max-width: 440px) {
+  .start-wrap {
+    padding: 20px 14px;
+    border-radius: 20px;
+    gap: 16px;
+  }
+  .start-logo {
+    font-size: 2.4rem;
+  }
+  .hero-start-btn {
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+  .start-modes-grid {
+    gap: 6px;
+  }
+  .mode-card {
+    padding: 10px 4px 8px;
+    border-radius: 12px;
+  }
+  .mode-card-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+  }
+  .mode-card-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  .mode-card-title {
+    font-size: 0.75rem;
+  }
+  .mode-card-desc {
+    font-size: 0.62rem;
+  }
+  .start-system-bar {
+    gap: 6px;
+  }
+  .system-bar-btn {
+    padding: 8px 2px 6px;
+    font-size: 0.65rem;
+    border-radius: 10px;
+  }
+  .system-bar-btn .btn-svg-icon {
+    width: 16px;
+    height: 16px;
+  }
+  #hud {
+    padding: 5px 8px;
+  }
+  #phase-num {
+    font-size: 0.75rem;
+  }
+  .badge-stat {
+    padding: 3px 6px;
+    font-size: 0.68rem;
+  }
+  .badge-stat strong {
+    font-size: 0.75rem;
+  }
+}
+
+/* ======================================================
+   MOBILE VIRTUAL KEYBOARD ACTIVE ADAPTATION
+   (When Android/iOS keyboard is open, consuming 40%-50% screen)
+   ====================================================== */
+body.keyboard-active {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+body.keyboard-active #screen-game {
+  height: var(--visual-viewport-height, 100vh) !important;
+  max-height: var(--visual-viewport-height, 100vh) !important;
+  overflow: hidden !important;
+}
+
+body.keyboard-active #layout {
+  padding: 4px 6px !important;
+  gap: 4px !important;
+}
+
+body.keyboard-active #side-left,
+body.keyboard-active #side-right {
+  display: none !important;
+}
+
+body.keyboard-active #game-column {
+  border-radius: 14px;
+}
+
+body.keyboard-active #hud {
+  padding: 4px 8px !important;
+  gap: 4px !important;
+}
+
+
+body.keyboard-active .phase-tag {
+  font-size: 0.65rem !important;
+}
+
+body.keyboard-active #progress-wrap {
+  height: 4px !important;
+}
+
+body.keyboard-active #zen-fixed-badge {
+  font-size: 0.58rem !important;
+  padding: 2px 6px !important;
+}
+
+body.keyboard-active #queue-bar {
+  height: 38px !important;
+  padding: 0 8px !important;
+}
+
+body.keyboard-active .queue-label {
+  font-size: 0.55rem !important;
+}
+
+body.keyboard-active .qi {
+  min-width: 22px !important;
+  height: 22px !important;
+  font-size: 0.65rem !important;
+}
+
+body.keyboard-active .boss-hud {
+  padding: 4px 8px !important;
+  gap: 6px !important;
+  margin-bottom: 4px !important;
+  border-radius: 12px !important;
+}
+
+body.keyboard-active .boss-figure-wrap {
+  width: 38px !important;
+  height: 38px !important;
+}
+
+body.keyboard-active .boss-sprite {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+body.keyboard-active .boss-name {
+  font-size: 0.82rem !important;
+}
+
+body.keyboard-active .boss-desc {
+  display: none !important;
+}
+
+body.keyboard-active .boss-hp-bar {
+  height: 16px !important;
+  width: 6px !important;
+}
+
+body.keyboard-active .boss-hp-text {
+  font-size: 0.95rem !important;
+}
+
+body.keyboard-active #game-area {
+  min-height: 120px !important;
+}
+
+/* Also handle compact landscape or low-height screens */
+@media (max-height: 520px) {
+  #hud {
+    padding: 3px 8px !important;
+    gap: 4px !important;
+  }
+  #layout {
+    padding: 3px 6px !important;
+  }
+  #queue-bar {
+    height: 36px !important;
+  }
+  .qi {
+    min-width: 22px !important;
+    height: 22px !important;
+    font-size: 0.64rem !important;
+  }
+  #game-column {
+    border-radius: 12px !important;
+  }
+}

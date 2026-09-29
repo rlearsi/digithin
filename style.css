@@ -1,0 +1,17 @@
+/* ======================================================
+   DIGITINHO — Master Stylesheet Aggregator
+   Separated into modular domain-specific stylesheets:
+   - css/variables.css  : Design system tokens, themes & canvas base
+   - css/components.css : Reusable buttons, theme switches & badges
+   - css/layout.css     : Screens, HUD, sidebars & playboard column
+   - css/gameplay.css   : Falling tokens, skills, feedback & particles
+   - css/modals.css     : Pause, phase, shop, library & game over modals
+   - css/responsive.css : Media queries & responsive viewport rules
+   ====================================================== */
+
+@import url('css/variables.css');
+@import url('css/components.css');
+@import url('css/layout.css');
+@import url('css/gameplay.css');
+@import url('css/modals.css');
+@import url('css/responsive.css');

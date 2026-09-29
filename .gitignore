@@ -1,0 +1,15 @@
+# Local files
+
+.env
+
+# IDE
+.vscode/
+.agents/
+.antigravity/
+
+# AGENTS & DOCS
+
+AGENTS.md
+ChangeLog.md
+futuramente.txt
+about.md

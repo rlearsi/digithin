@@ -1,0 +1,224 @@
+/* ======================================================
+   DIGITINHO — css/components.css
+   Reusable UI Components: Buttons, Theme Switch & Badges
+   ====================================================== */
+
+/* ======================================================
+   THEME TOGGLE SWITCH
+   ====================================================== */
+.theme-switch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface-card);
+  border: none;
+  border-radius: var(--r-pill);
+  padding: 6px 14px;
+  cursor: pointer;
+  color: var(--t2);
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  transition: background 0.2s, color 0.2s;
+}
+.theme-switch-btn:hover {
+  background: var(--surface-hover);
+  color: var(--t1);
+}
+.theme-switch-disc {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #10B981 50%, #1E293B 50%);
+  display: inline-block;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+[data-theme="light"] .theme-switch-disc {
+  background: linear-gradient(90deg, #F59E0B 50%, #E2E8F0 50%);
+  transform: rotate(180deg);
+}
+.screen-top-bar {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hud-theme-switch {
+  padding: 6px 8px;
+}
+.queue-switch-btn {
+  gap: 6px;
+}
+.queue-switch-icon {
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+/* ======================================================
+   COMMON BUTTONS & CONTROLS (BORDERLESS DESIGN)
+   ====================================================== */
+button {
+  border: none;
+  outline: none;
+  font-family: var(--font);
+}
+
+.btn-primary {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: #FFFFFF;
+  background: var(--accent-primary);
+  border-radius: var(--r-md);
+  padding: 12px 24px;
+  cursor: pointer;
+  box-shadow: none;
+  transition: background 0.18s ease, filter 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-primary:hover {
+  background: var(--accent-primary-hover);
+  filter: brightness(1.12);
+  box-shadow: none;
+}
+.btn-primary:active {
+  background: var(--accent-primary);
+  filter: brightness(0.96);
+}
+
+.btn-secondary {
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--t1);
+  background: var(--glass-btn-sec, rgba(255, 255, 255, 0.08));
+  border: none;
+  border-radius: var(--r-md);
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.btn-secondary:hover {
+  background: var(--glass-hover, rgba(255, 255, 255, 0.15));
+  color: var(--t1);
+}
+.btn-secondary:active {
+  background: var(--glass-btn-sec, rgba(255, 255, 255, 0.08));
+}
+
+.btn-svg-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.btn-link {
+  background: none;
+  font-size: 0.72rem;
+  color: var(--accent-cyan);
+  cursor: pointer;
+  font-weight: 700;
+  padding: 0;
+  transition: opacity 0.15s;
+}
+.btn-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.btn-lib-mini {
+  background: var(--glass-card);
+  backdrop-filter: var(--glass-card-blur);
+  -webkit-backdrop-filter: var(--glass-card-blur);
+  border: none;
+  border-radius: var(--r-sm);
+  color: var(--t2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: none;
+}
+.btn-lib-mini:hover {
+  background: var(--glass-card-hover);
+  color: var(--t1);
+}
+
+/* ======================================================
+   SPEED BADGE & STATUS INDICATORS
+   ====================================================== */
+.speed-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  background: var(--accent-amber);
+  border-radius: var(--r-pill);
+  padding: 2px 8px;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.speed-badge.speed-up-flash {
+  background: var(--accent-coral) !important;
+  transform: scale(1.18);
+}
+
+/* Keyboard keys */
+.kb-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  background: linear-gradient(180deg, #374151 0%, #1F2937 100%);
+  color: #FFFFFF;
+  border-radius: 5px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-bottom: 2px solid #0B0F19;
+  box-shadow: 0 2px 0 0 #0B0F19, 0 3px 5px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="light"] kbd {
+  background: linear-gradient(180deg, #FFFFFF 0%, #E2E8F0 100%);
+  color: #0F172A;
+  border: 1px solid #CBD5E1;
+  border-bottom: 2px solid #94A3B8;
+  box-shadow: 0 2px 0 0 #94A3B8, 0 2px 4px rgba(0, 0, 0, 0.1), inset 0 1px 0 #FFFFFF;
+  text-shadow: none;
+}
+
+/* Color Helpers */
+.text-green { color: var(--accent-emerald) !important; }
+.text-rose  { color: var(--accent-coral) !important; }
+.text-sky   { color: var(--accent-cyan) !important; }
+.text-amber { color: var(--accent-amber) !important; }
+
+/* Visibility Utilities */
+.hidden {
+  display: none !important;
+}
