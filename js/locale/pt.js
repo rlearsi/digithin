@@ -12,7 +12,7 @@ window.TRANSLATIONS.pt = {
   rules_title: 'Como Jogar & Regras Rúnicas',
   rule_typing: '<strong>Digitação no Teclado:</strong> Digite letras, sílabas e palavras antes que atinjam o fundo da tela',
   rule_wildcard: '<strong>Palavras Coringa:</strong> Destroem todos os rúnicos na tela simultaneamente e absorvem todos os seus pontos',
-  rule_spells: '<strong>Teclas 1–8 (ou clique):</strong> Ativam magias de desaceleração, congelar, espaçamento, escudo e poder',
+  rule_spells: '<strong>Teclas 1–8 (ou clique):</strong> Ativam habilidades de desaceleração, congelar, espaçamento, escudo e poder',
   rule_combo: '<strong>Combos & Modo Fúria:</strong> Sequências de acertos sem erros multiplicam sua pontuação em até 8×',
   rule_danger: '<strong>Vidas & Perigo:</strong> Rúnicos no fundo piscam em alerta vermelho e custam 1 vida ao cair (3 vidas no Clássico)',
 
@@ -40,7 +40,7 @@ window.TRANSLATIONS.pt = {
   hud_wpm: 'PPM',
   hud_combo: 'COMBO',
   hud_upcoming: 'PRÓXIMOS',
-  hud_spells: 'MAGIAS',
+  hud_spells: 'HABILIDADES',
   hud_active: 'ATIVO',
   hud_sec: 's',
 
@@ -86,13 +86,19 @@ window.TRANSLATIONS.pt = {
   victory_desc: 'Parabéns, você dominou com maestria o teclado rúnico!',
   victory_play_again: 'Jogar Novamente',
 
-  shop_title: 'Loja de Magias',
+  shop_title: 'Loja de Habilidades',
   shop_sub: 'Aprimore suas habilidades para as próximas fases',
   shop_points: 'Seus Pontos:',
   shop_btn_buy: 'Comprar',
   shop_btn_owned: 'Comprado',
   shop_available: 'Disponível',
   shop_btn_close: 'Fechar',
+  shop_confirm_exit_title: 'Sair da Loja?',
+  shop_confirm_exit_desc: 'Tem certeza que deseja sair da loja?',
+  shop_confirm_stay: 'Continuar na Loja',
+  shop_confirm_leave: 'Voltar ao Menu Principal',
+  shop_insufficient_pts: 'Pontos insuficientes!',
+
 
   skill_name_freezer: 'Congelar',
   skill_desc_freezer: 'Congela todos os rúnicos na esteira por 10s',

@@ -104,6 +104,7 @@ function goToMainMenu() {
   if (typeof closeBiblioteca === 'function') closeBiblioteca();
   if (typeof closeConquistas === 'function') closeConquistas();
   if (typeof closeTrainingModal === 'function') closeTrainingModal();
+  if (typeof cancelShopExitConfirm === 'function') cancelShopExitConfirm();
 
   const cdOverlay = $('countdown-overlay');
   if (cdOverlay) cdOverlay.classList.add('hidden');
@@ -152,6 +153,41 @@ function confirmGoToMainMenu() {
 function executeExitToMainMenu() {
   cancelExitConfirm();
   goToMainMenu();
+}
+
+function isPhaseConfirmOpen() {
+  const confirmView = $('phase-confirm-view');
+  return confirmView && !confirmView.classList.contains('hidden');
+}
+
+function showPhaseExitConfirm() {
+  const mainView = $('phase-main-view');
+  const confirmView = $('phase-confirm-view');
+  const box = $('modal-phase-box');
+  if (mainView && confirmView) {
+    mainView.classList.add('hidden');
+    confirmView.classList.remove('hidden');
+    if (box) box.classList.add('modal-box-confirm');
+    if (typeof playSound === 'function') playSound('click');
+  }
+}
+
+function cancelPhaseExitConfirm() {
+  const mainView = $('phase-main-view');
+  const confirmView = $('phase-confirm-view');
+  const box = $('modal-phase-box');
+  if (confirmView) confirmView.classList.add('hidden');
+  if (mainView) mainView.classList.remove('hidden');
+  if (box) box.classList.remove('modal-box-confirm');
+}
+
+function executePhaseExitToMainMenu() {
+  cancelPhaseExitConfirm();
+  if (state.gameMode === 'training') {
+    exitTrainingToMenu();
+  } else {
+    exitPhaseToMainMenu();
+  }
 }
 
 function getLearnedWords() {
@@ -276,7 +312,24 @@ function checkPhaseComplete() {
   }
 }
 
+function clearGameBoard() {
+  if (state.activeItems && Array.isArray(state.activeItems)) {
+    state.activeItems.forEach(i => i.el?.parentNode?.removeChild(i.el));
+    state.activeItems = [];
+  }
+  const leftoverTokens = gameArea?.querySelectorAll('.token, .boss-meaning-box');
+  if (leftoverTokens) {
+    leftoverTokens.forEach(el => el.parentNode?.removeChild(el));
+  }
+  state.spawnQueue = [];
+  if (typeof renderQueue === 'function') renderQueue();
+  state.typedBuffer = '';
+  if (typeof clearHighlight === 'function') clearHighlight();
+}
+
 function showPhaseModal() {
+  clearGameBoard();
+
   // Deduct error penalty at the end when banking phase points!
   const rawPts   = state.phasePts;
   const penalty  = state.errorsPhase;
@@ -492,6 +545,7 @@ function showPhaseModal() {
     $('section-words').style.display = 'none';
   }
 
+  if (typeof cancelPhaseExitConfirm === 'function') cancelPhaseExitConfirm();
   modalPhase.classList.remove('hidden');
   playSound('firework');
   launchConfetti();
@@ -499,7 +553,9 @@ function showPhaseModal() {
 
 function continueToNextPhase() {
   stopConfetti();
+  if (typeof cancelPhaseExitConfirm === 'function') cancelPhaseExitConfirm();
   modalPhase.classList.add('hidden');
+  state.phaseComplete = false;
   const completedPhase = state.phase;
 
   if (state.gameMode === 'training') {
@@ -535,12 +591,14 @@ function continueToNextPhase() {
 
 function exitPhaseToMainMenu() {
   stopConfetti();
+  if (typeof cancelPhaseExitConfirm === 'function') cancelPhaseExitConfirm();
   if (modalPhase) modalPhase.classList.add('hidden');
   goToMainMenu();
 }
 
 function exitTrainingToMenu() {
   stopConfetti();
+  if (typeof cancelPhaseExitConfirm === 'function') cancelPhaseExitConfirm();
   if (modalPhase) modalPhase.classList.add('hidden');
   goToMainMenu();
   openTrainingModal();
@@ -692,6 +750,24 @@ function togglePause() {
   const modalConquistas = $('modal-conquistas');
   if (modalConquistas && !modalConquistas.classList.contains('hidden')) {
     if (typeof closeConquistas === 'function') closeConquistas();
+    return;
+  }
+  const modalPhaseEl = $('modal-phase');
+  if (modalPhaseEl && !modalPhaseEl.classList.contains('hidden')) {
+    if (typeof isPhaseConfirmOpen === 'function' && isPhaseConfirmOpen()) {
+      if (typeof cancelPhaseExitConfirm === 'function') cancelPhaseExitConfirm();
+    } else if (typeof showPhaseExitConfirm === 'function') {
+      showPhaseExitConfirm();
+    }
+    return;
+  }
+  const modalShopEl = $('modal-shop');
+  if (modalShopEl && !modalShopEl.classList.contains('hidden')) {
+    if (typeof isShopConfirmOpen === 'function' && isShopConfirmOpen()) {
+      if (typeof cancelShopExitConfirm === 'function') cancelShopExitConfirm();
+    } else if (typeof showShopExitConfirm === 'function') {
+      showShopExitConfirm();
+    }
     return;
   }
 
@@ -1054,10 +1130,25 @@ document.addEventListener('keydown', e => {
     }
   }
 
-  // If Phase Complete modal is open, Enter advances to next phase and ESC returns to main menu
+  // If Phase Complete modal is open, Enter advances to next phase and ESC asks confirmation
   const modalPhaseEl = $('modal-phase');
-  const isPhaseModalOpen = (modalPhaseEl && !modalPhaseEl.classList.contains('hidden')) || state.phaseComplete;
+  const isPhaseModalOpen = modalPhaseEl && !modalPhaseEl.classList.contains('hidden');
   if (isPhaseModalOpen) {
+    const isConfirmOpen = (typeof isPhaseConfirmOpen === 'function') && isPhaseConfirmOpen();
+    if (isConfirmOpen) {
+      if (e.key === 'Escape' || e.code === 'Escape') {
+        e.preventDefault();
+        if (typeof cancelPhaseExitConfirm === 'function') cancelPhaseExitConfirm();
+        return;
+      }
+      if (e.key === 'Enter' || e.code === 'Enter' || e.code === 'NumpadEnter') {
+        e.preventDefault();
+        if (typeof executePhaseExitToMainMenu === 'function') executePhaseExitToMainMenu();
+        return;
+      }
+      return;
+    }
+
     if (e.key === 'Enter' || e.code === 'Enter' || e.code === 'NumpadEnter') {
       e.preventDefault();
       continueToNextPhase();
@@ -1065,13 +1156,65 @@ document.addEventListener('keydown', e => {
     }
     if (e.key === 'Escape' || e.code === 'Escape') {
       e.preventDefault();
-      if (state.gameMode === 'training') {
-        exitTrainingToMenu();
-      } else {
-        exitPhaseToMainMenu();
+      if (typeof showPhaseExitConfirm === 'function') showPhaseExitConfirm();
+      return;
+    }
+    return;
+  }
+
+  // If Shop modal is open, handle keyboard navigation, buy/close, or ESC confirmation
+  const modalShopEl = $('modal-shop');
+  const isShopModalOpen = (typeof isShopOpen === 'function') ? isShopOpen() : (modalShopEl && !modalShopEl.classList.contains('hidden'));
+  if (isShopModalOpen) {
+    const isConfirmOpen = (typeof isShopConfirmOpen === 'function') && isShopConfirmOpen();
+    if (isConfirmOpen) {
+      if (e.key === 'Escape' || e.code === 'Escape') {
+        e.preventDefault();
+        if (typeof cancelShopExitConfirm === 'function') cancelShopExitConfirm();
+        return;
+      }
+      if (e.key === 'Enter' || e.code === 'Enter' || e.code === 'NumpadEnter') {
+        e.preventDefault();
+        if (typeof confirmShopExit === 'function') confirmShopExit();
+        return;
       }
       return;
     }
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (typeof navigateShop === 'function') navigateShop('down');
+      return;
+    }
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (typeof navigateShop === 'function') navigateShop('up');
+      return;
+    }
+
+    if (e.key === 'Enter' || e.code === 'Enter' || e.code === 'NumpadEnter') {
+      e.preventDefault();
+      if (state.selectedShopIndex !== undefined && state.selectedShopIndex >= 0) {
+        if (typeof buySelectedShopItem === 'function') buySelectedShopItem();
+      } else {
+        if (typeof closeShop === 'function') closeShop();
+      }
+      return;
+    }
+
+    if (e.key === 'Escape' || e.code === 'Escape') {
+      e.preventDefault();
+      if (state.selectedShopIndex !== undefined && state.selectedShopIndex >= 0) {
+        state.selectedShopIndex = -1;
+        if (typeof updateShopSelectionVisual === 'function') updateShopSelectionVisual();
+      } else {
+        if (typeof showShopExitConfirm === 'function') showShopExitConfirm();
+      }
+      return;
+    }
+
+    // Intercept ANY other key while shop is open to prevent background typing or accidental interactions
+    e.preventDefault();
     return;
   }
 
@@ -1133,6 +1276,10 @@ gameArea?.addEventListener('touchstart', () => {
 }, { passive: true });
 
 hiddenInput?.addEventListener('input', () => {
+  if (state.paused || state.phaseComplete || (typeof isShopOpen === 'function' && isShopOpen())) {
+    hiddenInput.value = '';
+    return;
+  }
   const val = hiddenInput.value;
   if (val) {
     const char = val.slice(-1).toUpperCase();
@@ -1147,6 +1294,10 @@ hiddenInput?.addEventListener('input', () => {
 // 6. MATCHING & COMPLETION
 // ============================================================
 function handleLetterTyped(char) {
+  if (state.paused || state.phaseComplete || (typeof isShopOpen === 'function' && isShopOpen())) {
+    state.typedBuffer = '';
+    return;
+  }
   // Boss Battle dedicated typing logic
   if (state.bossBattle && state.bossBattle.active) {
     handleBossLetterTyped(char);
@@ -1902,7 +2053,7 @@ function grantRewardSkill(skill) {
 function continueAfterBossVictory() {
   hideBossHud();
   state.phaseComplete = false;
-  state.paused = false;
+  state.paused = true;
   const completedPhase = state.phase;
   state.phase++;
 

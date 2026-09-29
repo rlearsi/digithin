@@ -284,7 +284,7 @@
       <!-- RIGHT SIDEBAR: Skills -->
       <div id="side-right">
         <div class="side-card flex-grow">
-          <div class="side-title" data-i18n="hud_spells">SPELLS</div>
+          <div class="side-title" data-i18n="hud_spells">SKILLS</div>
           <div id="skills-container">
             <div class="empty-hint" data-i18n="hud_spells_hint">Buy in shop<br/>or complete words <strong>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle">
@@ -406,35 +406,68 @@
 
   <!-- ===== MODAL: Phase complete ===== -->
   <div id="modal-phase" class="modal hidden">
-    <div class="modal-box">
-      <div class="modal-emoji" id="phase-emoji">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"/>
-          <circle cx="12" cy="12" r="6"/>
-          <circle cx="12" cy="12" r="2"/>
-        </svg>
-      </div>
-      <div id="phase-rank-wrap" class="phase-rank-wrap">
-        <span class="phase-rank-label" data-i18n="modal_performance">PERFORMANCE:</span>
-        <span id="phase-rank-badge" class="phase-rank-badge rank-s">RANK S</span>
-      </div>
-      <h2 id="modal-phase-h">Phase 1 Complete!</h2>
-      <div class="modal-stats" id="modal-phase-stats"></div>
-      <div id="section-words" class="modal-section">
-        <div class="modal-section-lbl" data-i18n="modal_unlocked_words">Unlocked words</div>
-        <div id="unlocked-words-row"></div>
-      </div>
-      <div class="modal-phase-actions">
-        <button id="btn-next-phase" class="btn-primary" onclick="continueToNextPhase()">
-          <span data-i18n="modal_btn_next_phase">Next Phase →</span>
-        </button>
-        <button id="btn-phase-back-training" class="btn-secondary hidden" style="display: none;" onclick="exitTrainingToMenu()">
-          <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+    <div class="modal-box" id="modal-phase-box">
+      <!-- Main Phase Complete View -->
+      <div id="phase-main-view">
+        <div class="modal-emoji" id="phase-emoji">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <circle cx="12" cy="12" r="6"/>
+            <circle cx="12" cy="12" r="2"/>
           </svg>
-          <span data-i18n="modal_btn_back_training">Back to Training Menu</span>
-        </button>
+        </div>
+        <div id="phase-rank-wrap" class="phase-rank-wrap">
+          <span class="phase-rank-label" data-i18n="modal_performance">PERFORMANCE:</span>
+          <span id="phase-rank-badge" class="phase-rank-badge rank-s">RANK S</span>
+        </div>
+        <h2 id="modal-phase-h">Phase 1 Complete!</h2>
+        <div class="modal-stats" id="modal-phase-stats"></div>
+        <div id="section-words" class="modal-section">
+          <div class="modal-section-lbl" data-i18n="modal_unlocked_words">Unlocked words</div>
+          <div id="unlocked-words-row"></div>
+        </div>
+        <div class="modal-phase-actions">
+          <button id="btn-next-phase" class="btn-primary" onclick="continueToNextPhase()">
+            <span data-i18n="modal_btn_next_phase">Next Phase →</span>
+          </button>
+          <button id="btn-phase-back-training" class="btn-secondary hidden" style="display: none;" onclick="exitTrainingToMenu()">
+            <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+            <span data-i18n="modal_btn_back_training">Back to Training Menu</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Phase Exit Confirmation View (Matches Imagem 3) -->
+      <div id="phase-confirm-view" class="pause-view hidden">
+        <div class="pause-confirm-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <h2 class="pause-confirm-title" data-i18n="confirm_exit_title">Return to Main Menu?</h2>
+        <p class="pause-confirm-desc" data-i18n="confirm_exit_to_menu">Are you sure you want to quit the current game and return to the Main Menu? All progress in this phase will be lost.</p>
+
+        <div class="pause-actions">
+          <button class="btn-secondary" onclick="cancelPhaseExitConfirm()" style="width: 100%;">
+            <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7 4.5v15a1 1 0 0 0 1.54.84l12-7.5a1 1 0 0 0 0-1.68l-12-7.5A1 1 0 0 0 7 4.5z"/>
+            </svg>
+            <span data-i18n="confirm_exit_cancel">Continuar Jogando</span>
+          </button>
+          <button class="btn-danger-confirm" onclick="executePhaseExitToMainMenu()">
+            <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            <span data-i18n="confirm_exit_confirm">Sim, Voltar ao Menu</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -442,37 +475,83 @@
   <!-- ===== MODAL: Shop ===== -->
   <div id="modal-shop" class="modal hidden">
     <div class="modal-box modal-shop-box">
-      <div class="modal-head-simple">
-        <div class="modal-head-icon">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="8" cy="21" r="1"/>
-            <circle cx="19" cy="21" r="1"/>
-            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+      <!-- Main Shop View -->
+      <div id="shop-main-view">
+        <div class="modal-head-simple">
+          <div class="modal-head-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="8" cy="21" r="1"/>
+              <circle cx="19" cy="21" r="1"/>
+              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>
+            </svg>
+          </div>
+          <div>
+            <h2 data-i18n="shop_title">Skill Shop</h2>
+            <p class="modal-sub" data-i18n="shop_sub">Upgrade your skills for upcoming phases</p>
+          </div>
+        </div>
+        <div class="shop-balance-card">
+          <div id="shop-feedback-msg" class="shop-feedback-msg hidden" aria-live="polite">
+            <span class="shop-feedback-icon">
+              <svg class="sfb-icon-warn" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="8" x2="12" y2="12"/>
+                <line x1="12" y1="16" x2="12.01" y2="16"/>
+              </svg>
+              <svg class="sfb-icon-success hidden" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="9 12 12 15 17 9"/>
+              </svg>
+            </span>
+            <span class="shop-feedback-text"></span>
+          </div>
+          <div class="shop-balance-wrap">
+            <span class="sbc-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 7v10M9 9h6a2 2 0 0 1 0 4H9a2 2 0 0 0 0 4h6"/>
+              </svg>
+            </span>
+            <strong id="shop-balance" class="sbc-val">0000000000</strong>
+          </div>
+        </div>
+        <div id="shop-items-grid"></div>
+        <button class="btn-primary btn-shop-close" onclick="closeShop()">
+          <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          <span data-i18n="shop_btn_continue">Continue Playing</span>
+        </button>
+      </div>
+
+      <!-- Shop Exit Confirmation View (Matches Imagem 3) -->
+      <div id="shop-confirm-view" class="pause-view hidden">
+        <div class="pause-confirm-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
           </svg>
         </div>
-        <div>
-          <h2 data-i18n="shop_title">Magic Shop</h2>
-          <p class="modal-sub" data-i18n="shop_sub">Upgrade your skills for upcoming phases</p>
-        </div>
-      </div>
-      <div class="shop-balance-card">
-        <div class="shop-balance-wrap">
-          <span class="sbc-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="9"/>
-              <path d="M12 7v10M9 9h6a2 2 0 0 1 0 4H9a2 2 0 0 0 0 4h6"/>
+        <h2 class="pause-confirm-title" data-i18n="shop_confirm_exit_title">Leave the Shop?</h2>
+        <p id="shop-confirm-desc" class="pause-confirm-desc" data-i18n="shop_confirm_exit_desc">Are you sure you want to leave the shop?</p>
+        <div class="pause-actions">
+          <button class="btn-secondary" onclick="cancelShopExitConfirm()" style="width: 100%;">
+            <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M7 4.5v15a1 1 0 0 0 1.54.84l12-7.5a1 1 0 0 0 0-1.68l-12-7.5A1 1 0 0 0 7 4.5z"/>
             </svg>
-          </span>
-          <strong id="shop-balance" class="sbc-val">0000000000</strong>
+            <span data-i18n="shop_confirm_stay">Stay in Shop</span>
+          </button>
+          <button class="btn-danger-confirm" onclick="confirmShopExit()" style="width: 100%;">
+            <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            <span data-i18n="shop_confirm_leave">Return to Main Menu</span>
+          </button>
         </div>
       </div>
-      <div id="shop-items-grid"></div>
-      <button class="btn-primary btn-shop-close" onclick="closeShop()">
-        <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-          <polygon points="5 3 19 12 5 21 5 3"/>
-        </svg>
-        <span data-i18n="shop_btn_continue">Continue Playing</span>
-      </button>
     </div>
   </div>
 

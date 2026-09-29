@@ -98,6 +98,8 @@ function defaultState() {
     activeTimers:      {},      // { freezer: ms, bomb: ms, shield: ms, vortex: ms, slowdown: ms, haste: ms }
     vortexAccum:       0,       // Tracks 2-second interval for vortex effect
     shopPurchaseCount: 0,
+    currentShopPurchases: 0,
+    selectedShopIndex: -1,
     currentShopItems:  [],
     idCounter:         0,
     combo:             0,       // Consecutive correct hits streak

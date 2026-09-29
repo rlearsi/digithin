@@ -40,7 +40,7 @@ window.TRANSLATIONS.fr = {
   hud_wpm: 'MPM',
   hud_combo: 'COMBO',
   hud_upcoming: 'À VENIR',
-  hud_spells: 'SORTS',
+  hud_spells: 'COMPÉTENCES',
   hud_active: 'ACTIF',
   hud_sec: 's',
 
@@ -86,13 +86,18 @@ window.TRANSLATIONS.fr = {
   victory_desc: 'Félicitations, vous maîtrisez désormais le clavier runique !',
   victory_play_again: 'Rejouer',
 
-  shop_title: 'Boutique de Magie',
+  shop_title: 'Boutique de Compétences',
   shop_sub: 'Améliorez vos compétences pour les prochaines étapes',
   shop_points: 'Vos Points :',
   shop_btn_buy: 'Acheter',
   shop_btn_owned: 'Possédé',
   shop_available: 'Disponible',
   shop_btn_close: 'Fermer',
+  shop_confirm_exit_title: 'Quitter la boutique ?',
+  shop_confirm_exit_desc: 'Êtes-vous sûr de vouloir quitter la boutique ?',
+  shop_confirm_stay: 'Rester dans la boutique',
+  shop_confirm_leave: 'Retour au menu principal',
+  shop_insufficient_pts: 'Points insuffisants !',
 
   skill_name_freezer: 'Gel',
   skill_desc_freezer: 'Gèle tous les runiques sur la piste pendant 10s',

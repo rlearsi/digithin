@@ -40,7 +40,7 @@ window.TRANSLATIONS.de = {
   hud_wpm: 'WPM',
   hud_combo: 'COMBO',
   hud_upcoming: 'NÄCHSTE',
-  hud_spells: 'ZAUBER',
+  hud_spells: 'FERTIGKEITEN',
   hud_active: 'AKTIV',
   hud_sec: 's',
 
@@ -86,13 +86,18 @@ window.TRANSLATIONS.de = {
   victory_desc: 'Glückwunsch! Du hast die Runentastatur gemeistert!',
   victory_play_again: 'Erneut spielen',
 
-  shop_title: 'Zauberladen',
+  shop_title: 'Fertigkeitenladen',
   shop_sub: 'Verbessere deine Fähigkeiten für die nächsten Phasen',
   shop_points: 'Deine Punkte:',
   shop_btn_buy: 'Kaufen',
   shop_btn_owned: 'Gekauft',
   shop_available: 'Verfügbar',
   shop_btn_close: 'Schließen',
+  shop_confirm_exit_title: 'Laden verlassen?',
+  shop_confirm_exit_desc: 'Bist du sicher, dass du den Laden verlassen möchtest?',
+  shop_confirm_stay: 'Im Laden bleiben',
+  shop_confirm_leave: 'Zurück zum Hauptmenü',
+  shop_insufficient_pts: 'Nicht genug Punkte!',
 
   skill_name_freezer: 'Einfrieren',
   skill_desc_freezer: 'Friert alle Runen auf der Bahn für 10s ein',

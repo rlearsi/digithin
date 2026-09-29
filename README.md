@@ -1,6 +1,6 @@
 # ⌨️ Digitinho — Jogo de Digitação Arcade
 
-> **Digitinho** é um jogo de digitação arcade moderno, dinâmico e polido construído em **HTML5**, **CSS3 Vanilla** e **JavaScript modular**. Rúnicos (letras, sílabas e palavras) caem em uma coluna inspirada em Tetris enquanto o jogador digita velozmente para acumular pontos, subir de fase, desbloquear palavras em sua Biblioteca e adquirir magias arcanas na Loja de Habilidades.
+> **Digitinho** é um jogo de digitação arcade moderno, dinâmico e polido construído em **HTML5**, **CSS3 Vanilla** e **JavaScript modular**. Rúnicos (letras, sílabas e palavras) caem em uma coluna inspirada em Tetris enquanto o jogador digita velozmente para acumular pontos, subir de fase, desbloquear palavras em sua Biblioteca e adquirir habilidades arcanas na Loja de Habilidades.
 
 ---
 
@@ -12,7 +12,7 @@
   - [3.2 Sistema de Fases e Progressão](#32-sistema-de-fases-e-progressão)
   - [3.3 Sistema de Pontuação Dupla e Penalidades](#33-sistema-de-pontuação-dupla-e-penalidades)
   - [3.4 Vida e Condição de Derrota](#34-vida-e-condição-de-derrota)
-- [4. Sistema de Habilidades e Magias](#4-sistema-de-habilidades-e-magias)
+- [4. Sistema de Habilidades](#4-sistema-de-habilidades)
 - [5. Loja de Habilidades e Economia](#5-loja-de-habilidades-e-economia)
 - [6. Biblioteca de Palavras (Bestiário)](#6-biblioteca-de-palavras-bestiário)
 - [7. Design, UI e Experiência do Jogador](#7-design-ui-e-experiência-do-jogador)
@@ -53,7 +53,7 @@ digitinho/
     ├── audio.js          # Síntese Web Audio API (hit, word, boom, erro, vida, etc.)
     ├── data.js           # Constantes (CFG), tabelas de dados, palavras e habilidades
     ├── state.js          # Definição do estado global e geradores pseudo-aleatórios
-    ├── ui.js             # Atualizações de HUD, slots de magias, fila e partículas
+    ├── ui.js             # Atualizações de HUD, slots de habilidades, fila e partículas
     ├── shop.js           # Mecânica da loja, cálculo exponencial e compra de itens
     └── library.js        # Bestiário de palavras (descobertas e bloqueadas)
 ```
@@ -71,9 +71,8 @@ digitinho/
 | **css/modals.css** | Camadas de overlay de vidro fosco (`blur(30px)`), modais de loja, biblioteca, pausa e tela de vitória. |
 | **css/responsive.css** | Ajustes adaptativos para dispositivos e resoluções compactas. |
 | **game.js** | Loop principal `requestAnimationFrame`, captura de teclas no evento `keydown`, algoritmo de digitação por prefixo, detecção de erros e acionamento de habilidades. |
-| **game.js** | Loop principal `requestAnimationFrame`, captura de teclas no evento `keydown`, algoritmo de digitação por prefixo, detecção de erros e acionamento de habilidades. |
 | **js/audio.js** | Sintetizador de ondas sonoras (senoidal, dente de serra, triângulo e ruído branco) para respostas táteis e imediatas sem latência de rede. |
-| **js/data.js** | Dicionário de 30 palavras divididas por categorias temáticas, 50 sílabas, palavras coringa, lista de magias e regra de metas de fase (`calcPhaseGoal`). |
+| **js/data.js** | Dicionário de 30 palavras divididas por categorias temáticas, 50 sílabas, palavras coringa, lista de habilidades e regra de metas de fase (`calcPhaseGoal`). |
 | **js/state.js** | Inicializador `defaultState()` garantindo estado previsível para novas partidas ou resets, além de funções auxiliares como `pick()`, `shuffle()` e `uid()`. |
 | **js/ui.js** | Atualização dos elementos de tela, slots de habilidades sem cortes de badge, barra de fila (`PRÓXIMOS`) e efeitos de partículas direcionais. |
 | **js/shop.js** | Geração de catálogo aleatório (3 itens), cálculo de custo com fator de escala exponencial `1.45` e entrega de habilidades ou palavras secretas. |
@@ -91,7 +90,7 @@ Os itens que caem do topo da tela são denominados **Rúnicos**. Suas cores de f
 | **Letra** | ❄️ **Fria (Gélida)** | `A`, `B`, `K` | **1 ponto** | Círculo azul real (`#2563EB`) de 44px com texto branco |
 | **Sílaba** | 🌿 **Temperada (Fresca)** | `CA`, `PRA`, `VI` | **3 pontos** | Pílula verde esmeralda (`#059669`) |
 | **Palavra** | ☀️ **Quente (Solar)** | `GATO`, `VULCAO` | **3 pts × letras** (ex: GATO = 12pts) | Pílula âmbar dourado (`#D97706`) |
-| **Palavra com Magia** | ⚡ **Incandescente (Plasma)** | `ESTRELA ⚡` | Pontuação da palavra + **Habilidade Arcana** | Pílula magenta radiante (`#D946EF`), aura estelar e badge de raio `⚡` |
+| **Palavra com Habilidade** | ⚡ **Incandescente (Plasma)** | `ESTRELA ⚡` | Pontuação da palavra + **Habilidade Arcana** | Pílula magenta radiante (`#D946EF`), aura estelar e badge de raio `⚡` |
 | **Palavra Coringa** | 💥 **Cósmica / Caos** | `BOOM`, `BANG`, `NOVA` | **10 pts base + Pontos da tela toda** | Pílula violeta (`#8B5CF6`) e badge `💥` |
 | **🚨 Estado de Perigo** | 🔥 **Alarme Crítico** | Qualquer rúnico próximo ao fundo | — | Transforma-se em vermelho alerta vivo (`#DC2626`) com pulso luminoso (`animation: dangerPulse`) |
 
@@ -180,13 +179,13 @@ A cada 10 fases da jornada (fases 10, 20, 30, 40, 50, 60…), o fluxo normal de 
 1. **Entrada Triunfal:** O chefão surge flutuando no topo da arena com avatar vetorial em SVG animado, halo luminoso personalizado na cor do seu bioma e medidor arcade de **Pontos de Vida: `|||`**.
 2. **Caixa de Enigma Descendente (`.boss-meaning-box`):** Em vez de rúnicos soltos, o jogador enfrenta uma caixa translúcida de vidro fosco que desce suavemente exibindo o significado e a quantidade de letras da palavra secreta contextualizada ao cenário do boss.
 3. **Golpes Críticos:** Ao deduzir o significado e digitar corretamente todas as letras da palavra no teclado antes da caixa tocar o fundo, o jogador desfere um impacto devastador que arranca 1 vida do chefão (`|||` $\to$ `||` $\to$ `|` $\to$ Derrota).
-4. **Recompensas de Vitória:** Ao zerar os 3 pontos de vida do Guardião, uma chuva de confetes comemora o feito e o jogador escolhe gratuitamente 1 entre 3 magias ou itens especiais de premiação para fortalecer sua jornada.
+4. **Recompensas de Vitória:** Ao zerar os 3 pontos de vida do Guardião, uma chuva de confetes comemora o feito e o jogador escolhe gratuitamente 1 entre 3 habilidades ou itens especiais de premiação para fortalecer sua jornada.
 
-## 4. Sistema de Habilidades e Magias
+## 4. Sistema de Habilidades
 
 As habilidades podem ser acumuladas na stack do HUD (`×1`, `×2`...) e ativadas a qualquer momento de duas formas intuitivas:
 - **Atalhos Numéricos:** Pressionando as teclas numéricas <kbd>1</kbd> a <kbd>8</kbd> no teclado (suporte a até 8 habilidades ativáveis no inventário).
-- **Clique com o Mouse:** Clicando diretamente sobre a pílula da habilidade no painel lateral de Magias.
+- **Clique com o Mouse:** Clicando diretamente sobre a pílula da habilidade no painel lateral de Habilidades.
 
 ### Monitoramento de Duração Ativa no HUD
 Ao ser acionada, a habilidade **não é removida de imediato** da lista:
@@ -194,7 +193,7 @@ Ao ser acionada, a habilidade **não é removida de imediato** da lista:
 - Uma **barra de progresso luminosa** (`.sp-active-bar`) na base do card retrai suavemente a 60fps acompanhando a duração restante.
 - A pílula é removida da stack apenas quando o tempo expira ou caso o efeito seja cancelado prematuramente (ex.: término antecipado do Freezer por limpeza total da tela).
 
-| Ícone | Magia | Tecla | Duração | Descrição do Efeito |
+| Ícone | Habilidade | Tecla | Duração | Descrição do Efeito |
 |:---:|:---|:---:|:---:|:---|
 | ❄️ | **Freezer** | <kbd>1</kbd>–<kbd>8</kbd> | 10s | Congela todos os rúnicos na tela impedindo sua descida. **Auto-cancelamento inteligente:** se o jogador limpar todos os rúnicos antes dos 10s, o gelo desativa automaticamente. |
 | 💣 | **Bomb** | <kbd>1</kbd>–<kbd>8</kbd> | 10s | Durante 10 segundos, cada letra, sílaba ou palavra completada gera uma **onda de choque em área** que destrói todos os rúnicos próximos e absorve seus pontos (quanto maior a palavra, maior o raio de explosão: 5 letras = 5 linhas, 10 letras = 10 linhas!). |
@@ -215,9 +214,9 @@ A **primeira Loja de Habilidades** se abre após a **fase 5** ser concluída, e 
 - **Inflação Exponencial:** A cada compra realizada, o preço de todos os itens subsequentes aumenta exponencialmente:
   $$\text{Preço Final} = \lceil \text{Preço Base} \times 1.45^{\text{Compras Realizadas}} \rceil$$
 
-### Itens e Magias Disponíveis na Loja
+### Itens e Habilidades Disponíveis na Loja
 
-#### 1. Magias Arcanas Ativáveis (8 Habilidades — Ocupam Slots 1–8 no HUD)
+#### 1. Habilidades Arcanas Ativáveis (8 Habilidades — Ocupam Slots 1–8 no HUD)
 - ❄️ **Freezer (300 pts / 10s):** Congela a esteira inteira impedindo a descida.
 - 💣 **Bomb (450 pts / 10s):** Explosão em área com escala por tamanho do vocábulo digitado.
 - 🛡️ **Imunidade (390 pts / 10s):** Escudo protetor contra danos e erros de digitação.
@@ -227,7 +226,7 @@ A **primeira Loja de Habilidades** se abre após a **fase 5** ser concluída, e 
 - 🔒 **Trava Velocidade (540 pts / 60s):** Trava a esteira em 1.0× por 1 minuto.
 - 🌌 **Espaçamento (480 pts / 45s):** Amplia a distância vertical e intervalo entre vocábulos por 45s.
 
-#### 2. Itens de Consumo Imediato e Uso Especial (3 Itens — Não Ocupam Slots de Magia)
+#### 2. Itens de Consumo Imediato e Uso Especial (3 Itens — Não Ocupam Slots de Habilidade)
 - 🪙 **Ficha Continue (900 pts):** Não é acionável durante a fase. Ao sofrer Game Over (perda de todas as vidas), permite reviver imediatamente na mesma fase mantendo pontuação e progresso acumulados.
 - 📦 **Pacote Misterioso (330 pts):** Consumível imediato de catálogo. Ao comprar, é consumido no mesmo instante, sorteando e desbloqueando instantaneamente 3 palavras secretas para o acervo da Biblioteca.
 - ❤️ **+1 Vida (600 pts):** Adiciona imediatamente +1 vida permanente para a reserva da partida atual (elevando o limite máximo até o teto de 6 vidas). Não se acumula em slots numéricos.

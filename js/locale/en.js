@@ -40,7 +40,7 @@ window.TRANSLATIONS.en = {
   hud_wpm: 'WPM',
   hud_combo: 'COMBO',
   hud_upcoming: 'UPCOMING',
-  hud_spells: 'SPELLS',
+  hud_spells: 'SKILLS',
   hud_active: 'ACTIVE',
   hud_sec: 's',
 
@@ -86,13 +86,18 @@ window.TRANSLATIONS.en = {
   victory_desc: 'Congratulations, you have mastered the runic keyboard!',
   victory_play_again: 'Play Again',
 
-  shop_title: 'Magic Shop',
+  shop_title: 'Skill Shop',
   shop_sub: 'Upgrade your skills for upcoming phases',
   shop_points: 'Your Points:',
   shop_btn_buy: 'Buy',
   shop_btn_owned: 'Purchased',
   shop_available: 'Available',
   shop_btn_close: 'Close',
+  shop_confirm_exit_title: 'Leave the Shop?',
+  shop_confirm_exit_desc: 'Are you sure you want to leave the shop?',
+  shop_confirm_stay: 'Stay in Shop',
+  shop_confirm_leave: 'Return to Main Menu',
+  shop_insufficient_pts: 'Not enough points!',
 
   skill_name_freezer: 'Freeze',
   skill_desc_freezer: 'Freezes all falling runics on the track for 10s',

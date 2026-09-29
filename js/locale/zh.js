@@ -40,7 +40,7 @@ window.TRANSLATIONS.zh = {
   hud_wpm: 'WPM',
   hud_combo: '连击',
   hud_upcoming: '下一个',
-  hud_spells: '法术',
+  hud_spells: '技能',
   hud_active: '已激活',
   hud_sec: '秒',
 
@@ -86,13 +86,18 @@ window.TRANSLATIONS.zh = {
   victory_desc: '恭喜你，你已经完全掌握了符文键盘！',
   victory_play_again: '再次游玩',
 
-  shop_title: '魔法商店',
+  shop_title: '技能商店',
   shop_sub: '为接下来的关卡升级你的技能',
   shop_points: '你的点数：',
   shop_btn_buy: '购买',
   shop_btn_owned: '已购买',
   shop_available: '可购买',
   shop_btn_close: '关闭',
+  shop_confirm_exit_title: '离开商店？',
+  shop_confirm_exit_desc: '确定要离开商店吗？',
+  shop_confirm_stay: '留在商店',
+  shop_confirm_leave: '返回主菜单',
+  shop_insufficient_pts: '点数不足！',
 
   skill_name_freezer: '冰冻',
   skill_desc_freezer: '冻结轨道上的所有符文10秒',
