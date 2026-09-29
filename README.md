@@ -195,7 +195,7 @@ Ao ser acionada, a habilidade **não é removida de imediato** da lista:
 
 | Ícone | Habilidade | Tecla | Duração | Descrição do Efeito |
 |:---:|:---|:---:|:---:|:---|
-| ❄️ | **Freezer** | <kbd>1</kbd>–<kbd>8</kbd> | 10s | Congela todos os rúnicos na tela impedindo sua descida. **Auto-cancelamento inteligente:** se o jogador limpar todos os rúnicos antes dos 10s, o gelo desativa automaticamente. |
+| ❄️ | **Freezer** | <kbd>1</kbd>–<kbd>8</kbd> | 10s | Congela todos os rúnicos na tela impedindo sua descida (com limite de até no máximo 3 rúnicos simultâneos em tela durante o congelamento). **Auto-cancelamento inteligente:** se o jogador limpar todos os rúnicos antes dos 10s, o gelo desativa automaticamente. |
 | 💣 | **Bomb** | <kbd>1</kbd>–<kbd>8</kbd> | 10s | Durante 10 segundos, cada letra, sílaba ou palavra completada gera uma **onda de choque em área** que destrói todos os rúnicos próximos e absorve seus pontos (quanto maior a palavra, maior o raio de explosão: 5 letras = 5 linhas, 10 letras = 10 linhas!). |
 | 🛡️ | **Imunidade** | <kbd>1</kbd>–<kbd>8</kbd> | 10s | Cria uma barreira de energia rúnica: rúnicos que caem **não tiram vidas**, e erros cometidos no teclado **não descontam pontos nem quebram o combo**. |
 | 🌀 | **Vórtice** | <kbd>1</kbd>–<kbd>8</kbd> | 10s | A cada **2 segundos**, o Vórtice consome automaticamente 1 rúnico em queda na esteira concedendo seus pontos integrais. **Proteção de foco:** nunca consome o que o jogador já começou a digitar. |

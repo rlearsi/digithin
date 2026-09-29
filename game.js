@@ -901,6 +901,15 @@ function scheduleSpawn() {
 }
 
 function spawnItem() {
+  const isFrozen = (state.activeTimers?.freezer || 0) > 0;
+  if (isFrozen) {
+    const activeCount = state.activeItems.filter(i => !i.removing).length;
+    const maxFrozen = (typeof CFG !== 'undefined' && CFG.freezerMaxItems) ? CFG.freezerMaxItems : 3;
+    if (activeCount >= maxFrozen) {
+      return false;
+    }
+  }
+
   refillQueue();
   const next = state.spawnQueue.shift();
   refillQueue();
@@ -944,7 +953,32 @@ function spawnItem() {
   const itemW = el.offsetWidth || 60;
   const minX  = CFG.padX;
   const maxX  = Math.max(minX, boardW - itemW - CFG.padX);
-  const posX  = rand(minX, maxX);
+  let posX    = rand(minX, maxX);
+
+  // Evita sobreposição horizontal com itens próximos ao topo (ex.: congelados em y = 0)
+  const nearTopItems = state.activeItems.filter(i => !i.removing && i.y < 50);
+  if (nearTopItems.length > 0) {
+    let bestX = posX;
+    let bestMinDist = -1;
+    for (let attempt = 0; attempt < 12; attempt++) {
+      const candidateX = rand(minX, maxX);
+      let minDist = Infinity;
+      for (const other of nearTopItems) {
+        const d = Math.abs(candidateX - other.x);
+        if (d < minDist) minDist = d;
+      }
+      if (minDist >= itemW + 12) {
+        bestX = candidateX;
+        break;
+      }
+      if (minDist > bestMinDist) {
+        bestMinDist = minDist;
+        bestX = candidateX;
+      }
+    }
+    posX = bestX;
+  }
+
   el.style.left = posX + 'px';
 
   const itemObj = {
@@ -960,6 +994,7 @@ function spawnItem() {
   };
 
   state.activeItems.push(itemObj);
+  return true;
 }
 
 // ============================================================

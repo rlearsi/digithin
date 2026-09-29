@@ -14,6 +14,7 @@ const CFG = {
   spawnBase: 2100,
   spawnMin: 500,
   spawnVariance: 650,
+  freezerMaxItems: 3, // Limite máximo de rúnicos simultâneos na tela com Freezer ativo
   padX: 14,
   progressPenalty: 3,
   startLives: 3,
