@@ -62,6 +62,7 @@ digitinho/
     ├── skills.js         # Acionamento de habilidades ativas, explosões de bomba, vórtex e coringas
     ├── boss.js           # Batalhas de chefões, validação de vocabulário, caixa de enigmas e recompensas
     ├── pause.js          # Controle de pausa/retomada, contagem 3-2-1 e modais de saída
+    ├── phase.js          # Progressão de fases, tela de vitória, resumo didático e recordes
     └── input.js          # Captura e roteamento de teclado, foco touch mobile e auto-pausa
 ```
 
@@ -90,6 +91,7 @@ digitinho/
 | **js/skills.js** | Execução de habilidades mágicas (congelamento, bomba em área, vórtex devorador, coringa, escudo e lentidão) e gerenciamento de expiração. |
 | **js/boss.js** | Ciclo completo dos chefões a cada 10 fases, validação temática de vocabulário aprendido, caixa de enigmas a 0.5x e concessão de habilidades raras. |
 | **js/pause.js** | Gerenciamento de pausa/retomada de partida, contagem regressiva interativa "3, 2, 1" e telas de confirmação de saída. |
+| **js/phase.js** | Transições de fase (`beginPhase`), verificação de meta (`checkPhaseComplete`), tela de vitória, resumo do Modo Treinamento e cálculo de recordes. |
 | **js/input.js** | Roteamento centralizado de atalhos de teclado (Escape, Enter, números 1-8, digitação), foco mobile touch e auto-pausa por perda de foco. |
 
 ---
