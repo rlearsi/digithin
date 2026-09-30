@@ -39,7 +39,7 @@ A base de código foi completamente desacoplada em módulos de responsabilidade 
 digitinho/
 ├── index.html            # Estrutura do jogo, HUD, modais e scripts
 ├── style.css             # Agregador mestre (@import) dos submódulos de estilo
-├── game.js               # Orquestrador principal: loop, colisão, matching e input
+├── game.js               # Orquestrador central: ciclo de jogo, loop RAF e matching de digitação
 ├── about.md              # Requisitos e brainstorm inicial
 ├── README.md             # Esta documentação completa do projeto
 ├── css/
@@ -50,12 +50,19 @@ digitinho/
 │   ├── modals.css        # Modais de pausa, vitória de fase, loja, biblioteca e game over
 │   └── responsive.css    # Media queries e adaptações para viewports menores
 └── js/
-    ├── audio.js          # Síntese Web Audio API (hit, word, boom, erro, vida, etc.)
-    ├── data.js           # Constantes (CFG), tabelas de dados, palavras e habilidades
+    ├── ambient.js        # Canvas de fundo dinâmico com malhas orbitais e relevo aeroespacial
+    ├── audio.js          # Síntese Web Audio API (hit, word, boom, erro, vida) e cliques mecânicos
+    ├── i18n.js           # Sistema de internacionalização (i18n) e carregador JSON multilíngue
+    ├── data.js           # Constantes (CFG), dicionários de palavras, habilidades e chefões
     ├── state.js          # Definição do estado global e geradores pseudo-aleatórios
-    ├── ui.js             # Atualizações de HUD, slots de habilidades, fila e partículas
-    ├── shop.js           # Mecânica da loja, cálculo exponencial e compra de itens
-    └── library.js        # Bestiário de palavras (descobertas e bloqueadas)
+    ├── ui.js             # Atualizações de HUD, modais translúcidos, fila e partículas
+    ├── shop.js           # Mecânica da loja, navegação por teclado e isolamento de tabuleiro
+    ├── library.js        # Bestiário de rúnicos descobertos e contadores de frequência
+    ├── spawner.js        # Motor de geração de rúnicos, esteira de fila e espaçamento anti-sobreposição
+    ├── skills.js         # Acionamento de habilidades ativas, explosões de bomba, vórtex e coringas
+    ├── boss.js           # Batalhas de chefões, validação de vocabulário, caixa de enigmas e recompensas
+    ├── pause.js          # Controle de pausa/retomada, contagem 3-2-1 e modais de saída
+    └── input.js          # Captura e roteamento de teclado, foco touch mobile e auto-pausa
 ```
 
 ### Detalhamento dos Módulos
@@ -70,13 +77,20 @@ digitinho/
 | **css/gameplay.css** | Estilização dos rúnicos circulares e em pílula, destaques de digitação, anéis de impacto e feitiços. |
 | **css/modals.css** | Camadas de overlay de vidro fosco (`blur(30px)`), modais de loja, biblioteca, pausa e tela de vitória. |
 | **css/responsive.css** | Ajustes adaptativos para dispositivos e resoluções compactas. |
-| **game.js** | Loop principal `requestAnimationFrame`, captura de teclas no evento `keydown`, algoritmo de digitação por prefixo, detecção de erros e acionamento de habilidades. |
+| **game.js** | Orquestrador central: ciclo de jogo (`startGame`, `restartGame`, `goToMainMenu`), loop `requestAnimationFrame`, limites de tela, penalidades e matching de prefixo. |
+| **js/ambient.js** | Renderização no canvas de orbs coloridos translúcidos, linhas topográficas aeroespaciais e partículas flutuantes. |
 | **js/audio.js** | Sintetizador de ondas sonoras (senoidal, dente de serra, triângulo e ruído branco) para respostas táteis e imediatas sem latência de rede. |
-| **js/data.js** | Dicionário de 30 palavras divididas por categorias temáticas, 50 sílabas, palavras coringa, lista de habilidades e regra de metas de fase (`calcPhaseGoal`). |
+| **js/i18n.js** | Sistema completo de internacionalização com detecção de idioma e carregamento assíncrono de dicionários JSON em 7 línguas. |
+| **js/data.js** | Dicionário multilíngue de palavras divididas por categorias temáticas, sílabas, habilidades e regras de pontuação. |
 | **js/state.js** | Inicializador `defaultState()` garantindo estado previsível para novas partidas ou resets, além de funções auxiliares como `pick()`, `shuffle()` e `uid()`. |
 | **js/ui.js** | Atualização dos elementos de tela, slots de habilidades sem cortes de badge, barra de fila (`PRÓXIMOS`) e efeitos de partículas direcionais. |
-| **js/shop.js** | Geração de catálogo aleatório (3 itens), cálculo de custo com fator de escala exponencial `1.45` e entrega de habilidades ou palavras secretas. |
+| **js/shop.js** | Geração de catálogo aleatório (3 itens), cálculo de custo exponencial, navegação via teclado e isolamento do tabuleiro. |
 | **js/library.js** | Visualização do Bestiário com contadores de descobertas e frequência de digitação, com pausamento automático do jogo em segundo plano. |
+| **js/spawner.js** | Motor de geração de rúnicos por tipo (letra, sílaba, palavra, coringa), alimentação da fila e distribuição horizontal sem sobreposição. |
+| **js/skills.js** | Execução de habilidades mágicas (congelamento, bomba em área, vórtex devorador, coringa, escudo e lentidão) e gerenciamento de expiração. |
+| **js/boss.js** | Ciclo completo dos chefões a cada 10 fases, validação temática de vocabulário aprendido, caixa de enigmas a 0.5x e concessão de habilidades raras. |
+| **js/pause.js** | Gerenciamento de pausa/retomada de partida, contagem regressiva interativa "3, 2, 1" e telas de confirmação de saída. |
+| **js/input.js** | Roteamento centralizado de atalhos de teclado (Escape, Enter, números 1-8, digitação), foco mobile touch e auto-pausa por perda de foco. |
 
 ---
 
