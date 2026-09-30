@@ -274,6 +274,7 @@
         "training_btn_next_lesson": "レッスン{lesson}へ進む（ルーン{runics}個） →",
         "fb_boss_defeated": "👑 {boss}を撃破！ +1,000 PTS！",
         "modal_phase_pts": "フェーズ獲得スコア",
+        "modal_acc_bonus": "正確度ボーナス ({acc}%)",
         "modal_penalty": "ミス（ペナルティ）",
         "modal_net_pts": "加算スコア",
         "modal_total_pts": "総合スコア",

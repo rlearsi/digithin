@@ -274,6 +274,7 @@
         "training_btn_next_lesson": "Avançar para Lição {lesson} ({runics} rúnicos) →",
         "fb_boss_defeated": "👑 {boss} DERROTADO! +1.000 PTS!",
         "modal_phase_pts": "Pontos Conquistados na Fase",
+        "modal_acc_bonus": "Bônus de Precisão ({acc}%)",
         "modal_penalty": "Erros (penalidade)",
         "modal_net_pts": "Soma Adicionada",
         "modal_total_pts": "Pontuação Total",

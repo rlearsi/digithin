@@ -274,6 +274,7 @@
         "training_btn_next_lesson": "레슨 {lesson}(으)로 이동 (룬 {runics}개) →",
         "fb_boss_defeated": "👑 {boss} 격퇴! +1,000 PTS!",
         "modal_phase_pts": "페이즈 획득 점수",
+        "modal_acc_bonus": "정확도 보너스 ({acc}%)",
         "modal_penalty": "오류 (페널티)",
         "modal_net_pts": "순 추가 점수",
         "modal_total_pts": "총 점수",

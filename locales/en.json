@@ -274,6 +274,7 @@
         "training_btn_next_lesson": "Advance to Lesson {lesson} ({runics} runics) →",
         "fb_boss_defeated": "👑 {boss} DEFEATED! +1,000 PTS!",
         "modal_phase_pts": "Points Earned in Phase",
+        "modal_acc_bonus": "Accuracy Bonus ({acc}%)",
         "modal_penalty": "Errors (Penalty)",
         "modal_net_pts": "Net Added Points",
         "modal_total_pts": "Total Score",

@@ -105,11 +105,24 @@ function clearGameBoard() {
 function showPhaseModal() {
   clearGameBoard();
 
-  // Deduct error penalty at the end when banking phase points!
+  // Accuracy and bonus calculation for completed phase
   const rawPts   = state.phasePts;
-  const penalty  = state.errorsPhase;
-  const finalPts = Math.max(0, rawPts - penalty);
+  const errs     = state.errorsPhase;
+  const attempts = state.hitsPhase + errs;
+  const acc      = attempts > 0 ? (state.hitsPhase / attempts) * 100 : 100;
+  const accPct   = Math.round(acc);
+
+  // Precision bonus: 100% -> 100 pts down to 70% -> 1 pt. Below 70% -> 0 pts.
+  let accBonus = 0;
+  if (attempts > 0 && acc >= 70) {
+    accBonus = Math.min(100, Math.max(1, 1 + Math.round(((acc - 70) / 30) * 99)));
+  }
+
+  // Deduct error penalty and credit accuracy bonus when banking phase points
+  const penalty  = errs;
+  const finalPts = Math.max(0, rawPts + accBonus - penalty);
   state.totalScore += finalPts;
+  if (typeof updateHUD === 'function') updateHUD();
 
   // Training Mode Didactic Summary
   if (state.gameMode === 'training') {
@@ -289,9 +302,6 @@ function showPhaseModal() {
   }
 
   // Performance Rank: S, A, B, C
-  const errs     = state.errorsPhase;
-  const attempts = state.hitsPhase + errs;
-  const acc      = attempts > 0 ? (state.hitsPhase / attempts) * 100 : 100;
   let rank = 'RANK C';
   let rankCls = 'rank-c';
   if (errs === 0 && acc === 100) {
@@ -328,12 +338,16 @@ function showPhaseModal() {
     : `Phase ${state.phase} Complete!`;
 
   const ptsEarnedLbl = typeof t === 'function' ? t('modal_phase_pts') : 'Points Earned in Phase';
+  const accBonusLbl  = typeof t === 'function' ? t('modal_acc_bonus', { acc: accPct }) : `Accuracy Bonus (${accPct}%)`;
   const penaltyLbl   = typeof t === 'function' ? t('modal_penalty') : 'Errors (Penalty)';
   const netPtsLbl    = typeof t === 'function' ? t('modal_net_pts') : 'Net Added Points';
   const totalPtsLbl  = typeof t === 'function' ? t('modal_total_pts') : 'Total Score';
 
+  const bonusColor   = accBonus > 0 ? 'var(--accent-emerald)' : 'var(--t3)';
+
   $('modal-phase-stats').innerHTML = `
     <div class="go-row"><span>${ptsEarnedLbl}</span><strong style="color:var(--t1)">+${rawPts}</strong></div>
+    <div class="go-row"><span>${accBonusLbl}</span><strong style="color:${bonusColor}">+${accBonus}</strong></div>
     <div class="go-row"><span>${penaltyLbl}</span><strong style="color:var(--accent-coral)">−${penalty}</strong></div>
     <div class="go-row"><span>${netPtsLbl}</span><strong style="color:var(--accent-emerald)">+${finalPts}</strong></div>
     <div class="go-row"><span>${totalPtsLbl}</span><strong style="color:var(--accent-cyan);font-variant-numeric:tabular-nums;letter-spacing:0.04em">${formatScore(state.totalScore)}</strong></div>
