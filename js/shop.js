@@ -152,7 +152,7 @@ function buySelectedShopItem() {
   const price = shopPrice(item.basePrice);
   if (state.totalScore < price) {
     if (typeof playSound === 'function') playSound('error');
-    const msg = typeof t === 'function' ? t('shop_insufficient_pts') : 'Pontos insuficientes!';
+    const msg = typeof t === 'function' ? t('shop_insufficient_pts') : 'Not enough points!';
     showShopFeedback(msg, 'warning');
     return false;
   }
@@ -286,7 +286,7 @@ function renderShopModal() {
 function buyShopItem(skillId, price) {
   if (state.totalScore < price) {
     if (typeof playSound === 'function') playSound('error');
-    const msg = typeof t === 'function' ? t('shop_insufficient_pts') : 'Pontos insuficientes!';
+    const msg = typeof t === 'function' ? t('shop_insufficient_pts') : 'Not enough points!';
     showShopFeedback(msg, 'warning');
     return;
   }
@@ -299,10 +299,10 @@ function buyShopItem(skillId, price) {
   if (skillId === 'extralife') {
     state.lives    = Math.min(state.lives + 1, 6);
     state.maxLives = Math.max(state.maxLives, state.lives);
-    showShopFeedback('+1 Vida permanente!', 'success');
+    showShopFeedback(typeof t === 'function' ? t('fb_permanent_life') : '+1 Permanent Life!', 'success');
   } else if (skillId === 'continue') {
     state.continues = (state.continues || 0) + 1;
-    showShopFeedback('+1 Ficha Continue obtida!', 'success');
+    showShopFeedback(typeof t === 'function' ? t('fb_continue_obtained') : '+1 Continue token obtained!', 'success');
   } else if (skillId === 'wordpack') {
     // Unlock 3 random locked words from pool
     const unlockedTexts = new Set(state.unlockedWords.map(w => w.text.toLowerCase()));
@@ -312,13 +312,14 @@ function buyShopItem(skillId, price) {
     if (picked.length > 0) {
       picked.forEach(w => state.unlockedWords.push({ ...w, phase: state.phase }));
       const names = picked.map(w => w.text.toUpperCase()).join(', ');
-      showShopFeedback(`Desbloqueadas: ${names}!`, 'success');
+      const unlLabel = typeof t === 'function' ? t('library_unlocked') : 'Unlocked';
+      showShopFeedback(`${unlLabel}: ${names}!`, 'success');
       playSound('skill');
       if (state.unlockedWords.length >= WORD_POOL.length) {
         if (typeof unlockAchievement === 'function') unlockAchievement('colecionador');
       }
     } else {
-      showShopFeedback('Todas as palavras já foram descobertas!', 'success');
+      showShopFeedback(typeof t === 'function' ? t('shop_all_words_unlocked') : 'All words have already been discovered!', 'success');
     }
   } else {
     // Regular skill item

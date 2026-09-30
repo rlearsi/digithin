@@ -49,10 +49,10 @@ function showBiblioteca() {
     const card = document.createElement('div');
     card.className = 'lib-word-card' + (isUnlocked ? (count > 0 ? ' lwc-completed' : ' lwc-unlocked') : ' lwc-locked');
 
-    const lockedTxt = typeof t === 'function' ? t('lib_locked') : 'Bloqueada';
+    const lockedTxt = typeof t === 'function' ? t('lib_locked') : 'Locked';
     const typedTxt = count > 0
-      ? (typeof t === 'function' ? '✓ ' + t('lib_typed').replace('{count}', count) : `✓ digitada ${count}×`)
-      : (typeof t === 'function' ? '○ ' + t('lib_not_typed') : '○ ainda não digitada');
+      ? (typeof t === 'function' ? '✓ ' + t('lib_typed').replace('{count}', count) : `✓ typed ${count}×`)
+      : (typeof t === 'function' ? '○ ' + t('lib_not_typed') : '○ not typed yet');
 
     if (isUnlocked) {
       card.innerHTML = `

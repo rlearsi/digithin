@@ -66,12 +66,14 @@ function setTheme(theme) {
   localStorage.setItem('digitinho_theme', theme);
   const isDark = theme === 'dark';
   document.querySelectorAll('.theme-switch-btn').forEach(btn => {
-    btn.setAttribute('aria-label', isDark ? 'Mudar para tema claro' : 'Mudar para tema escuro');
+    const aria = isDark
+      ? (typeof t === 'function' ? t('theme_switch_to_light') : 'Switch to light theme')
+      : (typeof t === 'function' ? t('theme_switch_to_dark') : 'Switch to dark theme');
+    btn.setAttribute('aria-label', aria);
     btn.classList.toggle('is-dark', isDark);
   });
-  const settingsThemeVal = $('settings-theme-val');
-  if (settingsThemeVal) {
-    settingsThemeVal.textContent = isDark ? '🌙 Escuro' : '☀️ Claro';
+  if (typeof updateSettingsUI === 'function') {
+    updateSettingsUI();
   }
 }
 
@@ -105,12 +107,17 @@ function setQueuePosition(pos) {
 
   localStorage.setItem('digitinho_queue_pos', finalPos);
 
-  const qBtnText = isTop ? 'Topo' : 'Base';
+  const qBtnText = isTop
+    ? (typeof t === 'function' ? t('queue_top') : 'Top')
+    : (typeof t === 'function' ? t('queue_bottom') : 'Bottom');
   const qBtnIcon = isTop ? '⬆️' : '⬇️';
 
   const barToggle = $('btn-toggle-queue-pos');
   if (barToggle) {
-    barToggle.setAttribute('title', isTop ? 'Fila no Topo (clique para mover para a base)' : 'Fila na Base (clique para mover para o topo)');
+    const qTitle = isTop
+      ? (typeof t === 'function' ? t('queue_toggle_to_bottom') : 'Queue at Top (click to move to bottom)')
+      : (typeof t === 'function' ? t('queue_toggle_to_top') : 'Queue at Bottom (click to move to top)');
+    barToggle.setAttribute('title', qTitle);
     const iconEl = barToggle.querySelector('.queue-pos-icon');
     const textEl = barToggle.querySelector('.queue-pos-text');
     if (iconEl) iconEl.textContent = qBtnIcon;
@@ -119,17 +126,11 @@ function setQueuePosition(pos) {
 
   const startToggle = $('start-queue-pos-text');
   if (startToggle) {
-    startToggle.textContent = `Fila: ${qBtnText}`;
+    startToggle.textContent = `${typeof t === 'function' ? t('settings_queue') : 'Queue'}: ${qBtnText}`;
   }
 
-  const pauseToggleVal = $('pause-queue-pos-val');
-  if (pauseToggleVal) {
-    pauseToggleVal.textContent = `${qBtnIcon} ${qBtnText}${isTop ? ' (Padrão)' : ''}`;
-  }
-
-  const settingsQueueVal = $('settings-queue-val');
-  if (settingsQueueVal) {
-    settingsQueueVal.textContent = `${qBtnIcon} ${qBtnText}${isTop ? ' (Padrão)' : ''}`;
+  if (typeof updateSettingsUI === 'function') {
+    updateSettingsUI();
   }
 }
 
@@ -373,13 +374,15 @@ function updateHUD() {
 
   if (phaseNumEl) {
     if (state.bossBattle && state.bossBattle.active) {
-      phaseNumEl.textContent = `⚔️ CHEFÃO ${state.phase}`;
+      const bossLbl = typeof t === 'function' ? t('boss_default_name').toUpperCase() : 'BOSS';
+      phaseNumEl.textContent = `⚔️ ${bossLbl} ${state.phase}`;
     } else if (state.gameMode === 'timeattack') {
       phaseNumEl.textContent = `⏱️ ${state.timeAttackSecs}s`;
     } else if (state.gameMode === 'zen') {
       phaseNumEl.textContent = `ZEN ${state.phase}`;
     } else if (state.gameMode === 'training') {
-      phaseNumEl.textContent = `M${state.trainingWorld || 1} • LIÇÃO ${state.phase} DE 3`;
+      const lessonLbl = typeof t === 'function' ? t('hud_training_lesson').toUpperCase() : 'LESSON';
+      phaseNumEl.textContent = `M${state.trainingWorld || 1} • ${lessonLbl} ${state.phase} / 3`;
     } else {
       phaseNumEl.textContent = state.phase;
     }
@@ -432,7 +435,8 @@ function updateHUD() {
     const maxLives = 3;
     const bossHpPct = Math.max(0, Math.min(100, (currentLives / maxLives) * 100));
     if (progressFill) progressFill.style.width = bossHpPct + '%';
-    if (progressText) progressText.textContent = `VIDA DO CHEFE: ${currentLives} / ${maxLives}`;
+    const bossHpLbl = typeof t === 'function' ? t('hud_boss_hp') : 'BOSS HP';
+    if (progressText) progressText.textContent = `${bossHpLbl}: ${currentLives} / ${maxLives}`;
   } else {
     const goal = phaseGoal();
     const pct  = Math.min(100, Math.max(0, (state.progress / goal) * 100));
@@ -440,8 +444,9 @@ function updateHUD() {
     if (progressText) {
       if (state.gameMode === 'training') {
         const lesson = state.phase || 1;
-        const lessonName = lesson === 1 ? 'Teclas Base' : lesson === 2 ? 'Alternância' : 'Desafio Final';
-        progressText.textContent = `${state.progress} / ${goal} • Lição ${lesson}/3: ${lessonName}`;
+        const lessonName = typeof t === 'function' ? t(`training_lesson_${lesson}_name`) : (lesson === 1 ? 'Home Keys' : lesson === 2 ? 'Alternation' : 'Final Challenge');
+        const lessonLbl = typeof t === 'function' ? t('hud_training_lesson') : 'Lesson';
+        progressText.textContent = `${state.progress} / ${goal} • ${lessonLbl} ${lesson}/3: ${lessonName}`;
       } else {
         progressText.textContent = `${state.progress} / ${goal}`;
       }
@@ -555,7 +560,8 @@ function renderSkills() {
   if (typeof state === 'undefined' || !state || !Array.isArray(state.skillSlots)) return;
 
   if (state.skillSlots.length === 0) {
-    skillsCont.innerHTML = '<div class="empty-hint">Compre na loja<br/>ou complete palavras <strong>⚡</strong></div>';
+    const emptyHint = typeof t === 'function' ? t('hud_skills_empty_hint') : 'Buy in the shop<br/>or complete words <strong>⚡</strong>';
+    skillsCont.innerHTML = `<div class="empty-hint">${emptyHint}</div>`;
     return;
   }
 
@@ -685,7 +691,10 @@ function renderQueue() {
     const qb = document.createElement('div');
     qb.className = 'queue-boss-indicator';
     qb.style.cssText = 'color:var(--accent-amber);font-weight:800;font-size:0.75rem;display:flex;align-items:center;gap:6px;padding:4px 8px;letter-spacing:0.03em;';
-    qb.innerHTML = `⚔️ ENIGMA ${state.bossBattle.meaningIndex + 1} DE 3 &bull; VIDA DO CHEFE: ${state.bossBattle.boss?.lives || 0}/3`;
+    const bossHpLbl = typeof t === 'function' ? t('hud_boss_hp') : 'BOSS HP';
+    const enigmaIdx = (state.bossBattle.meaningIndex || 0) + 1;
+    const enigmaLbl = typeof t === 'function' ? t('boss_enigma_queue', { num: enigmaIdx }) : `ENIGMA ${enigmaIdx} / 3`;
+    qb.innerHTML = `⚔️ ${enigmaLbl} &bull; ${bossHpLbl}: ${state.bossBattle.boss?.lives || 0}/3`;
     queueItemsEl.appendChild(qb);
     return;
   }
@@ -945,7 +954,7 @@ function runResumeCountdown(onComplete) {
       playSound('countdown');
       countdownTimerId = setTimeout(tick, 700);
     } else if (count === 0) {
-      numEl.textContent = 'VAI!';
+      numEl.textContent = typeof t === 'function' ? t('countdown_go') : 'GO!';
       numEl.style.animation = 'none';
       void numEl.offsetWidth;
       numEl.style.animation = '';
@@ -1720,7 +1729,7 @@ function showBossRewardModal(skills, onPick) {
 
   skills.forEach(skill => {
     const loc = (typeof getLocalizedItem === 'function') ? getLocalizedItem(skill) : { name: skill.name, desc: skill.desc };
-    const pickTxt = typeof t === 'function' && t('boss_btn_pick') ? t('boss_btn_pick') : 'Obter';
+    const pickTxt = typeof t === 'function' && t('boss_btn_pick') ? t('boss_btn_pick') : 'Obtain';
     const card = document.createElement('div');
     card.className = 'boss-skill-card';
     card.innerHTML = `

@@ -63,7 +63,9 @@ function startTrainingWorld(worldId = 1) {
   beginPhase();
 
   const worldData = (typeof TRAINING_WORLDS !== 'undefined' && TRAINING_WORLDS[state.trainingWorld]) || { name: 'Mundo 1' };
-  showFeedback(`${worldData.name} — Lição 1 de 3 (Teclas Base)`, 'special');
+  const lesson1Name = typeof t === 'function' ? t('training_lesson_1_name') : 'Home Keys';
+  const lessonLbl = typeof t === 'function' ? t('hud_training_lesson') : 'Lesson';
+  showFeedback(`${worldData.name} — ${lessonLbl} 1/3 (${lesson1Name})`, 'special');
 }
 
 function restartGame() {
@@ -403,7 +405,7 @@ function showPhaseModal() {
   // Training Mode Didactic Summary
   if (state.gameMode === 'training') {
     const worldId = state.trainingWorld || 1;
-    const worldData = (typeof TRAINING_WORLDS !== 'undefined' && TRAINING_WORLDS[worldId]) || { name: 'Treinamento', subtitle: '' };
+    const worldData = (typeof TRAINING_WORLDS !== 'undefined' && TRAINING_WORLDS[worldId]) || { name: (typeof t === 'function' ? t('hud_training_lbl') : 'Training'), subtitle: '' };
     const lesson = state.phase || 1; // 1, 2 ou 3
     const errs = state.errorsPhase;
     const attempts = state.hitsPhase + errs;
@@ -443,21 +445,37 @@ function showPhaseModal() {
       const currentRecord = localStorage.getItem(`digitinho_training_precision_${worldId}`) || finalPrecNum.toFixed(1);
 
       $('phase-emoji').innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>`;
-      $('modal-phase-h').textContent = `${worldData.name} — Maestria Concluída!`;
+      $('modal-phase-h').textContent = typeof t === 'function'
+        ? t('training_mastery_completed', { world: worldData.name })
+        : `${worldData.name} — Mastery Completed!`;
 
       const rankBadge = $('phase-rank-badge');
       if (rankBadge) {
-        rankBadge.textContent = isNewRecord ? 'NOVO RECORDE!' : 'MUNDO DOMINADO';
+        rankBadge.textContent = isNewRecord
+          ? (typeof t === 'function' ? t('training_new_record') : 'NEW RECORD!')
+          : (typeof t === 'function' ? t('training_world_mastered') : 'WORLD MASTERED');
         rankBadge.className = 'phase-rank-badge rank-s';
       }
 
+      const statStatusLbl = typeof t === 'function' ? t('training_stat_status') : 'Training Status';
+      const statCompletedLbl = typeof t === 'function' ? t('training_stat_completed') : '100% Completed (3/3 Lessons)';
+      const statKeysLbl = typeof t === 'function' ? t('training_stat_keys') : 'Mastered Keys';
+      const statAccLbl = typeof t === 'function' ? t('training_stat_accuracy') : 'Match Accuracy';
+      const statBestLbl = typeof t === 'function' ? t('training_stat_best_record') : 'Best Record (Accuracy)';
+      const statSpeedLbl = typeof t === 'function' ? t('training_stat_speed') : 'Real Speed (WPM)';
+      const statHitsLbl = typeof t === 'function' ? t('training_stat_hits_errors') : 'Total Hits / Errors';
+      const hitsVal = typeof t === 'function'
+        ? t('training_hits_errs_val', { hits: state.totalHits || state.hitsPhase, errors: state.totalErrors || errs })
+        : `${state.totalHits || state.hitsPhase} hits / ${state.totalErrors || errs} errors`;
+      const newRecLabel = isNewRecord ? (typeof t === 'function' ? `(${t('training_new_record')})` : '(NEW RECORD!)') : '';
+
       $('modal-phase-stats').innerHTML = `
-        <div class="go-row"><span>Status do Treinamento</span><strong style="color:var(--accent-emerald)">100% Concluído (3/3 Lições)</strong></div>
-        <div class="go-row"><span>Teclas Dominadas</span><strong style="color:var(--accent-amber)">${worldData.subtitle}</strong></div>
-        <div class="go-row"><span>Precisão Desta Partida</span><strong style="color:${finalPrecNum >= 90 ? 'var(--accent-emerald)' : 'var(--accent-coral)'}">${finalPrecNum.toFixed(1)}%</strong></div>
-        <div class="go-row"><span>Melhor Recorde (Precisão)</span><strong style="color:var(--accent-amber)">${currentRecord}% ${isNewRecord ? '(NOVO RECORDE!)' : ''}</strong></div>
-        <div class="go-row"><span>Velocidade Real (PPM)</span><strong style="color:var(--accent-cyan)">${ppm} PPM</strong></div>
-        <div class="go-row"><span>Acertos / Erros Totais</span><strong style="color:var(--t1)">${state.totalHits || state.hitsPhase} acertos / ${state.totalErrors || errs} erros</strong></div>
+        <div class="go-row"><span>${statStatusLbl}</span><strong style="color:var(--accent-emerald)">${statCompletedLbl}</strong></div>
+        <div class="go-row"><span>${statKeysLbl}</span><strong style="color:var(--accent-amber)">${worldData.subtitle}</strong></div>
+        <div class="go-row"><span>${statAccLbl}</span><strong style="color:${finalPrecNum >= 90 ? 'var(--accent-emerald)' : 'var(--accent-coral)'}">${finalPrecNum.toFixed(1)}%</strong></div>
+        <div class="go-row"><span>${statBestLbl}</span><strong style="color:var(--accent-amber)">${currentRecord}% ${newRecLabel}</strong></div>
+        <div class="go-row"><span>${statSpeedLbl}</span><strong style="color:var(--accent-cyan)">${ppm} PPM</strong></div>
+        <div class="go-row"><span>${statHitsLbl}</span><strong style="color:var(--t1)">${hitsVal}</strong></div>
       `;
 
       $('section-words').style.display = 'none';
@@ -467,9 +485,11 @@ function showPhaseModal() {
       const nextBtn = $('btn-next-phase') || document.querySelector('#modal-phase .btn-primary');
       if (nextBtn) {
         if (hasNextWorld) {
-          nextBtn.textContent = `Avançar para o ${TRAINING_WORLDS[nextWorldId].name} →`;
+          nextBtn.textContent = typeof t === 'function'
+            ? t('training_btn_next_world', { world: TRAINING_WORLDS[nextWorldId].name })
+            : `Advance to ${TRAINING_WORLDS[nextWorldId].name} →`;
         } else {
-          nextBtn.textContent = `Concluir Todos os Treinos! →`;
+          nextBtn.textContent = typeof t === 'function' ? t('training_btn_finish_all') : 'Finish All Trainings! →';
         }
       }
 
@@ -481,26 +501,30 @@ function showPhaseModal() {
 
     // Lições 1 e 2
     const nextLesson = lesson + 1;
-    const lessonTitle = lesson === 1 ? 'Lição 1: Reconhecimento de Teclas' : 'Lição 2: Alternância de Dedos';
+    const lessonTitle = lesson === 1
+      ? (typeof t === 'function' ? t('training_lesson_1_title') : 'Lesson 1: Key Recognition')
+      : (typeof t === 'function' ? t('training_lesson_2_title') : 'Lesson 2: Finger Alternation');
     const nextLessonHint = lesson === 1
-      ? 'Próximo objetivo: Combinar teclas em pequenas palavras e alternância entre as mãos.'
-      : 'Próximo objetivo: Desafio final de fluidez e maestria com vocábulos completos!';
+      ? (typeof t === 'function' ? t('training_next_obj_2') : 'Next goal: Combine keys into short words and alternate hands.')
+      : (typeof t === 'function' ? t('training_next_obj_3') : 'Next goal: Final flow and mastery challenge with full words!');
 
     $('phase-emoji').innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`;
-    $('modal-phase-h').textContent = `${worldData.name} — ${lessonTitle} Concluída!`;
+    $('modal-phase-h').textContent = typeof t === 'function'
+      ? t('training_lesson_completed', { world: worldData.name, lesson: lessonTitle })
+      : `${worldData.name} — ${lessonTitle}`;
 
-    let rank = 'PRECISÃO CIRÚRGICA';
+    let rank = typeof t === 'function' ? t('training_rank_s') : 'SURGICAL PRECISION';
     let rankCls = 'rank-s';
     if (acc === '100.0' && errs === 0) {
       unlockAchievement('cirurgico');
     } else if (acc >= 90) {
-      rank = 'EXCELENTE FLUIDEZ';
+      rank = typeof t === 'function' ? t('training_rank_a') : 'EXCELLENT FLOW';
       rankCls = 'rank-a';
     } else if (acc >= 75) {
-      rank = 'BOM CONTROLE';
+      rank = typeof t === 'function' ? t('training_rank_b') : 'GOOD CONTROL';
       rankCls = 'rank-b';
     } else {
-      rank = 'PRATICAR MAIS';
+      rank = typeof t === 'function' ? t('training_rank_c') : 'PRACTICE MORE';
       rankCls = 'rank-c';
     }
 
@@ -510,11 +534,20 @@ function showPhaseModal() {
       rankBadge.className = `phase-rank-badge ${rankCls}`;
     }
 
+    const statProgressLbl = typeof t === 'function' ? t('training_stat_world_progress') : 'World Progress';
+    const statLessonDone = typeof t === 'function' ? t('training_stat_lesson_done', { lesson }) : `Lesson ${lesson} of 3 Completed`;
+    const statAccRateLbl = typeof t === 'function' ? t('training_stat_accuracy_rate') : 'Accuracy Rate';
+    const statSpeedLbl = typeof t === 'function' ? t('training_stat_speed') : 'Real Speed (WPM)';
+    const statHitsErrorsLbl = typeof t === 'function' ? t('training_stat_hits_errors') : 'Hits / Errors';
+    const hitsErrVal = typeof t === 'function'
+      ? t('training_hits_errs_val', { hits: state.hitsPhase, errors: errs })
+      : `${state.hitsPhase} hits / ${errs} errors`;
+
     $('modal-phase-stats').innerHTML = `
-      <div class="go-row"><span>Progresso do Mundo</span><strong style="color:var(--accent-amber)">Lição ${lesson} de 3 Concluída</strong></div>
-      <div class="go-row"><span>Taxa de Precisão</span><strong style="color:${acc >= 90 ? 'var(--accent-emerald)' : 'var(--accent-coral)'}">${acc}%</strong></div>
-      <div class="go-row"><span>Velocidade Real (PPM)</span><strong style="color:var(--accent-cyan)">${ppm} PPM</strong></div>
-      <div class="go-row"><span>Acertos / Erros</span><strong style="color:var(--t1)">${state.hitsPhase} acertos / ${errs} erros</strong></div>
+      <div class="go-row"><span>${statProgressLbl}</span><strong style="color:var(--accent-amber)">${statLessonDone}</strong></div>
+      <div class="go-row"><span>${statAccRateLbl}</span><strong style="color:${acc >= 90 ? 'var(--accent-emerald)' : 'var(--accent-coral)'}">${acc}%</strong></div>
+      <div class="go-row"><span>${statSpeedLbl}</span><strong style="color:var(--accent-cyan)">${ppm} PPM</strong></div>
+      <div class="go-row"><span>${statHitsErrorsLbl}</span><strong style="color:var(--t1)">${hitsErrVal}</strong></div>
       <div class="go-row"><span style="color:var(--t3);font-size:0.75rem">${nextLessonHint}</span></div>
     `;
 
@@ -522,7 +555,10 @@ function showPhaseModal() {
 
     const nextBtn = $('btn-next-phase') || document.querySelector('#modal-phase .btn-primary');
     if (nextBtn) {
-      nextBtn.textContent = `Avançar para Lição ${nextLesson} (${nextLesson === 2 ? '15' : '20'} rúnicos) →`;
+      const runicsCount = nextLesson === 2 ? '15' : '20';
+      nextBtn.textContent = typeof t === 'function'
+        ? t('training_btn_next_lesson', { lesson: nextLesson, runics: runicsCount })
+        : `Advance to Lesson ${nextLesson} (${runicsCount} runics) →`;
     }
 
     modalPhase.classList.remove('hidden');
@@ -540,7 +576,7 @@ function showPhaseModal() {
   const nextBtn = $('btn-next-phase') || document.querySelector('#modal-phase .btn-primary');
   if (nextBtn) {
     const span = nextBtn.querySelector('span') || nextBtn;
-    span.textContent = typeof t === 'function' ? t('modal_btn_next_phase') : 'Próxima Fase →';
+    span.textContent = typeof t === 'function' ? t('modal_btn_next_phase') : 'Next Phase →';
   }
 
   // Performance Rank: S, A, B, C
@@ -578,12 +614,20 @@ function showPhaseModal() {
       phaseEmojiEl.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`;
     }
   }
-  $('modal-phase-h').textContent  = `Fase ${state.phase} Completa!`;
+  $('modal-phase-h').textContent = typeof t === 'function'
+    ? t('modal_phase_complete', { phase: state.phase })
+    : `Phase ${state.phase} Complete!`;
+
+  const ptsEarnedLbl = typeof t === 'function' ? t('modal_phase_pts') : 'Points Earned in Phase';
+  const penaltyLbl   = typeof t === 'function' ? t('modal_penalty') : 'Errors (Penalty)';
+  const netPtsLbl    = typeof t === 'function' ? t('modal_net_pts') : 'Net Added Points';
+  const totalPtsLbl  = typeof t === 'function' ? t('modal_total_pts') : 'Total Score';
+
   $('modal-phase-stats').innerHTML = `
-    <div class="go-row"><span>Pontos Conquistados na Fase</span><strong style="color:var(--t1)">+${rawPts}</strong></div>
-    <div class="go-row"><span>Erros (penalidade)</span><strong style="color:var(--accent-coral)">−${penalty}</strong></div>
-    <div class="go-row"><span>Soma Adicionada</span><strong style="color:var(--accent-emerald)">+${finalPts}</strong></div>
-    <div class="go-row"><span>Pontuação Total</span><strong style="color:var(--accent-cyan);font-variant-numeric:tabular-nums;letter-spacing:0.04em">${formatScore(state.totalScore)}</strong></div>
+    <div class="go-row"><span>${ptsEarnedLbl}</span><strong style="color:var(--t1)">+${rawPts}</strong></div>
+    <div class="go-row"><span>${penaltyLbl}</span><strong style="color:var(--accent-coral)">−${penalty}</strong></div>
+    <div class="go-row"><span>${netPtsLbl}</span><strong style="color:var(--accent-emerald)">+${finalPts}</strong></div>
+    <div class="go-row"><span>${totalPtsLbl}</span><strong style="color:var(--accent-cyan);font-variant-numeric:tabular-nums;letter-spacing:0.04em">${formatScore(state.totalScore)}</strong></div>
   `;
 
   // Unlock 3 new random words
@@ -631,7 +675,7 @@ function continueToNextPhase() {
       } else {
         goToMainMenu();
         openTrainingModal();
-        showFeedback('Parabéns! Você concluiu todos os mundos de treino!', 'special');
+        showFeedback(typeof t === 'function' ? t('fb_training_completed') : '🎉 Congratulations! You completed all training worlds!', 'special');
       }
       return;
     }
@@ -683,7 +727,7 @@ function loseLife() {
     state.totalErrors++;
     state.combo = 0;
     playSound('fall');
-    showFeedback('⚠️ Rúnico caiu (- precisão)', 'error');
+    showFeedback(typeof t === 'function' ? t('fb_runic_dropped_zen') : '⚠️ Runic dropped (-accuracy)', 'error');
     updateHUD();
     return;
   }
@@ -699,12 +743,12 @@ function loseLife() {
   // Combo breaks on life loss
   if (state.combo > 0) {
     state.combo = 0;
-    showFeedback('Combo quebrado!', 'error');
+    showFeedback(typeof t === 'function' ? t('fb_combo_broken') : 'Combo broken!', 'error');
   }
 
   state.lives--;
   playSound('life');
-  showFeedback('💔 Rúnico caiu!', 'error');
+  showFeedback(typeof t === 'function' ? t('fb_runic_dropped') : '💔 Runic dropped!', 'error');
 
   // Flash border
   document.body.style.animation = 'screenShake .28s ease';
@@ -776,7 +820,7 @@ function useContinue() {
   state.activeItems.forEach(i => i.el?.parentNode?.removeChild(i.el));
   state.activeItems     = [];
   modalGameover.classList.add('hidden');
-  showFeedback('🪙 Continue usado! Continuando fase...', 'special');
+  showFeedback(typeof t === 'function' ? t('fb_continue_used') : '🪙 Continue used! Resuming phase...', 'special');
   beginPhase();
 }
 
@@ -1150,7 +1194,7 @@ function gameLoop(ts) {
       updateHUD();
       if (state.timeAttackSecs <= 0) {
         gameOver();
-        showFeedback('⏱️ Tempo Esgotado!', 'special');
+        showFeedback(typeof t === 'function' ? t('fb_time_up') : "⏱️ Time's Up!", 'special');
         return;
       }
     }
@@ -1218,7 +1262,7 @@ function gameLoop(ts) {
       loseLife();
 
       if (item.isBossMeaning) {
-        showFeedback('💥 O enigma caiu! O Chefão atacou!', 'error');
+        showFeedback(typeof t === 'function' ? t('fb_boss_enigma_dropped') : '💥 The enigma dropped! The Boss attacked!', 'error');
         if (typeof flashBossDamage === 'function') flashBossDamage();
         // Regra 2: Salva o significado que caiu para não repeti-lo imediatamente no próximo sorteio
         if (state.bossBattle?.currentWord) {
@@ -1247,7 +1291,7 @@ function checkFreezerAutoCancel() {
   if (state.activeTimers.freezer > 0 && state.activeItems.length === 0 && !state.bossBattle?.active) {
     state.activeTimers.freezer = 0;
     state.skillSlots = state.skillSlots.filter(s => !(s.id === 'freezer' && s.count <= 0));
-    showFeedback('❄️ Tela limpa — gelo desligado!', 'special');
+    showFeedback(typeof t === 'function' ? t('fb_ice_cleared') : '❄️ Screen cleared — Freeze deactivated!', 'special');
     updateHUD();
   }
 }
@@ -1264,7 +1308,7 @@ function onSkillExpired(skillId) {
   const expireMsgKey = `fb_${skillId}_expired`;
   const msg = (typeof t === 'function' && t(expireMsgKey) !== expireMsgKey)
     ? t(expireMsgKey)
-    : (def?.expireMsg || `${def?.name || skillId} expirou`);
+    : (def?.expireMsg || `${def?.name || skillId} expired`);
 
   showFeedback(msg, 'special');
 
@@ -1542,7 +1586,7 @@ function handleLetterTyped(char) {
         state.typedBuffer = '';
         clearHighlight();
         playSound('skill');
-        const msg = typeof t === 'function' ? t('fb_shield_error_protected') : '🛡️ Erro protegido!';
+        const msg = typeof t === 'function' ? t('fb_shield_error_protected') : '🛡️ Error protected by Shield!';
         showFeedback(msg, 'special');
         return;
       }
@@ -1550,7 +1594,7 @@ function handleLetterTyped(char) {
       // Combo breaks on error
       if (state.combo > 0) {
         state.combo = 0;
-        showFeedback('Combo quebrado!', 'error');
+        showFeedback(typeof t === 'function' ? t('fb_combo_broken') : 'Combo broken!', 'error');
       }
 
       // Typo: -1 penalty at phase end + progress bar deduction (only in classic mode)
@@ -1576,10 +1620,11 @@ function handleLetterTyped(char) {
       state.typedBuffer = '';
       clearHighlight();
       playSound('error');
+      const errLbl = typeof t === 'function' ? t('fb_error') : '❌ Error';
       if (diffCfg.speedErrorPenalty > 0) {
-        showFeedback(`❌ Erro (+${diffCfg.speedErrorPenalty}x)`, 'error');
+        showFeedback(`${errLbl} (+${diffCfg.speedErrorPenalty}x)`, 'error');
       } else {
-        showFeedback('❌ Erro', 'error');
+        showFeedback(errLbl, 'error');
       }
       updateHUD();
     }
@@ -1663,7 +1708,7 @@ function completeItem(item) {
   const isFury = state.combo >= 15;
   if (state.combo === 15) {
     playSound('fury');
-    showFeedback('MODO FÚRIA ATIVADO! PONTOS EM DOBRO!', 'special');
+    showFeedback(typeof t === 'function' ? t('fb_fury_activated') : 'FURY MODE ACTIVATED! DOUBLE POINTS!', 'special');
     unlockAchievement('modo_furia');
   } else if (state.combo > 1) {
     playSound('combo');
@@ -1750,7 +1795,7 @@ function completeItem(item) {
 // ============================================================
 function wildcardExplode(wildcardItem) {
   playSound('wildcard');
-  showFeedback('💥 CORINGA! LIMPEZA TOTAL!', 'special');
+  showFeedback(typeof t === 'function' ? t('fb_wildcard_clean') : '💥 WILDCARD! TOTAL CLEAR!', 'special');
 
   let totalPts = 10;
   state.activeItems.forEach(other => {
@@ -1787,7 +1832,11 @@ function gainSkill(skillId) {
     state.skillSlots.push({ id: skillId, count: 1 });
   }
   const def = (typeof SKILLS_CONFIG !== 'undefined' && SKILLS_CONFIG[skillId]) || SKILLS_ALL.find(s => s.id === skillId);
-  showFeedback(`⚡ Habilidade ${def?.name || ''}!`, 'special');
+  const skillName = (typeof t === 'function' && t(`skill_name_${skillId}`) !== `skill_name_${skillId}`)
+    ? t(`skill_name_${skillId}`)
+    : (def?.name || '');
+  const skillMsg = typeof t === 'function' ? t('fb_skill_acquired', { skill: skillName }) : `⚡ Skill: ${skillName}!`;
+  showFeedback(skillMsg, 'special');
   updateHUD();
 }
 
@@ -1863,7 +1912,7 @@ function triggerBombAreaExplosion(sourceItem) {
     state.progress += extraPts;
     const msg = (typeof t === 'function')
       ? t('fb_bomb_explosion', { lines: numLetters, pts: extraPts })
-      : `💥 Explosão (${numLetters} linhas)! +${extraPts}`;
+      : `💥 Explosion (${numLetters} lines)! +${extraPts}`;
     showFeedback(msg, 'special');
   }
 }
@@ -1889,7 +1938,10 @@ function triggerVortexDevour() {
   state.phasePts += pts;
   state.progress += pts;
 
-  showFeedback(`🌀 Vórtice devorou ${victim.text}! +${pts}`, 'special');
+  const vortexMsg = typeof t === 'function'
+    ? t('fb_vortex_devour', { text: victim.text, pts })
+    : `🌀 Vortex devoured ${victim.text}! +${pts}`;
+  showFeedback(vortexMsg, 'special');
 
   setTimeout(() => {
     victim.el?.parentNode?.removeChild(victim.el);
@@ -1976,14 +2028,14 @@ function beginBossPhase() {
   renderQueue();
   playSound('bossSpawn');
 
-  const currentLang = typeof getLanguage === 'function' ? getLanguage() : 'pt';
+  const currentLang = typeof getLanguage === 'function' ? getLanguage() : 'en';
   const bossIcon = state.bossBattle.boss.icon || '👾';
   const bossName = (currentLang === 'pt' && state.bossBattle.boss?.namePt)
     ? state.bossBattle.boss.namePt
-    : (state.bossBattle.boss?.name || 'Chefão');
+    : (state.bossBattle.boss?.name || (typeof t === 'function' ? t('boss_default_name') : 'Boss'));
   const scenarioName = (currentLang === 'pt' && state.bossBattle.boss?.scenarioPt)
     ? state.bossBattle.boss.scenarioPt
-    : (state.bossBattle.boss?.scenario || 'Cenário');
+    : (state.bossBattle.boss?.scenario || 'Scenario');
   showFeedback(`${bossIcon} ${bossName.toUpperCase()} • ${scenarioName.toUpperCase()}!`, 'special');
 
   state.lastTs = null;
@@ -2061,15 +2113,22 @@ function spawnBossMeaningBox() {
   const currentLang = (typeof getLanguage === 'function') ? getLanguage() : 'en';
   const scenarioName = (currentLang === 'pt' && state.bossBattle.boss.scenarioPt)
     ? state.bossBattle.boss.scenarioPt
-    : (state.bossBattle.boss.scenario || 'Cenário');
+    : (state.bossBattle.boss.scenario || 'Scenario');
 
   const solvedNum = Math.min(3, (state.bossBattle.solvedCount || 0) + 1);
   const totalEnigmas = state.bossBattle.boss?.maxLives || 3;
 
+  const badgeText = typeof t === 'function'
+    ? t('boss_enigma_badge', { num: solvedNum, total: totalEnigmas, scenario: scenarioName.toUpperCase() })
+    : `📜 ENIGMA ${solvedNum} / ${totalEnigmas} • ${scenarioName.toUpperCase()}`;
+  const lettersText = typeof t === 'function'
+    ? t('boss_enigma_letters', { count: targetWord.length })
+    : `${targetWord.length} LETTERS`;
+
   el.innerHTML = `
     <div class="bmb-header">
-      <span class="bmb-badge">📜 ENIGMA ${solvedNum} DE ${totalEnigmas} • ${scenarioName.toUpperCase()}</span>
-      <span class="bmb-length">${targetWord.length} LETRAS</span>
+      <span class="bmb-badge">${badgeText}</span>
+      <span class="bmb-length">${lettersText}</span>
     </div>
     <div class="bmb-meaning">"${wordObj.meaning}"</div>
     <div class="bmb-slots"></div>
@@ -2133,20 +2192,20 @@ function handleBossLetterTyped(char) {
     // Shield protection
     if ((state.activeTimers?.shield || 0) > 0) {
       playSound('skill');
-      showFeedback('🛡️ Erro protegido pela Imunidade!', 'special');
+      showFeedback(typeof t === 'function' ? t('fb_shield_error_protected') : '🛡️ Error protected by Shield!', 'special');
       return;
     }
 
     // Typo breaks combo
     if (state.combo > 0) {
       state.combo = 0;
-      showFeedback('Combo quebrado!', 'error');
+      showFeedback(typeof t === 'function' ? t('fb_combo_broken') : 'Combo broken!', 'error');
     }
 
     state.errorsPhase++;
     state.totalErrors++;
     playSound('error');
-    showFeedback('❌ Letra errada!', 'error');
+    showFeedback(typeof t === 'function' ? t('fb_error_letter') : '❌ Wrong letter!', 'error');
 
     // Regra 1: Velocidade é fixa em 0.5x mesmo em caso de erro
     state.speedMultiplier = 0.5;
@@ -2182,7 +2241,7 @@ function completeBossMeaning() {
   const isFury = state.combo >= 15;
   if (state.combo === 15) {
     playSound('fury');
-    showFeedback('MODO FÚRIA ATIVADO! PONTOS EM DOBRO!', 'special');
+    showFeedback(typeof t === 'function' ? t('fb_fury_activated') : 'FURY MODE ACTIVATED! DOUBLE POINTS!', 'special');
     unlockAchievement('modo_furia');
   } else if (state.combo > 1) {
     playSound('combo');
@@ -2218,7 +2277,10 @@ function completeBossMeaning() {
   state.bossBattle.boss.lives--;
   state.bossBattle.damageCount++;
 
-  showFeedback(`💥 ENIGMA DECIFRADO! -1 PONTO DE VIDA! (+${pts}pts)`, 'special');
+  const enigmaMsg = typeof t === 'function'
+    ? t('fb_enigma_solved', { pts })
+    : `💥 ENIGMA SOLVED! -1 BOSS HP! (+${pts}pts)`;
+  showFeedback(enigmaMsg, 'special');
   renderBossHud(state.bossBattle.boss, state.bossBattle.boss.lives, state.bossBattle.boss.maxLives || 3);
   updateHUD();
 
@@ -2260,13 +2322,13 @@ function defeatBoss() {
   playSound('bossDefeat');
   launchConfetti();
 
-  const currentLang = typeof getLanguage === 'function' ? getLanguage() : 'pt';
+  const currentLang = typeof getLanguage === 'function' ? getLanguage() : 'en';
   const bossName = (currentLang === 'pt' && state.bossBattle.boss?.namePt)
     ? state.bossBattle.boss.namePt
-    : (state.bossBattle.boss?.name || 'Chefão');
+    : (state.bossBattle.boss?.name || (typeof t === 'function' ? t('boss_default_name') : 'Boss'));
 
-  const victoryMsg = currentLang === 'pt'
-    ? `👑 ${bossName.toUpperCase()} DERROTADO! +1.000 PTS!`
+  const victoryMsg = typeof t === 'function'
+    ? t('fb_boss_defeated', { boss: bossName.toUpperCase() })
     : `👑 ${bossName.toUpperCase()} DEFEATED! +1,000 PTS!`;
 
   showFeedback(victoryMsg, 'special');
@@ -2296,10 +2358,10 @@ function grantRewardSkill(skill) {
   if (skill.id === 'extralife') {
     state.lives = Math.min(state.lives + 1, 6);
     state.maxLives = Math.max(state.maxLives, state.lives);
-    showFeedback('+1 Vida permanente!', 'special');
+    showFeedback(typeof t === 'function' ? t('fb_permanent_life') : '+1 Permanent Life!', 'special');
   } else if (skill.id === 'continue') {
     state.continues = (state.continues || 0) + 1;
-    showFeedback('🪙 +1 Ficha Continue obtida!', 'special');
+    showFeedback(typeof t === 'function' ? t('fb_continue_obtained') : '🪙 +1 Continue token obtained!', 'special');
   } else if (skill.id === 'wordpack') {
     const unlockedTexts = new Set(state.unlockedWords.map(w => w.text.toLowerCase()));
     const lockedPool    = WORD_POOL.filter(w => !unlockedTexts.has(w.text.toLowerCase()));
@@ -2307,7 +2369,8 @@ function grantRewardSkill(skill) {
     if (picked.length > 0) {
       picked.forEach(w => state.unlockedWords.push({ ...w, phase: state.phase }));
       const names = picked.map(w => w.text.toUpperCase()).join(', ');
-      showFeedback(`📦 Desbloqueadas: ${names}!`, 'special');
+      const unlLabel = typeof t === 'function' ? t('library_unlocked') : 'Unlocked';
+      showFeedback(`📦 ${unlLabel}: ${names}!`, 'special');
       if (state.unlockedWords.length >= WORD_POOL.length) {
         if (typeof unlockAchievement === 'function') unlockAchievement('colecionador');
       }
@@ -2321,7 +2384,11 @@ function grantRewardSkill(skill) {
     } else {
       state.skillSlots[state.skillSlots.length - 1] = { id: skill.id, count: 1 };
     }
-    showFeedback(`Recompensa concedida: ${skill.name}!`, 'special');
+    const skillName = (typeof t === 'function' && t(`skill_name_${skill.id}`) !== `skill_name_${skill.id}`)
+      ? t(`skill_name_${skill.id}`)
+      : (skill.name || '');
+    const rewardMsg = typeof t === 'function' ? t('fb_reward_granted', { reward: skillName }) : `Reward granted: ${skillName}!`;
+    showFeedback(rewardMsg, 'special');
   }
   playSound('skill');
   updateHUD();
