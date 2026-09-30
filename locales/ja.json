@@ -1,0 +1,861 @@
+{
+    "ui": {
+        "app_title": "Digitinho.",
+        "app_subtitle": "言葉が深淵に落ちる前にルーンキーボードをマスターしよう",
+        "rules_title": "遊び方とルーンのルール",
+        "rule_typing": "<strong>キーボード入力：</strong>文字、音節、単語が画面の底に落ちる前に入力します",
+        "rule_wildcard": "<strong>ワイルドカード単語：</strong>画面上のすべてのルーンを瞬時に破壊しポイントを獲得",
+        "rule_spells": "<strong>数字キー 1〜8（またはクリック）：</strong>スロー、氷結、間隔拡大、シールド、強力な魔法を発動",
+        "rule_combo": "<strong>コンボ＆フューリーモード：</strong>ノーミスの連続入力でスコアが最大8倍にアップ",
+        "rule_danger": "<strong>ライフと危険：</strong>落下直前のルーンは赤く点滅し、落ちるとライフを失います",
+        "btn_start": "スタート",
+        "btn_training": "トレーニングモード（キー列別）",
+        "btn_zen": "禅モード（ゲームオーバーなし）",
+        "btn_timeattack": "タイムアタック (60秒)",
+        "btn_library": "ライブラリ",
+        "btn_achievements": "実績",
+        "btn_settings": "設定",
+        "start_game_modes": "ゲームモード",
+        "btn_training_short": "トレーニング",
+        "btn_training_desc": "キー列別練習",
+        "btn_zen_short": "禅モード",
+        "btn_zen_desc": "ライフ減少なし",
+        "btn_timeattack_short": "タイムアタック",
+        "btn_timeattack_desc": "60秒勝負",
+        "btn_rules": "遊び方",
+        "btn_close_rules": "了解",
+        "hud_phase": "フェーズ",
+        "hud_zen_badge": "禅モード：ライフ減少なし",
+        "hud_training_badge": "トレーニングモード：ライフ減少なし",
+        "hud_training_lesson": "レッスン",
+        "hud_zen_lbl": "禅モード",
+        "hud_training_lbl": "トレーニング",
+        "hud_free": "自由",
+        "hud_zen_pill": "ライフ減少なし",
+        "hud_zen_pill_title": "禅モードではライフを失わず自由に練習できます",
+        "hud_training_pill_title": "トレーニングモードではライフを失わず精度と筋記憶を鍛えます",
+        "hud_lives": "ライフ",
+        "hud_accuracy": "正確度",
+        "hud_wpm": "WPM",
+        "hud_combo": "コンボ",
+        "hud_upcoming": "次の文字",
+        "hud_spells": "スキル",
+        "hud_active": "発動中",
+        "hud_sec": "秒",
+        "pause_title": "一時停止中",
+        "pause_hint": "<kbd>ESC</kbd> キーで再開",
+        "pause_resume": "再開する",
+        "pause_library": "ライブラリ",
+        "pause_achievements": "実績",
+        "pause_settings": "設定",
+        "pause_training_menu": "トレーニングメニューに戻る",
+        "pause_main_menu": "メインメニューに戻る",
+        "confirm_exit_to_menu": "現在のゲームを終了してメインメニューに戻りますか？現在のフェーズの進行状況は失われます。",
+        "confirm_exit_title": "メインメニューに戻りますか？",
+        "confirm_exit_cancel": "プレイを続ける",
+        "confirm_exit_confirm": "はい、戻る",
+        "countdown_hint": "指を準備してください！",
+        "countdown_go": "スタート！",
+        "modal_performance": "パフォーマンス",
+        "modal_phase_complete": "フェーズ {phase} クリア！",
+        "modal_press_continue": "ENTERまたはスペースキーで次へ",
+        "modal_btn_continue": "次へ ➔",
+        "modal_btn_shop": "ショップへ",
+        "modal_stat_score": "スコア",
+        "modal_stat_accuracy": "正確度",
+        "modal_stat_wpm": "WPM",
+        "modal_stat_combo": "最大コンボ",
+        "modal_stat_discovered": "新しく発見した単語",
+        "go_title": "ゲームオーバー",
+        "go_best_score": "最高記録:",
+        "go_new_record_tag": "新記録！",
+        "go_final_score": "最終スコア",
+        "go_phase_reached": "到達フェーズ",
+        "go_best_combo": "ベストコンボ",
+        "go_avg_accuracy": "平均正確度",
+        "go_revive_continue": "復活して継続 ({n})",
+        "go_play_again": "もう一度プレイ",
+        "go_main_menu": "メインメニュー",
+        "victory_title": "完全勝利！",
+        "victory_desc": "おめでとうございます！ルーンキーボードを極めました！",
+        "victory_play_again": "もう一度挑戦",
+        "shop_title": "スキルショップ",
+        "shop_sub": "次のフェーズに向けてスキルを強化しよう",
+        "shop_points": "所持ポイント：",
+        "shop_btn_buy": "購入",
+        "shop_btn_owned": "購入済み",
+        "shop_available": "利用可能",
+        "shop_btn_close": "閉じる",
+        "shop_confirm_exit_title": "ショップを出ますか？",
+        "shop_confirm_exit_desc": "本当にショップを出ますか？",
+        "shop_confirm_stay": "ショップに残る",
+        "shop_confirm_leave": "メインメニューに戻る",
+        "shop_insufficient_pts": "ポイントが足りません！",
+        "skill_name_freezer": "フリーズ",
+        "skill_desc_freezer": "10秒間、画面上のすべてのルーンを凍結します",
+        "skill_name_bomb": "ボム",
+        "skill_desc_bomb": "10秒間、単語の長さに応じた範囲爆破の衝撃波を放ちます",
+        "skill_name_shield": "ルーンシールド",
+        "skill_desc_shield": "10秒間、ルーン落下やミスタイプによるペナルティを無効化します",
+        "skill_name_vortex": "ヴォルテックス",
+        "skill_desc_vortex": "10秒間、2秒ごとに最も危険なルーンを1つ吸収します",
+        "skill_name_slowdown": "スローモーション",
+        "skill_desc_slowdown": "15秒間、ルーンの落下速度を50%減速します",
+        "skill_name_haste": "ポイント2倍",
+        "skill_desc_haste": "15秒間、速度が+0.5になり獲得スコアが2倍になります",
+        "skill_name_speedlock": "スピード固定",
+        "skill_desc_speedlock": "60秒間、速度を1.0倍に固定し加速を防ぎます",
+        "skill_name_dilation": "間隔拡大",
+        "skill_desc_dilation": "45秒間、ルーン間の垂直距離と出現間隔を広げます",
+        "skill_name_continue": "コンティニューコイン",
+        "skill_desc_continue": "ゲームオーバー時に同じフェーズで即座に復活します",
+        "skill_name_wordpack": "ミステリーパック",
+        "skill_desc_wordpack": "ライブラリの単語を即座にランダムで3つ解放します",
+        "skill_name_extralife": "+1 ライフ",
+        "skill_desc_extralife": "このゲームのライフを永続的に+1増やします（最大6）",
+        "lib_title": "ルーンライブラリ",
+        "lib_sub": "発見した単語のコレクション",
+        "lib_discovered": "発見した単語",
+        "lib_locked": "ロック中",
+        "lib_typed": "入力済み {count}回",
+        "lib_not_typed": "未入力",
+        "lib_btn_close": "閉じる",
+        "ach_title": "実績とバッジ",
+        "ach_sub": "タイピングの速度、正確さ、達成度のマイルストーン",
+        "ach_counter": "{unlocked} / {total} 解除済み",
+        "ach_btn_close": "閉じる",
+        "ach_status_unlocked": "✓ 獲得済み",
+        "ach_status_locked": "ロック中",
+        "ach_goal_reached": "目標達成",
+        "ach_unit_words": "単語",
+        "ach_unit_streak": "連続",
+        "ach_unit_combo": "コンボ",
+        "ach_dedo_veloz_name": "神速の指",
+        "ach_dedo_veloz_desc": "60 WPMに到達する。",
+        "ach_cirurgico_name": "百発百中",
+        "ach_cirurgico_desc": "精度100%でいずれかのフェーズをクリアする。",
+        "ach_colecionador_name": "コレクター",
+        "ach_colecionador_desc": "ライブラリのすべての単語を解放する。",
+        "ach_mestre_combo_name": "コンボマスター",
+        "ach_mestre_combo_desc": "30連続でキー入力を成功させる。",
+        "ach_modo_furia_name": "フューリーモード",
+        "ach_modo_furia_desc": "15連続ヒットでフューリーモードを発動。",
+        "ach_mestre_tipo_name": "タイピングマスター",
+        "ach_mestre_tipo_desc": "単語を100回完全に完成させる。",
+        "settings_title": "設定",
+        "settings_sub": "ゲームとインターフェースの調整",
+        "settings_sound": "効果音",
+        "settings_sound_on": "オン",
+        "settings_sound_off": "ミュート",
+        "settings_queue": "キューの位置",
+        "settings_queue_top": "上部（デフォルト）",
+        "settings_queue_bottom": "下部",
+        "settings_theme": "テーマ",
+        "settings_theme_dark": "ダーク",
+        "settings_theme_light": "ライト",
+        "settings_boss": "ボスバトル",
+        "settings_boss_on": "10フェーズ毎（有効）",
+        "settings_boss_off": "無効",
+        "settings_test_boss": "ボス戦テスト",
+        "settings_face_boss": "ボスと戦う",
+        "settings_lang": "言語",
+        "settings_difficulty": "難易度",
+        "settings_diff_locked_match": "プレイ中に難易度を変更することはできません",
+        "diff_easy": "イージー",
+        "diff_normal": "ノーマル",
+        "diff_hard": "ハード",
+        "diff_desc_easy": "初期速度0.5倍 • ミス加速なし • ゲージ減少なし • 5ライフ",
+        "diff_desc_normal": "初期速度1.0倍 • ミス加速なし • 通常ゲージ減少 • 3ライフ",
+        "diff_desc_hard": "初期速度1.5倍 • ミス時+0.05倍加速 • 通常ゲージ減少 • 3ライフ",
+        "settings_cat_general": "一般・インターフェース",
+        "settings_cat_boss": "ボスバトル",
+        "settings_btn_back": "戻る",
+        "training_title": "トレーニング：キーボードの列",
+        "training_sub": "手元を見ずにブラインドタッチの筋肉記憶を鍛えよう",
+        "training_notice": "この練習モードでは<strong>ライフは減りません</strong>。ミスは<strong>正確度 %</strong>と<strong>WPM</strong>に反映されます。",
+        "training_btn_back": "戻る",
+        "training_btn_start": "レッスン開始 (3レッスン) →",
+        "training_btn_again": "もう一度練習",
+        "training_completed": "完了（マスター）",
+        "training_pending": "3レッスン",
+        "training_record_acc": "記録：{acc}% 正確度",
+        "boss_defeated_title": "ボス撃破！",
+        "boss_defeated_sub": "ルーンの試練を鮮やかに突破しました。",
+        "boss_defeated_prompt": "永続ボーナススキルを1つ選択してください：",
+        "boss_btn_pick": "獲得",
+        "boss_pick_skill": "獲得",
+        "boss_default_name": "ボス",
+        "fb_combo_broken": "コンボ途切れ！",
+        "fb_fury_activated": "フューリーモード発動！スコア2倍！",
+        "fb_bomb_activated": "ボム発動 (10秒)！",
+        "fb_bomb_expired": "ボム効果終了",
+        "fb_bomb_explosion": "大爆発 ({lines}列消去)！+{pts}",
+        "fb_freezer_activated": "氷結発動 (10秒)！",
+        "fb_freezer_expired": "氷結終了",
+        "fb_shield_activated": "ルーンシールド発動 (10秒)！",
+        "fb_shield_expired": "シールド効果終了",
+        "fb_shield_blocked": "ルーンシールドがダメージを防いだ！",
+        "fb_shield_error_protected": "シールドがミス入力を守った！",
+        "fb_vortex_activated": "ヴォルテックス発動 (10秒)！",
+        "fb_vortex_expired": "ヴォルテックス効果終了",
+        "fb_slowdown_activated": "スロー発動 (15秒)！",
+        "fb_slowdown_expired": "スロー効果終了",
+        "fb_slow_activated": "スロー発動 (15秒)！",
+        "fb_slow_expired": "スロー効果終了",
+        "fb_haste_activated": "スコア2倍発動 (15秒)！",
+        "fb_haste_expired": "スコア2倍終了",
+        "fb_dilation_activated": "間隔拡大 (45秒)！",
+        "fb_dilation_expired": "間隔拡大効果終了",
+        "fb_speedlock_activated": "速度固定 (1.0x / 60秒)！",
+        "fb_speedlock_expired": "速度固定終了",
+        "fb_wildcard": "ワイルドカード！画面全消去！+{pts}",
+        "fb_life_recovered": "ライフ+1 回復！",
+        "fb_perfect": "パーフェクト！",
+        "hud_performance": "パフォーマンスダッシュボード",
+        "hud_total_score": "トータルスコア",
+        "hud_hits": "ヒット",
+        "hud_errors": "ミス",
+        "hud_discovered_words": "発見した言葉",
+        "hud_view_all": "すべて表示",
+        "hud_spells_hint": "ショップで購入<br/>または言葉を完成",
+        "hud_activate_kb": "発動 (キーボード)",
+        "hud_key_label": "キー",
+        "hud_max_phase": "最高フェーズ",
+        "modal_unlocked_words": "解放された単語",
+        "modal_btn_next_phase": "次のフェーズ →",
+        "modal_btn_back_training": "トレーニングメニューに戻る",
+        "shop_note": "購入ごとに価格が上昇します",
+        "shop_btn_continue": "ゲームを続ける",
+        "btn_back_to_game": "ゲームに戻る",
+        "app_loading": "ルーンデータを読み込み中..."
+    },
+    "syllables": [
+        "ka",
+        "ki",
+        "ku",
+        "ke",
+        "ko",
+        "sa",
+        "shi",
+        "su",
+        "se",
+        "so",
+        "ta",
+        "chi",
+        "tsu",
+        "te",
+        "to",
+        "na",
+        "ni",
+        "nu",
+        "ne",
+        "no",
+        "ha",
+        "hi",
+        "fu",
+        "he",
+        "ho",
+        "ma",
+        "mi",
+        "mu",
+        "me",
+        "mo",
+        "ya",
+        "yu",
+        "yo",
+        "ra",
+        "ri",
+        "ru",
+        "re",
+        "ro",
+        "wa",
+        "wo"
+    ],
+    "words": [
+        {
+            "text": "neko",
+            "type": "animal",
+            "meaning": "猫：愛らしく喉を鳴らす身軽な生き物"
+        },
+        {
+            "text": "ie",
+            "type": "place",
+            "meaning": "家：家族が安らぎ暮らすあたたかな場所"
+        },
+        {
+            "text": "ai",
+            "type": "feeling",
+            "meaning": "愛：深く人を想い慈しむ心"
+        },
+        {
+            "text": "tama",
+            "type": "object",
+            "meaning": "玉・球：スポーツや遊びで転がす丸いもの"
+        },
+        {
+            "text": "hi",
+            "type": "element",
+            "meaning": "火：光と熱を放ち燃え盛るエレメント"
+        },
+        {
+            "text": "kaze",
+            "type": "nature",
+            "meaning": "風：大地を通り抜けて吹き抜ける空気の流れ"
+        },
+        {
+            "text": "mado",
+            "type": "place",
+            "meaning": "窓：光と澄んだ風を部屋に招き入れる開口部"
+        },
+        {
+            "text": "ookami",
+            "type": "animal",
+            "meaning": "狼：月に吠える誇り高き群れのハンター"
+        },
+        {
+            "text": "ishi",
+            "type": "nature",
+            "meaning": "石：大地が育んだ硬く揺るぎない鉱物"
+        },
+        {
+            "text": "hatake",
+            "type": "nature",
+            "meaning": "畑・野：青々とした草や作物が広がる大地"
+        },
+        {
+            "text": "ame",
+            "type": "nature",
+            "meaning": "雨：空の雲から降り注ぐ恵みの雫"
+        },
+        {
+            "text": "tsuchi",
+            "type": "nature",
+            "meaning": "土・地球：生命を育む母なる大地"
+        },
+        {
+            "text": "yoru",
+            "type": "time",
+            "meaning": "夜：日没から夜明けまでの静寂の時間"
+        },
+        {
+            "text": "hoshi",
+            "type": "cosmos",
+            "meaning": "星：夜空にきらめく無数の光の点"
+        },
+        {
+            "text": "ryu",
+            "type": "fantasy",
+            "meaning": "竜：天を駆け炎を放つ伝説の聖獣"
+        },
+        {
+            "text": "kitsune",
+            "type": "animal",
+            "meaning": "狐：豊かな尾を持つ聡明な森の獣"
+        },
+        {
+            "text": "machi",
+            "type": "place",
+            "meaning": "街：賑わいと人々の活気があふれる都市"
+        },
+        {
+            "text": "mori",
+            "type": "nature",
+            "meaning": "森：深い緑と生き物たちが息づく木々の世界"
+        },
+        {
+            "text": "hoshi",
+            "type": "cosmos",
+            "meaning": "惑星：恒星の周りを静かに公転する天体"
+        },
+        {
+            "text": "tsurugi",
+            "type": "object",
+            "meaning": "剣：研ぎ澄まされた鋭い白銀の刃"
+        },
+        {
+            "text": "suisho",
+            "type": "object",
+            "meaning": "水晶：純粋な輝きを宿す透明な結晶"
+        },
+        {
+            "text": "kazan",
+            "type": "nature",
+            "meaning": "火山：灼熱のマグマを吹き上げる雄大な山"
+        },
+        {
+            "text": "umi",
+            "type": "nature",
+            "meaning": "海：地球の広がりを包み込む壮大な青"
+        },
+        {
+            "text": "hebi",
+            "type": "animal",
+            "meaning": "蛇：滑らかに地を這う神秘的な生き物"
+        },
+        {
+            "text": "kaminari",
+            "type": "nature",
+            "meaning": "雷：光の閃光とともに轟く天の轟音"
+        },
+        {
+            "text": "hikari",
+            "type": "cosmos",
+            "meaning": "光：世界を照らし闇を払う希望の輝き"
+        },
+        {
+            "text": "uma",
+            "type": "animal",
+            "meaning": "馬：風のように大地を駆ける優美な駿馬"
+        },
+        {
+            "text": "kumo",
+            "type": "nature",
+            "meaning": "雲：青空にゆったりと浮かぶ白いかたまり"
+        },
+        {
+            "text": "shishi",
+            "type": "animal",
+            "meaning": "獅子：百獣の王と称される威風堂々の猛獣"
+        },
+        {
+            "text": "mizuumi",
+            "type": "nature",
+            "meaning": "湖：山々に囲まれた澄んだ静かな水面"
+        },
+        {
+            "text": "kairo",
+            "type": "tech",
+            "meaning": "回路：電子やバイナリ信号が流れる高密度のプリント基板"
+        },
+        {
+            "text": "reza",
+            "type": "tech",
+            "meaning": "レーザー：光学的スキャンや通信を行う指向性の高い干渉光"
+        },
+        {
+            "text": "nettowaku",
+            "type": "tech",
+            "meaning": "ネットワーク：世界中の端末とサーバを結ぶ高速通信網"
+        },
+        {
+            "text": "deta",
+            "type": "tech",
+            "meaning": "データ：アルゴリズムによって高速処理されるバイナリ情報"
+        },
+        {
+            "text": "pikuseru",
+            "type": "tech",
+            "meaning": "画素：画面を構成する最小単位の微小な色要素"
+        },
+        {
+            "text": "robotto",
+            "type": "tech",
+            "meaning": "ロボット：複雑な作業を自律的にこなすプログラマブル機械"
+        },
+        {
+            "text": "denshi",
+            "type": "tech",
+            "meaning": "電子：回路内を移動して信号と電力を運ぶ素粒子"
+        },
+        {
+            "text": "eisei",
+            "type": "tech",
+            "meaning": "人工衛星：地球周回軌道から通信や観測を行う宇宙機"
+        },
+        {
+            "text": "kodo",
+            "type": "tech",
+            "meaning": "コード：プロセッサを駆動するプログラム命令の構文"
+        },
+        {
+            "text": "sensa",
+            "type": "tech",
+            "meaning": "センサー：光や熱などの物理的変化を検出する電子素子"
+        },
+        {
+            "text": "sofuto",
+            "type": "tech",
+            "meaning": "ソフトウェア：ハードウェアに命令を与えるプログラム群"
+        },
+        {
+            "text": "antena",
+            "type": "tech",
+            "meaning": "アンテナ：電磁波を高精度に送受信する通信装置"
+        }
+    ],
+    "bossWords": {
+        "robot": [
+            {
+                "text": "kairo",
+                "type": "tech",
+                "meaning": "回路：電子やバイナリ信号が流れる高密度のプリント基板"
+            },
+            {
+                "text": "reza",
+                "type": "tech",
+                "meaning": "レーザー：光学的スキャンや通信を行う指向性の高い干渉光"
+            },
+            {
+                "text": "nettowaku",
+                "type": "tech",
+                "meaning": "ネットワーク：世界中の端末とサーバを結ぶ高速通信網"
+            },
+            {
+                "text": "deta",
+                "type": "tech",
+                "meaning": "データ：アルゴリズムによって高速処理されるバイナリ情報"
+            },
+            {
+                "text": "pikuseru",
+                "type": "tech",
+                "meaning": "画素：画面を構成する最小単位の微小な色要素"
+            },
+            {
+                "text": "robotto",
+                "type": "tech",
+                "meaning": "ロボット：複雑な作業を自律的にこなすプログラマブル機械"
+            },
+            {
+                "text": "denshi",
+                "type": "tech",
+                "meaning": "電子：回路内を移動して信号と電力を運ぶ素粒子"
+            },
+            {
+                "text": "eisei",
+                "type": "tech",
+                "meaning": "人工衛星：地球周回軌道から通信や観測を行う宇宙機"
+            },
+            {
+                "text": "kodo",
+                "type": "tech",
+                "meaning": "コード：プロセッサを駆動するプログラム命令の構文"
+            },
+            {
+                "text": "sensa",
+                "type": "tech",
+                "meaning": "センサー：光や熱などの物理的変化を検出する電子素子"
+            },
+            {
+                "text": "sofuto",
+                "type": "tech",
+                "meaning": "ソフトウェア：ハードウェアに命令を与えるプログラム群"
+            },
+            {
+                "text": "antena",
+                "type": "tech",
+                "meaning": "アンテナ：電磁波を高精度に送受信する通信装置"
+            }
+        ],
+        "beast": [
+            {
+                "text": "shishi",
+                "type": "fauna",
+                "meaning": "百獣の王：堂々たるたてがみと圧倒的な狩りの力を持つ大型肉食獣"
+            },
+            {
+                "text": "ookami",
+                "type": "fauna",
+                "meaning": "狼：群れを統率して荒野を駆け、月に遠吠えを響かせる狩人"
+            },
+            {
+                "text": "tora",
+                "type": "fauna",
+                "meaning": "虎：強靭な筋肉と見事な縞模様を持つ孤独な森の猛獣"
+            },
+            {
+                "text": "washi",
+                "type": "fauna",
+                "meaning": "鷲：上空から獲物を見失わず鋭い爪で急降下する空の覇者"
+            },
+            {
+                "text": "mure",
+                "type": "fauna",
+                "meaning": "群れ：厳格な序列を守り連携して獲物を追いつめる捕食者集団"
+            },
+            {
+                "text": "tsume",
+                "type": "fauna",
+                "meaning": "鉤爪：獲物を確実に捕獲し引き裂く鋭利な天然の武器"
+            },
+            {
+                "text": "emono",
+                "type": "fauna",
+                "meaning": "獲物：自然界の食物連鎖の中で命を賭して逃走する野生動物"
+            },
+            {
+                "text": "kemono",
+                "type": "fauna",
+                "meaning": "獣：過酷な大自然を本能と生命力で生き抜く強き生き物"
+            },
+            {
+                "text": "panza",
+                "type": "fauna",
+                "meaning": "豹：しなやかな体躯で木々を渡り歩く俊敏なハンター"
+            },
+            {
+                "text": "hayabusa",
+                "type": "fauna",
+                "meaning": "隼：猛烈な速度の急降下で空中戦を制する俊足の猛禽"
+            },
+            {
+                "text": "kuma",
+                "type": "fauna",
+                "meaning": "熊：強烈な腕力と厚い毛皮で大自然に君臨する大巨獣"
+            },
+            {
+                "text": "yajuu",
+                "type": "fauna",
+                "meaning": "野獣：牙と爪を研ぎ澄まし原始の掟に従う荒ぶる獣"
+            }
+        ],
+        "mythology": [
+            {
+                "text": "ryu",
+                "type": "myth",
+                "meaning": "竜・龍：天を駆け灼熱の炎や雷を操る神聖にして強大な伝説の獣"
+            },
+            {
+                "text": "fushichou",
+                "type": "myth",
+                "meaning": "不死鳥：自らを炎で焼き、その灰の中から永遠に蘇る霊鳥"
+            },
+            {
+                "text": "hidora",
+                "type": "myth",
+                "meaning": "ヒドラ：首を切り落とすたびに二本の新首が生え出る多頭の大蛇"
+            },
+            {
+                "text": "gurifon",
+                "type": "myth",
+                "meaning": "グリフォン：黄金の翼と鋭い嘴、獅子の肉体を持つ天空の守護聖獣"
+            },
+            {
+                "text": "orinpusu",
+                "type": "myth",
+                "meaning": "オリュンポス：雲海の上にそびえ立つ神々の聖なる都"
+            },
+            {
+                "text": "sufinkusu",
+                "type": "myth",
+                "meaning": "スフィンクス：旅人に死の謎解きを課す有翼の人面獅子"
+            },
+            {
+                "text": "shinwa",
+                "type": "myth",
+                "meaning": "神話：神々と英雄たちが世界の創世と運命を紡いだ古代の物語"
+            },
+            {
+                "text": "kimera",
+                "type": "myth",
+                "meaning": "キメラ：獅子と山羊と蛇の異形が合体し火焔を噴き散らす魔獣"
+            },
+            {
+                "text": "kyojin",
+                "type": "myth",
+                "meaning": "巨人・ティタン：オリュンポスの神々に先立ち天地を支えた原初の神族"
+            },
+            {
+                "text": "pegasasu",
+                "type": "myth",
+                "meaning": "ペガサス：純白の翼で大空を駆け抜ける神聖なる天馬"
+            },
+            {
+                "text": "kentaorosu",
+                "type": "myth",
+                "meaning": "ケンタウロス：人間の知性と駿馬の疾走力を併せ持つ森の賢者"
+            },
+            {
+                "text": "kamigami",
+                "type": "myth",
+                "meaning": "神々：天界の神殿に集い、人々の祈りと運命を司る至高の存在"
+            }
+        ],
+        "ocean": [
+            {
+                "text": "kaiyou",
+                "type": "ocean",
+                "meaning": "海洋：地球の大部分を包み込み、未知の深海を抱く広大なる塩水の海"
+            },
+            {
+                "text": "same",
+                "type": "ocean",
+                "meaning": "鮫：微弱な生体電気を感じ取り獲物を追う流線型の捕食者"
+            },
+            {
+                "text": "sango",
+                "type": "ocean",
+                "meaning": "珊瑚：海底に色鮮やかな巨大礁を築き上げる海洋生態系の揺りかご"
+            },
+            {
+                "text": "shinkai",
+                "type": "ocean",
+                "meaning": "深海：太陽の光が届かず、超高圧と暗黒が支配する神秘の世界"
+            },
+            {
+                "text": "tako",
+                "type": "ocean",
+                "meaning": "蛸：八本の腕と高度な知性を持ち、瞬時に体色を変える軟体動物"
+            },
+            {
+                "text": "tsunami",
+                "type": "ocean",
+                "meaning": "津波：海底地震によって発生し沿岸へ押し寄せる巨大な波"
+            },
+            {
+                "text": "kujira",
+                "type": "ocean",
+                "meaning": "鯨：深海に響く歌声で仲間と交信する地球上最大の海洋哺乳類"
+            },
+            {
+                "text": "kaikou",
+                "type": "ocean",
+                "meaning": "海溝：プレートが沈み込み地球で最も深い谷を形成する暗黒の裂け目"
+            },
+            {
+                "text": "shio",
+                "type": "ocean",
+                "meaning": "潮汐：月の引力によって規則正しく満ち引きを繰り返す海水の潮流"
+            },
+            {
+                "text": "kurage",
+                "type": "ocean",
+                "meaning": "海月：傘を拍動させながら青い海を漂う半透明の刺胞動物"
+            },
+            {
+                "text": "shou",
+                "type": "ocean",
+                "meaning": "環礁：無数の珊瑚が何世代も積み重なって築き上げた海の城壁"
+            },
+            {
+                "text": "iruka",
+                "type": "ocean",
+                "meaning": "海豚：超音波クリックで仲間と語り合う人懐っこい海の俊足"
+            }
+        ],
+        "cosmos": [
+            {
+                "text": "hoshi",
+                "type": "cosmos",
+                "meaning": "恒星：自らの核融合反応によって輝き、熱と光を放つ星"
+            },
+            {
+                "text": "wakusei",
+                "type": "cosmos",
+                "meaning": "惑星：恒星の周囲を一定の周期で静かに周回する球状の天体"
+            },
+            {
+                "text": "kidou",
+                "type": "cosmos",
+                "meaning": "軌道：重力に引かれながら天体が時空に描く永遠の運行曲線"
+            },
+            {
+                "text": "suisei",
+                "type": "cosmos",
+                "meaning": "彗星：氷と塵からなり、太陽に近づくと美しい尾を引く旅人"
+            },
+            {
+                "text": "ryuusei",
+                "type": "cosmos",
+                "meaning": "流星：宇宙の微粒子が大気に突入して眩く一筋の軌跡を刻む光"
+            },
+            {
+                "text": "parusa",
+                "type": "cosmos",
+                "meaning": "パルサー：超高密度で規則的な電波パルスを放射する自転中性子星"
+            },
+            {
+                "text": "ginga",
+                "type": "cosmos",
+                "meaning": "銀河：数千億の星々や星雲が重力によって渦を巻く巨大な星の島"
+            },
+            {
+                "text": "nisshoku",
+                "type": "cosmos",
+                "meaning": "日食：月が太陽を覆い隠し地上に一時的な黄昏をもたらす神秘の天体現象"
+            },
+            {
+                "text": "chuuryoku",
+                "type": "cosmos",
+                "meaning": "重力：星々を引き寄せ、宇宙の構造と時間を形作る根源的な力"
+            },
+            {
+                "text": "seiun",
+                "type": "cosmos",
+                "meaning": "星雲：宇宙空間に漂う巨大なガスと塵の雲で、星々が産声をあげる母胎"
+            },
+            {
+                "text": "kuwasa",
+                "type": "cosmos",
+                "meaning": "クエーサー：超巨大ブラックホールを動力源とする宇宙最強クラスの超高輝度天体"
+            },
+            {
+                "text": "uchu",
+                "type": "cosmos",
+                "meaning": "宇宙：無数の星々と銀河、無限の広がりを持つ星間空間"
+            }
+        ],
+        "volcano": [
+            {
+                "text": "kazan",
+                "type": "volcano",
+                "meaning": "火山：地下深部からマグマやガスが噴出する大地の開口部"
+            },
+            {
+                "text": "maguma",
+                "type": "volcano",
+                "meaning": "マグマ：地下深くで超高温によりドロドロに溶けた岩石流体"
+            },
+            {
+                "text": "yougan",
+                "type": "volcano",
+                "meaning": "溶岩：火口から地表へあふれ出し、大地を焼き尽くす灼熱の流体"
+            },
+            {
+                "text": "hai",
+                "type": "volcano",
+                "meaning": "火山灰：噴火に伴い空高く吹き上げられ空を覆う微細な岩石粉末"
+            },
+            {
+                "text": "kakou",
+                "type": "volcano",
+                "meaning": "火口：煮えたぎるマグマと噴煙を噴き上げる火山の頂上開口部"
+            },
+            {
+                "text": "genbuan",
+                "type": "volcano",
+                "meaning": "玄武岩：流出した溶岩が急速に冷え固まってできる極めて硬質な黒色火成岩"
+            },
+            {
+                "text": "kaji",
+                "type": "volcano",
+                "meaning": "鍛冶場：地球深部の大熱量によって鉱物や金属を鍛え上げる地底の坩堝"
+            },
+            {
+                "text": "kanketsusen",
+                "type": "volcano",
+                "meaning": "間欠泉：地下の地熱で沸騰した熱水と水蒸気を天高く噴き上げる天然の泉"
+            },
+            {
+                "text": "iwa",
+                "type": "volcano",
+                "meaning": "岩石：冷え固まった溶岩が気の遠くなる時間を経て生み出す頑強な鉱物"
+            },
+            {
+                "text": "honoo",
+                "type": "volcano",
+                "meaning": "焔：マグマの熱気とガスが激しく燃え盛る大地を焦がす炎"
+            },
+            {
+                "text": "karudera",
+                "type": "volcano",
+                "meaning": "カルデラ：大噴火後にマグマ溜まりが陥没して形成される雄大なすり鉢状の地形"
+            },
+            {
+                "text": "purēto",
+                "type": "volcano",
+                "meaning": "プレート：地球表面を覆い、衝突と沈み込みによって火山活動を生み出す巨大岩盤"
+            }
+        ]
+    },
+    "trainingWorlds": []
+}

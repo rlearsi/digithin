@@ -4,7 +4,7 @@
    ================================================ */
 'use strict';
 
-let state = {};
+let state = null;
 
 // ================================================
 // DIFFICULTY PERSISTENCE & HELPERS
@@ -23,7 +23,7 @@ function getDifficultyConfig(diffKey) {
   const key = diffKey || (state && state.difficulty) || getDifficulty();
   return (typeof DIFFICULTY_CONFIG !== 'undefined' && DIFFICULTY_CONFIG[key])
     ? DIFFICULTY_CONFIG[key]
-    : { id: 'normal', name: 'Médio', initialSpeed: 1.0, speedErrorPenalty: 0, progressErrorPenalty: 3, startLives: 3 };
+    : { id: 'normal', name: 'normal', initialSpeed: 1.0, speedErrorPenalty: 0, progressErrorPenalty: 3, startLives: 3 };
 }
 
 function isMatchInProgress() {
@@ -128,6 +128,8 @@ function defaultState() {
     },
   };
 }
+
+state = defaultState();
 
 // Check if a phase is a Boss Battle (every 10 phases: 10, 20, 30, ...)
 function isBossPhase(phase) {

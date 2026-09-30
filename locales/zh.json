@@ -1,0 +1,852 @@
+{
+    "ui": {
+        "app_title": "Digitinho.",
+        "app_subtitle": "在文字坠入深渊之前熟练掌握符文键盘",
+        "rules_title": "游戏玩法与符文规则",
+        "rule_typing": "<strong>键盘打字：</strong>在字母、音节和单词掉落到底部之前在键盘上输入它们",
+        "rule_wildcard": "<strong>万能单词：</strong>瞬间摧毁屏幕上的所有符文并吸取所有点数",
+        "rule_spells": "<strong>按键 1–8（或点击）：</strong>激活减速、冰冻、间距增加、护盾和强力法术",
+        "rule_combo": "<strong>连击与狂暴模式：</strong>无失误连击可将得分提高至多8倍",
+        "rule_danger": "<strong>生命与危险：</strong>底部的符文会闪烁红光警报，掉落会扣除1点生命值",
+        "btn_start": "开始游戏",
+        "btn_training": "训练模式（键盘按键行）",
+        "btn_zen": "禅模式（无生命限制）",
+        "btn_timeattack": "限时挑战 (60秒)",
+        "btn_library": "图书馆",
+        "btn_achievements": "成就",
+        "btn_settings": "设置",
+        "start_game_modes": "游戏模式",
+        "btn_training_short": "训练模式",
+        "btn_training_desc": "按键行练习",
+        "btn_zen_short": "禅模式",
+        "btn_zen_desc": "无生命限制",
+        "btn_timeattack_short": "限时挑战",
+        "btn_timeattack_desc": "60秒极速",
+        "btn_rules": "玩法说明",
+        "btn_close_rules": "知道了",
+        "hud_phase": "关卡",
+        "hud_zen_badge": "禅模式：不扣除生命",
+        "hud_training_badge": "训练模式：不扣除生命",
+        "hud_training_lesson": "课程",
+        "hud_zen_lbl": "禅模式",
+        "hud_training_lbl": "训练",
+        "hud_free": "自由",
+        "hud_zen_pill": "不扣除生命",
+        "hud_zen_pill_title": "禅模式下您可以自由练习而不会失去生命",
+        "hud_training_pill_title": "训练模式下您可以在不失去生命的情况下培养精准度和肌肉记忆",
+        "hud_lives": "生命",
+        "hud_accuracy": "准确率",
+        "hud_wpm": "WPM",
+        "hud_combo": "连击",
+        "hud_upcoming": "下一个",
+        "hud_spells": "技能",
+        "hud_active": "已激活",
+        "hud_sec": "秒",
+        "pause_title": "游戏暂停",
+        "pause_hint": "按 <kbd>ESC</kbd> 继续游戏",
+        "pause_resume": "继续",
+        "pause_library": "词典",
+        "pause_achievements": "成就",
+        "pause_settings": "设置",
+        "pause_training_menu": "返回训练菜单",
+        "pause_main_menu": "返回主菜单",
+        "confirm_exit_to_menu": "确定要退出当前对局并返回主菜单吗？当前关卡的所有进度都将丢失。",
+        "confirm_exit_title": "返回主菜单？",
+        "confirm_exit_cancel": "继续游戏",
+        "confirm_exit_confirm": "确认返回菜单",
+        "countdown_hint": "准备好你的手指！",
+        "countdown_go": "开始！",
+        "modal_performance": "对局表现",
+        "modal_phase_complete": "关卡 {phase} 完成！",
+        "modal_press_continue": "按回车键或空格键继续",
+        "modal_btn_continue": "继续 ➔",
+        "modal_btn_shop": "前往商店",
+        "modal_stat_score": "得分",
+        "modal_stat_accuracy": "准确率",
+        "modal_stat_wpm": "WPM",
+        "modal_stat_combo": "最高连击",
+        "modal_stat_discovered": "新发现的单词",
+        "go_title": "游戏结束",
+        "go_best_score": "最高纪录:",
+        "go_new_record_tag": "创纪录！",
+        "go_final_score": "最终得分",
+        "go_phase_reached": "到达关卡",
+        "go_best_combo": "最高连击",
+        "go_avg_accuracy": "平均准确率",
+        "go_revive_continue": "复活并继续 ({n})",
+        "go_play_again": "重新游玩",
+        "go_main_menu": "主菜单",
+        "victory_title": "史诗大捷！",
+        "victory_desc": "恭喜你，你已经完全掌握了符文键盘！",
+        "victory_play_again": "再次游玩",
+        "shop_title": "技能商店",
+        "shop_sub": "为接下来的关卡升级你的技能",
+        "shop_points": "你的点数：",
+        "shop_btn_buy": "购买",
+        "shop_btn_owned": "已购买",
+        "shop_available": "可购买",
+        "shop_btn_close": "关闭",
+        "shop_confirm_exit_title": "离开商店？",
+        "shop_confirm_exit_desc": "确定要离开商店吗？",
+        "shop_confirm_stay": "留在商店",
+        "shop_confirm_leave": "返回主菜单",
+        "shop_insufficient_pts": "点数不足！",
+        "skill_name_freezer": "冰冻",
+        "skill_desc_freezer": "冻结轨道上的所有符文10秒",
+        "skill_name_bomb": "炸弹",
+        "skill_desc_bomb": "释放范围冲击波10秒（范围随单词长度扩大）",
+        "skill_name_shield": "符文护盾",
+        "skill_desc_shield": "10秒内免疫掉落符文与输入错误惩罚",
+        "skill_name_vortex": "旋涡",
+        "skill_desc_vortex": "10秒内每2秒吞噬最危险的符文",
+        "skill_name_slowdown": "慢速",
+        "skill_desc_slowdown": "15秒内符文下落速度降低50%",
+        "skill_name_haste": "双倍积分",
+        "skill_desc_haste": "15秒内速度增加0.5且所有积分翻倍（2×）",
+        "skill_name_speedlock": "锁定速度",
+        "skill_desc_speedlock": "锁定速度在1.0×持续60秒，防止失误加速",
+        "skill_name_dilation": "拉开间距",
+        "skill_desc_dilation": "45秒内增加符文垂直距离与出现间隔",
+        "skill_name_continue": "接关币",
+        "skill_desc_continue": "游戏结束时在当前关卡立即复活",
+        "skill_name_wordpack": "神秘卡包",
+        "skill_desc_wordpack": "立即为词典随机解锁3个神秘词汇",
+        "skill_name_extralife": "+1 生命",
+        "skill_desc_extralife": "本局永久增加1点备用生命（最多6点）",
+        "lib_title": "符文词典",
+        "lib_sub": "已发现的单词图鉴",
+        "lib_discovered": "已发现单词",
+        "lib_locked": "未解锁",
+        "lib_typed": "已输入 {count}次",
+        "lib_not_typed": "尚未输入",
+        "lib_btn_close": "关闭",
+        "ach_title": "成就与勋章",
+        "ach_sub": "你的打字速度与准确率里程碑",
+        "ach_counter": "{unlocked} / {total} 已解锁",
+        "ach_btn_close": "关闭",
+        "ach_status_unlocked": "✓ 已达成",
+        "ach_status_locked": "未解锁",
+        "ach_goal_reached": "目标达成",
+        "ach_unit_words": "单词",
+        "ach_unit_streak": "次命中",
+        "ach_unit_combo": "连击",
+        "ach_dedo_veloz_name": "飞速之指",
+        "ach_dedo_veloz_desc": "达到 60 WPM。",
+        "ach_cirurgico_name": "精准无误",
+        "ach_cirurgico_desc": "以100%准确率完成任意阶段。",
+        "ach_colecionador_name": "收藏家",
+        "ach_colecionador_desc": "解锁词库中的所有词汇。",
+        "ach_mestre_combo_name": "连击大师",
+        "ach_mestre_combo_desc": "达成30次连续正确击键。",
+        "ach_modo_furia_name": "狂暴模式",
+        "ach_modo_furia_desc": "连击15次激活狂暴模式。",
+        "ach_mestre_tipo_name": "打字宗师",
+        "ach_mestre_tipo_desc": "敲击完成100个完整词汇。",
+        "settings_title": "设置",
+        "settings_sub": "游戏与界面选项调整",
+        "settings_sound": "音效",
+        "settings_sound_on": "开启",
+        "settings_sound_off": "静音",
+        "settings_queue": "队列位置",
+        "settings_queue_top": "顶部（默认）",
+        "settings_queue_bottom": "底部",
+        "settings_theme": "界面主题",
+        "settings_theme_dark": "暗色",
+        "settings_theme_light": "亮色",
+        "settings_boss": "Boss战",
+        "settings_boss_on": "每10关（已激活）",
+        "settings_boss_off": "已禁用",
+        "settings_test_boss": "测试Boss战",
+        "settings_face_boss": "挑战Boss",
+        "settings_lang": "语言",
+        "settings_difficulty": "游戏难度",
+        "settings_diff_locked_match": "对局进行中无法更改难度",
+        "diff_easy": "简单",
+        "diff_normal": "普通",
+        "diff_hard": "困难",
+        "diff_desc_easy": "初始速度0.5× • 失误不加速 • 失误不扣进度 • 5条生命",
+        "diff_desc_normal": "初始速度1.0× • 失误不加速 • 正常扣除进度 • 3条生命",
+        "diff_desc_hard": "初始速度1.5× • 每次失误+0.05×加速 • 正常扣除进度 • 3条生命",
+        "settings_cat_general": "通用与界面",
+        "settings_cat_boss": "首领之战",
+        "settings_btn_back": "返回",
+        "training_title": "训练模式：键盘按键行",
+        "training_sub": "盲打肌肉记忆练习，无需低头看键盘",
+        "training_notice": "在此教学练习模式下<strong>不会扣除生命值</strong>。输入失误与掉落会降低你的<strong>准确率 %</strong>与<strong>WPM</strong>。",
+        "training_btn_back": "返回",
+        "training_btn_start": "开始练习（3课） →",
+        "training_btn_again": "再次练习",
+        "training_completed": "已完成（精通）",
+        "training_pending": "3节课",
+        "training_record_acc": "最佳记录：{acc}% 准确率",
+        "boss_defeated_title": "BOSS 已击败！",
+        "boss_defeated_sub": "你以极高的造诣解开了所有符文谜题。",
+        "boss_defeated_prompt": "选择 1 项永久奖励技能：",
+        "boss_btn_pick": "获取",
+        "boss_pick_skill": "获取",
+        "boss_default_name": "Boss",
+        "fb_combo_broken": "连击中断！",
+        "fb_fury_activated": "狂暴模式激活！得分翻倍！",
+        "fb_bomb_activated": "炸弹法术激活 (10秒)！",
+        "fb_bomb_expired": "炸弹效果结束",
+        "fb_bomb_explosion": "大爆炸 (摧毁 {lines} 行)！+{pts}",
+        "fb_freezer_activated": "冰冻激活 (10秒)！",
+        "fb_freezer_expired": "冰冻结束",
+        "fb_shield_activated": "符文护盾激活 (10秒)！",
+        "fb_shield_expired": "护盾效果结束",
+        "fb_shield_blocked": "符文护盾阻挡了伤害！",
+        "fb_shield_error_protected": "护盾保护了误敲失误！",
+        "fb_vortex_activated": "符文漩涡激活 (10秒)！",
+        "fb_vortex_expired": "符文漩涡结束",
+        "fb_slowdown_activated": "减速激活 (15秒)！",
+        "fb_slowdown_expired": "减速结束",
+        "fb_slow_activated": "减速激活 (15秒)！",
+        "fb_slow_expired": "减速结束",
+        "fb_haste_activated": "双倍积分激活 (15秒)！",
+        "fb_haste_expired": "双倍积分结束",
+        "fb_dilation_activated": "间距延展 (45秒)！",
+        "fb_dilation_expired": "间距延展结束",
+        "fb_speedlock_activated": "速度锁定 (1.0x / 60秒)！",
+        "fb_speedlock_expired": "速度锁定结束",
+        "fb_wildcard": "万能符文！全屏吸收！+{pts}",
+        "fb_life_recovered": "+1 生命恢复！",
+        "fb_perfect": "完美无瑕！",
+        "hud_performance": "表现面板",
+        "hud_total_score": "总积分",
+        "hud_hits": "击中",
+        "hud_errors": "错误",
+        "hud_discovered_words": "已探索词汇",
+        "hud_view_all": "查看全部",
+        "hud_spells_hint": "在商店购买<br/>或敲击完整词汇",
+        "hud_activate_kb": "激活 (键盘)",
+        "hud_key_label": "按键",
+        "hud_max_phase": "最高阶段",
+        "modal_unlocked_words": "已解锁词汇",
+        "modal_btn_next_phase": "下一阶段 →",
+        "modal_btn_back_training": "返回训练菜单",
+        "shop_note": "每次购买后价格递增",
+        "shop_btn_continue": "继续游戏",
+        "btn_back_to_game": "返回游戏",
+        "app_loading": "正在加载符文数据..."
+    },
+    "syllables": [
+        "ba",
+        "pa",
+        "ma",
+        "fa",
+        "da",
+        "ta",
+        "na",
+        "la",
+        "ga",
+        "ka",
+        "ha",
+        "ji",
+        "qi",
+        "xi",
+        "zhi",
+        "chi",
+        "shi",
+        "ri",
+        "zi",
+        "ci",
+        "si",
+        "de",
+        "le",
+        "me",
+        "ne",
+        "ge",
+        "he",
+        "bo",
+        "po",
+        "mo",
+        "fo"
+    ],
+    "words": [
+        {
+            "text": "mao",
+            "type": "animal",
+            "meaning": "猫：可爱机敏、呼噜撒娇的小动物"
+        },
+        {
+            "text": "jia",
+            "type": "place",
+            "meaning": "家：充满温暖与守候的安居之所"
+        },
+        {
+            "text": "ai",
+            "type": "feeling",
+            "meaning": "爱：内心深处真挚的情感与守护"
+        },
+        {
+            "text": "qiu",
+            "type": "object",
+            "meaning": "球：运动与游戏中旋转的圆形物体"
+        },
+        {
+            "text": "huo",
+            "type": "element",
+            "meaning": "火：散发炽热光芒与能量的烈焰"
+        },
+        {
+            "text": "feng",
+            "type": "nature",
+            "meaning": "风：在大地上流转吹拂的清新空气"
+        },
+        {
+            "text": "chuang",
+            "type": "place",
+            "meaning": "窗：迎纳阳光与和风的明净之口"
+        },
+        {
+            "text": "lang",
+            "type": "animal",
+            "meaning": "狼：团结勇敢、仰天长啸的旷野生灵"
+        },
+        {
+            "text": "shi",
+            "type": "nature",
+            "meaning": "石：大自然历经岁月洗礼的坚固磐石"
+        },
+        {
+            "text": "ye",
+            "type": "nature",
+            "meaning": "野：无边无际、生机勃勃的开阔原野"
+        },
+        {
+            "text": "yu",
+            "type": "nature",
+            "meaning": "雨：自云端飘落、润泽大地的甘霖"
+        },
+        {
+            "text": "di",
+            "type": "nature",
+            "meaning": "地：孕育万千生命的深厚大地母亲"
+        },
+        {
+            "text": "ye",
+            "type": "time",
+            "meaning": "夜：夕阳隐没后星河闪耀的宁静时刻"
+        },
+        {
+            "text": "xing",
+            "type": "cosmos",
+            "meaning": "星：夜空中永恒闪烁的璀璨天体"
+        },
+        {
+            "text": "long",
+            "type": "fantasy",
+            "meaning": "龙：翱翔九天、吐纳烈焰的祥瑞神兽"
+        },
+        {
+            "text": "hu",
+            "type": "animal",
+            "meaning": "狐：身姿灵巧、毛色鲜艳的林间生灵"
+        },
+        {
+            "text": "cheng",
+            "type": "place",
+            "meaning": "城：车水马龙、繁荣喧嚣的现代都市"
+        },
+        {
+            "text": "lin",
+            "type": "nature",
+            "meaning": "林：古木参天、鸟鸣清脆的苍翠森林"
+        },
+        {
+            "text": "xing",
+            "type": "cosmos",
+            "meaning": "行星：沿着轨道静谧运行的广袤天体"
+        },
+        {
+            "text": "jian",
+            "type": "object",
+            "meaning": "剑：寒光闪闪、斩除邪祟的正义之刃"
+        },
+        {
+            "text": "jing",
+            "type": "object",
+            "meaning": "晶：纯洁通透、折射彩芒的天然矿石"
+        },
+        {
+            "text": "shan",
+            "type": "nature",
+            "meaning": "火山：涌动灼热岩浆与壮丽熔岩的高山"
+        },
+        {
+            "text": "hai",
+            "type": "nature",
+            "meaning": "海：浩瀚无垠、波澜壮阔的蓝色大洋"
+        },
+        {
+            "text": "she",
+            "type": "animal",
+            "meaning": "蛇：蜿蜒滑行、神秘莫测的灵巧爬虫"
+        },
+        {
+            "text": "lei",
+            "type": "nature",
+            "meaning": "雷：闪电划破长空后的震撼轰鸣"
+        },
+        {
+            "text": "guang",
+            "type": "cosmos",
+            "meaning": "光：驱散所有黑暗的明亮之源"
+        },
+        {
+            "text": "ma",
+            "type": "animal",
+            "meaning": "马：昂首嘶鸣、驰骋千里的骏马"
+        },
+        {
+            "text": "yun",
+            "type": "nature",
+            "meaning": "云：随风漂浮于苍穹之上的洁白水气"
+        },
+        {
+            "text": "shi",
+            "type": "animal",
+            "meaning": "狮：威武雄壮、傲视草原的百兽之王"
+        },
+        {
+            "text": "hu",
+            "type": "nature",
+            "meaning": "湖：群山环抱间澄澈如镜的水域"
+        },
+        {
+            "text": "xinpi",
+            "type": "tech",
+            "meaning": "芯片：以纳米级晶体管高速执行二进制指令的集成电路"
+        },
+        {
+            "text": "jiguang",
+            "type": "tech",
+            "meaning": "激光：用于光学传感、高能扫描与数据传输的高相干性光束"
+        },
+        {
+            "text": "wangluo",
+            "type": "tech",
+            "meaning": "网络：将海量计算节点与数据中心连接的互联数字网格"
+        },
+        {
+            "text": "shuju",
+            "type": "tech",
+            "meaning": "数据：由算法系统高速解析和存取的离散信息单元"
+        },
+        {
+            "text": "xiangsu",
+            "type": "tech",
+            "meaning": "像素：组成数字屏幕画面的最小独立可寻址色彩单元"
+        },
+        {
+            "text": "jiqiren",
+            "type": "tech",
+            "meaning": "机器人：具备传感器与执行机构的自律型机电智能设备"
+        },
+        {
+            "text": "dianlu",
+            "type": "tech",
+            "meaning": "电路：由导线与电子元器件构成的闭合导电路径"
+        },
+        {
+            "text": "weixing",
+            "type": "tech",
+            "meaning": "卫星：在地球轨道上中继传输通讯与定位信号的人造天体"
+        },
+        {
+            "text": "daima",
+            "type": "tech",
+            "meaning": "代码：使用编程语言规范书写给计算机执行的程序序列"
+        },
+        {
+            "text": "chuanganqi",
+            "type": "tech",
+            "meaning": "传感器：侦测环境光热、压力等物理变化的微电子元件"
+        },
+        {
+            "text": "ruanjian",
+            "type": "tech",
+            "meaning": "软件：指挥计算机硬件运行与数据处理的程序系统"
+        },
+        {
+            "text": "tianxian",
+            "type": "tech",
+            "meaning": "天线：发射和接收电磁无线电波信号的高频导电装置"
+        }
+    ],
+    "bossWords": {
+        "robot": [
+            {
+                "text": "xinpi",
+                "type": "tech",
+                "meaning": "芯片：以纳米级晶体管高速执行二进制指令的集成电路"
+            },
+            {
+                "text": "jiguang",
+                "type": "tech",
+                "meaning": "激光：用于光学传感、高能扫描与数据传输的高相干性光束"
+            },
+            {
+                "text": "wangluo",
+                "type": "tech",
+                "meaning": "网络：将海量计算节点与数据中心连接的互联数字网格"
+            },
+            {
+                "text": "shuju",
+                "type": "tech",
+                "meaning": "数据：由算法系统高速解析和存取的离散信息单元"
+            },
+            {
+                "text": "xiangsu",
+                "type": "tech",
+                "meaning": "像素：组成数字屏幕画面的最小独立可寻址色彩单元"
+            },
+            {
+                "text": "jiqiren",
+                "type": "tech",
+                "meaning": "机器人：具备传感器与执行机构的自律型机电智能设备"
+            },
+            {
+                "text": "dianlu",
+                "type": "tech",
+                "meaning": "电路：由导线与电子元器件构成的闭合导电路径"
+            },
+            {
+                "text": "weixing",
+                "type": "tech",
+                "meaning": "卫星：在地球轨道上中继传输通讯与定位信号的人造天体"
+            },
+            {
+                "text": "daima",
+                "type": "tech",
+                "meaning": "代码：使用编程语言规范书写给计算机执行的程序序列"
+            },
+            {
+                "text": "chuanganqi",
+                "type": "tech",
+                "meaning": "传感器：侦测环境光热、压力等物理变化的微电子元件"
+            },
+            {
+                "text": "ruanjian",
+                "type": "tech",
+                "meaning": "软件：指挥计算机硬件运行与数据处理的程序系统"
+            },
+            {
+                "text": "tianxian",
+                "type": "tech",
+                "meaning": "天线：发射和接收电磁无线电波信号的高频导电装置"
+            }
+        ],
+        "beast": [
+            {
+                "text": "shizi",
+                "type": "fauna",
+                "meaning": "狮子：拥有威严鬃毛、统治开阔草原与领地的顶级食肉王者"
+            },
+            {
+                "text": "lang",
+                "type": "fauna",
+                "meaning": "狼：以严密纪律协同狩猎、向着夜月发出悠长长嚎的荒野捕食者"
+            },
+            {
+                "text": "laohu",
+                "type": "fauna",
+                "meaning": "老虎：身披斑斓条纹、具备极强爆发力和隐蔽伏击能力的丛林霸主"
+            },
+            {
+                "text": "laoying",
+                "type": "fauna",
+                "meaning": "老鹰：翱翔于九天之上、以极目远眺锁定制胜猎物的猛禽"
+            },
+            {
+                "text": "qunluo",
+                "type": "fauna",
+                "meaning": "群落：遵循野性严密秩序、结阵猎杀强敌的狼群捕食方阵"
+            },
+            {
+                "text": "lizhao",
+                "type": "fauna",
+                "meaning": "利爪：猛兽脚掌上用于奔袭撕裂与扑杀猎物的尖锐角质武器"
+            },
+            {
+                "text": "liewu",
+                "type": "fauna",
+                "meaning": "猎物：在大自然残酷食物链中依靠敏捷机敏求生的动物"
+            },
+            {
+                "text": "yeshou",
+                "type": "fauna",
+                "meaning": "野兽：以原始生存本能主宰旷野山川的强悍陆地生命"
+            },
+            {
+                "text": "heibao",
+                "type": "fauna",
+                "meaning": "黑豹：遁入夜色之中、步履无声且爆发力极强的敏捷大猫"
+            },
+            {
+                "text": "lieying",
+                "type": "fauna",
+                "meaning": "猎鹰：以高空俯冲绝技精准截击空中目标的飞禽霸者"
+            },
+            {
+                "text": "xiong",
+                "type": "fauna",
+                "meaning": "巨熊：身披厚密重铠般皮毛、拥有碎骨巨力的高山巨兽"
+            },
+            {
+                "text": "caoyuan",
+                "type": "fauna",
+                "meaning": "草原：风吹草低见牛羊、万千野性生灵竞逐奔腾的广袤大地"
+            }
+        ],
+        "mythology": [
+            {
+                "text": "shenlong",
+                "type": "myth",
+                "meaning": "神龙：翱翔于九霄云外、吞吐焚天烈焰与雷霆的天地神兽"
+            },
+            {
+                "text": "fenghuang",
+                "type": "myth",
+                "meaning": "凤凰：浴火淬炼而生命不灭、在余烬中翱翔重生的百鸟之王"
+            },
+            {
+                "text": "jiutoushe",
+                "type": "myth",
+                "meaning": "九头蛇：断其一首则生两首、蕴藏剧毒血海的上古魔物"
+            },
+            {
+                "text": "shishenrenmian",
+                "type": "myth",
+                "meaning": "狮身人面：盘踞于金字塔前、以致命谜题裁决凡人命运的守门者"
+            },
+            {
+                "text": "aolinpisi",
+                "type": "myth",
+                "meaning": "奥林匹斯：众神居于云海之巅、执掌天地雷火的黄金神山"
+            },
+            {
+                "text": "sifinkesi",
+                "type": "myth",
+                "meaning": "斯芬克斯：身披巨翼与利爪、盘问命运之秘的守护异兽"
+            },
+            {
+                "text": "shenhua",
+                "type": "myth",
+                "meaning": "神话：记载远古神明开辟混沌与英雄传奇的洪荒史诗"
+            },
+            {
+                "text": "qimeila",
+                "type": "myth",
+                "meaning": "奇美拉：狮首羊身蛇尾、吞吐烈火熔岩的凶煞魔物"
+            },
+            {
+                "text": "juren",
+                "type": "myth",
+                "meaning": "泰坦巨人：诞生于天地开辟之初、拥有翻江倒海伟力的上古巨神"
+            },
+            {
+                "text": "tianma",
+                "type": "myth",
+                "meaning": "天马：翱翔天际、踏破星辰破云而出的神圣飞马"
+            },
+            {
+                "text": "banrenma",
+                "type": "myth",
+                "meaning": "半人马：兼具人类智慧与奔马极速的荒野守护智者"
+            },
+            {
+                "text": "shengdian",
+                "type": "myth",
+                "meaning": "圣殿：供奉神谕与永恒圣火、接受万人朝拜的庄严殿堂"
+            }
+        ],
+        "ocean": [
+            {
+                "text": "haiyang",
+                "type": "ocean",
+                "meaning": "海洋：覆盖地球绝大部分地表面积、蕴藏无尽深渊秘密的广阔水域"
+            },
+            {
+                "text": "shayu",
+                "type": "ocean",
+                "meaning": "鲨鱼：拥有敏锐电场感知器官与流线型躯体的远洋顶级掠食者"
+            },
+            {
+                "text": "shanhu",
+                "type": "ocean",
+                "meaning": "珊瑚：由无数微小水螅体分泌碳酸钙堆叠而成的五彩缤纷海底礁石"
+            },
+            {
+                "text": "shenhai",
+                "type": "ocean",
+                "meaning": "深海：阳光无法穿透、承受着巨大水压与永恒寂静的深海深层"
+            },
+            {
+                "text": "zhangyu",
+                "type": "ocean",
+                "meaning": "章鱼：拥有八条灵活触腕、极高智商并能根据环境瞬间拟态的软体生物"
+            },
+            {
+                "text": "haixiao",
+                "type": "ocean",
+                "meaning": "海啸：海底板块震动引发、掀翻万顷波涛呼啸而至的滔天巨浪"
+            },
+            {
+                "text": "jingyu",
+                "type": "ocean",
+                "meaning": "鲸鱼：依靠悠扬低沉的次声波歌声在各大洋中迁徙通信的庞然大物"
+            },
+            {
+                "text": "haigou",
+                "type": "ocean",
+                "meaning": "海沟：大洋板块向下俯冲形成的地球表面最深邃陡峭的峡谷"
+            },
+            {
+                "text": "haichao",
+                "type": "ocean",
+                "meaning": "海潮：在月球引力摄动下昼夜节律性涨落的海洋潮汐水流"
+            },
+            {
+                "text": "shuimu",
+                "type": "ocean",
+                "meaning": "水母：在蔚蓝深海中轻盈律动伞盖、漂浮巡游的半透明刺胞生灵"
+            },
+            {
+                "text": "jiaoshi",
+                "type": "ocean",
+                "meaning": "礁石：隐匿于波涛之下、庇护亿万海洋生灵繁衍生息的坚实壁垒"
+            },
+            {
+                "text": "haitun",
+                "type": "ocean",
+                "meaning": "海豚：利用高频回声定位欢跃浪尖、智慧超凡的群居海洋哺乳精灵"
+            }
+        ],
+        "cosmos": [
+            {
+                "text": "hengxing",
+                "type": "cosmos",
+                "meaning": "恒星：核心进行剧烈热核聚变、源源不断向深空辐射光热的星体"
+            },
+            {
+                "text": "xingqiu",
+                "type": "cosmos",
+                "meaning": "行星：沿着固定公转椭圆轨道围绕中心恒星安静运行的天体"
+            },
+            {
+                "text": "guidao",
+                "type": "cosmos",
+                "meaning": "轨道：在引力摄动下天体在时空中划出的封闭几何运行路径"
+            },
+            {
+                "text": "huixing",
+                "type": "cosmos",
+                "meaning": "彗星：由冰雪与尘埃构成、接近太阳时喷发万千耀眼气态长尾的行者"
+            },
+            {
+                "text": "liuxing",
+                "type": "cosmos",
+                "meaning": "流星：穿梭于深空的星际尘屑撞击大气层剧烈摩擦燃尽的光芒"
+            },
+            {
+                "text": "maichongxing",
+                "type": "cosmos",
+                "meaning": "脉冲星：飞速自转、精准扫射极端相对论射线束的高密度中子星"
+            },
+            {
+                "text": "yinhe",
+                "type": "cosmos",
+                "meaning": "银河：由千亿颗恒星系统与星际尘埃在暗物质引力下凝聚的宏大漩涡"
+            },
+            {
+                "text": "rishe",
+                "type": "cosmos",
+                "meaning": "日食：月球精确遮挡太阳光盘、将白昼转瞬化为夜色苍穹的天象奇观"
+            },
+            {
+                "text": "yinli",
+                "type": "cosmos",
+                "meaning": "引力：弯曲时空结构、决定恒星演化与宇宙终极宿命的基本作用力"
+            },
+            {
+                "text": "xingyun",
+                "type": "cosmos",
+                "meaning": "星云：孕育恒星胚胎与行星系统的弥散性星际气体尘埃天体"
+            },
+            {
+                "text": "leixing",
+                "type": "cosmos",
+                "meaning": "类星体：超大质量黑洞吞噬物质时释放毁天灭地能量的高能天体"
+            },
+            {
+                "text": "yuzhou",
+                "type": "cosmos",
+                "meaning": "宇宙：包含一切物质、能量与时空演变的无垠宏观存在"
+            }
+        ],
+        "volcano": [
+            {
+                "text": "huoshan",
+                "type": "volcano",
+                "meaning": "火山：地壳板块缝隙中释放高温熔岩、火山灰与高压气体的天然喷口"
+            },
+            {
+                "text": "yanjiang",
+                "type": "volcano",
+                "meaning": "岩浆：存在于地球深部地幔、处于超高温高压熔融状态的液态矿物"
+            },
+            {
+                "text": "rongyan",
+                "type": "volcano",
+                "meaning": "熔岩：喷出地表后奔涌流淌、所到之处重塑地貌的炽热火红岩流"
+            },
+            {
+                "text": "huohui",
+                "type": "volcano",
+                "meaning": "火山灰：剧烈喷发时被送上万米平流层、遮天蔽日的细微矿物碎屑"
+            },
+            {
+                "text": "huokou",
+                "type": "volcano",
+                "meaning": "火山口：位于火山顶部、不断喷吐滚烫地热气体与熔岩柱的碗状凹坑"
+            },
+            {
+                "text": "xuanyuanyan",
+                "type": "volcano",
+                "meaning": "玄武岩：基性岩浆溢出地表迅速冷却形成的黑色致密火成岩石"
+            },
+            {
+                "text": "lianlu",
+                "type": "volcano",
+                "meaning": "地热熔炉：在极端构造高热下熔融万物重铸地壳的天然冶炼之所"
+            },
+            {
+                "text": "jianquan",
+                "type": "volcano",
+                "meaning": "间歇泉：受地下高压蒸汽积蓄定期向空中喷涌沸腾水柱的地热奇景"
+            },
+            {
+                "text": "yanshi",
+                "type": "volcano",
+                "meaning": "岩石：由玄武岩熔岩冷却固化形成的地壳固态基岩骨架"
+            },
+            {
+                "text": "lieyan",
+                "type": "volcano",
+                "meaning": "烈焰：在极端地热能量驱动下肆虐翻腾的熔融之焰"
+            },
+            {
+                "text": "podi",
+                "type": "volcano",
+                "meaning": "破火山口：特大喷发后岩浆房塌陷形成的宽阔壮丽盆状陷落构造"
+            },
+            {
+                "text": "bankuai",
+                "type": "volcano",
+                "meaning": "板块：浮动于地幔软流层之上、挤压摩擦引爆地心熔岩的陆壳构造"
+            }
+        ]
+    },
+    "trainingWorlds": []
+}

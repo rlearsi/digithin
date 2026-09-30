@@ -202,30 +202,26 @@ function showShop() {
 }
 
 function getLocalizedItem(item) {
-  const lang = typeof getLanguage === 'function' ? getLanguage() : (typeof state !== 'undefined' && state?.language ? state.language : 'pt');
   const nameKey = `skill_name_${item.id}`;
   const descKey = `skill_desc_${item.id}`;
 
-  let name = (typeof t === 'function' && t(nameKey) !== nameKey)
+  const name = (typeof t === 'function' && t(nameKey) !== nameKey)
     ? t(nameKey)
-    : (lang === 'pt' && item.namePt ? item.namePt : item.name);
+    : (item.name || '');
 
-  let desc = (typeof t === 'function' && t(descKey) !== descKey)
+  const desc = (typeof t === 'function' && t(descKey) !== descKey)
     ? t(descKey)
-    : (lang === 'pt' && item.descPt ? item.descPt : item.desc);
+    : (item.desc || '');
 
-  if (lang === 'pt') {
-    if (item.namePt) name = item.namePt;
-    if (item.descPt) desc = item.descPt;
-  }
-
-  return { name: name || item.name || '', desc: desc || item.desc || '' };
+  return { name, desc };
 }
 
 function renderShopItems() {
   const grid = $('shop-items-grid');
   if (!grid) return;
   grid.innerHTML = '';
+
+  if (!Array.isArray(state.currentShopItems) || state.currentShopItems.length === 0) return;
 
   state.currentShopItems.forEach((item, index) => {
     const price     = shopPrice(item.basePrice);
@@ -237,7 +233,7 @@ function renderShopItems() {
     const itemColor = item.color || 'var(--accent-primary)';
     const loc       = getLocalizedItem(item);
 
-    const buyTxt = typeof t === 'function' ? t('shop_btn_buy') : 'Comprar';
+    const buyTxt = typeof t === 'function' ? t('shop_btn_buy') : '•';
 
     const el = document.createElement('div');
     el.className = 'shop-card ' + (canAfford ? 'shop-card-affordable' : 'shop-card-dimmed') + (isSelected ? ' shop-card-selected' : '');
@@ -247,7 +243,7 @@ function renderShopItems() {
       selectShopItem(index);
     };
 
-    const availTxt = (typeof t === 'function' && t('shop_available')) ? t('shop_available') : 'Disponível';
+    const availTxt = typeof t === 'function' ? t('shop_available') : '✓';
     el.innerHTML = `
       <div class="shop-icon-wrapper" style="--item-clr: ${itemColor}">
         <span class="shop-icon-symbol">${item.icon}</span>

@@ -152,8 +152,8 @@ function updateSoundUI() {
       ? `<svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`
       : `<svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>`;
     const label = isEnabled
-      ? (typeof t === 'function' ? t('settings_sound_on') : 'Ligado')
-      : (typeof t === 'function' ? t('settings_sound_off') : 'Mudo');
+      ? (typeof t === 'function' ? t('settings_sound_on') : 'On')
+      : (typeof t === 'function' ? t('settings_sound_off') : 'Mute');
     soundVal.innerHTML = `${iconSvg} <span>${label}</span>`;
   }
   const soundBtn = $('settings-sound-btn');
@@ -367,6 +367,7 @@ function phaseGoal() {
 
 // Update HUD & Side Panels
 function updateHUD() {
+  if (typeof state === 'undefined' || !state) return;
   const formattedScore = formatScore(state.totalScore);
   if (hudTotal) hudTotal.textContent = formattedScore;
 
@@ -474,11 +475,12 @@ function updateHUD() {
   const zenFixedBadge = $('zen-fixed-badge');
   if (zenFixedBadge) {
     if (state.gameMode === 'zen') {
-      zenFixedBadge.textContent = '🧘 Modo Zen: sem perda de vidas';
+      zenFixedBadge.textContent = typeof t === 'function' ? t('hud_zen_badge') : 'Zen';
       zenFixedBadge.classList.remove('hidden');
     } else if (state.gameMode === 'training') {
       const tw = typeof TRAINING_WORLDS !== 'undefined' ? TRAINING_WORLDS[state.trainingWorld || 1] : null;
-      zenFixedBadge.textContent = tw ? `🎓 ${tw.name} (Lição ${state.phase}/3)` : '🎓 Modo Treinamento (sem perda de vidas)';
+      const lessonLabel = typeof t === 'function' ? t('hud_training_lesson') : 'Lesson';
+      zenFixedBadge.textContent = tw ? `${tw.name} (${lessonLabel} ${state.phase}/3)` : (typeof t === 'function' ? t('hud_training_badge') : 'Training');
       zenFixedBadge.classList.remove('hidden');
     } else {
       zenFixedBadge.classList.add('hidden');
@@ -491,21 +493,26 @@ function updateHUD() {
     const livesLbl = $('hud-lives-lbl');
     const livesCountText = $('lives-count-text');
     if (state.gameMode === 'zen') {
-      livesRow.innerHTML = '<span class="zen-lives-pill" title="No Modo Zen você pratica livremente sem perda de vidas">🧘 Sem perda de vidas</span>';
-      if (livesLbl) livesLbl.textContent = 'MODO ZEN';
+      const zenPill = typeof t === 'function' ? t('hud_zen_pill') : 'No lives lost';
+      const zenTitle = typeof t === 'function' ? t('hud_zen_pill_title') : '';
+      livesRow.innerHTML = `<span class="zen-lives-pill" title="${zenTitle}">${zenPill}</span>`;
+      if (livesLbl) livesLbl.textContent = typeof t === 'function' ? t('hud_zen_lbl') : 'ZEN MODE';
       if (livesCountText) {
         livesCountText.textContent = '∞';
         livesCountText.className = 'stat-lives-count';
       }
     } else if (state.gameMode === 'training') {
-      livesRow.innerHTML = '<span class="zen-lives-pill" title="No Modo Treinamento você desenvolve precisão e memória muscular sem perder vidas">🎓 Treinamento</span>';
-      if (livesLbl) livesLbl.textContent = 'TREINO';
+      const trainingTitle = typeof t === 'function' ? t('hud_training_pill_title') : '';
+      const trainingLbl = typeof t === 'function' ? t('hud_training_lbl') : 'TRAINING';
+      const freeLbl = typeof t === 'function' ? t('hud_free') : 'Free';
+      livesRow.innerHTML = `<span class="zen-lives-pill" title="${trainingTitle}">${trainingLbl}</span>`;
+      if (livesLbl) livesLbl.textContent = typeof t === 'function' ? t('hud_training_lbl') : 'TRAINING';
       if (livesCountText) {
-        livesCountText.textContent = 'Livre';
+        livesCountText.textContent = freeLbl;
         livesCountText.className = 'stat-lives-count';
       }
     } else {
-      if (livesLbl) livesLbl.textContent = 'VIDAS';
+      if (livesLbl) livesLbl.textContent = typeof t === 'function' ? t('hud_lives') : 'LIVES';
       const max = Math.min(10, state.maxLives || CFG.startLives);
       const cur = Math.max(0, state.lives);
       if (livesCountText) {
@@ -545,6 +552,7 @@ function updateHUD() {
 // Render skill slots cleanly with persistent active state and duration bar
 function renderSkills() {
   if (!skillsCont) return;
+  if (typeof state === 'undefined' || !state || !Array.isArray(state.skillSlots)) return;
 
   if (state.skillSlots.length === 0) {
     skillsCont.innerHTML = '<div class="empty-hint">Compre na loja<br/>ou complete palavras <strong>⚡</strong></div>';
@@ -1085,7 +1093,7 @@ function renderConquistasModal() {
       progressTxt = isUnlocked ? (t('ach_goal_reached') + ' (60+ ' + t('hud_wpm') + ')') : `Record: ${curVal} / ${target} ${t('hud_wpm')}`;
     } else if (ach.id === 'cirurgico') {
       curVal = isUnlocked ? 100 : (state.currentAccuracy ? Math.round(state.currentAccuracy) : 0);
-      const accLabel = (typeof t === 'function') ? t('hud_accuracy') : 'PRECISÃO';
+      const accLabel = typeof t === 'function' ? t('hud_accuracy') : 'ACCURACY';
       progressTxt = isUnlocked ? `${t('ach_goal_reached')} (100% ${accLabel})` : `100% ${accLabel}`;
     } else if (ach.id === 'colecionador') {
       curVal = Math.min(target, wordsCount);
@@ -1629,12 +1637,12 @@ function renderBossHud(boss, remainingLives = 3, maxLives = 3) {
   const badgeLabel = isPt ? (boss.badgeTextPt || boss.badgeText) : (boss.badgeText || boss.badgeTextPt);
   const desc = isPt ? (boss.scenarioDescPt || boss.lorePt || boss.titlePt) : (boss.scenarioDesc || boss.lore || boss.title);
 
-  if (bossName) bossName.textContent = name || 'Chefão';
+  if (bossName) bossName.textContent = name || (typeof t === 'function' ? t('boss_default_name') : 'Boss');
   if (bossDesc) bossDesc.textContent = `${scenario} — ${desc}`;
 
   const badgeEl = $('boss-badge');
   if (badgeEl) {
-    badgeEl.textContent = `${badgeLabel || 'CHEFÃO'} • ${scenario.toUpperCase()}`;
+    badgeEl.textContent = `${badgeLabel || (typeof t === 'function' ? t('boss_default_name').toUpperCase() : 'BOSS')} • ${scenario.toUpperCase()}`;
     const clr = boss.color || '#06B6D4';
     badgeEl.style.background = `linear-gradient(135deg, ${clr}, #3B82F6)`;
     badgeEl.style.boxShadow = `0 0 10px ${clr}55`;

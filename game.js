@@ -8,6 +8,7 @@
 // 1. GAME LIFECYCLE
 // ============================================================
 function startGame(mode = 'classic') {
+  if (typeof isLocaleReady !== 'undefined' && !isLocaleReady) return;
   if (typeof closeSettings === 'function') closeSettings();
   const pauseOverlay = $('pause-overlay');
   if (pauseOverlay) pauseOverlay.classList.add('hidden');
@@ -37,6 +38,7 @@ function startGame(mode = 'classic') {
 }
 
 function startTrainingWorld(worldId = 1) {
+  if (typeof isLocaleReady !== 'undefined' && !isLocaleReady) return;
   if (typeof closeSettings === 'function') closeSettings();
   const pauseOverlay = $('pause-overlay');
   if (pauseOverlay) pauseOverlay.classList.add('hidden');
