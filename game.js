@@ -1125,11 +1125,18 @@ function gameLoop(ts) {
   // Multipliers & effective speed
   const isFrozen = (state.activeTimers.freezer || 0) > 0;
   let effectiveSpeed = state.speedMultiplier || 1.0;
-  if ((state.activeTimers.haste || 0) > 0) {
-    effectiveSpeed += (typeof CFG !== 'undefined' && CFG.hasteSpeedBonus) ? CFG.hasteSpeedBonus : 0.5;
-  }
-  if ((state.activeTimers.slowdown || 0) > 0) {
-    effectiveSpeed *= 0.4;
+  if (state.bossBattle && state.bossBattle.active) {
+    // Regra 1: Velocidade padrão dos significados que caem nos chefões é 0.5x para qualquer dificuldade.
+    // Mesmo que o jogador erre, a velocidade é fixa em 0.5x.
+    state.speedMultiplier = 0.5;
+    effectiveSpeed = 0.5;
+  } else {
+    if ((state.activeTimers.haste || 0) > 0) {
+      effectiveSpeed += (typeof CFG !== 'undefined' && CFG.hasteSpeedBonus) ? CFG.hasteSpeedBonus : 0.5;
+    }
+    if ((state.activeTimers.slowdown || 0) > 0) {
+      effectiveSpeed *= 0.4;
+    }
   }
 
   // Freezer auto-cancel check
@@ -1177,6 +1184,12 @@ function gameLoop(ts) {
       if (item.isBossMeaning) {
         showFeedback('💥 O enigma caiu! O Chefão atacou!', 'error');
         if (typeof flashBossDamage === 'function') flashBossDamage();
+        // Regra 2: Salva o significado que caiu para não repeti-lo imediatamente no próximo sorteio
+        if (state.bossBattle?.currentWord) {
+          state.bossBattle.lastDroppedWord = state.bossBattle.currentWord.text.toLowerCase();
+        }
+        state.typedBuffer = '';
+        state.speedMultiplier = 0.5; // Garante velocidade fixa
         setTimeout(() => {
           item.el?.parentNode?.removeChild(item.el);
           if (state.bossBattle?.active && !state.paused && state.lives > 0) {
@@ -1888,32 +1901,29 @@ function beginBossPhase() {
   }
 
   state.bossBattle = {
-    active:       true,
-    boss:         candidateBoss,
-    meanings:     [],
-    meaningIndex: 0,
-    currentWord:  null,
-    boxItem:      null,
-    damageCount:    0,
+    active:          true,
+    boss:            candidateBoss,
+    pool:            themedMatches,
+    solvedWords:     [],
+    attemptedWords:  [],
+    lastDroppedWord: null,
+    solvedCount:     0,
+    currentWord:     null,
+    boxItem:         null,
+    damageCount:       0,
   };
 
   state.progress        = 0;
   state.hitsPhase       = 0;
   state.errorsPhase     = 0;
   state.phasePts        = 0;
-  const diffCfg = typeof getDifficultyConfig === 'function' ? getDifficultyConfig() : { initialSpeed: 1.0 };
-  state.speedMultiplier = diffCfg.initialSpeed;
+  // Regra 1: Velocidade padrão dos significados que caem nos chefões é fixa em 0.5x para qualquer dificuldade.
+  state.speedMultiplier = 0.5;
   state.combo           = 0;
   state.phaseComplete   = false;
   state.paused          = false;
   state.typedBuffer     = '';
   state.spawnQueue      = [];
-
-  const chosen = shuffle(themedMatches).slice(0, 3);
-
-  state.bossBattle.meanings = chosen;
-  state.bossBattle.meaningIndex = 0;
-  state.bossBattle.currentWord = chosen[0];
 
   renderBossHud(state.bossBattle.boss, state.bossBattle.boss.lives, state.bossBattle.boss.maxLives || 3);
   renderQueue();
@@ -1940,16 +1950,61 @@ function beginBossPhase() {
   }, 900);
 }
 
+function pickNextBossWord() {
+  if (!state.bossBattle || !state.bossBattle.active) return null;
+  const bossType = state.bossBattle.boss?.type || 'robot';
+
+  // Regra 5: Mantenha a lógica de apenas sortear palavras que ele já aprendeu e que sejam daquele chefão
+  const learnedPool = getLearnedWords();
+  const themedMatches = learnedPool.filter(w => isWordThematicallyRelatedToBoss(w, bossType));
+  if (themedMatches.length === 0) return null;
+
+  // 1. Filtrar palavras já resolvidas com sucesso nesta batalha
+  const solvedSet = new Set((state.bossBattle.solvedWords || []).map(s => s.toLowerCase()));
+  const unsolvedPool = themedMatches.filter(w => !solvedSet.has(w.text.toLowerCase()));
+  const availablePool = unsolvedPool.length > 0 ? unsolvedPool : themedMatches;
+
+  // 2. Regra 2: Filtrar palavras que já foram tentadas no ciclo atual
+  const attemptedSet = new Set((state.bossBattle.attemptedWords || []).map(s => s.toLowerCase()));
+  let candidates = availablePool.filter(w => !attemptedSet.has(w.text.toLowerCase()));
+
+  // 3. Regras 3 e 4: Caso todas as palavras disponíveis tenham sido tentadas (ou o limite seja 3 e esgotou), reinicia o ciclo
+  if (candidates.length === 0) {
+    state.bossBattle.attemptedWords = [];
+    // Evita repetir imediatamente a palavra que acabou de cair se houver outras opções disponíveis
+    if (availablePool.length > 1 && state.bossBattle.lastDroppedWord) {
+      candidates = availablePool.filter(w => w.text.toLowerCase() !== state.bossBattle.lastDroppedWord.toLowerCase());
+    }
+    if (!candidates || candidates.length === 0) {
+      candidates = availablePool;
+    }
+  }
+
+  // 4. Sorteia aleatoriamente um novo significado entre as opções elegíveis
+  const chosenWord = candidates[Math.floor(Math.random() * candidates.length)];
+  if (chosenWord) {
+    const key = chosenWord.text.toLowerCase();
+    if (!state.bossBattle.attemptedWords) state.bossBattle.attemptedWords = [];
+    if (!state.bossBattle.attemptedWords.includes(key)) {
+      state.bossBattle.attemptedWords.push(key);
+    }
+    state.bossBattle.currentWord = chosenWord;
+    state.bossBattle.lastDroppedWord = null;
+  }
+  return chosenWord;
+}
+
 function spawnBossMeaningBox() {
   if (!state.bossBattle?.active || state.paused) return;
 
-  const currentIdx = state.bossBattle.meaningIndex;
-  const wordObj = state.bossBattle.meanings[currentIdx];
+  const wordObj = pickNextBossWord();
   if (!wordObj) return;
 
   state.bossBattle.currentWord = wordObj;
   const targetWord = wordObj.text.toUpperCase();
   state.typedBuffer = '';
+  // Regra 1: Velocidade fixa de 0.5x
+  state.speedMultiplier = 0.5;
 
   const el = document.createElement('div');
   let cls = 'boss-meaning-box';
@@ -1961,9 +2016,12 @@ function spawnBossMeaningBox() {
     ? state.bossBattle.boss.scenarioPt
     : (state.bossBattle.boss.scenario || 'Cenário');
 
+  const solvedNum = Math.min(3, (state.bossBattle.solvedCount || 0) + 1);
+  const totalEnigmas = state.bossBattle.boss?.maxLives || 3;
+
   el.innerHTML = `
     <div class="bmb-header">
-      <span class="bmb-badge">📜 ENIGMA ${currentIdx + 1} DE 3 • ${scenarioName.toUpperCase()}</span>
+      <span class="bmb-badge">📜 ENIGMA ${solvedNum} DE ${totalEnigmas} • ${scenarioName.toUpperCase()}</span>
       <span class="bmb-length">${targetWord.length} LETRAS</span>
     </div>
     <div class="bmb-meaning">"${wordObj.meaning}"</div>
@@ -1998,6 +2056,7 @@ function spawnBossMeaningBox() {
   state.activeItems = [itemObj];
   state.bossBattle.boxItem = itemObj;
   renderQueue();
+  updateHUD();
 }
 
 function handleBossLetterTyped(char) {
@@ -2041,6 +2100,9 @@ function handleBossLetterTyped(char) {
     state.totalErrors++;
     playSound('error');
     showFeedback('❌ Letra errada!', 'error');
+
+    // Regra 1: Velocidade é fixa em 0.5x mesmo em caso de erro
+    state.speedMultiplier = 0.5;
 
     if (boxItem.el) {
       boxItem.el.classList.add('bmb-error');
@@ -2093,6 +2155,12 @@ function completeBossMeaning() {
 
   // Record discovered word stats
   const wordKey = state.bossBattle.currentWord.text.toLowerCase();
+  if (!state.bossBattle.solvedWords) state.bossBattle.solvedWords = [];
+  if (!state.bossBattle.solvedWords.includes(wordKey)) {
+    state.bossBattle.solvedWords.push(wordKey);
+  }
+  state.bossBattle.solvedCount = (state.bossBattle.solvedCount || 0) + 1;
+
   if (!state.wordStats[wordKey]) state.wordStats[wordKey] = { count: 0 };
   state.wordStats[wordKey].count++;
   if (!state.unlockedWords.find(w => w.text.toLowerCase() === wordKey)) {
@@ -2119,7 +2187,6 @@ function completeBossMeaning() {
     if (state.bossBattle.boss.lives <= 0) {
       defeatBoss();
     } else {
-      state.bossBattle.meaningIndex++;
       state.typedBuffer = '';
       setTimeout(() => {
         if (state.bossBattle?.active && !state.paused) {
@@ -2266,7 +2333,7 @@ function testBossBattle(phaseOverride) {
       const bossList = BOSS_WORDS_BY_TYPE[bossType][curLang] || BOSS_WORDS_BY_TYPE[bossType].pt || BOSS_WORDS_BY_TYPE[bossType].en || [];
       matchingInPool = [...matchingInPool, ...bossList];
     }
-    matchingInPool.slice(0, 3).forEach(w => {
+    matchingInPool.forEach(w => {
       const key = w.text.toLowerCase();
       if (!state.wordStats[key]) state.wordStats[key] = { count: 1 };
       if (!state.unlockedWords.find(u => u.text.toLowerCase() === key)) {
@@ -2309,7 +2376,7 @@ function startBossTest() {
     matchingInPool = [...matchingInPool, ...bossWordFallback];
   }
 
-  matchingInPool.slice(0, 3).forEach(w => {
+  matchingInPool.forEach(w => {
     state.unlockedWords.push({ ...w, phase: 1 });
     const key = w.text.toLowerCase();
     if (!state.wordStats[key]) state.wordStats[key] = { count: 1 };

@@ -117,8 +117,11 @@ function defaultState() {
     bossBattle: {
       active:          false,
       boss:            null,
-      meanings:        [],
-      meaningIndex:    0,
+      pool:            [],
+      solvedWords:     [],
+      attemptedWords:  [],
+      lastDroppedWord: null,
+      solvedCount:     0,
       currentWord:     null,
       boxItem:         null,
       damageCount:     0,
