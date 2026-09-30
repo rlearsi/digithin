@@ -28,11 +28,6 @@ function startGame(mode = 'classic') {
     state.timeAttackSecs = 60;
   }
   state.speedMultiplier = diffCfg.initialSpeed;
-
-  // Unlock first 3 initial words
-  const initial = shuffle(WORD_POOL).slice(0, CFG.wordsPerPhase);
-  initial.forEach(w => state.unlockedWords.push({ ...w, phase: 1 }));
-
   screenStart.classList.remove('active');
   screenGame.classList.add('active');
   hiddenInput.focus();

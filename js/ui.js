@@ -525,16 +525,18 @@ function updateHUD() {
     }
   }
 
-  // Render unlocked words in side panel
+  // Render unlocked words in side panel (misteriosamente aparece a partir da Fase 3)
   if (wordsList) {
     wordsList.innerHTML = '';
-    state.unlockedWords.forEach(w => {
-      const completed = state.wordStats[w.text.toLowerCase()]?.count || 0;
-      const d = document.createElement('div');
-      d.className = 'word-tag';
-      d.innerHTML = `<span>${w.text.toUpperCase()}</span><span class="wt-pts">${completed > 0 ? `✓×${completed}` : `+${wordPts(w.text)}`}</span>`;
-      wordsList.appendChild(d);
-    });
+    if (state.phase >= 3 && state.unlockedWords && state.unlockedWords.length > 0) {
+      state.unlockedWords.forEach(w => {
+        const completed = state.wordStats[w.text.toLowerCase()]?.count || 0;
+        const d = document.createElement('div');
+        d.className = 'word-tag';
+        d.innerHTML = `<span>${w.text.toUpperCase()}</span><span class="wt-pts">${completed > 0 ? `✓×${completed}` : `+${wordPts(w.text)}`}</span>`;
+        wordsList.appendChild(d);
+      });
+    }
   }
 
   renderSkills();
@@ -1060,7 +1062,7 @@ function renderConquistasModal() {
 
   const bestWpm    = Math.max(state.currentWpm || 0, parseInt(localStorage.getItem('digitinho_best_wpm') || '0', 10));
   const bestCombo  = Math.max(state.maxCombo || 0, parseInt(localStorage.getItem('digitinho_best_combo') || '0', 10));
-  const wordsCount = state.unlockedWords ? state.unlockedWords.length : 3;
+  const wordsCount = state.unlockedWords ? state.unlockedWords.length : 0;
 
   const total = (typeof ACHIEVEMENTS !== 'undefined') ? ACHIEVEMENTS.length : 6;
   const list  = (typeof ACHIEVEMENTS !== 'undefined') ? ACHIEVEMENTS : [];
