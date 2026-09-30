@@ -339,13 +339,16 @@ function showPhaseModal() {
     <div class="go-row"><span>${totalPtsLbl}</span><strong style="color:var(--accent-cyan);font-variant-numeric:tabular-nums;letter-spacing:0.04em">${formatScore(state.totalScore)}</strong></div>
   `;
 
-  // Unlock 3 new random words
-  const pool     = WORD_POOL.filter(w => !state.unlockedWords.find(u => u.text === w.text));
-  const toUnlock = shuffle(pool).slice(0, CFG.wordsPerPhase);
-  toUnlock.forEach(w => state.unlockedWords.push({ ...w, phase: state.phase }));
+  // Unlock new words: only starting from the completion of Phase 2 (to be displayed starting at Phase 3)
+  let toUnlock = [];
+  if (state.phase >= 2) {
+    const pool     = WORD_POOL.filter(w => !state.unlockedWords.find(u => u.text === w.text));
+    toUnlock = shuffle(pool).slice(0, CFG.wordsPerPhase);
+    toUnlock.forEach(w => state.unlockedWords.push({ ...w, phase: state.phase }));
 
-  if (state.unlockedWords.length >= WORD_POOL.length) {
-    unlockAchievement('colecionador');
+    if (state.unlockedWords.length >= WORD_POOL.length) {
+      unlockAchievement('colecionador');
+    }
   }
 
   const row = $('unlocked-words-row');
