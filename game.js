@@ -781,6 +781,60 @@ function useContinue() {
 // ============================================================
 // 2. PAUSE / RESUME (ESC) WITH "3, 2, 1" COUNTDOWN
 // ============================================================
+function pauseGame() {
+  const screenGame = $('screen-game');
+  if (!screenGame?.classList.contains('active')) return;
+  if (state.phaseComplete) return;
+  if (modalGameover && !modalGameover.classList.contains('hidden')) return;
+
+  const pauseOverlay = $('pause-overlay');
+
+  if (typeof countdownActive !== 'undefined' && countdownActive) {
+    cancelResumeCountdown();
+    state.escPaused = true;
+    state.paused    = true;
+    if (typeof resetPauseView === 'function') resetPauseView();
+    if (pauseOverlay) pauseOverlay.classList.remove('hidden');
+    cancelAnimationFrame(state.rafId);
+    clearTimeout(state.spawnTimer);
+    return;
+  }
+
+  if (state.paused) return;
+
+  state.escPaused = true;
+  state.paused    = true;
+  if (typeof resetPauseView === 'function') resetPauseView();
+  if (pauseOverlay) pauseOverlay.classList.remove('hidden');
+  cancelAnimationFrame(state.rafId);
+  clearTimeout(state.spawnTimer);
+}
+
+function resumeGame() {
+  const screenGame = $('screen-game');
+  if (!screenGame?.classList.contains('active')) return;
+  if (state.phaseComplete) return;
+
+  const pauseOverlay = $('pause-overlay');
+  if (pauseOverlay) pauseOverlay.classList.add('hidden');
+  state.escPaused = false;
+
+  // Run 3, 2, 1 countdown before resuming gameplay!
+  runResumeCountdown(() => {
+    state.paused = false;
+    state.lastTs = null;
+    state.rafId  = requestAnimationFrame(gameLoop);
+    if (!state.bossBattle || !state.bossBattle.active) {
+      scheduleSpawn();
+    } else {
+      if (state.activeItems.length === 0 && !state.bossBattle.boxItem && (state.bossBattle.boss?.lives || 0) > 0) {
+        spawnBossMeaningBox();
+      }
+    }
+    hiddenInput?.focus();
+  });
+}
+
 function togglePause() {
   // If exit confirmation view is open inside pause, ESC cancels it back to main pause options
   if (isPauseConfirmOpen()) {
@@ -838,34 +892,14 @@ function togglePause() {
   if (state.phaseComplete) return;
 
   if (typeof countdownActive !== 'undefined' && countdownActive) {
-    cancelResumeCountdown();
-    state.escPaused = true;
-    state.paused    = true;
-    if (typeof resetPauseView === 'function') resetPauseView();
-    pauseOverlay.classList.remove('hidden');
+    pauseGame();
     return;
   }
 
-  state.escPaused = !state.escPaused;
-
   if (state.escPaused) {
-    state.paused = true;
-    if (typeof resetPauseView === 'function') resetPauseView();
-    pauseOverlay.classList.remove('hidden');
-    cancelAnimationFrame(state.rafId);
-    clearTimeout(state.spawnTimer);
+    resumeGame();
   } else {
-    pauseOverlay.classList.add('hidden');
-    // Run 3, 2, 1 countdown before resuming gameplay!
-    runResumeCountdown(() => {
-      state.paused = false;
-      state.lastTs = null;
-      state.rafId  = requestAnimationFrame(gameLoop);
-      if (!state.bossBattle || !state.bossBattle.active) {
-        scheduleSpawn();
-      }
-      hiddenInput?.focus();
-    });
+    pauseGame();
   }
 }
 
@@ -1421,6 +1455,17 @@ hiddenInput?.addEventListener('input', () => {
     }
     hiddenInput.value = '';
   }
+});
+
+// Auto-pause when browser tab is minimized / hidden or window loses focus (inactive)
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    pauseGame();
+  }
+});
+
+window.addEventListener('blur', () => {
+  pauseGame();
 });
 
 // ============================================================
