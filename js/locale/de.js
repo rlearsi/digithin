@@ -195,7 +195,8 @@ window.TRANSLATIONS.de = {
   boss_defeated_title: 'BOSS BESIEGT!',
   boss_defeated_sub: 'Du hast alle Runenprüfungen meisterhaft gelöst.',
   boss_defeated_prompt: 'Wähle 1 dauerhafte Bonus-Fähigkeit:',
-  boss_btn_pick: 'Fähigkeit Wählen',
+  boss_btn_pick: 'Erhalten',
+  boss_pick_skill: 'Erhalten',
 
   fb_combo_broken: 'Combo Unterbrochen!',
   fb_fury_activated: 'WUTMODUS AKTIV! DOPPELTE PUNKTE!',

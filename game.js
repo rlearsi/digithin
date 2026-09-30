@@ -237,41 +237,108 @@ function getLearnedWords() {
   return Array.from(learnedMap.values());
 }
 
+const BOSS_THEME_INDICES = {
+  robot:     [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41],
+  beast:     [0, 7, 15, 23, 26, 28],
+  mythology: [14, 19, 20],
+  ocean:     [10, 22, 29],
+  cosmos:    [12, 13, 18],
+  volcano:   [4, 8, 11, 21],
+};
+
+function getWordConceptIndex(text) {
+  if (!text) return -1;
+  const lower = text.toLowerCase();
+  if (typeof WORD_POOLS !== 'undefined') {
+    for (const lang in WORD_POOLS) {
+      const pool = WORD_POOLS[lang];
+      if (Array.isArray(pool)) {
+        const idx = pool.findIndex(w => w && w.text && w.text.toLowerCase() === lower);
+        if (idx !== -1) return idx;
+      }
+    }
+  }
+  return -1;
+}
+
 function isWordThematicallyRelatedToBoss(wordObj, bossType) {
   if (!wordObj || !bossType) return false;
+  const currentLang = typeof getLanguage === 'function' ? getLanguage() : 'pt';
   const type = (wordObj.type || '').toLowerCase();
   const text = (wordObj.text || '').toLowerCase();
 
+  // 1. Direct thematic vocabulary check from BOSS_WORDS_BY_TYPE scoped strictly to active language
+  if (typeof BOSS_WORDS_BY_TYPE !== 'undefined' && BOSS_WORDS_BY_TYPE[bossType]) {
+    const langDicts = BOSS_WORDS_BY_TYPE[bossType];
+    const list = langDicts[currentLang] || langDicts.pt || langDicts.en;
+    if (Array.isArray(list) && list.some(item => item && item.text && item.text.toLowerCase() === text)) {
+      return true;
+    }
+  }
+
+  // 2. Strict semantic type and authentic keywords scoped strictly by boss theme
   switch (bossType) {
-    case 'beast':
-      return type === 'animal';
-    case 'mythology':
-      return type === 'fantasia' || text === 'dragao' || text === 'dragon' || text === 'espada' || text === 'cristal';
-    case 'ocean':
-      return text === 'oceano' || text === 'ocean' || text === 'lagoa' || text === 'lake' || text === 'chuva' || text === 'rain';
-    case 'cosmos':
-      return type === 'cosmos' || text === 'estrela' || text === 'star' || text === 'planeta' || text === 'planet' || text === 'noite' || text === 'night';
-    case 'volcano':
-      return text === 'vulcao' || text === 'volcano' || text === 'fogo' || text === 'feu' || text === 'fire' || text === 'pedra' || text === 'terra';
     case 'robot':
-      return text === 'cidade' || text === 'city' || text === 'farol' || text === 'janela' || type === 'objeto';
+      return type === 'tech';
+    case 'beast':
+      return type === 'fauna' || type === 'animal' || type === 'tier';
+    case 'mythology':
+      return type === 'myth' || type === 'fantasia' || type === 'fantasie' || type === 'fantasy';
+    case 'ocean':
+      return type === 'ocean';
+    case 'cosmos':
+      return type === 'cosmos' || type === 'kosmos';
+    case 'volcano':
+      return type === 'volcano';
     default:
       return false;
   }
 }
 
 function canTriggerBossBattle() {
-  if (state.gameMode === 'training') return false;
+  if (state.gameMode === 'training' || state.gameMode === 'zen') return false;
   if (typeof isBossBattlesEnabled === 'function' && !isBossBattlesEnabled()) return false;
+  // Regra 1: O boss deve continuar aparecendo em um múltiplo de 10 fases
   if (!isBossPhase(state.phase)) return false;
 
   const learnedWords = getLearnedWords();
-  // Boss requires at least 3 distinct learned words for its 3 health points / enigmas
-  return learnedWords.length >= 3;
+  const defeated = state.defeatedBossTypes || [];
+
+  // Filtra todos os chefões para os quais o jogador já aprendeu pelo menos 3 vocábulos
+  const eligible = (typeof BOSS_DEFS !== 'undefined' ? BOSS_DEFS : []).filter(b => {
+    const matching = learnedWords.filter(w => isWordThematicallyRelatedToBoss(w, b.type));
+    return matching.length >= 3;
+  });
+
+  // Regra 2 & 3: Caso não haja palavras o suficiente para nenhum chefão, ignora o boss naquele loop (sem aviso)
+  if (eligible.length === 0) {
+    state.pendingBoss = null;
+    state.pendingBossPhase = null;
+    return false;
+  }
+
+  // Prioriza chefões ainda não enfrentados nesta partida para garantir variedade máxima
+  const notDefeated = eligible.filter(b => !defeated.includes(b.type));
+  const pool = notDefeated.length > 0 ? notDefeated : eligible;
+
+  // Sorteia aleatoriamente um dos chefões qualificados!
+  const chosenBase = pool[Math.floor(Math.random() * pool.length)];
+  const level = Math.max(1, Math.floor(state.phase / 10));
+
+  state.pendingBoss = {
+    ...chosenBase,
+    name: level > 1 ? `${chosenBase.name} (Lv. ${level})` : chosenBase.name,
+    namePt: level > 1 ? `${chosenBase.namePt || chosenBase.name} (Nv. ${level})` : (chosenBase.namePt || chosenBase.name),
+    lives: 3,
+    maxLives: 3
+  };
+  state.pendingBossPhase = state.phase;
+
+  return true;
 }
 
 function beginPhase() {
-  // Check if current phase is a Boss Battle (every 10 phases) - requires at least 3 learned words
+  // Check if current phase is a Boss Battle (every 10 phases) - requires at least 3 learned words of that boss
   if (canTriggerBossBattle()) {
     beginBossPhase();
     return;
@@ -799,7 +866,9 @@ function togglePause() {
       state.paused = false;
       state.lastTs = null;
       state.rafId  = requestAnimationFrame(gameLoop);
-      scheduleSpawn();
+      if (!state.bossBattle || !state.bossBattle.active) {
+        scheduleSpawn();
+      }
       hiddenInput?.focus();
     });
   }
@@ -885,7 +954,7 @@ function refillQueue() {
 }
 
 function scheduleSpawn() {
-  if (state.paused || state.phaseComplete) return;
+  if (state.paused || state.phaseComplete || (state.bossBattle && state.bossBattle.active)) return;
   let multVal  = state.speedMultiplier || 1.0;
   if ((state.activeTimers?.haste || 0) > 0) {
     multVal += (typeof CFG !== 'undefined' && CFG.hasteSpeedBonus) ? CFG.hasteSpeedBonus : 0.5;
@@ -899,7 +968,7 @@ function scheduleSpawn() {
   }
   const interval = base + (Math.random() - 0.5) * CFG.spawnVariance;
   state.spawnTimer = setTimeout(() => {
-    if (!state.paused && !state.phaseComplete) {
+    if (!state.paused && !state.phaseComplete && (!state.bossBattle || !state.bossBattle.active)) {
       spawnItem();
       scheduleSpawn();
     }
@@ -907,6 +976,7 @@ function scheduleSpawn() {
 }
 
 function spawnItem() {
+  if (state.bossBattle && state.bossBattle.active) return false;
   const isFrozen = (state.activeTimers?.freezer || 0) > 0;
   if (isFrozen) {
     const activeCount = state.activeItems.filter(i => !i.removing).length;
@@ -1072,6 +1142,16 @@ function gameLoop(ts) {
 
   const boardH = gameArea.clientHeight || 500;
   const items  = state.activeItems;
+
+  // Boss Battle safety: strictly no loose runics or words during boss confrontations
+  if (state.bossBattle && state.bossBattle.active) {
+    for (let i = items.length - 1; i >= 0; i--) {
+      if (!items[i].isBossMeaning) {
+        items[i].el?.parentNode?.removeChild(items[i].el);
+        items.splice(i, 1);
+      }
+    }
+  }
 
   for (let i = items.length - 1; i >= 0; i--) {
     const item = items[i];
@@ -1772,10 +1852,49 @@ function triggerVortexDevour() {
 function beginBossPhase() {
   clearArea();
   clearTimeout(state.spawnTimer);
+  state.spawnTimer = null;
+
+  // Clean any lingering non-boss tokens from DOM and activeItems
+  const stray = gameArea?.querySelectorAll('.falling-item, .token');
+  stray?.forEach(el => el.parentNode?.removeChild(el));
+  state.activeItems = [];
+
+  const candidateBoss = (state.pendingBoss && state.pendingBossPhase === state.phase)
+    ? state.pendingBoss
+    : getBossForPhase(state.phase, getLearnedWords(), state.defeatedBossTypes || []);
+  const bossType = candidateBoss?.type || 'robot';
+
+  // Pick 3 distinct words strictly from the words the player has already learned matching this boss
+  const learnedPool = getLearnedWords();
+  const themedMatches = learnedPool.filter(w => isWordThematicallyRelatedToBoss(w, bossType));
+
+  // Regra 2 & 3: O boss escolhido só deve aparecer se o jogador já aprendeu pelo menos 3 vocábulos daquele chefão.
+  // Caso não haja palavras suficientes, ignora o boss naquele loop (sem aviso) e roda fase comum.
+  if (themedMatches.length < 3) {
+    if (typeof hideBossHud === 'function') hideBossHud();
+    if (state.bossBattle) state.bossBattle.active = false;
+    state.progress        = 0;
+    state.hitsPhase       = 0;
+    state.errorsPhase     = 0;
+    state.phasePts        = 0;
+    state.phaseComplete   = false;
+    state.paused          = false;
+    state.typedBuffer     = '';
+    state.activeItems     = [];
+    state.spawnQueue      = [];
+    clearArea();
+    refillQueue();
+    renderQueue();
+    state.lastTs = null;
+    state.rafId = requestAnimationFrame(gameLoop);
+    updateHUD();
+    scheduleSpawn();
+    return;
+  }
 
   state.bossBattle = {
     active:       true,
-    boss:         getBossForPhase(state.phase),
+    boss:         candidateBoss,
     meanings:     [],
     meaningIndex: 0,
     currentWord:  null,
@@ -1795,25 +1914,7 @@ function beginBossPhase() {
   state.typedBuffer     = '';
   state.spawnQueue      = [];
 
-  // Pick 3 distinct words strictly from the words the player has already learned
-  const learnedPool = getLearnedWords();
-  if (learnedPool.length < 3) {
-    // Safety check: if there aren't enough learned words, do not display the boss
-    if (typeof hideBossHud === 'function') hideBossHud();
-    state.bossBattle.active = false;
-    return;
-  }
-
-  const bossType = state.bossBattle.boss.type || 'robot';
-
-  // Thematic affinity: prioritize learned words matching the boss's element/theme
-  const themedMatches = learnedPool.filter(w => isWordThematicallyRelatedToBoss(w, bossType));
-  const otherMatches  = learnedPool.filter(w => !isWordThematicallyRelatedToBoss(w, bossType));
-
-  const chosen = [
-    ...shuffle(themedMatches),
-    ...shuffle(otherMatches)
-  ].slice(0, 3);
+  const chosen = shuffle(themedMatches).slice(0, 3);
 
   state.bossBattle.meanings = chosen;
   state.bossBattle.meaningIndex = 0;
@@ -1823,13 +1924,14 @@ function beginBossPhase() {
   renderQueue();
   playSound('bossSpawn');
 
+  const currentLang = typeof getLanguage === 'function' ? getLanguage() : 'pt';
   const bossIcon = state.bossBattle.boss.icon || '👾';
-  const bossName = (currentLang === 'pt' && state.bossBattle.boss.namePt)
+  const bossName = (currentLang === 'pt' && state.bossBattle.boss?.namePt)
     ? state.bossBattle.boss.namePt
-    : (state.bossBattle.boss.name || 'Chefão');
-  const scenarioName = (currentLang === 'pt' && state.bossBattle.boss.scenarioPt)
+    : (state.bossBattle.boss?.name || 'Chefão');
+  const scenarioName = (currentLang === 'pt' && state.bossBattle.boss?.scenarioPt)
     ? state.bossBattle.boss.scenarioPt
-    : (state.bossBattle.boss.scenario || 'Cenário');
+    : (state.bossBattle.boss?.scenario || 'Cenário');
   showFeedback(`${bossIcon} ${bossName.toUpperCase()} • ${scenarioName.toUpperCase()}!`, 'special');
 
   state.lastTs = null;
@@ -1874,6 +1976,13 @@ function spawnBossMeaningBox() {
   `;
 
   renderBossMeaningSlots(el, targetWord, '');
+
+  clearTimeout(state.spawnTimer);
+  state.spawnTimer = null;
+
+  // Purge any stray non-boss tokens from DOM and activeItems
+  const stray = gameArea?.querySelectorAll('.falling-item, .token');
+  stray?.forEach(tEl => tEl.parentNode?.removeChild(tEl));
 
   const initialY = 0;
   el.style.top  = initialY + 'px';
@@ -2005,8 +2114,12 @@ function completeBossMeaning() {
 
   setTimeout(() => {
     boxItem.el?.parentNode?.removeChild(boxItem.el);
+    clearTimeout(state.spawnTimer);
+    state.spawnTimer = null;
     state.activeItems = [];
     state.bossBattle.boxItem = null;
+    const stray = gameArea?.querySelectorAll('.falling-item, .token');
+    stray?.forEach(el => el.parentNode?.removeChild(el));
 
     if (state.bossBattle.boss.lives <= 0) {
       defeatBoss();
@@ -2048,6 +2161,15 @@ function defeatBoss() {
     : `👑 ${bossName.toUpperCase()} DEFEATED! +1,000 PTS!`;
 
   showFeedback(victoryMsg, 'special');
+
+  if (state.bossBattle?.boss?.type) {
+    if (!state.defeatedBossTypes) state.defeatedBossTypes = [];
+    if (!state.defeatedBossTypes.includes(state.bossBattle.boss.type)) {
+      state.defeatedBossTypes.push(state.bossBattle.boss.type);
+    }
+  }
+  state.pendingBoss = null;
+  state.pendingBossPhase = null;
 
   // Ao vencer o boss, jogador pode escolher entre 3 habilidades aleatórias
   const rewardPool = shuffle(SKILLS_ALL).slice(0, 3);
@@ -2098,6 +2220,8 @@ function grantRewardSkill(skill) {
 
 function continueAfterBossVictory() {
   hideBossHud();
+  state.pendingBoss = null;
+  state.pendingBossPhase = null;
   state.phaseComplete = false;
   state.paused = true;
   const completedPhase = state.phase;
@@ -2125,18 +2249,29 @@ function testBossBattle(phaseOverride) {
     screenGame.classList.add('active');
     hiddenInput.focus();
   }
-  if (phaseOverride && phaseOverride % 10 === 0) {
-    state.phase = phaseOverride;
-  } else {
-    state.phase = BOSS_TEST_PHASES[currentBossTestIndex % BOSS_TEST_PHASES.length];
-    currentBossTestIndex++;
-  }
+  const testIdx = currentBossTestIndex++;
+  const testBosses = typeof BOSS_DEFS !== 'undefined' ? BOSS_DEFS : [];
+  state.phase = (phaseOverride && phaseOverride % 10 === 0) ? phaseOverride : 10;
+  const candidateBoss = testBosses[testIdx % testBosses.length] || getBossForPhase(state.phase);
+  state.pendingBoss = candidateBoss;
+  state.pendingBossPhase = state.phase;
+  const bossType = candidateBoss?.type || 'robot';
 
-  // Ensure tester has at least 3 sample learned words if testing in isolation
+  // Ensure tester has at least 3 matching learned words for the candidate boss
   const currentLearned = getLearnedWords();
-  if (currentLearned.length < 3) {
-    const sample = shuffle(WORD_POOL).slice(0, 3);
-    sample.forEach(w => {
+  const matchingThemed = currentLearned.filter(w => isWordThematicallyRelatedToBoss(w, bossType));
+
+  if (matchingThemed.length < 3) {
+    const curLang = typeof getLanguage === 'function' ? getLanguage() : 'pt';
+    const activePool = (typeof WORD_POOLS !== 'undefined' && WORD_POOLS[curLang])
+      ? WORD_POOLS[curLang]
+      : (typeof WORD_POOL !== 'undefined' ? WORD_POOL : []);
+    let matchingInPool = activePool.filter(w => isWordThematicallyRelatedToBoss(w, bossType));
+    if (matchingInPool.length < 3 && typeof BOSS_WORDS_BY_TYPE !== 'undefined' && BOSS_WORDS_BY_TYPE[bossType]) {
+      const bossList = BOSS_WORDS_BY_TYPE[bossType][curLang] || BOSS_WORDS_BY_TYPE[bossType].pt || BOSS_WORDS_BY_TYPE[bossType].en || [];
+      matchingInPool = [...matchingInPool, ...bossList];
+    }
+    matchingInPool.slice(0, 3).forEach(w => {
       const key = w.text.toLowerCase();
       if (!state.wordStats[key]) state.wordStats[key] = { count: 1 };
       if (!state.unlockedWords.find(u => u.text.toLowerCase() === key)) {
@@ -2160,11 +2295,26 @@ function startBossTest() {
   state = defaultState();
   state.gameMode = 'classic';
   state.startTime = Date.now();
-  state.phase = BOSS_TEST_PHASES[currentBossTestIndex % BOSS_TEST_PHASES.length];
-  currentBossTestIndex++;
+  state.phase = 10;
 
-  const initial = shuffle(WORD_POOL).slice(0, CFG.wordsPerPhase);
-  initial.forEach(w => {
+  const testIdx = currentBossTestIndex++;
+  const testBosses = typeof BOSS_DEFS !== 'undefined' ? BOSS_DEFS : [];
+  const candidateBoss = testBosses[testIdx % testBosses.length] || getBossForPhase(state.phase);
+  state.pendingBoss = candidateBoss;
+  state.pendingBossPhase = state.phase;
+  const bossType = candidateBoss?.type || 'robot';
+
+  const curLang = typeof getLanguage === 'function' ? getLanguage() : 'pt';
+  const activePool = (typeof WORD_POOLS !== 'undefined' && WORD_POOLS[curLang])
+    ? WORD_POOLS[curLang]
+    : (typeof WORD_POOL !== 'undefined' ? WORD_POOL : []);
+  let matchingInPool = activePool.filter(w => isWordThematicallyRelatedToBoss(w, bossType));
+  if (matchingInPool.length < 3 && typeof BOSS_WORDS_BY_TYPE !== 'undefined' && BOSS_WORDS_BY_TYPE[bossType]) {
+    const bossWordFallback = BOSS_WORDS_BY_TYPE[bossType][curLang] || BOSS_WORDS_BY_TYPE[bossType].pt || BOSS_WORDS_BY_TYPE[bossType].en || [];
+    matchingInPool = [...matchingInPool, ...bossWordFallback];
+  }
+
+  matchingInPool.slice(0, 3).forEach(w => {
     state.unlockedWords.push({ ...w, phase: 1 });
     const key = w.text.toLowerCase();
     if (!state.wordStats[key]) state.wordStats[key] = { count: 1 };

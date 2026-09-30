@@ -111,6 +111,9 @@ function defaultState() {
     trainingLesson:    1,
     startTime:         null,    // Timestamp when phase/run started
     charsTyped:        0,       // Total characters correctly typed
+    defeatedBossTypes: [],      // Boss types defeated during this run for randomized variety
+    pendingBoss:       null,    // Randomly selected candidate boss for the upcoming boss phase
+    pendingBossPhase:  null,    // Phase number for which pendingBoss was selected
     bossBattle: {
       active:          false,
       boss:            null,

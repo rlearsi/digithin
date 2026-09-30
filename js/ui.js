@@ -297,7 +297,9 @@ function closeSettings() {
       state.paused = false;
       state.lastTs = null;
       state.rafId  = requestAnimationFrame(gameLoop);
-      scheduleSpawn();
+      if (!state.bossBattle || !state.bossBattle.active) {
+        scheduleSpawn();
+      }
       hiddenInput?.focus();
     }
   }
@@ -1037,7 +1039,9 @@ function closeConquistas() {
       state.paused = false;
       state.lastTs = null;
       state.rafId  = requestAnimationFrame(gameLoop);
-      scheduleSpawn();
+      if (!state.bossBattle || !state.bossBattle.active) {
+        scheduleSpawn();
+      }
       hiddenInput?.focus();
     }
   }
@@ -1706,7 +1710,7 @@ function showBossRewardModal(skills, onPick) {
 
   skills.forEach(skill => {
     const loc = (typeof getLocalizedItem === 'function') ? getLocalizedItem(skill) : { name: skill.name, desc: skill.desc };
-    const pickTxt = typeof t === 'function' && t('boss_pick_skill') ? t('boss_pick_skill') : '✨ Escolher Habilidade';
+    const pickTxt = typeof t === 'function' && t('boss_btn_pick') ? t('boss_btn_pick') : 'Obter';
     const card = document.createElement('div');
     card.className = 'boss-skill-card';
     card.innerHTML = `
@@ -1717,10 +1721,14 @@ function showBossRewardModal(skills, onPick) {
       <div class="boss-skill-desc">${loc.desc || skill.desc}</div>
       <button class="boss-skill-pick-btn" type="button">${pickTxt}</button>
     `;
-    card.addEventListener('click', () => {
-      if (typeof onPick === 'function') onPick(skill);
-      closeBossRewardModal();
-    });
+    const btn = card.querySelector('.boss-skill-pick-btn');
+    if (btn) {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (typeof onPick === 'function') onPick(skill);
+        closeBossRewardModal();
+      });
+    }
     bossSkillsGrid.appendChild(card);
   });
 

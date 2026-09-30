@@ -195,7 +195,8 @@ window.TRANSLATIONS.en = {
   boss_defeated_title: 'BOSS DEFEATED!',
   boss_defeated_sub: 'You masterfully solved all runic trials.',
   boss_defeated_prompt: 'Choose 1 permanent bonus skill for upcoming phases:',
-  boss_btn_pick: 'Choose Skill',
+  boss_btn_pick: 'Claim',
+  boss_pick_skill: 'Claim',
 
   fb_combo_broken: 'Combo Broken!',
   fb_fury_activated: 'FURY MODE ACTIVATED! DOUBLE POINTS!',

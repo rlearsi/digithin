@@ -117,7 +117,9 @@ function closeBiblioteca() {
       state.paused = false;
       state.lastTs = null;
       state.rafId  = requestAnimationFrame(gameLoop);
-      scheduleSpawn();
+      if (!state.bossBattle || !state.bossBattle.active) {
+        scheduleSpawn();
+      }
       hiddenInput?.focus();
     }
   }

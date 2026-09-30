@@ -195,7 +195,8 @@ window.TRANSLATIONS.ko = {
   boss_defeated_title: '보스 격파!',
   boss_defeated_sub: '룬의 시련을 훌륭하게 통과했습니다.',
   boss_defeated_prompt: '영구 보너스 스킬을 1개 선택하세요:',
-  boss_btn_pick: '스킬 선택',
+  boss_btn_pick: '획득',
+  boss_pick_skill: '획득',
 
   fb_combo_broken: '콤보 종료!',
   fb_fury_activated: '퓨리 모드 발동! 점수 2배!',

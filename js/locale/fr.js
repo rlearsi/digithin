@@ -195,7 +195,8 @@ window.TRANSLATIONS.fr = {
   boss_defeated_title: 'BOSS DÉFAIT !',
   boss_defeated_sub: 'Vous avez brillamment résolu les énigmes runiques.',
   boss_defeated_prompt: 'Choisissez 1 compétence bonus permanente :',
-  boss_btn_pick: 'Choisir la Compétence',
+  boss_btn_pick: 'Obtenir',
+  boss_pick_skill: 'Obtenir',
 
   fb_combo_broken: 'Combo Brisé !',
   fb_fury_activated: 'MODE FUREUR ACTIVÉ ! POINTS DOUBLÉS !',

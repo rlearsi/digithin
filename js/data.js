@@ -139,7 +139,19 @@ const WORD_POOLS = {
     { text: 'horse', type: 'animal', meaning: 'A noble galloping mammal with an elegant flowing mane' },
     { text: 'cloud', type: 'nature', meaning: 'A floating mass of condensed vapor drifting in the sky' },
     { text: 'lion', type: 'animal', meaning: 'A majestic feline ruler known as the king of the jungle' },
-    { text: 'lake', type: 'nature', meaning: 'A peaceful body of fresh water surrounded by land' }
+    { text: 'lake', type: 'nature', meaning: 'A peaceful body of fresh water surrounded by land' },
+    { text: 'chip', type: 'tech', meaning: 'Silicon integrated circuit executing computer logic instructions' },
+    { text: 'laser', type: 'tech', meaning: 'Coherent amplified beam of light used in precision optical systems' },
+    { text: 'network', type: 'tech', meaning: 'Interconnected digital grid of servers exchanging high-speed packets' },
+    { text: 'data', type: 'tech', meaning: 'Binary units of structured information processed by algorithms' },
+    { text: 'pixel', type: 'tech', meaning: 'Smallest individual addressable color unit forming an image on a digital screen' },
+    { text: 'robot', type: 'tech', meaning: 'Autonomous electro-mechanical automaton programmed to execute tasks' },
+    { text: 'circuit', type: 'tech', meaning: 'Closed conductive loop through which electrical current and signals flow' },
+    { text: 'satellite', type: 'tech', meaning: 'Orbital spacecraft transmitting global data, positioning and communication signals' },
+    { text: 'code', type: 'tech', meaning: 'Structured programming instructions commanding computer processors' },
+    { text: 'sensor', type: 'tech', meaning: 'Electronic transducer detecting physical stimuli such as light or motion' },
+    { text: 'software', type: 'tech', meaning: 'System programs, libraries and applications running on computing hardware' },
+    { text: 'antenna', type: 'tech', meaning: 'Conductive apparatus that transmits and receives electromagnetic waves' }
   ],
   pt: [
     { text: 'gato', type: 'animal', meaning: 'Felino doméstico que ronrona e gosta de caçar ratos' },
@@ -171,7 +183,19 @@ const WORD_POOLS = {
     { text: 'cavalo', type: 'animal', meaning: 'Animal veloz com crina elegante, usado para montaria' },
     { text: 'nuvem', type: 'natureza', meaning: 'Massa branca de vapor de água suspensa no céu' },
     { text: 'leao', type: 'animal', meaning: 'Grande felino carnívoro conhecido como o rei da selva' },
-    { text: 'lagoa', type: 'natureza', meaning: 'Corpo de água doce cercado por terra menor que um lago' }
+    { text: 'lagoa', type: 'natureza', meaning: 'Corpo de água doce cercado por terra menor que um lago' },
+    { text: 'chip', type: 'tech', meaning: 'Circuito integrado de silício que processa instruções computacionais em microssegundos' },
+    { text: 'laser', type: 'tech', meaning: 'Feixe de luz concentrada e coerente utilizado em leituras ópticas, scanners e cortes' },
+    { text: 'rede', type: 'tech', meaning: 'Malha de conexões digitais e servidores que interliga computadores e sistemas globais' },
+    { text: 'dados', type: 'tech', meaning: 'Informações digitais estruturadas processadas por algoritmos e bancos computacionais' },
+    { text: 'pixel', type: 'tech', meaning: 'Menor unidade individual de cor que compõe uma imagem digital na matriz da tela' },
+    { text: 'robo', type: 'tech', meaning: 'Máquina eletromecânica autônoma e programável projetada para executar tarefas complexas' },
+    { text: 'circuito', type: 'tech', meaning: 'Caminho condutor fechado por onde flui a corrente elétrica em placas-mãe' },
+    { text: 'satelite', type: 'tech', meaning: 'Dispositivo orbital espacial que retransmite dados e sinais de comunicação para o globo' },
+    { text: 'codigo', type: 'tech', meaning: 'Conjunto de regras e instruções binárias escritas em uma linguagem de programação' },
+    { text: 'sensor', type: 'tech', meaning: 'Dispositivo eletrônico que detecta variações físicas do ambiente como calor ou luz' },
+    { text: 'software', type: 'tech', meaning: 'Conjunto de programas lógicos e sistemas operacionais que instruem o hardware' },
+    { text: 'antena', type: 'tech', meaning: 'Dispositivo condutor que emite e capta ondas eletromagnéticas de telecomunicação' }
   ],
   fr: [
     { text: 'chat', type: 'animal', meaning: 'Félin domestique joueur au pelage doux qui ronronne' },
@@ -203,7 +227,19 @@ const WORD_POOLS = {
     { text: 'cheval', type: 'animal', meaning: 'Noble mammifère rapide à la crinière élégante' },
     { text: 'nuage', type: 'nature', meaning: 'Masse vaporeuse blanche suspendue dans l\'atmosphère' },
     { text: 'lion', type: 'animal', meaning: 'Grand félin majestueux couronné roi des animaux' },
-    { text: 'lac', type: 'nature', meaning: 'Étendue paisible d\'eau douce entourée de terres' }
+    { text: 'lac', type: 'nature', meaning: 'Étendue paisible d\'eau douce entourée de terres' },
+    { text: 'puce', type: 'tech', meaning: 'Circuit intégré de silicium qui exécute les calculs et instructions informatiques' },
+    { text: 'laser', type: 'tech', meaning: 'Faisceau de lumière cohérente et concentrée servant au balayage et à l\'optique' },
+    { text: 'reseau', type: 'tech', meaning: 'Ensemble de serveurs interconnectés échangeant des données numériques à haute vitesse' },
+    { text: 'donnees', type: 'tech', meaning: 'Unités d\'information binaire analysées et traitées par les algorithmes' },
+    { text: 'pixel', type: 'tech', meaning: 'Plus petit élément de couleur composant une image numérique sur un écran' },
+    { text: 'robot', type: 'tech', meaning: 'Machine autonome et programmable conçue pour exécuter des tâches mécaniques' },
+    { text: 'circuit', type: 'tech', meaning: 'Boucle conductrice fermée dans laquelle circule le courant électrique' },
+    { text: 'satellite', type: 'tech', meaning: 'Engin spatial orbital relayant les signaux et communications globales' },
+    { text: 'code', type: 'tech', meaning: 'Instructions structurées écrites dans un langage de programmation' },
+    { text: 'capteur', type: 'tech', meaning: 'Dispositif électronique détectant les variations physiques de l\'environnement' },
+    { text: 'logiciel', type: 'tech', meaning: 'Programmes et applications pilotant le matériel informatique' },
+    { text: 'antenne', type: 'tech', meaning: 'Dispositif métallique émettant et recevant les ondes électromagnétiques' }
   ],
   de: [
     { text: 'katze', type: 'tier', meaning: 'Sanftes Haustier mit weichem Fell, das gerne schnurrt' },
@@ -235,7 +271,19 @@ const WORD_POOLS = {
     { text: 'pferd', type: 'tier', meaning: 'Anmutiges Huftier mit flatternder Mähne' },
     { text: 'wolke', type: 'natur', meaning: 'Weiße Wasserdampfmasse, die am Himmel zieht' },
     { text: 'loewe', type: 'tier', meaning: 'König der Tiere mit prächtiger, wilder Mähne' },
-    { text: 'see', type: 'natur', meaning: 'Ruhiges Binnengewässer umgeben von Natur' }
+    { text: 'see', type: 'natur', meaning: 'Ruhiges Binnengewässer umgeben von Natur' },
+    { text: 'chip', type: 'tech', meaning: 'Integrierter Halbleiterschaltkreis für Hochgeschwindigkeitsberechnungen' },
+    { text: 'laser', type: 'tech', meaning: 'Gebündelter kohärenter Lichtstrahl für optische Präzisionssysteme' },
+    { text: 'netz', type: 'tech', meaning: 'Verbundene digitale Serverarchitektur zum weltweiten Austausch von Datenpaketen' },
+    { text: 'daten', type: 'tech', meaning: 'Binäre Informationseinheiten, die von Algorithmen verarbeitet und gespeichert werden' },
+    { text: 'pixel', type: 'tech', meaning: 'Kleinstes adressierbares Farbpixel auf einer digitalen Bildschirmanzeige' },
+    { text: 'roboter', type: 'tech', meaning: 'Autonome programmierbare Maschine zur fehlerfreien Ausführung technischer Befehle' },
+    { text: 'schaltkreis', type: 'tech', meaning: 'Geschlossene Leiterbahn für elektrische Signale und Impulse' },
+    { text: 'satellit', type: 'tech', meaning: 'Orbitaler Raumflugkörper zur weltweiten Übertragung von Funksignalen' },
+    { text: 'code', type: 'tech', meaning: 'Strukturierte logische Anweisungen in einer definierten Programmiersprache' },
+    { text: 'sensor', type: 'tech', meaning: 'Elektronischer Messfühler zur Erfassung physikalischer Umgebungswerte' },
+    { text: 'software', type: 'tech', meaning: 'Gesamtheit der Programme und Betriebssysteme für Rechenanlagen' },
+    { text: 'antenne', type: 'tech', meaning: 'Vorrichtung zum Senden und Empfangen elektromagnetischer Funkwellen' }
   ],
   ja: [
     { text: 'neko', type: 'animal', meaning: '猫：愛らしく喉を鳴らす身軽な生き物' },
@@ -267,7 +315,19 @@ const WORD_POOLS = {
     { text: 'uma', type: 'animal', meaning: '馬：風のように大地を駆ける優美な駿馬' },
     { text: 'kumo', type: 'nature', meaning: '雲：青空にゆったりと浮かぶ白いかたまり' },
     { text: 'shishi', type: 'animal', meaning: '獅子：百獣の王と称される威風堂々の猛獣' },
-    { text: 'mizuumi', type: 'nature', meaning: '湖：山々に囲まれた澄んだ静かな水面' }
+    { text: 'mizuumi', type: 'nature', meaning: '湖：山々に囲まれた澄んだ静かな水面' },
+    { text: 'kairo', type: 'tech', meaning: '回路：電子やバイナリ信号が流れる高密度のプリント基板' },
+    { text: 'reza', type: 'tech', meaning: 'レーザー：光学的スキャンや通信を行う指向性の高い干渉光' },
+    { text: 'nettowaku', type: 'tech', meaning: 'ネットワーク：世界中の端末とサーバを結ぶ高速通信網' },
+    { text: 'deta', type: 'tech', meaning: 'データ：アルゴリズムによって高速処理されるバイナリ情報' },
+    { text: 'pikuseru', type: 'tech', meaning: '画素：画面を構成する最小単位の微小な色要素' },
+    { text: 'robotto', type: 'tech', meaning: 'ロボット：複雑な作業を自律的にこなすプログラマブル機械' },
+    { text: 'denshi', type: 'tech', meaning: '電子：回路内を移動して信号と電力を運ぶ素粒子' },
+    { text: 'eisei', type: 'tech', meaning: '人工衛星：地球周回軌道から通信や観測を行う宇宙機' },
+    { text: 'kodo', type: 'tech', meaning: 'コード：プロセッサを駆動するプログラム命令の構文' },
+    { text: 'sensa', type: 'tech', meaning: 'センサー：光や熱などの物理的変化を検出する電子素子' },
+    { text: 'sofuto', type: 'tech', meaning: 'ソフトウェア：ハードウェアに命令を与えるプログラム群' },
+    { text: 'antena', type: 'tech', meaning: 'アンテナ：電磁波を高精度に送受信する通信装置' }
   ],
   ko: [
     { text: 'goyang-i', type: 'animal', meaning: '고양이: 부드러운 털과 발걸음을 가진 동물' },
@@ -299,7 +359,19 @@ const WORD_POOLS = {
     { text: 'mal', type: 'animal', meaning: '말: 바람처럼 갈기를 휘날리며 질주하는 동물' },
     { text: 'gureum', type: 'nature', meaning: '구름: 파란 하늘 위를 자유롭게 유영하는 수증기' },
     { text: 'saja', type: 'animal', meaning: '사자: 당당한 기상을 지닌 백수의 제왕' },
-    { text: 'hosu', type: 'nature', meaning: '호수: 육지에 둘러싸여 맑고 잔잔한 물결' }
+    { text: 'hosu', type: 'nature', meaning: '호수: 육지에 둘러싸여 맑고 잔잔한 물결' },
+    { text: 'chib', type: 'tech', meaning: '칩셋: 수억 개의 트랜지스터가 집약된 초소형 논리 회로' },
+    { text: 'reijeo', type: 'tech', meaning: '레이저: 정밀 스캔과 신호 전송에 사용되는 집중된 광선' },
+    { text: 'neteuwokeu', type: 'tech', meaning: '네트워크: 전 세계 시스템을 연결하는 초고속 데이터 통신망' },
+    { text: 'deita', type: 'tech', meaning: '데이터: 초고속 알고리즘으로 처리되는 바이너리 디지털 정보' },
+    { text: 'piksel', type: 'tech', meaning: '픽셀: 디지털 디스플레이 화면을 구성하는 최소 단위 화소' },
+    { text: 'robot', type: 'tech', meaning: '로봇: 복잡한 연산과 물리적 작업을 자율 수행하는 기계 구조물' },
+    { text: 'hoero', type: 'tech', meaning: '회로: 전류가 순환하며 신호를 전달하는 마더보드의 통로' },
+    { text: 'wiseong', type: 'tech', meaning: '위성: 지구 궤도에서 글로벌 통신 신호를 중계하는 우주 장치' },
+    { text: 'kodeu', type: 'tech', meaning: '코드: 시스템 프로세서를 구동하는 정밀한 프로그래밍 명령어' },
+    { text: 'senseo', type: 'tech', meaning: '센서: 빛, 열, 움직임 등 외부 자극을 감지하는 전자 부품' },
+    { text: 'sopeuteuwe-eo', type: 'tech', meaning: '소프트웨어: 하드웨어를 제어하고 실행하는 컴퓨터 프로그램' },
+    { text: 'antena', type: 'tech', meaning: '안테나: 무선 전자기파를 송수신하는 통신 기기' }
   ],
   zh: [
     { text: 'mao', type: 'animal', meaning: '猫：可爱机敏、呼噜撒娇的小动物' },
@@ -331,7 +403,19 @@ const WORD_POOLS = {
     { text: 'ma', type: 'animal', meaning: '马：昂首嘶鸣、驰骋千里的骏马' },
     { text: 'yun', type: 'nature', meaning: '云：随风漂浮于苍穹之上的洁白水气' },
     { text: 'shi', type: 'animal', meaning: '狮：威武雄壮、傲视草原的百兽之王' },
-    { text: 'hu', type: 'nature', meaning: '湖：群山环抱间澄澈如镜的水域' }
+    { text: 'hu', type: 'nature', meaning: '湖：群山环抱间澄澈如镜的水域' },
+    { text: 'xinpi', type: 'tech', meaning: '芯片：以纳米级晶体管高速执行二进制指令的集成电路' },
+    { text: 'jiguang', type: 'tech', meaning: '激光：用于光学传感、高能扫描与数据传输的高相干性光束' },
+    { text: 'wangluo', type: 'tech', meaning: '网络：将海量计算节点与数据中心连接的互联数字网格' },
+    { text: 'shuju', type: 'tech', meaning: '数据：由算法系统高速解析和存取的离散信息单元' },
+    { text: 'xiangsu', type: 'tech', meaning: '像素：组成数字屏幕画面的最小独立可寻址色彩单元' },
+    { text: 'jiqiren', type: 'tech', meaning: '机器人：具备传感器与执行机构的自律型机电智能设备' },
+    { text: 'dianlu', type: 'tech', meaning: '电路：由导线与电子元器件构成的闭合导电路径' },
+    { text: 'weixing', type: 'tech', meaning: '卫星：在地球轨道上中继传输通讯与定位信号的人造天体' },
+    { text: 'daima', type: 'tech', meaning: '代码：使用编程语言规范书写给计算机执行的程序序列' },
+    { text: 'chuanganqi', type: 'tech', meaning: '传感器：侦测环境光热、压力等物理变化的微电子元件' },
+    { text: 'ruanjian', type: 'tech', meaning: '软件：指挥计算机硬件运行与数据处理的程序系统' },
+    { text: 'tianxian', type: 'tech', meaning: '天线：发射和接收电磁无线电波信号的高频导电装置' }
   ]
 };
 
@@ -348,13 +432,13 @@ function updateWordPoolLanguage(lang) {
 // ================================================
 // BOSS SYSTEM: SCENARIOS, UNIQUE TYPES & THEMATIC ENIGMAS
 // ================================================
-// Exactly 1 boss per unique type, each tied to an authentic scenario:
-// Phase 10: robot     -> Cybernetic Metropolis (Technological meanings)
-// Phase 20: beast     -> Primordial Savanna (Fauna, Predators & Pack meanings)
-// Phase 30: mythology -> Mystic Pantheon & Delphi (Mythology & Legendary beings)
-// Phase 40: ocean     -> Pelagic Trench & Deep Abyss (Marine biology & Ocean depths)
-// Phase 50: cosmos    -> Stellar Nebula & Cosmic Void (Astrophysics, Stars & Gravity)
-// Phase 60: volcano   -> Volcanic Caldera & Igneous Core (Magma, Lava & Geology)
+// 6 authentic boss archetypes appearing randomly at phase multiples of 10:
+// - robot:     Cybernetic Metropolis (Technological & Cybernetic meanings)
+// - beast:     Primordial Savanna (Fauna, Apex Predators & Pack meanings)
+// - mythology: Mystic Pantheon & Delphi (Mythology, Gods & Legendary beings)
+// - ocean:     Pelagic Trench & Deep Abyss (Marine biology & Ocean depths)
+// - cosmos:    Stellar Nebula & Cosmic Void (Astrophysics, Stars & Gravity)
+// - volcano:   Volcanic Caldera & Igneous Core (Magma, Lava & Geology)
 
 const BOSS_DEFS = [
   {
@@ -485,21 +569,67 @@ const BOSS_DEFS = [
   }
 ];
 
-function getBossForPhase(phase) {
-  const p = parseInt(phase, 10) || 10;
-  const match = BOSS_DEFS.find(b => b.phase === p);
-  if (match) {
-    return { ...match, lives: 3, maxLives: 3 };
+function getRandomBoss(level = 1, excludeTypes = []) {
+  let pool = BOSS_DEFS;
+  if (Array.isArray(excludeTypes) && excludeTypes.length > 0 && excludeTypes.length < BOSS_DEFS.length) {
+    const filtered = BOSS_DEFS.filter(b => !excludeTypes.includes(b.type));
+    if (filtered.length > 0) pool = filtered;
   }
-  const level = Math.max(1, Math.floor(p / 10));
-  const base = BOSS_DEFS[(level - 1) % BOSS_DEFS.length];
+  const base = pool[Math.floor(Math.random() * pool.length)];
   return {
     ...base,
-    name: `${base.name} (Lv. ${level})`,
-    namePt: `${base.namePt || base.name} (Nv. ${level})`,
+    name: level > 1 ? `${base.name} (Lv. ${level})` : base.name,
+    namePt: level > 1 ? `${base.namePt || base.name} (Nv. ${level})` : (base.namePt || base.name),
     lives: 3,
     maxLives: 3
   };
+}
+
+function getBossByType(bossType, level = 1) {
+  const base = BOSS_DEFS.find(b => b.type === bossType) || BOSS_DEFS[0];
+  return {
+    ...base,
+    name: level > 1 ? `${base.name} (Lv. ${level})` : base.name,
+    namePt: level > 1 ? `${base.namePt || base.name} (Nv. ${level})` : (base.namePt || base.name),
+    lives: 3,
+    maxLives: 3
+  };
+}
+
+function getBossForPhase(phase, learnedWords = null, excludeTypes = []) {
+  const p = parseInt(phase, 10) || 10;
+  const level = Math.max(1, Math.floor(p / 10));
+
+  // If active game state has a pending boss already chosen for this phase, preserve it
+  if (typeof state !== 'undefined' && state && state.pendingBoss && state.pendingBossPhase === p) {
+    return state.pendingBoss;
+  }
+
+  // 1. If learned words are provided, find all eligible bosses (player learned >= 3 words)
+  if (Array.isArray(learnedWords) && typeof isWordThematicallyRelatedToBoss === 'function') {
+    let eligible = BOSS_DEFS.filter(b => {
+      const matching = learnedWords.filter(w => isWordThematicallyRelatedToBoss(w, b.type));
+      return matching.length >= 3;
+    });
+
+    if (eligible.length > 0) {
+      if (Array.isArray(excludeTypes) && excludeTypes.length > 0 && excludeTypes.length < eligible.length) {
+        const notDefeated = eligible.filter(b => !excludeTypes.includes(b.type));
+        if (notDefeated.length > 0) eligible = notDefeated;
+      }
+      const base = eligible[Math.floor(Math.random() * eligible.length)];
+      return {
+        ...base,
+        name: level > 1 ? `${base.name} (Lv. ${level})` : base.name,
+        namePt: level > 1 ? `${base.namePt || base.name} (Nv. ${level})` : (base.namePt || base.name),
+        lives: 3,
+        maxLives: 3
+      };
+    }
+  }
+
+  // 2. Fallback: random boss among archetypes
+  return getRandomBoss(level, excludeTypes);
 }
 
 // ================================================
@@ -517,7 +647,10 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'robo', type: 'tech', meaning: 'Máquina eletromecânica autônoma e programável projetada para executar tarefas complexas' },
       { text: 'circuito', type: 'tech', meaning: 'Caminho condutor fechado por onde flui a corrente elétrica em placas-mãe' },
       { text: 'satelite', type: 'tech', meaning: 'Dispositivo orbital espacial que retransmite dados e sinais de comunicação para o globo' },
-      { text: 'codigo', type: 'tech', meaning: 'Conjunto de regras e instruções binárias escritas em uma linguagem de programação' }
+      { text: 'codigo', type: 'tech', meaning: 'Conjunto de regras e instruções binárias escritas em uma linguagem de programação' },
+      { text: 'sensor', type: 'tech', meaning: 'Dispositivo eletrônico que detecta variações físicas do ambiente como calor ou luz' },
+      { text: 'software', type: 'tech', meaning: 'Conjunto de programas lógicos e sistemas operacionais que instruem o hardware' },
+      { text: 'antena', type: 'tech', meaning: 'Dispositivo condutor que emite e capta ondas eletromagnéticas de telecomunicação' }
     ],
     en: [
       { text: 'chip', type: 'tech', meaning: 'Silicon integrated circuit that executes logic instructions at gigahertz frequencies' },
@@ -527,8 +660,11 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'pixel', type: 'tech', meaning: 'Smallest addressable color element on a high-definition visual display screen' },
       { text: 'robot', type: 'tech', meaning: 'Autonomous electro-mechanical automaton programmed to execute complex cyber operations' },
       { text: 'circuit', type: 'tech', meaning: 'Closed conductive loop through which electrical current and binary pulses flow' },
-      { text: 'satellite', type: 'tech', meaning: 'Orbital spacecraft transmitting global positioning telemetry and encrypted telemetry' },
-      { text: 'code', type: 'tech', meaning: 'Structured sequence of algorithmic syntax commanding computer processors' }
+      { text: 'satellite', type: 'tech', meaning: 'Orbital spacecraft transmitting global positioning telemetry and encrypted signals' },
+      { text: 'code', type: 'tech', meaning: 'Structured sequence of algorithmic syntax commanding computer processors' },
+      { text: 'sensor', type: 'tech', meaning: 'Electronic transducer detecting ambient physical stimuli such as light and temperature' },
+      { text: 'software', type: 'tech', meaning: 'System instructions, runtime libraries and operating systems directing hardware' },
+      { text: 'antenna', type: 'tech', meaning: 'Conductive metallic apparatus radiating and receiving high-frequency radio waves' }
     ],
     fr: [
       { text: 'puce', type: 'tech', meaning: 'Circuit intégré de silicium qui exécute les calculs et instructions informatiques' },
@@ -538,7 +674,11 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'pixel', type: 'tech', meaning: 'Plus petit élément de couleur composant une image numérique sur un écran' },
       { text: 'robot', type: 'tech', meaning: 'Machine autonome et programmable conçue pour exécuter des tâches mécaniques' },
       { text: 'circuit', type: 'tech', meaning: 'Boucle conductrice fermée dans laquelle circule le courant électrique' },
-      { text: 'code', type: 'tech', meaning: 'Instructions structurées écrites dans un langage de programmation' }
+      { text: 'satellite', type: 'tech', meaning: 'Engin spatial orbital relayant les signaux et télécommunications mondiales' },
+      { text: 'code', type: 'tech', meaning: 'Instructions structurées écrites dans un langage de programmation' },
+      { text: 'capteur', type: 'tech', meaning: 'Dispositif électronique détectant les variations physiques de l\'environnement' },
+      { text: 'logiciel', type: 'tech', meaning: 'Programmes et systèmes d\'exploitation pilotant le matériel informatique' },
+      { text: 'antenne', type: 'tech', meaning: 'Dispositif métallique émettant et recevant les ondes radio haute fréquence' }
     ],
     de: [
       { text: 'chip', type: 'tech', meaning: 'Integrierter Halbleiterschaltkreis, der Prozessoroperationen im Nanosekundenbereich ausführt' },
@@ -547,32 +687,54 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'daten', type: 'tech', meaning: 'Binäre Informationseinheiten, die von Algorithmen verarbeitet und gespeichert werden' },
       { text: 'pixel', type: 'tech', meaning: 'Kleinstes adressierbares Farbpixel auf einer digitalen Bildschirmanzeige' },
       { text: 'roboter', type: 'tech', meaning: 'Autonome programmierbare Maschine zur fehlerfreien Ausführung technischer Befehle' },
-      { text: 'code', type: 'tech', meaning: 'Strukturierte logische Anweisungen in einer definierten Programmiersprache' }
+      { text: 'schaltkreis', type: 'tech', meaning: 'Geschlossene Leiterbahn für elektrische Signale und binäre Stromimpulse' },
+      { text: 'satellit', type: 'tech', meaning: 'Orbitaler Raumflugkörper zur weltweiten Übertragung verschlüsselter Funksignale' },
+      { text: 'code', type: 'tech', meaning: 'Strukturierte logische Anweisungen in einer definierten Programmiersprache' },
+      { text: 'sensor', type: 'tech', meaning: 'Elektronischer Messfühler zur Erfassung physikalischer Umgebungswerte' },
+      { text: 'software', type: 'tech', meaning: 'Gesamtheit der Programme und Betriebssysteme für Rechenanlagen' },
+      { text: 'antenne', type: 'tech', meaning: 'Vorrichtung zum Senden und Empfangen hochfrequenter Funkwellen' }
     ],
     ja: [
-      { text: 'kaero', type: 'tech', meaning: '回路：電子やバイナリ信号が流れる高密度のプリント基板' },
-      { text: 'kodo', type: 'tech', meaning: 'コード：プロセッサを駆動するプログラム命令の構文' },
+      { text: 'kairo', type: 'tech', meaning: '回路：電子やバイナリ信号が流れる高密度のプリント基板' },
+      { text: 'reza', type: 'tech', meaning: 'レーザー：光学的スキャンや通信を行う指向性の高い干渉光' },
+      { text: 'nettowaku', type: 'tech', meaning: 'ネットワーク：世界中の端末とサーバを結ぶ高速通信網' },
       { text: 'deta', type: 'tech', meaning: 'データ：アルゴリズムによって高速処理されるバイナリ情報' },
-      { text: 'kikai', type: 'tech', meaning: '機械：正確な演算と自律動作を実行するサイバー構造体' },
-      { text: 'hikari', type: 'tech', meaning: 'レーザー光：光学的スキャンや通信を行う強力な指向性ビーム' },
-      { text: 'kensa', type: 'tech', meaning: 'スキャン：システムの不具合や侵入者を検出する監視シーケンス' },
-      { text: 'denki', type: 'tech', meaning: '電力：超小型チップを起動させるエネルギーの流れ' }
+      { text: 'pikuseru', type: 'tech', meaning: '画素：画面を構成する最小単位の微小な色要素' },
+      { text: 'robotto', type: 'tech', meaning: 'ロボット：複雑な作業を自律的にこなすプログラマブル機械' },
+      { text: 'denshi', type: 'tech', meaning: '電子：回路内を移動して信号と電力を運ぶ素粒子' },
+      { text: 'eisei', type: 'tech', meaning: '人工衛星：地球周回軌道から通信や観測を行う宇宙機' },
+      { text: 'kodo', type: 'tech', meaning: 'コード：プロセッサを駆動するプログラム命令の構文' },
+      { text: 'sensa', type: 'tech', meaning: 'センサー：光や熱などの物理的変化を検出する電子素子' },
+      { text: 'sofuto', type: 'tech', meaning: 'ソフトウェア：ハードウェアに命令を与えるプログラム群' },
+      { text: 'antena', type: 'tech', meaning: 'アンテナ：電磁波を高精度に送受信する通信装置' }
     ],
     ko: [
+      { text: 'chib', type: 'tech', meaning: '칩셋: 수억 개의 트랜지스터가 집약된 초소형 논리 회로' },
+      { text: 'reijeo', type: 'tech', meaning: '레이저: 정밀 스캔과 신호 전송에 사용되는 집중된 광선' },
+      { text: 'neteuwokeu', type: 'tech', meaning: '네트워크: 전 세계 시스템을 연결하는 초고속 데이터 통신망' },
+      { text: 'deita', type: 'tech', meaning: '데이터: 초고속 알고리즘으로 처리되는 바이너리 디지털 정보' },
+      { text: 'piksel', type: 'tech', meaning: '픽셀: 디지털 디스플레이 화면을 구성하는 최소 단위 화소' },
+      { text: 'robot', type: 'tech', meaning: '로봇: 복잡한 연산과 물리적 작업을 자율 수행하는 기계 구조물' },
+      { text: 'hoero', type: 'tech', meaning: '회로: 전류가 순환하며 신호를 전달하는 마더보드의 통로' },
+      { text: 'wiseong', type: 'tech', meaning: '위성: 지구 궤도에서 글로벌 통신 신호를 중계하는 우주 장치' },
       { text: 'kodeu', type: 'tech', meaning: '코드: 시스템 프로세서를 구동하는 정밀한 프로그래밍 명령어' },
-      { text: 'deta', type: 'tech', meaning: '데이터: 초고속 알고리즘으로 처리되는 바이너리 디지털 정보' },
-      { text: 'lobo', type: 'tech', meaning: '로봇: 복잡한 연산과 물리적 작업을 자율 수행하는 기계 구조물' },
-      { text: 'biseu', type: 'tech', meaning: '칩셋: 수억 개의 트랜지스터가 집약된 초소형 논리 회로' },
-      { text: 'hwalo', type: 'tech', meaning: '회로: 전류가 순환하며 신호를 전달하는 마더보드의 통로' },
-      { text: 'jeongi', type: 'tech', meaning: '전기: 메가로봇의 에너지 코어를 활성화하는 동력원' }
+      { text: 'senseo', type: 'tech', meaning: '센서: 빛, 열, 움직임 등 외부 자극을 감지하는 전자 부품' },
+      { text: 'sopeuteuwe-eo', type: 'tech', meaning: '소프트웨어: 하드웨어를 제어하고 실행하는 컴퓨터 프로그램' },
+      { text: 'antena', type: 'tech', meaning: '안테나: 무선 전자기파를 송수신하는 통신 기기' }
     ],
     zh: [
       { text: 'xinpi', type: 'tech', meaning: '芯片：以纳米级晶体管高速执行二进制指令的集成电路' },
       { text: 'jiguang', type: 'tech', meaning: '激光：用于光学传感、高能扫描与数据传输的高相干性光束' },
       { text: 'wangluo', type: 'tech', meaning: '网络：将海量计算节点与数据中心连接的互联数字网格' },
       { text: 'shuju', type: 'tech', meaning: '数据：由算法系统高速解析和存取的离散信息单元' },
+      { text: 'xiangsu', type: 'tech', meaning: '像素：组成数字屏幕画面的最小独立可寻址色彩单元' },
       { text: 'jiqiren', type: 'tech', meaning: '机器人：具备传感器与执行机构的自律型机电智能设备' },
-      { text: 'daima', type: 'tech', meaning: '代码：使用编程语言规范书写给计算机执行的程序序列' }
+      { text: 'dianlu', type: 'tech', meaning: '电路：由导线与电子元器件构成的闭合导电路径' },
+      { text: 'weixing', type: 'tech', meaning: '卫星：在地球轨道上中继传输通讯与定位信号的人造天体' },
+      { text: 'daima', type: 'tech', meaning: '代码：使用编程语言规范书写给计算机执行的程序序列' },
+      { text: 'chuanganqi', type: 'tech', meaning: '传感器：侦测环境光热、压力等物理变化的微电子元件' },
+      { text: 'ruanjian', type: 'tech', meaning: '软件：指挥计算机硬件运行与数据处理的程序系统' },
+      { text: 'tianxian', type: 'tech', meaning: '天线：发射和接收电磁无线电波信号的高频导电装置' }
     ]
   },
 
@@ -587,7 +749,10 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'garras', type: 'fauna', meaning: 'Unhas curvas retráteis de queratina afiadas para golpear e imobilizar a caça' },
       { text: 'presa', type: 'fauna', meaning: 'Animal perseguido no equilíbrio da cadeia alimentar que depende da agilidade para fugir' },
       { text: 'fauna', type: 'fauna', meaning: 'Conjunto biológico de todas as criaturas animais selvagens de um ecossistema natural' },
-      { text: 'savana', type: 'fauna', meaning: 'Bioma de planícies douradas e acácias onde manadas e grandes carnívoros coexistem' }
+      { text: 'savana', type: 'fauna', meaning: 'Bioma de planícies douradas e acácias onde manadas e grandes carnívoros coexistem' },
+      { text: 'pantera', type: 'fauna', meaning: 'Felino ágil e silencioso de pelagem escura camuflada nas sombras da floresta' },
+      { text: 'falcao', type: 'fauna', meaning: 'Ave veloz capaz de mergulhar a velocidades extraordinárias para abater alvos no ar' },
+      { text: 'urso', type: 'fauna', meaning: 'Mamífero imponente dotado de densa camada de pelo, olfato apurado e vigor colossal' }
     ],
     en: [
       { text: 'lion', type: 'fauna', meaning: 'Apex predatory cat with a majestic mane reigning over the golden savanna territory' },
@@ -598,7 +763,10 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'claws', type: 'fauna', meaning: 'Curved razor-sharp keratin weapons deployed by ferocious carnivores to seize targets' },
       { text: 'prey', type: 'fauna', meaning: 'Herbivores and quarry pursued in the primordial circle of the wild food chain' },
       { text: 'fauna', type: 'fauna', meaning: 'The collective animal kingdom inhabiting a wild natural biome' },
-      { text: 'savanna', type: 'fauna', meaning: 'Sun-drenched tropical grassland ecosystem teeming with roaming herds and predators' }
+      { text: 'savanna', type: 'fauna', meaning: 'Sun-drenched tropical grassland ecosystem teeming with roaming herds and predators' },
+      { text: 'panther', type: 'fauna', meaning: 'Stealthy agile melanistic wild feline stalking silently through forest shadows' },
+      { text: 'falcon', type: 'fauna', meaning: 'Aerodynamic predatory bird stooping at terminal velocity to strike quarry in mid-air' },
+      { text: 'bear', type: 'fauna', meaning: 'Formidable thick-furred omnivorous mammal possessing crushing muscular power' }
     ],
     fr: [
       { text: 'lion', type: 'fauna', meaning: 'Grand félin majestueux couronné souverain des étendues dorées de la savane' },
@@ -609,7 +777,10 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'griffes', type: 'fauna', meaning: 'Armes courbes acérées en kératine équipant les pattes des redoutables fauves' },
       { text: 'proie', type: 'fauna', meaning: 'Animal traqué par les carnivores dans le cycle ancestral de la nature' },
       { text: 'faune', type: 'fauna', meaning: 'Ensemble de la vie animale peuplant un biome sauvage et préservé' },
-      { text: 'savane', type: 'fauna', meaning: 'Vaste plaine herbeuse abritant les plus spectaculaires migrations animales' }
+      { text: 'savane', type: 'fauna', meaning: 'Vaste plaine herbeuse abritant les plus spectaculaires migrations animales' },
+      { text: 'panthere', type: 'fauna', meaning: 'Félin agile et silencieux au pelage noir se fondant dans la pénombre' },
+      { text: 'faucon', type: 'fauna', meaning: 'Oiseau de proie ultrarapide fondant en piqué sur ses proies aériennes' },
+      { text: 'ours', type: 'fauna', meaning: 'Colosse des forêts doté d\'une force colossale et d\'un odorat surdéveloppé' }
     ],
     de: [
       { text: 'loewe', type: 'fauna', meaning: 'Majestätischer Spitzenprädator mit dichter Mähne, der die afrikanische Savanne beherrscht' },
@@ -619,7 +790,11 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'rudel', type: 'fauna', meaning: 'Disziplinierte Jagdgemeinschaft von Beutegreifern in der Wildnis' },
       { text: 'krallen', type: 'fauna', meaning: 'Scharf gekrümmte Hornwaffen der Raubtiere zum Schlagen der Beute' },
       { text: 'beute', type: 'fauna', meaning: 'Gejagtes Tier im ewigen Kreislauf der unberührten Nahrungskette' },
-      { text: 'fauna', type: 'fauna', meaning: 'Die gesamte artenreiche Tierwelt eines natürlichen Lebensraumes' }
+      { text: 'fauna', type: 'fauna', meaning: 'Die gesamte artenreiche Tierwelt eines natürlichen Lebensraumes' },
+      { text: 'savanne', type: 'fauna', meaning: 'Weite tropische Graslandschaft, in der Herden und Raubtiere aufeinandertreffen' },
+      { text: 'panther', type: 'fauna', meaning: 'Schwarze Großkatze mit lautloser Eleganz und perfekter Nachtjagd' },
+      { text: 'falke', type: 'fauna', meaning: 'Schnellster Greifvogel der Welt im atemberaubenden Sturzflug' },
+      { text: 'baer', type: 'fauna', meaning: 'Mächtiges Wildtier mit enormer Kraft, dickem Pelz und feinem Spürsinn' }
     ],
     ja: [
       { text: 'shishi', type: 'fauna', meaning: '百獣の王：堂々たるたてがみと圧倒的な狩りの力を持つ大型肉食獣' },
@@ -629,25 +804,39 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'mure', type: 'fauna', meaning: '群れ：厳格な序列を守り連携して獲物を追いつめる捕食者集団' },
       { text: 'tsume', type: 'fauna', meaning: '鉤爪：獲物を確実に捕獲し引き裂く鋭利な天然の武器' },
       { text: 'emono', type: 'fauna', meaning: '獲物：自然界の食物連鎖の中で命を賭して逃走する野生動物' },
-      { text: 'kemono', type: 'fauna', meaning: '獣：過酷な大自然を本能と生命力で生き抜く強き生き物' }
+      { text: 'kemono', type: 'fauna', meaning: '獣：過酷な大自然を本能と生命力で生き抜く強き生き物' },
+      { text: 'panza', type: 'fauna', meaning: '豹：しなやかな体躯で木々を渡り歩く俊敏なハンター' },
+      { text: 'hayabusa', type: 'fauna', meaning: '隼：猛烈な速度の急降下で空中戦を制する俊足の猛禽' },
+      { text: 'kuma', type: 'fauna', meaning: '熊：強烈な腕力と厚い毛皮で大自然に君臨する大巨獣' },
+      { text: 'yajuu', type: 'fauna', meaning: '野獣：牙と爪を研ぎ澄まし原始の掟に従う荒ぶる獣' }
     ],
     ko: [
       { text: 'saja', type: 'fauna', meaning: '사자: 광활한 사바나를 호령하는 갈기와 위엄을 지닌 최상위 포식자' },
       { text: 'neukdae', type: 'fauna', meaning: '늑대: 무리를 지어 협력 사냥을 펼치며 달을 향해 울부짖는 맹수' },
       { text: 'horangi', type: 'fauna', meaning: '호랑이: 은밀한 줄무늬와 폭발적인 근력을 지닌 고독한 정글의 제왕' },
       { text: 'doksuri', type: 'fauna', meaning: '독수리: 천 미터 상공에서도 표적을 포착하는 날카로운 발톱의 맹금류' },
+      { text: 'muri', type: 'fauna', meaning: '무리: 규율 있는 본능으로 대형 사냥감을 몰아붙이는 협동 집단' },
       { text: 'baltob', type: 'fauna', meaning: '발톱: 포식자가 먹이를 단숨에 제압하기 위해 갈고 닦은 흉기' },
       { text: 'meok-i', type: 'fauna', meaning: '먹잇감: 원초적 야생의 먹이사슬 속에서 생존을 위해 질주하는 동물' },
-      { text: 'yasoo', type: 'fauna', meaning: '야수: 길들여지지 않은 야생의 본능과 생명력을 간직한 짐승' }
+      { text: 'yasoo', type: 'fauna', meaning: '야수: 길들여지지 않은 야생의 본능과 생명력을 간직한 짐승' },
+      { text: 'pyobeom', type: 'fauna', meaning: '표범: 높은 나무 위로 먹이를 끌어올리는 민첩한 흑야의 포식자' },
+      { text: 'mae', type: 'fauna', meaning: '매: 초고속 수직 하강으로 허공의 표적을 격추하는 날렵한 사냥꾼' },
+      { text: 'gom', type: 'fauna', meaning: '곰: 두터운 털가죽과 압도적인 완력을 자랑하는 산림의 거구' },
+      { text: 'cho-won', type: 'fauna', meaning: '초원: 끝없는 대자연의 지평선 아래 거대한 야생 생태계가 펼쳐진 터전' }
     ],
     zh: [
       { text: 'shizi', type: 'fauna', meaning: '狮子：拥有威严鬃毛、统治开阔草原与领地的顶级食肉王者' },
       { text: 'lang', type: 'fauna', meaning: '狼：以严密纪律协同狩猎、向着夜月发出悠长长嚎的荒野捕食者' },
       { text: 'laohu', type: 'fauna', meaning: '老虎：身披斑斓条纹、具备极强爆发力和隐蔽伏击能力的丛林霸主' },
       { text: 'laoying', type: 'fauna', meaning: '老鹰：翱翔于九天之上、以极目远眺锁定制胜猎物的猛禽' },
+      { text: 'qunluo', type: 'fauna', meaning: '群落：遵循野性严密秩序、结阵猎杀强敌的狼群捕食方阵' },
       { text: 'lizhao', type: 'fauna', meaning: '利爪：猛兽脚掌上用于奔袭撕裂与扑杀猎物的尖锐角质武器' },
       { text: 'liewu', type: 'fauna', meaning: '猎物：在大自然残酷食物链中依靠敏捷机敏求生的动物' },
-      { text: 'yeshou', type: 'fauna', meaning: '野兽：以原始生存本能主宰旷野山川的强悍陆地生命' }
+      { text: 'yeshou', type: 'fauna', meaning: '野兽：以原始生存本能主宰旷野山川的强悍陆地生命' },
+      { text: 'heibao', type: 'fauna', meaning: '黑豹：遁入夜色之中、步履无声且爆发力极强的敏捷大猫' },
+      { text: 'lieying', type: 'fauna', meaning: '猎鹰：以高空俯冲绝技精准截击空中目标的飞禽霸者' },
+      { text: 'xiong', type: 'fauna', meaning: '巨熊：身披厚密重铠般皮毛、拥有碎骨巨力的高山巨兽' },
+      { text: 'caoyuan', type: 'fauna', meaning: '草原：风吹草低见牛羊、万千野性生灵竞逐奔腾的广袤大地' }
     ]
   },
 
@@ -662,7 +851,10 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'esfinge', type: 'myth', meaning: 'Guardiã alada com corpo de leoa que propõe enigmas mortais aos viajantes' },
       { text: 'oraculo', type: 'myth', meaning: 'Santuário profético sagrado onde divindades revelavam o destino dos homens' },
       { text: 'quimera', type: 'myth', meaning: 'Besta quimérica que cospe fogo formada por partes de leão, cabra e serpente' },
-      { text: 'tita', type: 'myth', meaning: 'Divindade primordial de poder astronômico que moldou as forças originais do cosmos' }
+      { text: 'tita', type: 'myth', meaning: 'Divindade primordial de poder astronômico que moldou as forças originais do cosmos' },
+      { text: 'pegaso', type: 'myth', meaning: 'Cavalo alado sagrado símbolo de inspiração heroica que voa livre entre as nuvens' },
+      { text: 'centauro', type: 'myth', meaning: 'Criatura lendária com torso humano e corpo veloz de cavalo guardiã dos bosques' },
+      { text: 'eliseo', type: 'myth', meaning: 'Paraíso mitológico dos campos sagrados onde heróis imortais descansam em glória' }
     ],
     en: [
       { text: 'dragon', type: 'myth', meaning: 'Colossal winged mythical reptile breathing incinerating arcane torrents of flame' },
@@ -673,7 +865,10 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'sphinx', type: 'myth', meaning: 'Winged riddling guardian with a lion body slaying those who fail the trial' },
       { text: 'oracle', type: 'myth', meaning: 'Sacred prophetic shrine through which the gods whispered unavoidable destinies' },
       { text: 'chimera', type: 'myth', meaning: 'Fire-breathing chimeric monster fusing the dread parts of lion, goat, and serpent' },
-      { text: 'titan', type: 'myth', meaning: 'Primordial cosmic giant wielding earth-shaking strength before the olympian age' }
+      { text: 'titan', type: 'myth', meaning: 'Primordial cosmic giant wielding earth-shaking strength before the olympian age' },
+      { text: 'pegasus', type: 'myth', meaning: 'Divine winged stallion soaring freely across starry skies and celestial realms' },
+      { text: 'centaur', type: 'myth', meaning: 'Wise mythic forest dweller combining human intellect with equine power' },
+      { text: 'elysium', type: 'myth', meaning: 'Blessed mythological realm of perpetual spring where heroic souls dwell' }
     ],
     fr: [
       { text: 'dragon', type: 'myth', meaning: 'Créature ailée colossale crachant des torrents de feu et gardant des trésors magiques' },
@@ -684,7 +879,10 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'sphinx', type: 'myth', meaning: 'Bête énigmatique au corps de félin ailé dévorant quiconque échoue à son mystère' },
       { text: 'oracle', type: 'myth', meaning: 'Sanctuaire divinatoire où la volonté des dieux était transmise aux héros' },
       { text: 'chimere', type: 'myth', meaning: 'Monstre mythologique hybride crachant des flammes composé de lion, chèvre et serpent' },
-      { text: 'titan', type: 'myth', meaning: 'Divinité gigantesque de l\'âge d\'or personnifiant les forces primordiales' }
+      { text: 'titan', type: 'myth', meaning: 'Divinité gigantesque de l\'âge d\'or personnifiant les forces primordiales' },
+      { text: 'pegase', type: 'myth', meaning: 'Cheval ailé divin galopant sur les nuées célestes au service des héros' },
+      { text: 'centaure', type: 'myth', meaning: 'Être fabuleux mi-homme mi-cheval gardien des savoirs anciens et des forêts' },
+      { text: 'elysee', type: 'myth', meaning: 'Paradis mythologique où séjournent les âmes vertueuses dans la clarté éternelle' }
     ],
     de: [
       { text: 'drache', type: 'myth', meaning: 'Gewaltiges geflügeltes Fabelwesen, das verzehrende Flammen speit und Burgen bewacht' },
@@ -694,31 +892,52 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'olymp', type: 'myth', meaning: 'Heiliger Göttersitz in lichten Höhen, von wo aus Zeus das Schicksal lenkte' },
       { text: 'sphinx', type: 'myth', meaning: 'Geflügelte Hüterin der Geheimnisse, die unlösbare Schicksalsrätsel stellt' },
       { text: 'orakel', type: 'myth', meaning: 'Heilige Seherstätte, an der Priesterinnen den Willen der Götter verkündeten' },
-      { text: 'titan', type: 'myth', meaning: 'Urgöttliches Riesengeschlecht mit gewaltigen Urkräften der Schöpfung' }
+      { text: 'chimere', type: 'myth', meaning: 'Feuerspeiendes Fabelungeheuer aus Löwe, Ziege und Schlange' },
+      { text: 'titan', type: 'myth', meaning: 'Urgöttliches Riesengeschlecht mit gewaltigen Urkräften der Schöpfung' },
+      { text: 'pegasus', type: 'myth', meaning: 'Göttliches geflügeltes Ross, das die Wolken durchbricht und Sterne berührt' },
+      { text: 'zentaur', type: 'myth', meaning: 'Weises Mischwesen aus Mensch und Pferd, Hüter uralter Waldmysterien' },
+      { text: 'elysium', type: 'myth', meaning: 'Insel der Seligen im jenseitigen Licht für ruhmreiche antike Helden' }
     ],
     ja: [
       { text: 'ryu', type: 'myth', meaning: '竜・龍：天を駆け灼熱の炎や雷を操る神聖にして強大な伝説の獣' },
       { text: 'fushichou', type: 'myth', meaning: '不死鳥：自らを炎で焼き、その灰の中から永遠に蘇る霊鳥' },
-      { text: 'shinwa', type: 'myth', meaning: '神話：神々と英雄たちが世界の創世と運命を紡いだ古代の物語' },
-      { text: 'kamigami', type: 'myth', meaning: '神々：天界の神殿に集い、人々の祈りと運命を司る至高の存在' },
+      { text: 'hidora', type: 'myth', meaning: 'ヒドラ：首を切り落とすたびに二本の新首が生え出る多頭の大蛇' },
+      { text: 'gurifon', type: 'myth', meaning: 'グリフォン：黄金の翼と鋭い嘴、獅子の肉体を持つ天空の守護聖獣' },
       { text: 'orinpusu', type: 'myth', meaning: 'オリュンポス：雲海の上にそびえ立つ神々の聖なる都' },
-      { text: 'oraku', type: 'myth', meaning: '神託：巫女を通じて下される、決して逆らえぬ運命の啓示' },
-      { text: 'kyojin', type: 'myth', meaning: '巨人・ティタン：オリュンポスの神々に先立ち天地を支えた原初の神族' }
+      { text: 'sufinkusu', type: 'myth', meaning: 'スフィンクス：旅人に死の謎解きを課す有翼の人面獅子' },
+      { text: 'shinwa', type: 'myth', meaning: '神話：神々と英雄たちが世界の創世と運命を紡いだ古代の物語' },
+      { text: 'kimera', type: 'myth', meaning: 'キメラ：獅子と山羊と蛇の異形が合体し火焔を噴き散らす魔獣' },
+      { text: 'kyojin', type: 'myth', meaning: '巨人・ティタン：オリュンポスの神々に先立ち天地を支えた原初の神族' },
+      { text: 'pegasasu', type: 'myth', meaning: 'ペガサス：純白の翼で大空を駆け抜ける神聖なる天馬' },
+      { text: 'kentaorosu', type: 'myth', meaning: 'ケンタウロス：人間の知性と駿馬の疾走力を併せ持つ森の賢者' },
+      { text: 'kamigami', type: 'myth', meaning: '神々：天界の神殿に集い、人々の祈りと運命を司る至高の存在' }
     ],
     ko: [
       { text: 'yong', type: 'myth', meaning: '용: 거대한 날개와 입에서 토해내는 마법의 불길로 세상을 압도하는 신화 속 생물' },
       { text: 'bulsae', type: 'myth', meaning: '불사조: 제 몸을 불태운 뒤 찬란한 잿더미 속에서 영원히 부활하는 전설의 영조' },
+      { text: 'hideura', type: 'myth', meaning: '히드라: 목을 벨 때마다 두 개의 머리가 다시 솟구치는 맹독의 다두 거사' },
+      { text: 'geulipon', type: 'myth', meaning: '그리폰: 황금빛 사자 몸체와 매의 날개를 지닌 용맹한 보물 수호수' },
+      { text: 'olrimposeu', type: 'myth', meaning: '올림포스: 구름 위에 자리한 고대 최고 신들의 신성한 황금 궁전' },
+      { text: 'seupingkeuseu', type: 'myth', meaning: '스핑크스: 수수께끼를 풀지 못하는 자를 심판하는 날개 달린 사자 괴수' },
       { text: 'sinwha', type: 'myth', meaning: '신화: 신들과 영웅들의 서사가 기록된 인류 태초의 영웅적 전설' },
-      { text: 'sin', type: 'myth', meaning: '신: 하늘 위의 신전에 머물며 자연과 번개를 다스리는 불멸의 존재' },
+      { text: 'kimera', type: 'myth', meaning: '키메라: 사자와 염소와 뱀이 융합되어 맹렬한 불을 뿜는 신화의 흉수' },
       { text: 'taetan', type: 'myth', meaning: '티탄: 올림포스 이전 세상의 기틀을 마련했던 거대한 태초의 거인족' },
+      { text: 'pegasuseu', type: 'myth', meaning: '페가수스: 천공을 활공하는 날개 달린 고결한 영웅의 백마' },
+      { text: 'kentauroseu', type: 'myth', meaning: '켄타우로스: 인간의 지혜와 준마의 기동성을 겸비한 숲의 명사수' },
       { text: 'sinjeon', type: 'myth', meaning: '신전: 신성한 제단과 거대한 석주가 신들의 영광을 증명하는 성소' }
     ],
     zh: [
       { text: 'shenlong', type: 'myth', meaning: '神龙：翱翔于九霄云外、吞吐焚天烈焰与雷霆的天地神兽' },
       { text: 'fenghuang', type: 'myth', meaning: '凤凰：浴火淬炼而生命不灭、在余烬中翱翔重生的百鸟之王' },
+      { text: 'jiutoushe', type: 'myth', meaning: '九头蛇：断其一首则生两首、蕴藏剧毒血海的上古魔物' },
+      { text: 'shishenrenmian', type: 'myth', meaning: '狮身人面：盘踞于金字塔前、以致命谜题裁决凡人命运的守门者' },
+      { text: 'aolinpisi', type: 'myth', meaning: '奥林匹斯：众神居于云海之巅、执掌天地雷火的黄金神山' },
+      { text: 'sifinkesi', type: 'myth', meaning: '斯芬克斯：身披巨翼与利爪、盘问命运之秘的守护异兽' },
       { text: 'shenhua', type: 'myth', meaning: '神话：记载远古神明开辟混沌与英雄传奇的洪荒史诗' },
-      { text: 'tianling', type: 'myth', meaning: '天神：居住于神山圣巅、执掌天地风云与宿命的永生神祇' },
+      { text: 'qimeila', type: 'myth', meaning: '奇美拉：狮首羊身蛇尾、吞吐烈火熔岩的凶煞魔物' },
       { text: 'juren', type: 'myth', meaning: '泰坦巨人：诞生于天地开辟之初、拥有翻江倒海伟力的上古巨神' },
+      { text: 'tianma', type: 'myth', meaning: '天马：翱翔天际、踏破星辰破云而出的神圣飞马' },
+      { text: 'banrenma', type: 'myth', meaning: '半人马：兼具人类智慧与奔马极速的荒野守护智者' },
       { text: 'shengdian', type: 'myth', meaning: '圣殿：供奉神谕与永恒圣火、接受万人朝拜的庄严殿堂' }
     ]
   },
@@ -734,7 +953,10 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'tsunami', type: 'ocean', meaning: 'Parede colossal de água marinha arremessada por abalos sísmicos no fundo do oceano' },
       { text: 'baleia', type: 'ocean', meaning: 'Gigante mamífero aquático que ecoa cantos harmônicos por milhares de milhas marítimas' },
       { text: 'fossa', type: 'ocean', meaning: 'Fenda submarina vertiginosa que mergulha nas trincheiras mais profundas do leito oceânico' },
-      { text: 'mare', type: 'ocean', meaning: 'Movimento constante de fluxo e refluxo das águas governado pela atração gravitacional da Lua' }
+      { text: 'mare', type: 'ocean', meaning: 'Movimento constante de fluxo e refluxo das águas governado pela atração gravitacional da Lua' },
+      { text: 'medusa', type: 'ocean', meaning: 'Criatura marinha gelatinosa e translúcida que pulsa pelos mares com tentáculos urticantes' },
+      { text: 'recife', type: 'ocean', meaning: 'Muralha de rocha e calcário marinho que abriga enorme biodiversidade nas águas tropicais' },
+      { text: 'golfinho', type: 'ocean', meaning: 'Cetáceo sociável e saltador de ecolocalização refinada e notável inteligência' }
     ],
     en: [
       { text: 'ocean', type: 'ocean', meaning: 'Vast saltwater expanse blanketing planet Earth and cradling undiscovered depths' },
@@ -745,7 +967,10 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'tsunami', type: 'ocean', meaning: 'Monstrous oceanic surge unleashed across open waters by seafloor seismic displacement' },
       { text: 'whale', type: 'ocean', meaning: 'Mammoth gentle cetacean transmitting deep acoustic whale songs through ocean basins' },
       { text: 'trench', type: 'ocean', meaning: 'Deepest geological chasm cut into the ocean crust sheltering extremophile life' },
-      { text: 'tide', type: 'ocean', meaning: 'Rhythmic rise and retreat of sea surfaces influenced by lunar gravitational pull' }
+      { text: 'tide', type: 'ocean', meaning: 'Rhythmic rise and retreat of sea surfaces influenced by lunar gravitational pull' },
+      { text: 'jellyfish', type: 'ocean', meaning: 'Pulsing translucent gelatinous pelagic creature armed with stinging tentacles' },
+      { text: 'reef', type: 'ocean', meaning: 'Submerged limestone ridge forged by living corals teeming with marine biodiversity' },
+      { text: 'dolphin', type: 'ocean', meaning: 'Playful marine mammal navigating turbulent oceans via supersonic echolocation' }
     ],
     fr: [
       { text: 'ocean', type: 'ocean', meaning: 'Immense étendue d\'eau salée recouvrant la terre et abritant les abysses mystérieux' },
@@ -756,7 +981,10 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'tsunami', type: 'ocean', meaning: 'Vague déferlante colossale engendrée par un séisme survenant au fond des mers' },
       { text: 'baleine', type: 'ocean', meaning: 'Géant des mers communiquant sur de grandes distances par de mystérieux chants' },
       { text: 'fosse', type: 'ocean', meaning: 'Dépression sous-marine abyssale plongeant dans les tréfonds de la croûte océanique' },
-      { text: 'maree', type: 'ocean', meaning: 'Mouvement périodique d\'oscillation des eaux sous l\'effet de la gravité lunaire' }
+      { text: 'maree', type: 'ocean', meaning: 'Mouvement périodique d\'oscillation des eaux sous l\'effet de la gravité lunaire' },
+      { text: 'meduse', type: 'ocean', meaning: 'Créature pélagique gélatineuse et translucide se propulsant par pulsations douces' },
+      { text: 'recif', type: 'ocean', meaning: 'Édifice calcaire sous-marin abritant les plus riches écosystèmes des mers chaudes' },
+      { text: 'dauphin', type: 'ocean', meaning: 'Mammifère marin sociable et joueur doté d\'une écholocalisation prodigieuse' }
     ],
     de: [
       { text: 'ozean', type: 'ocean', meaning: 'Gewaltiges Weltmeer voller unerforschter Tiefseegräben und faszinierender Lebensformen' },
@@ -766,7 +994,11 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'krake', type: 'ocean', meaning: 'Hochintelligenter Tintenfisch mit acht Fangarmen und meisterhafter Tarnkunst' },
       { text: 'tsunami', type: 'ocean', meaning: 'Zerstörerische Flutwelle, die durch ein Unterwasserbeben im Ozeanboden erzeugt wird' },
       { text: 'wal', type: 'ocean', meaning: 'Größtes Säugetier des Planeten, das majestätisch durch die Ozeane zieht' },
-      { text: 'flut', type: 'ocean', meaning: 'Ansteigender Wasserstand an Küsten im Rhythmus der Gezeiten' }
+      { text: 'graben', type: 'ocean', meaning: 'Tiefste tektonische Schlucht am Meeresboden fernab jedes Sonnenlichts' },
+      { text: 'flut', type: 'ocean', meaning: 'Ansteigender Wasserstand an Küsten im Rhythmus der Gezeiten' },
+      { text: 'qualle', type: 'ocean', meaning: 'Gallertartiges Schwebetier mit feinen Nesselkapseln in der Meeresströmung' },
+      { text: 'riff', type: 'ocean', meaning: 'Unterseeischer Kalksteinwall von überwältigender Artenvielfalt' },
+      { text: 'delfin', type: 'ocean', meaning: 'Intelligenter Zahnwal mit ausgeprägtem Sozialverhalten und Echoortung' }
     ],
     ja: [
       { text: 'kaiyou', type: 'ocean', meaning: '海洋：地球の大部分を包み込み、未知の深海を抱く広大なる塩水の海' },
@@ -774,9 +1006,13 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'sango', type: 'ocean', meaning: '珊瑚：海底に色鮮やかな巨大礁を築き上げる海洋生態系の揺りかご' },
       { text: 'shinkai', type: 'ocean', meaning: '深海：太陽の光が届かず、超高圧と暗黒が支配する神秘の世界' },
       { text: 'tako', type: 'ocean', meaning: '蛸：八本の腕と高度な知性を持ち、瞬時に体色を変える軟体動物' },
+      { text: 'tsunami', type: 'ocean', meaning: '津波：海底地震によって発生し沿岸へ押し寄せる巨大な波' },
       { text: 'kujira', type: 'ocean', meaning: '鯨：深海に響く歌声で仲間と交信する地球上最大の海洋哺乳類' },
+      { text: 'kaikou', type: 'ocean', meaning: '海溝：プレートが沈み込み地球で最も深い谷を形成する暗黒の裂け目' },
       { text: 'shio', type: 'ocean', meaning: '潮汐：月の引力によって規則正しく満ち引きを繰り返す海水の潮流' },
-      { text: 'kaikou', type: 'ocean', meaning: '海溝：プレートが沈み込み地球で最も深い谷を形成する暗黒の裂け目' }
+      { text: 'kurage', type: 'ocean', meaning: '海月：傘を拍動させながら青い海を漂う半透明の刺胞動物' },
+      { text: 'shou', type: 'ocean', meaning: '環礁：無数の珊瑚が何世代も積み重なって築き上げた海の城壁' },
+      { text: 'iruka', type: 'ocean', meaning: '海豚：超音波クリックで仲間と語り合う人懐っこい海の俊足' }
     ],
     ko: [
       { text: 'bada', type: 'ocean', meaning: '바다: 지구 표면을 뒤덮고 있는 거대하고 신비로운 푸른 소금물의 세계' },
@@ -784,9 +1020,13 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'sanho', type: 'ocean', meaning: '산호: 바닷속에 아름다운 암초를 형성하여 수많은 해양 생물을 품는 군체' },
       { text: 'simhae', type: 'ocean', meaning: '심해: 햇빛이 전혀 닿지 않는 극도의 고압과 암흑이 지배하는 미지의 심연' },
       { text: 'muneo', type: 'ocean', meaning: '문어: 여덟 개의 촉수와 주변 환경에 완벽히 동화되는 지능적인 두족류' },
+      { text: 'tsunami', type: 'ocean', meaning: '쓰나미: 해저 지진에 의해 촉발되어 거대한 위력으로 밀려드는 해일' },
       { text: 'gorae', type: 'ocean', meaning: '고래: 깊은 바닷속을 울리는 신비로운 노래로 교감하는 대양의 거인' },
+      { text: 'haegu', type: 'ocean', meaning: '해구: 해저 지각이 부딪치며 형성된 지구상 가장 깊고 험준한 바다 골짜기' },
       { text: 'pado', type: 'ocean', meaning: '파도: 바람과 해류의 에너지가 수면을 일렁이며 해안가로 밀려오는 물결' },
-      { text: 'haegu', type: 'ocean', meaning: '해구: 해저 지각이 부딪치며 형성된 지구상 가장 깊고 험준한 바다 골짜기' }
+      { text: 'haepari', type: 'ocean', meaning: '해파리: 우아하게 박동하며 유영하는 반투명한 촉수의 부유 생물' },
+      { text: 'amcho', type: 'ocean', meaning: '산호초: 풍요로운 바다 생물들의 보금자리가 되는 탄산칼슘 석회 암초' },
+      { text: 'dolgolae', type: 'ocean', meaning: '돌고래: 정교한 음파 탐지 능력과 뛰어난 지능을 갖춘 온순한 해양 포유류' }
     ],
     zh: [
       { text: 'haiyang', type: 'ocean', meaning: '海洋：覆盖地球绝大部分地表面积、蕴藏无尽深渊秘密的广阔水域' },
@@ -794,9 +1034,13 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'shanhu', type: 'ocean', meaning: '珊瑚：由无数微小水螅体分泌碳酸钙堆叠而成的五彩缤纷海底礁石' },
       { text: 'shenhai', type: 'ocean', meaning: '深海：阳光无法穿透、承受着巨大水压与永恒寂静的深海深层' },
       { text: 'zhangyu', type: 'ocean', meaning: '章鱼：拥有八条灵活触腕、极高智商并能根据环境瞬间拟态的软体生物' },
+      { text: 'haixiao', type: 'ocean', meaning: '海啸：海底板块震动引发、掀翻万顷波涛呼啸而至的滔天巨浪' },
       { text: 'jingyu', type: 'ocean', meaning: '鲸鱼：依靠悠扬低沉的次声波歌声在各大洋中迁徙通信的庞然大物' },
       { text: 'haigou', type: 'ocean', meaning: '海沟：大洋板块向下俯冲形成的地球表面最深邃陡峭的峡谷' },
-      { text: 'haichao', type: 'ocean', meaning: '海潮：在月球引力摄动下昼夜节律性涨落的海洋潮汐水流' }
+      { text: 'haichao', type: 'ocean', meaning: '海潮：在月球引力摄动下昼夜节律性涨落的海洋潮汐水流' },
+      { text: 'shuimu', type: 'ocean', meaning: '水母：在蔚蓝深海中轻盈律动伞盖、漂浮巡游的半透明刺胞生灵' },
+      { text: 'jiaoshi', type: 'ocean', meaning: '礁石：隐匿于波涛之下、庇护亿万海洋生灵繁衍生息的坚实壁垒' },
+      { text: 'haitun', type: 'ocean', meaning: '海豚：利用高频回声定位欢跃浪尖、智慧超凡的群居海洋哺乳精灵' }
     ]
   },
 
@@ -811,7 +1055,10 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'pulsar', type: 'cosmos', meaning: 'Estrela de nêutrons magnética de giro rápido que emite pulsos regulares de radiação' },
       { text: 'galaxia', type: 'cosmos', meaning: 'Vasto arquipélago gravitacional com bilhões de sistemas estelares, poeira e buracos negros' },
       { text: 'eclipse', type: 'cosmos', meaning: 'Alinhamento celeste no qual um astro bloqueia momentaneamente a luz de outro no espaço' },
-      { text: 'gravidade', type: 'cosmos', meaning: 'Força cósmica fundamental que atrai massas e curva o tecido do espaço-tempo' }
+      { text: 'gravidade', type: 'cosmos', meaning: 'Força cósmica fundamental que atrai massas e curva o tecido do espaço-tempo' },
+      { text: 'nebulosa', type: 'cosmos', meaning: 'Nuvem cósmica monumental de gás e poeira interestelar onde nascem novas estrelas' },
+      { text: 'quasar', type: 'cosmos', meaning: 'Núcleo galáctico hiperativo incrivelmente luminoso alimentado por um buraco negro supermassivo' },
+      { text: 'cosmos', type: 'cosmos', meaning: 'Conjunto harmonioso de todo o universo, matéria, energia e leis físicas do espaço' }
     ],
     en: [
       { text: 'star', type: 'cosmos', meaning: 'Self-luminous stellar ball of plasma sustained by thermonuclear core fusion' },
@@ -822,50 +1069,79 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'pulsar', type: 'cosmos', meaning: 'Rapidly rotating magnetized neutron star sweeping radio beacons across the cosmos' },
       { text: 'galaxy', type: 'cosmos', meaning: 'Immense swirling vortex of hundreds of billions of suns, dark matter, and nebulae' },
       { text: 'eclipse', type: 'cosmos', meaning: 'Geometric celestial alignment casting darkness across the face of an orb' },
-      { text: 'gravity', type: 'cosmos', meaning: 'Fundamental universal attraction curving the fabric of space and dictating cosmic motion' }
+      { text: 'gravity', type: 'cosmos', meaning: 'Fundamental universal attraction curving the fabric of space and dictating cosmic motion' },
+      { text: 'nebula', type: 'cosmos', meaning: 'Colossal glowing stellar nursery of ionized hydrogen gas and cosmic dust' },
+      { text: 'quasar', type: 'cosmos', meaning: 'Hyper-luminous galactic core powered by an accreting supermassive black hole' },
+      { text: 'cosmos', type: 'cosmos', meaning: 'The ordered and harmonious universe considered as an integrated physical whole' }
     ],
     fr: [
       { text: 'etoile', type: 'cosmos', meaning: 'Sphère lumineuse de plasma alimentée en son cœur par la fusion thermonucléaire' },
       { text: 'planete', type: 'cosmos', meaning: 'Corps céleste massif en révolution ordonnée autour d\'un soleil central' },
       { text: 'orbite', type: 'cosmos', meaning: 'Trajectoire céleste fermée parcourue sous l\'influence de l\'attraction gravitationnelle' },
       { text: 'comete', type: 'cosmos', meaning: 'Astre glacé déployant une magnifique chevelure lumineuse à l\'approche d\'une étoile' },
+      { text: 'meteore', type: 'cosmos', meaning: 'Éphémère traînée lumineuse produite par l\'entrée d\'un débris spatial dans l\'atmosphère' },
       { text: 'pulsar', type: 'cosmos', meaning: 'Étoile à neutrons ultra-dense émettant des impulsions radio d\'une régularité absolue' },
       { text: 'galaxie', type: 'cosmos', meaning: 'Gigantesque ensemble lié par la gravité regroupant des milliards d\'étoiles' },
       { text: 'eclipse', type: 'cosmos', meaning: 'Phénomène d\'occultation totale ou partielle d\'un astre par un autre dans le ciel' },
-      { text: 'gravite', type: 'cosmos', meaning: 'Force universelle invisible qui courbe l\'espace-temps et gouverne les mondes' }
+      { text: 'gravite', type: 'cosmos', meaning: 'Force universelle invisible qui courbe l\'espace-temps et gouverne les mondes' },
+      { text: 'nebuleuse', type: 'cosmos', meaning: 'Vaste nuage interstellaire de gaz et poussières constituant le berceau des étoiles' },
+      { text: 'quasar', type: 'cosmos', meaning: 'Noyau actif de galaxie extrêmement lointain et énergétique' },
+      { text: 'cosmos', type: 'cosmos', meaning: 'L\'Univers tout entier conçu comme un système ordonné régi par des lois physiques' }
     ],
     de: [
       { text: 'stern', type: 'cosmos', meaning: 'Glühender Plasmakörper, der durch kontinuierliche Kernfusion Licht ins All abstrahlt' },
       { text: 'planet', type: 'cosmos', meaning: 'Kugelförmiger Himmelskörper auf einer stabilen Umlaufbahn um sein Zentralgestirn' },
       { text: 'orbit', type: 'cosmos', meaning: 'Präzise berechenbare Bahn, auf der ein Satellit oder Planet ein Schwerkraftzentrum umkreist' },
       { text: 'komet', type: 'cosmos', meaning: 'Vereister Schweifstern, dessen flüchtige Gase im Sonnenwind leuchtend verdampfen' },
+      { text: 'meteor', type: 'cosmos', meaning: 'Aufleuchtende Sternschnuppe beim Eintritt kosmischer Partikel in die Erdatmosphäre' },
       { text: 'pulsar', type: 'cosmos', meaning: 'Extrem dichter Neutronenstern mit rasender Eigenrotation und gebündelter Strahlung' },
       { text: 'galaxie', type: 'cosmos', meaning: 'Spiraliges System aus Milliarden Sternen, Dunkler Materie und leuchtendem Gas' },
-      { text: 'finsternis', type: 'cosmos', meaning: 'Kosmisches Schattenspiel, wenn sich ein Himmelskörper vor die Lichtquelle schiebt' }
+      { text: 'finsternis', type: 'cosmos', meaning: 'Kosmisches Schattenspiel, wenn sich ein Himmelskörper vor die Lichtquelle schiebt' },
+      { text: 'gravitation', type: 'cosmos', meaning: 'Fundamentale Anziehungskraft, welche die Raumzeit krümmt und Bahnen festlegt' },
+      { text: 'nebel', type: 'cosmos', meaning: 'Gewaltige interstellare Gaswolke, in der neue Generationen von Sonnen erstrahlen' },
+      { text: 'quasar', type: 'cosmos', meaning: 'Extrem energiereicher aktiver Galaxienkern mit gigantischer Strahlungsleistung' },
+      { text: 'kosmos', type: 'cosmos', meaning: 'Das unendliche Universum in seiner geordneten physikalischen Ganzheit' }
     ],
     ja: [
       { text: 'hoshi', type: 'cosmos', meaning: '恒星：自らの核融合反応によって輝き、熱と光を放つ星' },
       { text: 'wakusei', type: 'cosmos', meaning: '惑星：恒星の周囲を一定の周期で静かに周回する球状の天体' },
       { text: 'kidou', type: 'cosmos', meaning: '軌道：重力に引かれながら天体が時空に描く永遠の運行曲線' },
       { text: 'suisei', type: 'cosmos', meaning: '彗星：氷と塵からなり、太陽に近づくと美しい尾を引く旅人' },
+      { text: 'ryuusei', type: 'cosmos', meaning: '流星：宇宙の微粒子が大気に突入して眩く一筋の軌跡を刻む光' },
+      { text: 'parusa', type: 'cosmos', meaning: 'パルサー：超高密度で規則的な電波パルスを放射する自転中性子星' },
       { text: 'ginga', type: 'cosmos', meaning: '銀河：数千億の星々や星雲が重力によって渦を巻く巨大な星の島' },
+      { text: 'nisshoku', type: 'cosmos', meaning: '日食：月が太陽を覆い隠し地上に一時的な黄昏をもたらす神秘の天体現象' },
       { text: 'chuuryoku', type: 'cosmos', meaning: '重力：星々を引き寄せ、宇宙の構造と時間を形作る根源的な力' },
+      { text: 'seiun', type: 'cosmos', meaning: '星雲：宇宙空間に漂う巨大なガスと塵の雲で、星々が産声をあげる母胎' },
+      { text: 'kuwasa', type: 'cosmos', meaning: 'クエーサー：超巨大ブラックホールを動力源とする宇宙最強クラスの超高輝度天体' },
       { text: 'uchu', type: 'cosmos', meaning: '宇宙：無数の星々と銀河、無限の広がりを持つ星間空間' }
     ],
     ko: [
       { text: 'byeol', type: 'cosmos', meaning: '별: 중심부의 핵융합 반응으로 스스로 빛과 열을 내뿜는 항성' },
       { text: 'haengseong', type: 'cosmos', meaning: '행성: 중심 별의 중력에 묶여 공전 궤도를 그리는 구형의 천체' },
       { text: 'gwedo', type: 'cosmos', meaning: '궤도: 중력 법칙에 따라 천체가 우주 공간에 그리는 일정한 비행로' },
+      { text: 'hyeseong', type: 'cosmos', meaning: '혜성: 태양에 접근할 때 기화된 얼음과 먼지로 찬란한 꼬리를 흩날리는 천체' },
+      { text: 'yuseong', type: 'cosmos', meaning: '유성: 우주 파편이 대기권과 마찰하여 하얗게 불타오르며 그리는 빛줄기' },
+      { text: 'peolseo', type: 'cosmos', meaning: '펄서: 맹렬한 자전 속도로 일정한 주기의 전파 등대를 방출하는 초밀도 중성자별' },
       { text: 'eunha', type: 'cosmos', meaning: '은하: 수천억 개의 별과 성운이 거대한 나선을 그리며 공존하는 우주계' },
+      { text: 'ilsik', type: 'cosmos', meaning: '일식: 천체의 정렬로 한 천체가 다른 천체의 빛을 완전히 가리는 천문 현상' },
       { text: 'jungryeok', type: 'cosmos', meaning: '중력: 질량을 가진 모든 천체가 서로를 끌어당기는 우주의 기본 법칙' },
+      { text: 'seong-un', type: 'cosmos', meaning: '성운: 새로운 항성들이 탄생하는 성간 수소 가스와 우주 먼지의 장대한 구름' },
+      { text: 'kweiseo', type: 'cosmos', meaning: '퀘이사: 초거대 블랙홀의 강착 원반에서 뿜어져 나오는 전 우주 최고의 초광도 에너지체' },
       { text: 'wooju', type: 'cosmos', meaning: '우주: 빛과 어둠, 시간과 공간이 팽창하며 펼쳐지는 무한한 영역' }
     ],
     zh: [
       { text: 'hengxing', type: 'cosmos', meaning: '恒星：核心进行剧烈热核聚变、源源不断向深空辐射光热的星体' },
       { text: 'xingqiu', type: 'cosmos', meaning: '行星：沿着固定公转椭圆轨道围绕中心恒星安静运行的天体' },
       { text: 'guidao', type: 'cosmos', meaning: '轨道：在引力摄动下天体在时空中划出的封闭几何运行路径' },
+      { text: 'huixing', type: 'cosmos', meaning: '彗星：由冰雪与尘埃构成、接近太阳时喷发万千耀眼气态长尾的行者' },
+      { text: 'liuxing', type: 'cosmos', meaning: '流星：穿梭于深空的星际尘屑撞击大气层剧烈摩擦燃尽的光芒' },
+      { text: 'maichongxing', type: 'cosmos', meaning: '脉冲星：飞速自转、精准扫射极端相对论射线束的高密度中子星' },
       { text: 'yinhe', type: 'cosmos', meaning: '银河：由千亿颗恒星系统与星际尘埃在暗物质引力下凝聚的宏大漩涡' },
+      { text: 'rishe', type: 'cosmos', meaning: '日食：月球精确遮挡太阳光盘、将白昼转瞬化为夜色苍穹的天象奇观' },
       { text: 'yinli', type: 'cosmos', meaning: '引力：弯曲时空结构、决定恒星演化与宇宙终极宿命的基本作用力' },
+      { text: 'xingyun', type: 'cosmos', meaning: '星云：孕育恒星胚胎与行星系统的弥散性星际气体尘埃天体' },
+      { text: 'leixing', type: 'cosmos', meaning: '类星体：超大质量黑洞吞噬物质时释放毁天灭地能量的高能天体' },
       { text: 'yuzhou', type: 'cosmos', meaning: '宇宙：包含一切物质、能量与时空演变的无垠宏观存在' }
     ]
   },
@@ -881,7 +1157,10 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'basalto', type: 'volcano', meaning: 'Rocha ígnea escura e ultra-resistente formada pelo resfriamento rápido de fluxos de lava' },
       { text: 'forja', type: 'volcano', meaning: 'Câmara tectônica de calor primordial onde minerais e ligas são moldados pelo fogo' },
       { text: 'geiser', type: 'volcano', meaning: 'Nascente hidrotermal subterrânea que expele jatos ferventes de vapor com força sísmica' },
-      { text: 'rocha', type: 'volcano', meaning: 'Agregado sólido e compacto de minerais que forja a crosta e os alicerces continentais' }
+      { text: 'rocha', type: 'volcano', meaning: 'Agregado sólido e compacto de minerais que forja a crosta e os alicerces continentais' },
+      { text: 'brasa', type: 'volcano', meaning: 'Fragmento mineral em combustão que emana calor intenso e luz avermelhada constante' },
+      { text: 'caldera', type: 'volcano', meaning: 'Vasta depressão vulcânica gerada pelo colapso da câmara magmática após erupções titânicas' },
+      { text: 'tectonica', type: 'volcano', meaning: 'Dinâmica geológica colossal das placas terrestres cujos atritos geram vulcões e abalos' }
     ],
     en: [
       { text: 'volcano', type: 'volcano', meaning: 'Crustal volcanic rupture venting superheated magma, pyroclasts and sulfurous plumes' },
@@ -892,7 +1171,10 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'basalt', type: 'volcano', meaning: 'Dense dark volcanic igneous stone forged through rapid solidification of basaltic lava' },
       { text: 'forge', type: 'volcano', meaning: 'Subterranean furnace of volcanic temperatures purifying unyielding ores' },
       { text: 'geyser', type: 'volcano', meaning: 'Geothermal fissure erupting pressurized boiling water and steam columns into the air' },
-      { text: 'rock', type: 'volcano', meaning: 'Solidified crystalline mineral foundation comprising the continental lithosphere' }
+      { text: 'rock', type: 'volcano', meaning: 'Solidified crystalline mineral foundation comprising the continental lithosphere' },
+      { text: 'ember', type: 'volcano', meaning: 'Glowing fragment of heated volcanic rock or coal radiating sustained heat' },
+      { text: 'caldera', type: 'volcano', meaning: 'Massive circular volcanic depression formed by magma chamber collapse after an eruption' },
+      { text: 'tectonic', type: 'volcano', meaning: 'Crustal plate mechanics generating volcanic fissures, rifts and mountain ranges' }
     ],
     fr: [
       { text: 'volcan', type: 'volcano', meaning: 'Fissure béante de l\'écorce terrestre crachant de la lave en fusion et des gaz brûlants' },
@@ -903,7 +1185,10 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'basalte', type: 'volcano', meaning: 'Roche magmatique sombre et dense issue du refroidissement rapide des coulées' },
       { text: 'forge', type: 'volcano', meaning: 'Fournaise géologique aux chaleurs extrêmes capable de fondre les métaux' },
       { text: 'geyser', type: 'volcano', meaning: 'Source hydrothermale crachant périodiquement des jets d\'eau bouillante sous pression' },
-      { text: 'roche', type: 'volcano', meaning: 'Matière minérale solide et indestructible formant la croûte terrestre' }
+      { text: 'roche', type: 'volcano', meaning: 'Matière minérale solide et indestructible formant la croûte terrestre' },
+      { text: 'braise', type: 'volcano', meaning: 'Fragment minéral ardent incandescent diffusant une lueur rougeoyante permanente' },
+      { text: 'caldeira', type: 'volcano', meaning: 'Vaste dépression circulaire née de l\'effondrement d\'une chambre magmatique' },
+      { text: 'tectonique', type: 'volcano', meaning: 'Forces géologiques titanesques à la frontière des plaques terrestres en collision' }
     ],
     de: [
       { text: 'vulkan', type: 'volcano', meaning: 'Tektonische Öffnung der Erdkruste, durch die glühendes Magma und Gase emporsteigen' },
@@ -912,8 +1197,12 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'asche', type: 'volcano', meaning: 'Feinste pyroklastische Partikelwolke, die den Himmel über der Eruption verdunkelt' },
       { text: 'krater', type: 'volcano', meaning: 'Trichterförmige Öffnung auf dem Vulkangipfel, aus der Gase und Lava austreten' },
       { text: 'basalt', type: 'volcano', meaning: 'Dunkles, extrem hartes Ergussgestein, das aus abgekühlter Lava entsteht' },
+      { text: 'schmiede', type: 'volcano', meaning: 'Tektonische Ur-Kammer, in der gewaltige Hitze Metalle und Gesteine formt' },
       { text: 'geysir', type: 'volcano', meaning: 'Geothermale Quelle, die periodisch kochend heiße Wasser- und Dampffontänen ausstößt' },
-      { text: 'stein', type: 'volcano', meaning: 'Festes mineralisches Fundament, aus dem die tektonischen Platten bestehen' }
+      { text: 'stein', type: 'volcano', meaning: 'Festes mineralisches Fundament, aus dem die tektonischen Platten bestehen' },
+      { text: 'glut', type: 'volcano', meaning: 'Intensiv glimmender mineralischer Restkörper von unerbittlicher Hitze' },
+      { text: 'caldera', type: 'volcano', meaning: 'Monumentaler Einsturzkrater nach der Entleerung gewaltiger Magmakammern' },
+      { text: 'tektonik', type: 'volcano', meaning: 'Bewegungen und Reibungen der kontinentalen Erdplatten als Ursprung des Vulkanismus' }
     ],
     ja: [
       { text: 'kazan', type: 'volcano', meaning: '火山：地下深部からマグマやガスが噴出する大地の開口部' },
@@ -921,8 +1210,13 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'yougan', type: 'volcano', meaning: '溶岩：火口から地表へあふれ出し、大地を焼き尽くす灼熱の流体' },
       { text: 'hai', type: 'volcano', meaning: '火山灰：噴火に伴い空高く吹き上げられ空を覆う微細な岩石粉末' },
       { text: 'kakou', type: 'volcano', meaning: '火口：煮えたぎるマグマと噴煙を噴き上げる火山の頂上開口部' },
+      { text: 'genbuan', type: 'volcano', meaning: '玄武岩：流出した溶岩が急速に冷え固まってできる極めて硬質な黒色火成岩' },
+      { text: 'kaji', type: 'volcano', meaning: '鍛冶場：地球深部の大熱量によって鉱物や金属を鍛え上げる地底の坩堝' },
+      { text: 'kanketsusen', type: 'volcano', meaning: '間欠泉：地下の地熱で沸騰した熱水と水蒸気を天高く噴き上げる天然の泉' },
+      { text: 'iwa', type: 'volcano', meaning: '岩石：冷え固まった溶岩が気の遠くなる時間を経て生み出す頑強な鉱物' },
       { text: 'honoo', type: 'volcano', meaning: '焔：マグマの熱気とガスが激しく燃え盛る大地を焦がす炎' },
-      { text: 'iwa', type: 'volcano', meaning: '岩石：冷え固まった溶岩が気の遠くなる時間を経て生み出す頑強な鉱物' }
+      { text: 'karudera', type: 'volcano', meaning: 'カルデラ：大噴火後にマグマ溜まりが陥没して形成される雄大なすり鉢状の地形' },
+      { text: 'purēto', type: 'volcano', meaning: 'プレート：地球表面を覆い、衝突と沈み込みによって火山活動を生み出す巨大岩盤' }
     ],
     ko: [
       { text: 'hwasan', type: 'volcano', meaning: '화산: 지각의 균열을 통해 고온의 마그마와 화산 가스가 분출하는 거대한 산' },
@@ -930,8 +1224,13 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'yong-am', type: 'volcano', meaning: '용암: 지표면으로 흘러나와 대지를 뒤덮으며 식어가는 붉은 불의 강' },
       { text: 'jae', type: 'volcano', meaning: '화산재: 폭발적 분화 시 대기 중으로 높이 치솟아 하늘을 가리는 암석 가루' },
       { text: 'hwagoo', type: 'volcano', meaning: '화구: 부글거리는 용암 호수와 화산 가스를 토해내는 산 정상의 분화구' },
-      { text: 'bul', type: 'volcano', meaning: '불길: 마그마의 맹렬한 지열로 인해 화산 주위를 집어삼키는 불꽃' },
-      { text: 'bawi', type: 'volcano', meaning: '바위: 굳어진 화산암이 오랜 세월을 거쳐 형성한 단단한 광물 덩어리' }
+      { text: 'hyeonmu-am', type: 'volcano', meaning: '현무암: 지표로 분출한 용암이 급격히 식어 굳어진 짙은 색의 치밀한 화성암' },
+      { text: 'daejang-gan', type: 'volcano', meaning: '화염로: 극한의 지열과 고온으로 광물을 제련하고 암석을 용해하는 대지의 심장' },
+      { text: 'gan-yeolcheon', type: 'volcano', meaning: '간헐천: 지하 수증기의 압력으로 주기적으로 맹렬히 치솟는 끓는 온천수' },
+      { text: 'bawi', type: 'volcano', meaning: '바위: 굳어진 화산암이 오랜 세월을 거쳐 형성한 단단한 광물 덩어리' },
+      { text: 'bulgil', type: 'volcano', meaning: '불길: 마그마의 맹렬한 지열로 인해 화산 주위를 집어삼키는 불꽃' },
+      { text: 'kaldera', type: 'volcano', meaning: '칼데라: 대규모 분화 후 마그마 방의 함몰로 생겨난 거대한 분지 지형' },
+      { text: 'pan-gujo', type: 'volcano', meaning: '지각판: 서로 맞부딪치며 지진과 분화를 야기하는 대륙판의 거대한 역학 체계' }
     ],
     zh: [
       { text: 'huoshan', type: 'volcano', meaning: '火山：地壳板块缝隙中释放高温熔岩、火山灰与高压气体的天然喷口' },
@@ -939,8 +1238,13 @@ const BOSS_WORDS_BY_TYPE = {
       { text: 'rongyan', type: 'volcano', meaning: '熔岩：喷出地表后奔涌流淌、所到之处重塑地貌的炽热火红岩流' },
       { text: 'huohui', type: 'volcano', meaning: '火山灰：剧烈喷发时被送上万米平流层、遮天蔽日的细微矿物碎屑' },
       { text: 'huokou', type: 'volcano', meaning: '火山口：位于火山顶部、不断喷吐滚烫地热气体与熔岩柱的碗状凹坑' },
-      { text: 'lihuo', type: 'volcano', meaning: '烈火：在极端地热能量驱动下肆虐翻腾的熔融之焰' },
-      { text: 'yanshi', type: 'volcano', meaning: '岩石：由玄武岩熔岩冷却固化形成的地壳固态基岩骨架' }
+      { text: 'xuanyuanyan', type: 'volcano', meaning: '玄武岩：基性岩浆溢出地表迅速冷却形成的黑色致密火成岩石' },
+      { text: 'lianlu', type: 'volcano', meaning: '地热熔炉：在极端构造高热下熔融万物重铸地壳的天然冶炼之所' },
+      { text: 'jianquan', type: 'volcano', meaning: '间歇泉：受地下高压蒸汽积蓄定期向空中喷涌沸腾水柱的地热奇景' },
+      { text: 'yanshi', type: 'volcano', meaning: '岩石：由玄武岩熔岩冷却固化形成的地壳固态基岩骨架' },
+      { text: 'lieyan', type: 'volcano', meaning: '烈焰：在极端地热能量驱动下肆虐翻腾的熔融之焰' },
+      { text: 'podi', type: 'volcano', meaning: '破火山口：特大喷发后岩浆房塌陷形成的宽阔壮丽盆状陷落构造' },
+      { text: 'bankuai', type: 'volcano', meaning: '板块：浮动于地幔软流层之上、挤压摩擦引爆地心熔岩的陆壳构造' }
     ]
   }
 };

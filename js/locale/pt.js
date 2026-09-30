@@ -196,7 +196,8 @@ window.TRANSLATIONS.pt = {
   boss_defeated_title: 'CHEFÃO DERROTADO!',
   boss_defeated_sub: 'Você decifrou com maestria os 3 enigmas rúnicos.',
   boss_defeated_prompt: 'Escolha 1 habilidade arcana como recompensa:',
-  boss_btn_pick: 'Escolher Habilidade',
+  boss_btn_pick: 'Obter',
+  boss_pick_skill: 'Obter',
 
   fb_combo_broken: 'Combo Quebrado!',
   fb_fury_activated: 'MODO FÚRIA ATIVADO! PONTOS EM DOBRO!',

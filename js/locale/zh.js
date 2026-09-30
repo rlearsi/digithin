@@ -195,7 +195,8 @@ window.TRANSLATIONS.zh = {
   boss_defeated_title: 'BOSS 已击败！',
   boss_defeated_sub: '你以极高的造诣解开了所有符文谜题。',
   boss_defeated_prompt: '选择 1 项永久奖励技能：',
-  boss_btn_pick: '选择技能',
+  boss_btn_pick: '获取',
+  boss_pick_skill: '获取',
 
   fb_combo_broken: '连击中断！',
   fb_fury_activated: '狂暴模式激活！得分翻倍！',

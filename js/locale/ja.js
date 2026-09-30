@@ -195,7 +195,8 @@ window.TRANSLATIONS.ja = {
   boss_defeated_title: 'ボス撃破！',
   boss_defeated_sub: 'ルーンの試練を鮮やかに突破しました。',
   boss_defeated_prompt: '永続ボーナススキルを1つ選択してください：',
-  boss_btn_pick: 'スキルを選択',
+  boss_btn_pick: '獲得',
+  boss_pick_skill: '獲得',
 
   fb_combo_broken: 'コンボ途切れ！',
   fb_fury_activated: 'フューリーモード発動！スコア2倍！',
