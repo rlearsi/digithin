@@ -170,6 +170,54 @@ document.addEventListener('keydown', e => {
     return;
   }
 
+  // Ignore Enter during resume countdown overlay
+  if (typeof countdownActive !== 'undefined' && countdownActive) {
+    if (e.key === 'Enter' || e.code === 'Enter' || e.code === 'NumpadEnter') {
+      e.preventDefault();
+      return;
+    }
+  }
+
+  // If Pause overlay is open, Enter resumes the game (triggers "Continuar")
+  const pauseOverlayEl = $('pause-overlay');
+  const isPauseOverlayOpen = pauseOverlayEl && !pauseOverlayEl.classList.contains('hidden');
+  if (isPauseOverlayOpen) {
+    const isConfirmOpen = (typeof isPauseConfirmOpen === 'function') && isPauseConfirmOpen();
+    if (isConfirmOpen) {
+      if (e.key === 'Escape' || e.code === 'Escape') {
+        e.preventDefault();
+        cancelExitConfirm();
+        return;
+      }
+      return;
+    }
+
+    // Check if other overlay modals are open on top of pause (Library, Achievements, Settings)
+    const isSubModalOpen =
+      (typeof isSettingsOpen === 'function' && isSettingsOpen()) ||
+      (typeof isPauseSettingsOpen === 'function' && isPauseSettingsOpen()) ||
+      Boolean($('modal-settings') && !$('modal-settings').classList.contains('hidden')) ||
+      Boolean($('modal-biblioteca') && !$('modal-biblioteca').classList.contains('hidden')) ||
+      Boolean($('modal-conquistas') && !$('modal-conquistas').classList.contains('hidden')) ||
+      Boolean($('modal-training') && !$('modal-training').classList.contains('hidden'));
+
+    if (!isSubModalOpen && (e.key === 'Enter' || e.code === 'Enter' || e.code === 'NumpadEnter')) {
+      const resumeBtn = $('btn-pause-resume') || pauseOverlayEl.querySelector('.btn-primary');
+      if (document.activeElement && document.activeElement.tagName === 'BUTTON' && document.activeElement !== resumeBtn) {
+        return;
+      }
+      e.preventDefault();
+      if (resumeBtn) {
+        resumeBtn.click();
+      } else if (typeof togglePause === 'function') {
+        togglePause();
+      } else if (typeof resumeGame === 'function') {
+        resumeGame();
+      }
+      return;
+    }
+  }
+
   if (e.key === 'Escape') {
     e.preventDefault();
     togglePause();
