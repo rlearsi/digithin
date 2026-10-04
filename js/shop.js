@@ -62,8 +62,8 @@ function confirmShopExit() {
   }
 }
 
-function selectShopItem(index) {
-  if (state.selectedShopIndex === index) {
+function selectShopItem(index, toggle = false) {
+  if (toggle && state.selectedShopIndex === index) {
     state.selectedShopIndex = -1;
   } else {
     state.selectedShopIndex = index;
@@ -144,15 +144,17 @@ function showShopFeedback(msg, type = 'warning') {
   }, 2600);
 }
 
-function buySelectedShopItem() {
-  if (state.selectedShopIndex < 0 || !state.currentShopItems || !state.currentShopItems[state.selectedShopIndex]) {
+function buyShopItemByIndex(index) {
+  if (!state.currentShopItems || !state.currentShopItems[index]) {
     return false;
   }
-  const item = state.currentShopItems[state.selectedShopIndex];
+  const item = state.currentShopItems[index];
   const price = shopPrice(item.basePrice);
-  if (state.totalScore < price) {
+  if ((state.coins || 0) < price) {
+    state.selectedShopIndex = index;
+    updateShopSelectionVisual();
     if (typeof playSound === 'function') playSound('error');
-    const msg = typeof t === 'function' ? t('shop_insufficient_pts') : 'Not enough points!';
+    const msg = typeof t === 'function' ? t('shop_insufficient_coins') : 'Not enough coins!';
     showShopFeedback(msg, 'warning');
     return false;
   }
@@ -160,6 +162,13 @@ function buySelectedShopItem() {
   state.selectedShopIndex = -1;
   updateShopSelectionVisual();
   return true;
+}
+
+function buySelectedShopItem() {
+  if (state.selectedShopIndex < 0 || !state.currentShopItems || !state.currentShopItems[state.selectedShopIndex]) {
+    return false;
+  }
+  return buyShopItemByIndex(state.selectedShopIndex);
 }
 
 function showShop() {
@@ -197,7 +206,7 @@ function showShop() {
   state.currentShopItems = shuffle(SKILLS_ALL).slice(0, 3);
   renderShopItems();
   updateShopSelectionVisual();
-  $('shop-balance').textContent = formatScore(state.totalScore);
+  updateShopBalanceDisplay();
   modalShop.classList.remove('hidden');
 }
 
@@ -225,7 +234,7 @@ function renderShopItems() {
 
   state.currentShopItems.forEach((item, index) => {
     const price     = shopPrice(item.basePrice);
-    const canAfford = state.totalScore >= price;
+    const canAfford = (state.coins || 0) >= price;
     const isSelected = (state.selectedShopIndex === index);
     const existing  = item.id === 'continue'
       ? (state.continues > 0 ? { count: state.continues } : null)
@@ -240,11 +249,12 @@ function renderShopItems() {
     el.setAttribute('data-shop-index', index);
     el.onclick = (e) => {
       if (e.target.closest('.shop-buy-btn')) return;
-      selectShopItem(index);
+      selectShopItem(index, true);
     };
 
     const availTxt = typeof t === 'function' ? t('shop_available') : '✓';
     el.innerHTML = `
+      <kbd class="card-key-hint" aria-hidden="true">${index + 1}</kbd>
       <div class="shop-icon-wrapper" style="--item-clr: ${itemColor}">
         <span class="shop-icon-symbol">${item.icon}</span>
       </div>
@@ -276,21 +286,33 @@ function renderShopItems() {
   });
 }
 
+function updateShopBalanceDisplay() {
+  const shopBal = $('shop-balance');
+  if (shopBal) {
+    shopBal.textContent = String(state.coins || 0);
+  }
+  const balLbl = $('shop-balance-lbl');
+  if (balLbl && typeof t === 'function') {
+    balLbl.textContent = t('shop_coins');
+  }
+}
+
 function renderShopModal() {
   renderShopItems();
+  updateShopBalanceDisplay();
   if (typeof isShopConfirmOpen === 'function' && isShopConfirmOpen()) {
     updateShopConfirmText();
   }
 }
 
 function buyShopItem(skillId, price) {
-  if (state.totalScore < price) {
+  if ((state.coins || 0) < price) {
     if (typeof playSound === 'function') playSound('error');
-    const msg = typeof t === 'function' ? t('shop_insufficient_pts') : 'Not enough points!';
+    const msg = typeof t === 'function' ? t('shop_insufficient_coins') : 'Not enough coins!';
     showShopFeedback(msg, 'warning');
     return;
   }
-  state.totalScore -= price;
+  state.coins -= price;
   state.shopPurchaseCount++;
   state.currentShopPurchases = (state.currentShopPurchases || 0) + 1;
   state.selectedShopIndex = -1;
@@ -336,7 +358,7 @@ function buyShopItem(skillId, price) {
     showShopFeedback(`+1 ${locDef?.name || def?.name || ''}!`, 'success');
   }
 
-  $('shop-balance').textContent = formatScore(state.totalScore);
+  updateShopBalanceDisplay();
   renderShopItems();
   updateShopSelectionVisual();
   updateHUD();

@@ -62,6 +62,7 @@ function beginPhase() {
   const diffCfg = typeof getDifficultyConfig === 'function' ? getDifficultyConfig() : { initialSpeed: 1.0 };
   state.speedMultiplier = state.gameMode === 'training' ? (state.phase === 3 ? 1.1 : 1.0) : diffCfg.initialSpeed;
   state.combo           = 0;   // Reseta o combo a cada nova fase!
+  state.maxComboPhase   = 0;   // Reseta o combo maximo atingido na fase!
   state.phaseComplete   = false;
   state.paused          = false;
   state.typedBuffer     = '';
@@ -105,23 +106,24 @@ function clearGameBoard() {
 function showPhaseModal() {
   clearGameBoard();
 
-  // Accuracy and bonus calculation for completed phase
-  const rawPts   = state.phasePts;
+  // Accuracy calculation for completed phase
   const errs     = state.errorsPhase;
   const attempts = state.hitsPhase + errs;
   const acc      = attempts > 0 ? (state.hitsPhase / attempts) * 100 : 100;
   const accPct   = Math.round(acc);
 
-  // Precision bonus: 100% -> 100 pts down to 70% -> 1 pt. Below 70% -> 0 pts.
-  let accBonus = 0;
-  if (attempts > 0 && acc >= 70) {
-    accBonus = Math.min(100, Math.max(1, 1 + Math.round(((acc - 70) / 30) * 99)));
-  }
+  // Coins Mechanic:
+  // Regra 3: partida/fase concluída = +10 moedas
+  const completionCoins = 10;
 
-  // Deduct error penalty and credit accuracy bonus when banking phase points
-  const penalty  = errs;
-  const finalPts = Math.max(0, rawPts + accBonus - penalty);
-  state.totalScore += finalPts;
+  // Regra 4: 100% precisão = +35 moedas
+  const isPerfectAcc = (accPct === 100 && errs === 0);
+  const precisionCoins = isPerfectAcc ? 35 : 0;
+
+  const totalPhaseCoins = completionCoins + precisionCoins;
+  state.coins = (state.coins || 0) + totalPhaseCoins;
+
+  // Pontos são 100% gerados e acumulados ao vivo durante a partida
   if (typeof updateHUD === 'function') updateHUD();
 
   // Training Mode Didactic Summary
@@ -192,12 +194,12 @@ function showPhaseModal() {
       const newRecLabel = isNewRecord ? (typeof t === 'function' ? `(${t('training_new_record')})` : '(NEW RECORD!)') : '';
 
       $('modal-phase-stats').innerHTML = `
-        <div class="go-row"><span>${statStatusLbl}</span><strong style="color:var(--accent-emerald)">${statCompletedLbl}</strong></div>
-        <div class="go-row"><span>${statKeysLbl}</span><strong style="color:var(--accent-amber)">${worldData.subtitle}</strong></div>
-        <div class="go-row"><span>${statAccLbl}</span><strong style="color:${finalPrecNum >= 90 ? 'var(--accent-emerald)' : 'var(--accent-coral)'}">${finalPrecNum.toFixed(1)}%</strong></div>
-        <div class="go-row"><span>${statBestLbl}</span><strong style="color:var(--accent-amber)">${currentRecord}% ${newRecLabel}</strong></div>
-        <div class="go-row"><span>${statSpeedLbl}</span><strong style="color:var(--accent-cyan)">${ppm} PPM</strong></div>
-        <div class="go-row"><span>${statHitsLbl}</span><strong style="color:var(--t1)">${hitsVal}</strong></div>
+        <div class="go-row go-row-pop" style="--row-delay: 80ms"><span>${statStatusLbl}</span><strong style="color:var(--accent-emerald)">${statCompletedLbl}</strong></div>
+        <div class="go-row go-row-pop" style="--row-delay: 160ms"><span>${statKeysLbl}</span><strong style="color:var(--accent-amber)">${worldData.subtitle}</strong></div>
+        <div class="go-row go-row-pop" style="--row-delay: 240ms"><span>${statAccLbl}</span><strong style="color:${finalPrecNum >= 90 ? 'var(--accent-emerald)' : 'var(--accent-coral)'}">${finalPrecNum.toFixed(1)}%</strong></div>
+        <div class="go-row go-row-pop" style="--row-delay: 320ms"><span>${statBestLbl}</span><strong style="color:var(--accent-amber)">${currentRecord}% ${newRecLabel}</strong></div>
+        <div class="go-row go-row-pop" style="--row-delay: 400ms"><span>${statSpeedLbl}</span><strong style="color:var(--accent-cyan)">${ppm} PPM</strong></div>
+        <div class="go-row go-row-pop" style="--row-delay: 480ms"><span>${statHitsLbl}</span><strong style="color:var(--t1)">${hitsVal}</strong></div>
       `;
 
       $('section-words').style.display = 'none';
@@ -266,11 +268,11 @@ function showPhaseModal() {
       : `${state.hitsPhase} hits / ${errs} errors`;
 
     $('modal-phase-stats').innerHTML = `
-      <div class="go-row"><span>${statProgressLbl}</span><strong style="color:var(--accent-amber)">${statLessonDone}</strong></div>
-      <div class="go-row"><span>${statAccRateLbl}</span><strong style="color:${acc >= 90 ? 'var(--accent-emerald)' : 'var(--accent-coral)'}">${acc}%</strong></div>
-      <div class="go-row"><span>${statSpeedLbl}</span><strong style="color:var(--accent-cyan)">${ppm} PPM</strong></div>
-      <div class="go-row"><span>${statHitsErrorsLbl}</span><strong style="color:var(--t1)">${hitsErrVal}</strong></div>
-      <div class="go-row"><span style="color:var(--t3);font-size:0.75rem">${nextLessonHint}</span></div>
+      <div class="go-row go-row-pop" style="--row-delay: 80ms"><span>${statProgressLbl}</span><strong style="color:var(--accent-amber)">${statLessonDone}</strong></div>
+      <div class="go-row go-row-pop" style="--row-delay: 160ms"><span>${statAccRateLbl}</span><strong style="color:${acc >= 90 ? 'var(--accent-emerald)' : 'var(--accent-coral)'}">${acc}%</strong></div>
+      <div class="go-row go-row-pop" style="--row-delay: 240ms"><span>${statSpeedLbl}</span><strong style="color:var(--accent-cyan)">${ppm} PPM</strong></div>
+      <div class="go-row go-row-pop" style="--row-delay: 320ms"><span>${statHitsErrorsLbl}</span><strong style="color:var(--t1)">${hitsErrVal}</strong></div>
+      <div class="go-row go-row-pop" style="--row-delay: 400ms"><span style="color:var(--t3);font-size:0.75rem">${nextLessonHint}</span></div>
     `;
 
     $('section-words').style.display = 'none';
@@ -337,21 +339,38 @@ function showPhaseModal() {
     ? t('modal_phase_complete', { phase: state.phase })
     : `Phase ${state.phase} Complete!`;
 
-  const ptsEarnedLbl = typeof t === 'function' ? t('modal_phase_pts') : 'Points Earned in Phase';
-  const accBonusLbl  = typeof t === 'function' ? t('modal_acc_bonus', { acc: accPct }) : `Accuracy Bonus (${accPct}%)`;
-  const penaltyLbl   = typeof t === 'function' ? t('modal_penalty') : 'Errors (Penalty)';
-  const netPtsLbl    = typeof t === 'function' ? t('modal_net_pts') : 'Net Added Points';
-  const totalPtsLbl  = typeof t === 'function' ? t('modal_total_pts') : 'Total Score';
+  const secCoinsLbl      = typeof t === 'function' ? t('modal_section_coins') : 'Coins Earned';
+  const coinsCompleteLbl = typeof t === 'function' ? t('modal_coins_completion') : 'Stage Completed';
+  const coinsPreciseLbl  = typeof t === 'function' ? t('modal_coins_precision') : '100% Accuracy Bonus';
+  const coinsPhaseTotLbl = typeof t === 'function' ? t('modal_coins_phase_total') : 'Total Coins Added';
 
-  const bonusColor   = accBonus > 0 ? 'var(--accent-emerald)' : 'var(--t3)';
+  // Prepare coin rows for sequential pop-in and count-up animation
+  const coinRowsData = [
+    { label: coinsCompleteLbl, target: completionCoins, color: '#FBBF24' }
+  ];
+  if (isPerfectAcc && precisionCoins > 0) {
+    coinRowsData.push({ label: coinsPreciseLbl, target: precisionCoins, color: '#10B981' });
+  }
+  coinRowsData.push({ label: coinsPhaseTotLbl, target: totalPhaseCoins, color: '#FBBF24', isTotal: true });
 
   $('modal-phase-stats').innerHTML = `
-    <div class="go-row"><span>${ptsEarnedLbl}</span><strong style="color:var(--t1)">+${rawPts}</strong></div>
-    <div class="go-row"><span>${accBonusLbl}</span><strong style="color:${bonusColor}">+${accBonus}</strong></div>
-    <div class="go-row"><span>${penaltyLbl}</span><strong style="color:var(--accent-coral)">−${penalty}</strong></div>
-    <div class="go-row"><span>${netPtsLbl}</span><strong style="color:var(--accent-emerald)">+${finalPts}</strong></div>
-    <div class="go-row"><span>${totalPtsLbl}</span><strong style="color:var(--accent-cyan);font-variant-numeric:tabular-nums;letter-spacing:0.04em">${formatScore(state.totalScore)}</strong></div>
+    <div class="modal-stats-group modal-stats-group-coins">
+      <div class="modal-stats-group-title coins-title">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="group-svg-icon" style="color:#FBBF24">
+          <circle cx="12" cy="12" r="9"/>
+          <circle cx="12" cy="12" r="5"/>
+          <path d="M12 9v6"/>
+        </svg>
+        <span>${secCoinsLbl}</span>
+      </div>
+      <div id="modal-coins-rows-list"></div>
+    </div>
   `;
+
+  const rowsList = $('modal-coins-rows-list');
+  if (typeof animateCoinsList === 'function') {
+    animateCoinsList(rowsList, coinRowsData);
+  }
 
   // Unlock new words: only starting from the completion of Phase 2 (to be displayed starting at Phase 3)
   let toUnlock = [];
@@ -386,6 +405,13 @@ function showPhaseModal() {
 }
 
 function continueToNextPhase() {
+  if (state._coinAnimTimers && Array.isArray(state._coinAnimTimers)) {
+    state._coinAnimTimers.forEach(id => {
+      clearInterval(id);
+      clearTimeout(id);
+    });
+    state._coinAnimTimers = [];
+  }
   stopConfetti();
   if (typeof cancelPhaseExitConfirm === 'function') cancelPhaseExitConfirm();
   modalPhase.classList.add('hidden');

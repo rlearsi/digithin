@@ -77,14 +77,30 @@ document.addEventListener('keydown', e => {
       return;
     }
 
-    if (e.key === 'ArrowDown') {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
       e.preventDefault();
       if (typeof navigateShop === 'function') navigateShop('down');
       return;
     }
-    if (e.key === 'ArrowUp') {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
       e.preventDefault();
       if (typeof navigateShop === 'function') navigateShop('up');
+      return;
+    }
+
+    if (e.key === '1' || e.code === 'Digit1' || e.code === 'Numpad1') {
+      e.preventDefault();
+      if (typeof buyShopItemByIndex === 'function') buyShopItemByIndex(0);
+      return;
+    }
+    if (e.key === '2' || e.code === 'Digit2' || e.code === 'Numpad2') {
+      e.preventDefault();
+      if (typeof buyShopItemByIndex === 'function') buyShopItemByIndex(1);
+      return;
+    }
+    if (e.key === '3' || e.code === 'Digit3' || e.code === 'Numpad3') {
+      e.preventDefault();
+      if (typeof buyShopItemByIndex === 'function') buyShopItemByIndex(2);
       return;
     }
 
@@ -110,6 +126,46 @@ document.addEventListener('keydown', e => {
     }
 
     // Intercept ANY other key while shop is open to prevent background typing or accidental interactions
+    e.preventDefault();
+    return;
+  }
+
+  // If Boss Battle Reward modal is open, handle keyboard navigation and confirm
+  const modalBossRewardEl = $('modal-boss-reward');
+  const isBossRewardModalOpen = (typeof isBossRewardOpen === 'function') ? isBossRewardOpen() : (modalBossRewardEl && !modalBossRewardEl.classList.contains('hidden'));
+  if (isBossRewardModalOpen) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (typeof navigateBossReward === 'function') navigateBossReward('next');
+      return;
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (typeof navigateBossReward === 'function') navigateBossReward('prev');
+      return;
+    }
+    if (e.key === '1' || e.code === 'Digit1' || e.code === 'Numpad1') {
+      e.preventDefault();
+      if (typeof pickBossSkillByIndex === 'function') pickBossSkillByIndex(0);
+      return;
+    }
+    if (e.key === '2' || e.code === 'Digit2' || e.code === 'Numpad2') {
+      e.preventDefault();
+      if (typeof pickBossSkillByIndex === 'function') pickBossSkillByIndex(1);
+      return;
+    }
+    if (e.key === '3' || e.code === 'Digit3' || e.code === 'Numpad3') {
+      e.preventDefault();
+      if (typeof pickBossSkillByIndex === 'function') pickBossSkillByIndex(2);
+      return;
+    }
+    if (e.key === 'Enter' || e.code === 'Enter' || e.code === 'NumpadEnter' || e.key === ' ' || e.code === 'Space') {
+      e.preventDefault();
+      if (typeof pickSelectedBossSkill === 'function') pickSelectedBossSkill();
+      return;
+    }
+
+    // Intercept ANY other key while boss reward modal is open to prevent background typing or accidental interactions
     e.preventDefault();
     return;
   }
@@ -172,7 +228,7 @@ gameArea?.addEventListener('touchstart', () => {
 }, { passive: true });
 
 hiddenInput?.addEventListener('input', () => {
-  if (state.paused || state.phaseComplete || (typeof isShopOpen === 'function' && isShopOpen())) {
+  if (state.paused || state.phaseComplete || (typeof isShopOpen === 'function' && isShopOpen()) || (typeof isBossRewardOpen === 'function' && isBossRewardOpen())) {
     hiddenInput.value = '';
     return;
   }

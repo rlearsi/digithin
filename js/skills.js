@@ -22,6 +22,7 @@ function wildcardExplode(wildcardItem) {
   state.activeItems = [];
   if ((state.activeTimers?.haste || 0) > 0) totalPts = Math.floor(totalPts * 2);
   state.phasePts += totalPts;
+  state.totalScore = (state.totalScore || 0) + totalPts;
   state.progress += totalPts;
 
   document.body.style.animation = 'screenShake .4s ease';

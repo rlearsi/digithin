@@ -8,12 +8,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/variables.css" />
-  <link rel="stylesheet" href="css/components.css" />
-  <link rel="stylesheet" href="css/layout.css" />
-  <link rel="stylesheet" href="css/gameplay.css" />
-  <link rel="stylesheet" href="css/modals.css" />
-  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/variables.css?v=2.9" />
+  <link rel="stylesheet" href="css/components.css?v=3.3" />
+  <link rel="stylesheet" href="css/layout.css?v=2.9" />
+  <link rel="stylesheet" href="css/gameplay.css?v=3.3" />
+  <link rel="stylesheet" href="css/modals.css?v=3.3" />
+  <link rel="stylesheet" href="css/responsive.css?v=3.3" />
 </head>
 <body>
   <!-- Ambient Saturated Canvas (vibrant ambient landscape, mesh orbs & topography) -->
@@ -206,6 +206,23 @@
             </div>
             <div class="stat-hero-val-wrap">
               <span class="stat-hero-val" id="hud-total">0000000000</span>
+            </div>
+          </div>
+
+          <!-- MOEDAS DO JOGADOR EM DESTAQUE -->
+          <div class="stat-hero-coins">
+            <div class="stat-hero-header">
+              <span class="stat-hero-lbl" data-i18n="hud_coins">COINS</span>
+              <span class="stat-hero-icon" style="color:#FBBF24">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9"/>
+                  <circle cx="12" cy="12" r="5"/>
+                  <path d="M12 9v6"/>
+                </svg>
+              </span>
+            </div>
+            <div class="stat-hero-val-wrap">
+              <span class="stat-hero-val text-amber" id="hud-coins" style="color:#FBBF24">0</span>
             </div>
           </div>
 
@@ -520,13 +537,15 @@
             <span class="shop-feedback-text"></span>
           </div>
           <div class="shop-balance-wrap">
-            <span class="sbc-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <span class="sbc-lbl" id="shop-balance-lbl" data-i18n="shop_coins" style="font-size:0.88rem;color:var(--t2);font-weight:700">Your Coins:</span>
+            <span class="sbc-icon" style="color:#FBBF24">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="9"/>
-                <path d="M12 7v10M9 9h6a2 2 0 0 1 0 4H9a2 2 0 0 0 0 4h6"/>
+                <circle cx="12" cy="12" r="5"/>
+                <path d="M12 9v6"/>
               </svg>
             </span>
-            <strong id="shop-balance" class="sbc-val">0000000000</strong>
+            <strong id="shop-balance" class="sbc-val">0</strong>
           </div>
         </div>
         <div id="shop-items-grid"></div>
@@ -667,9 +686,10 @@
 
       <div class="go-actions">
         <button id="btn-go-continue" class="btn-go-continue hidden" onclick="useContinue()">
-          <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="9"/>
-            <path d="M12 7v10M9 9h6a2 2 0 0 1 0 4H9a2 2 0 0 0 0 4h6"/>
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 9v6"/>
           </svg>
           <span data-i18n="go_use_continue">Usar Continue</span> (<strong id="go-continue-count">0</strong>)
         </button>
@@ -1006,7 +1026,17 @@
         <span class="boss-reward-crown">👑</span>
       </div>
       <h2 class="boss-reward-title" data-i18n="boss_defeated_title">BOSS DEFEATED!</h2>
-      <div class="boss-reward-bonus-badge">🪙 +1.000 PTS</div>
+      <div id="boss-coins-container" class="boss-coins-container modal-stats-group modal-stats-group-coins">
+        <div class="modal-stats-group-title coins-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="group-svg-icon" style="color:#FBBF24">
+            <circle cx="12" cy="12" r="9"/>
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 9v6"/>
+          </svg>
+          <span data-i18n="modal_section_coins">Coins Earned</span>
+        </div>
+        <div id="boss-coins-rows-list"></div>
+      </div>
       <p class="boss-reward-sub" data-i18n="boss_defeated_sub">You masterfully solved all runic trials.</p>
       <div class="boss-reward-prompt" data-i18n="boss_defeated_prompt">Choose 1 permanent bonus skill for upcoming phases:</div>
       <div id="boss-skills-grid" class="boss-skills-grid"></div>
@@ -1036,20 +1066,20 @@
   </div>
 
   <!-- Modular Scripts with Cache Busting -->
-  <script src="js/ambient.js?v=2.4"></script>
-  <script src="js/audio.js?v=2.4"></script>
-  <script src="js/i18n.js?v=2.4"></script>
-  <script src="js/data.js?v=2.4"></script>
-  <script src="js/state.js?v=2.4"></script>
-  <script src="js/ui.js?v=2.4"></script>
-  <script src="js/shop.js?v=2.4"></script>
-  <script src="js/library.js?v=2.4"></script>
-  <script src="js/spawner.js?v=2.4"></script>
-  <script src="js/skills.js?v=2.4"></script>
-  <script src="js/boss.js?v=2.4"></script>
-  <script src="js/pause.js?v=2.4"></script>
-  <script src="js/phase.js?v=2.4"></script>
-  <script src="game.js?v=2.4"></script>
-  <script src="js/input.js?v=2.4"></script>
+  <script src="js/ambient.js?v=3.3"></script>
+  <script src="js/audio.js?v=3.3"></script>
+  <script src="js/i18n.js?v=3.3"></script>
+  <script src="js/data.js?v=3.3"></script>
+  <script src="js/state.js?v=3.3"></script>
+  <script src="js/ui.js?v=3.3"></script>
+  <script src="js/shop.js?v=3.3"></script>
+  <script src="js/library.js?v=3.3"></script>
+  <script src="js/spawner.js?v=3.3"></script>
+  <script src="js/skills.js?v=3.3"></script>
+  <script src="js/boss.js?v=3.3"></script>
+  <script src="js/pause.js?v=3.3"></script>
+  <script src="js/phase.js?v=3.3"></script>
+  <script src="game.js?v=3.3"></script>
+  <script src="js/input.js?v=3.3"></script>
 </body>
 </html>

@@ -14,6 +14,7 @@ const hiddenInput    = $('hidden-input');
 const feedbackEl     = $('feedback-msg');
 const hudPhasePts    = $('hud-phase-pts');
 const hudTotal       = $('hud-total');
+const hudCoins       = $('hud-coins');
 const phaseNumEl     = $('phase-num');
 const progressFill   = $('progress-fill');
 const progressText   = $('progress-text');
@@ -349,6 +350,8 @@ function updateHUD() {
   if (typeof state === 'undefined' || !state) return;
   const formattedScore = formatScore(state.totalScore);
   if (hudTotal) hudTotal.textContent = formattedScore;
+  if (hudCoins) hudCoins.textContent = String(state.coins || 0);
+  if (typeof updateShopBalanceDisplay === 'function') updateShopBalanceDisplay();
 
   if (phaseNumEl) {
     if (state.bossBattle && state.bossBattle.active) {
@@ -578,6 +581,7 @@ function createSkillPill(slot, idx, def) {
   pill.title = sDesc;
 
   pill.innerHTML = `
+    <kbd class="sp-key-badge">${idx + 1}</kbd>
     <div class="sp-main">
       <span class="sp-icon">${def.icon}</span>
       <div class="sp-info">
@@ -586,7 +590,6 @@ function createSkillPill(slot, idx, def) {
       </div>
     </div>
     <div class="sp-badges">
-      <kbd class="sp-key-badge">${idx + 1}</kbd>
       <span class="sp-count-badge"></span>
     </div>
     <div class="sp-active-bar-track">
@@ -1701,16 +1704,170 @@ function renderBossMeaningSlots(boxEl, targetWord, typedBuffer) {
   }
 }
 
+function animateCoinsList(containerEl, coinRowsData, onComplete) {
+  if (!containerEl) return;
+  containerEl.innerHTML = '';
+  if (!state._coinAnimTimers) state._coinAnimTimers = [];
+
+  function runRowSequence(index) {
+    if (index >= coinRowsData.length) {
+      if (typeof onComplete === 'function') onComplete();
+      return;
+    }
+    const rowInfo = coinRowsData[index];
+
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'go-row go-row-pop';
+    rowDiv.style.setProperty('--row-delay', '0ms');
+
+    const labelSpan = document.createElement('span');
+    labelSpan.textContent = rowInfo.label;
+
+    const valStrong = document.createElement('strong');
+    valStrong.style.color = rowInfo.color;
+    valStrong.style.fontVariantNumeric = 'tabular-nums';
+    if (rowInfo.isTotal) {
+      valStrong.style.fontSize = '1.05rem';
+    }
+    valStrong.textContent = '+0';
+
+    rowDiv.appendChild(labelSpan);
+    rowDiv.appendChild(valStrong);
+    containerEl.appendChild(rowDiv);
+
+    const startTimeout = setTimeout(() => {
+      let currentVal = 0;
+      const targetVal = rowInfo.target;
+      if (targetVal <= 0) {
+        valStrong.textContent = '+0';
+        runRowSequence(index + 1);
+        return;
+      }
+
+      const totalTicks = Math.min(35, targetVal);
+      const step = Math.max(1, Math.ceil(targetVal / totalTicks));
+      const tickInterval = Math.max(18, Math.min(38, Math.round(850 / totalTicks)));
+
+      const intervalId = setInterval(() => {
+        currentVal = Math.min(targetVal, currentVal + step);
+        valStrong.textContent = `+${currentVal}`;
+        if (typeof playSound === 'function') playSound('coin');
+
+        if (currentVal >= targetVal) {
+          clearInterval(intervalId);
+          const nextTimeout = setTimeout(() => {
+            runRowSequence(index + 1);
+          }, 220);
+          state._coinAnimTimers.push(nextTimeout);
+        }
+      }, tickInterval);
+
+      state._coinAnimTimers.push(intervalId);
+    }, 120);
+
+    state._coinAnimTimers.push(startTimeout);
+  }
+
+  const initTimeout = setTimeout(() => {
+    runRowSequence(0);
+  }, 120);
+  state._coinAnimTimers.push(initTimeout);
+}
+
+function isBossRewardOpen() {
+  const modal = $('modal-boss-reward');
+  return modal && !modal.classList.contains('hidden');
+}
+
+function selectBossRewardIndex(index) {
+  if (!state.currentBossRewardSkills || !state.currentBossRewardSkills[index]) return;
+  state.selectedBossRewardIndex = index;
+  if (typeof playSound === 'function') playSound('click');
+  updateBossRewardSelectionVisual();
+}
+
+function navigateBossReward(direction) {
+  const total = state.currentBossRewardSkills ? state.currentBossRewardSkills.length : 3;
+  if (total === 0) return;
+  if (state.selectedBossRewardIndex === undefined || state.selectedBossRewardIndex === null || state.selectedBossRewardIndex < 0) {
+    state.selectedBossRewardIndex = 0;
+  } else if (direction === 'next' || direction === 'down' || direction === 'right') {
+    state.selectedBossRewardIndex = (state.selectedBossRewardIndex + 1) % total;
+  } else if (direction === 'prev' || direction === 'up' || direction === 'left') {
+    state.selectedBossRewardIndex = (state.selectedBossRewardIndex - 1 + total) % total;
+  }
+  if (typeof playSound === 'function') playSound('click');
+  updateBossRewardSelectionVisual();
+}
+
+function updateBossRewardSelectionVisual() {
+  const cards = document.querySelectorAll('#boss-skills-grid .boss-skill-card');
+  cards.forEach((card, idx) => {
+    if (idx === state.selectedBossRewardIndex) {
+      card.classList.add('boss-skill-card-selected');
+    } else {
+      card.classList.remove('boss-skill-card-selected');
+    }
+  });
+}
+
+function pickBossSkillByIndex(index) {
+  if (!state.currentBossRewardSkills || !state.currentBossRewardSkills[index]) return;
+  state.selectedBossRewardIndex = index;
+  updateBossRewardSelectionVisual();
+  const skill = state.currentBossRewardSkills[index];
+  const onPick = state.onPickBossReward;
+  closeBossRewardModal();
+  if (typeof onPick === 'function') {
+    onPick(skill);
+  }
+}
+
+function pickSelectedBossSkill() {
+  const idx = (state.selectedBossRewardIndex !== undefined && state.selectedBossRewardIndex >= 0)
+    ? state.selectedBossRewardIndex
+    : 0;
+  pickBossSkillByIndex(idx);
+}
+
 function showBossRewardModal(skills, onPick) {
   if (!modalBossReward || !bossSkillsGrid) return;
   bossSkillsGrid.innerHTML = '';
+  state.currentBossRewardSkills = skills;
+  state.onPickBossReward = onPick;
+  state.selectedBossRewardIndex = 0;
 
-  skills.forEach(skill => {
+  const bossCoinsRowsList = $('boss-coins-rows-list');
+  if (bossCoinsRowsList) {
+    const bossBonusLbl     = typeof t === 'function' ? t('modal_boss_bonus') : 'Boss Bonus';
+    const coinsPreciseLbl  = typeof t === 'function' ? t('modal_coins_precision') : '100% Accuracy Bonus';
+    const coinsPhaseTotLbl = typeof t === 'function' ? t('modal_coins_phase_total') : 'Total Coins Added';
+
+    const bossBonusCoins = 350;
+    const isPerfectAcc = (state.errorsPhase === 0);
+    const precisionCoins = isPerfectAcc ? 35 : 0;
+    const totalBossCoins = bossBonusCoins + precisionCoins;
+
+    const coinRowsData = [
+      { label: bossBonusLbl, target: bossBonusCoins, color: '#FBBF24' }
+    ];
+    if (isPerfectAcc && precisionCoins > 0) {
+      coinRowsData.push({ label: coinsPreciseLbl, target: precisionCoins, color: '#10B981' });
+    }
+    coinRowsData.push({ label: coinsPhaseTotLbl, target: totalBossCoins, color: '#FBBF24', isTotal: true });
+
+    animateCoinsList(bossCoinsRowsList, coinRowsData);
+  }
+
+  skills.forEach((skill, index) => {
     const loc = (typeof getLocalizedItem === 'function') ? getLocalizedItem(skill) : { name: skill.name, desc: skill.desc };
     const pickTxt = typeof t === 'function' && t('boss_btn_pick') ? t('boss_btn_pick') : 'Obtain';
     const card = document.createElement('div');
-    card.className = 'boss-skill-card';
+    const isSelected = (index === state.selectedBossRewardIndex);
+    card.className = 'boss-skill-card' + (isSelected ? ' boss-skill-card-selected' : '');
+    card.setAttribute('data-boss-index', String(index));
     card.innerHTML = `
+      <kbd class="card-key-hint" aria-hidden="true">${index + 1}</kbd>
       <div class="boss-skill-icon-wrap" style="--item-clr: ${skill.color || 'var(--accent-primary)'}">
         <span>${skill.icon}</span>
       </div>
@@ -1718,12 +1875,20 @@ function showBossRewardModal(skills, onPick) {
       <div class="boss-skill-desc">${loc.desc || skill.desc}</div>
       <button class="boss-skill-pick-btn" type="button">${pickTxt}</button>
     `;
+    card.addEventListener('mouseenter', () => {
+      state.selectedBossRewardIndex = index;
+      updateBossRewardSelectionVisual();
+    });
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.boss-skill-pick-btn')) return;
+      selectBossRewardIndex(index);
+    });
     const btn = card.querySelector('.boss-skill-pick-btn');
     if (btn) {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (typeof onPick === 'function') onPick(skill);
         closeBossRewardModal();
+        if (typeof onPick === 'function') onPick(skill);
       });
     }
     bossSkillsGrid.appendChild(card);
@@ -1733,5 +1898,15 @@ function showBossRewardModal(skills, onPick) {
 }
 
 function closeBossRewardModal() {
+  if (state._coinAnimTimers && Array.isArray(state._coinAnimTimers)) {
+    state._coinAnimTimers.forEach(id => {
+      clearInterval(id);
+      clearTimeout(id);
+    });
+    state._coinAnimTimers = [];
+  }
+  state.currentBossRewardSkills = null;
+  state.onPickBossReward = null;
+  state.selectedBossRewardIndex = 0;
   if (modalBossReward) modalBossReward.classList.add('hidden');
 }

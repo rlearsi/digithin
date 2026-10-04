@@ -427,6 +427,7 @@ function completeBossMeaning() {
   // Combo progression
   state.combo    = (state.combo || 0) + 1;
   state.maxCombo = Math.max(state.maxCombo, state.combo);
+  state.maxComboPhase = Math.max(state.maxComboPhase || 0, state.combo);
   try {
     const curBest = parseInt(localStorage.getItem('digitinho_best_combo') || '0', 10);
     if (state.maxCombo > curBest) localStorage.setItem('digitinho_best_combo', String(state.maxCombo));
@@ -445,7 +446,7 @@ function completeBossMeaning() {
   let comboMult = state.combo >= 15 ? 4 : state.combo >= 10 ? 3 : state.combo >= 5 ? 2 : 1;
   if (isFury) comboMult *= 2;
 
-  const pts = 60 * comboMult;
+  const pts = 300;
   state.phasePts   += pts;
   state.totalScore += pts;
 
@@ -508,10 +509,13 @@ function defeatBoss() {
   cancelAnimationFrame(state.rafId);
   clearTimeout(state.spawnTimer);
 
-  // Ao vencer o boss, jogador ganha 1000 pontos
-  const bossBonusPts = 1000;
-  state.phasePts += bossBonusPts;
-  state.totalScore += bossBonusPts;
+  // Regra 5: chefão derrotado = +350 moedas (+35 precisão se 0 erros)
+  const bossBonusCoins = 350;
+  const isPerfectAcc = (state.errorsPhase === 0);
+  const precisionCoins = isPerfectAcc ? 35 : 0;
+  const totalBossCoins = bossBonusCoins + precisionCoins;
+  state.coins = (state.coins || 0) + totalBossCoins;
+
   updateHUD();
 
   playSound('bossDefeat');
@@ -524,7 +528,7 @@ function defeatBoss() {
 
   const victoryMsg = typeof t === 'function'
     ? t('fb_boss_defeated', { boss: bossName.toUpperCase() })
-    : `👑 ${bossName.toUpperCase()} DEFEATED! +1,000 PTS!`;
+    : `${bossName.toUpperCase()} DEFEATED! +350 COINS!`;
 
   showFeedback(victoryMsg, 'special');
 

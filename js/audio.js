@@ -88,6 +88,19 @@ function playSound(type) {
         [440, 550, 660].forEach((f, i) => osc(f, 'sine', i * 0.055, 0.18, 0.12));
         break;
 
+      case 'coin': {
+        const o = ctx.createOscillator(), g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.type = 'sine';
+        o.frequency.setValueAtTime(987.77, t);
+        o.frequency.setValueAtTime(1318.51, t + 0.035);
+        g.gain.setValueAtTime(0.001, t);
+        g.gain.linearRampToValueAtTime(0.11, t + 0.008);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.11);
+        o.start(t); o.stop(t + 0.12);
+        break;
+      }
+
       case 'error': {
         const o = ctx.createOscillator(), g = ctx.createGain();
         o.connect(g); g.connect(ctx.destination);

@@ -360,11 +360,37 @@
   overflow: hidden;
   box-shadow: none;
 }
+.modal-stats-group {
+  display: flex;
+  flex-direction: column;
+}
+.modal-stats-group:not(:last-child) {
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+}
+.modal-stats-group-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 18px 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--t2);
+}
+.modal-stats-group-title .group-svg-icon {
+  color: var(--accent-cyan);
+  display: inline-block;
+}
+.modal-stats-group-coins .modal-stats-group-title .group-svg-icon {
+  color: #FBBF24;
+}
 .go-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 18px;
+  padding: 9px 18px;
   font-size: 0.90rem;
   font-weight: 600;
   color: var(--t2);
@@ -379,6 +405,38 @@
   font-weight: 800;
   font-size: 1.05rem;
   color: var(--t1);
+}
+@keyframes rowPopIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.86);
+  }
+  65% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.go-row-pop {
+  animation: rowPopIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation-delay: var(--row-delay, 0ms);
+}
+
+.go-row-highlight,
+.go-row-pts-highlight {
+  background: transparent;
+  padding: 9px 18px;
+  margin: 0;
+}
+
+.go-row-balance {
+  background: var(--glass-sub-card);
+  border-radius: 10px;
+  margin: 2px 8px 6px;
+  padding: 8px 10px;
 }
 
 .modal-section {
@@ -567,8 +625,9 @@
 #shop-items-grid {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   margin-bottom: 22px;
+  padding-top: 8px;
 }
 
 /* Modern Shop Item Card */
@@ -586,6 +645,8 @@
   box-shadow: none;
   transition: background 0.15s ease, filter 0.15s ease;
   transform: none !important;
+  position: relative;
+  overflow: visible;
 }
 .shop-card:hover {
   background: var(--glass-card-hover);
@@ -653,6 +714,56 @@
   gap: 3px;
   line-height: 1.3;
   letter-spacing: 0.01em;
+}
+
+/* Floating Keyboard Key Badge for Boss & Shop Cards (Clean translucent glass design) */
+.card-key-hint {
+  position: absolute;
+  top: -11px;
+  left: 14px;
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 22px;
+  padding: 0 6px;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--t1);
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+  font-weight: 700;
+  font-size: 0.72rem;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  user-select: none;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.22);
+  transition: all 0.2s ease;
+}
+
+[data-theme="light"] .card-key-hint {
+  background: rgba(0, 0, 0, 0.08);
+  color: #0F172A;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.boss-skill-card.boss-skill-card-selected .card-key-hint,
+.shop-card.shop-card-selected .card-key-hint {
+  background: rgba(255, 255, 255, 0.26);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.30);
+  filter: brightness(1.12);
+}
+
+.boss-skill-card:hover .card-key-hint,
+.shop-card:hover .card-key-hint {
+  filter: brightness(1.08);
 }
 
 .shop-icon-wrapper {
@@ -1427,19 +1538,10 @@
   -webkit-text-fill-color: transparent;
 }
 
-.boss-reward-bonus-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(245, 158, 11, 0.18);
-  color: #FBBF24;
-  font-weight: 800;
-  font-size: 0.95rem;
-  padding: 4px 16px;
-  border-radius: var(--r-pill);
-  box-shadow: 0 0 16px rgba(245, 158, 11, 0.25);
-  margin: 6px auto 10px;
-  letter-spacing: 0.04em;
+.boss-coins-container {
+  width: 100%;
+  max-width: 440px;
+  margin: 6px auto 8px;
 }
 
 .boss-reward-sub {
@@ -1462,13 +1564,15 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
   width: 100%;
-  margin: 10px 0 16px;
+  margin: 16px 0 16px;
+  padding-top: 8px;
 }
 
 @media (max-width: 520px) {
   .boss-skills-grid {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 14px;
+    padding-top: 8px;
   }
 }
 
@@ -1484,15 +1588,36 @@
   text-align: center;
   gap: 8px;
   border: none;
-  cursor: default;
-  transition: background 0.22s ease;
+  cursor: pointer;
+  transition: background 0.22s ease, filter 0.2s ease, box-shadow 0.2s ease;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .boss-skill-card:hover {
   background: var(--glass-card-hover);
-  box-shadow: none;
+  box-shadow: 0 0 22px rgba(168, 85, 247, 0.28);
+  filter: brightness(1.08);
+}
+
+/* Keyboard / Click Selection for Boss Skill Cards (100% borderless, frosted luminous aura) */
+.boss-skill-card.boss-skill-card-selected {
+  border: none !important;
+  outline: none !important;
+  transform: none !important;
+  box-shadow: 0 0 32px rgba(168, 85, 247, 0.58), 0 0 14px rgba(99, 102, 241, 0.40), inset 0 0 16px rgba(255, 255, 255, 0.16) !important;
+  filter: brightness(1.18) !important;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.32), rgba(99, 102, 241, 0.22)), var(--glass-card) !important;
+}
+
+.boss-skill-card.boss-skill-card-selected:hover {
+  filter: brightness(1.22) !important;
+  box-shadow: 0 0 36px rgba(168, 85, 247, 0.65), 0 0 16px rgba(99, 102, 241, 0.45), inset 0 0 18px rgba(255, 255, 255, 0.18) !important;
+}
+
+.boss-skill-card.boss-skill-card-selected .boss-skill-pick-btn {
+  filter: brightness(1.18) !important;
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.6) !important;
 }
 
 .boss-skill-icon-wrap {

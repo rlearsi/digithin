@@ -555,32 +555,40 @@ function completeItem(item) {
     return;
   }
 
-  // Increment combo streak
-  state.combo    = (state.combo || 0) + 1;
-  state.maxCombo = Math.max(state.maxCombo, state.combo);
-  try {
-    const curBest = parseInt(localStorage.getItem('digitinho_best_combo') || '0', 10);
-    if (state.maxCombo > curBest) localStorage.setItem('digitinho_best_combo', String(state.maxCombo));
-  } catch (_) {}
-  if (state.combo >= 30) {
-    unlockAchievement('mestre_combo');
+  // Regra de Combo:
+  // Letra e Sílaba: dão pontos com multiplicador do combo atual, mas NÃO aumentam combo.
+  // Palavra completa: +1 combo.
+  const isWord = (item.type === 'word');
+
+  if (isWord) {
+    state.combo = (state.combo || 0) + 1;
+    state.maxCombo = Math.max(state.maxCombo, state.combo);
+    state.maxComboPhase = Math.max(state.maxComboPhase || 0, state.combo);
+    try {
+      const curBest = parseInt(localStorage.getItem('digitinho_best_combo') || '0', 10);
+      if (state.maxCombo > curBest) localStorage.setItem('digitinho_best_combo', String(state.maxCombo));
+    } catch (_) {}
+    if (state.combo >= 30) {
+      unlockAchievement('mestre_combo');
+    }
+
+    // Check Modo Fúria
+    if (state.combo === 15) {
+      playSound('fury');
+      showFeedback(typeof t === 'function' ? t('fb_fury_activated') : 'FURY MODE ACTIVATED! DOUBLE POINTS!', 'special');
+      unlockAchievement('modo_furia');
+    } else if (state.combo > 1) {
+      playSound('combo');
+    }
   }
 
-  // Check Modo Fúria
-  const isFury = state.combo >= 15;
-  if (state.combo === 15) {
-    playSound('fury');
-    showFeedback(typeof t === 'function' ? t('fb_fury_activated') : 'FURY MODE ACTIVATED! DOUBLE POINTS!', 'special');
-    unlockAchievement('modo_furia');
-  } else if (state.combo > 1) {
-    playSound('combo');
-  }
-
-  // Multiplier calculation:
+  // Multiplier calculation (estilo Tetris: combo escala o multiplicador de pontos):
+  const isFury = (state.combo || 0) >= 15;
   let comboMult = 1;
   if (state.combo >= 15)      comboMult = 4;
   else if (state.combo >= 10) comboMult = 3;
   else if (state.combo >= 5)  comboMult = 2;
+  else if (state.combo >= 2)  comboMult = 1.5;
 
   // In Modo Fúria, point multiplier doubles:
   if (isFury) {
@@ -593,12 +601,14 @@ function completeItem(item) {
 
   const pts = basePts * comboMult;
   state.phasePts += pts;
+  state.totalScore = (state.totalScore || 0) + pts;
 
   if (state.gameMode === 'training') {
     state.progress = Math.min(phaseGoal(), state.progress + 1);
   } else {
     state.progress += pts;
   }
+  updateHUD();
 
   if (progressFill) {
     progressFill.classList.add('hit-flash');

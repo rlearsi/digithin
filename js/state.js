@@ -73,7 +73,9 @@ function defaultState() {
     difficulty:        diffKey,
     phase:             1,
     phasePts:          0,       // Points accumulated in the current phase
-    totalScore:        0,       // Banked points from previous phases (used in shop)
+    totalScore:        0,       // Banked points from previous phases (run score)
+    coins:             0,       // Player coins currency (used exclusively in shop)
+    flawlessStreak:    0,       // Consecutive phases completed without errors
     errorsPhase:       0,       // Errors made in the current phase
     totalErrors:       0,       // Total errors made in this run
     lives:             diffCfg.startLives,
@@ -101,9 +103,13 @@ function defaultState() {
     currentShopPurchases: 0,
     selectedShopIndex: -1,
     currentShopItems:  [],
+    selectedBossRewardIndex: 0,
+    currentBossRewardSkills: [],
+    onPickBossReward:        null,
     idCounter:         0,
     combo:             0,       // Consecutive correct hits streak
     maxCombo:          0,       // Best streak in the match
+    maxComboPhase:     0,       // Best streak in current phase
     continues:         0,       // Available continues purchased from shop
     gameMode:          'classic', // 'classic' | 'zen' | 'timeattack' | 'training'
     timeAttackSecs:    60,
@@ -171,5 +177,24 @@ function updateHighScore(score) {
     } catch (_) {}
   }
   return { best, isNew, previous: currentBest };
+}
+
+/**
+ * Calculates flawless streak coin bonus:
+ * 3 consecutive phases -> +10 coins
+ * 6 consecutive phases -> +20 coins
+ * 10 consecutive phases -> +40 coins
+ * and so on (+10 at 13, +20 at 16, +40 at 20, ...)
+ */
+function getFlawlessStreakCoins(streak) {
+  if (!streak || streak <= 0) return 0;
+  if (streak % 10 === 0) {
+    return (streak / 10) * 40;
+  }
+  const rem = streak % 10;
+  const baseDecade = Math.floor(streak / 10) * 40;
+  if (rem === 3) return baseDecade + 10;
+  if (rem === 6) return baseDecade + 20;
+  return 0;
 }
 
