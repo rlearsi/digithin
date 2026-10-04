@@ -459,12 +459,12 @@ function handleLetterTyped(char) {
         showFeedback(typeof t === 'function' ? t('fb_combo_broken') : 'Combo broken!', 'error');
       }
 
-      // Typo: -1 penalty at phase end + progress bar deduction (only in classic mode)
+      // Typo: -1 penalty at phase end + 1 point deduction from progress bar
       state.errorsPhase++;
       state.totalErrors++;
-      const diffCfg = typeof getDifficultyConfig === 'function' ? getDifficultyConfig() : { speedErrorPenalty: 0, progressErrorPenalty: 3 };
+      const diffCfg = typeof getDifficultyConfig === 'function' ? getDifficultyConfig() : { speedErrorPenalty: 0, progressErrorPenalty: 1 };
       if (state.gameMode !== 'training' && diffCfg.progressErrorPenalty > 0) {
-        state.progress = Math.max(0, state.progress - diffCfg.progressErrorPenalty);
+        state.progress = Math.max(0, (state.progress || 0) - diffCfg.progressErrorPenalty);
       }
       if (state.gameMode !== 'training' && (state.activeTimers?.speedlock || 0) <= 0 && diffCfg.speedErrorPenalty > 0) {
         state.speedMultiplier = Math.min(CFG.maxSpeedMult, (state.speedMultiplier || 1.0) + diffCfg.speedErrorPenalty);
@@ -603,11 +603,9 @@ function completeItem(item) {
   state.phasePts += pts;
   state.totalScore = (state.totalScore || 0) + pts;
 
-  if (state.gameMode === 'training') {
-    state.progress = Math.min(phaseGoal(), state.progress + 1);
-  } else {
-    state.progress += pts;
-  }
+  // A barra de progresso cresce pela quantidade de letras da palavra/sílaba completada
+  const charsCompleted = (item.text || '').length || 1;
+  state.progress = Math.min(phaseGoal(), (state.progress || 0) + charsCompleted);
   updateHUD();
 
   if (progressFill) {

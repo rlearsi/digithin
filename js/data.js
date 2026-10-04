@@ -17,7 +17,7 @@ const CFG = {
   freezerMaxItems: 3, // Limite máximo de rúnicos simultâneos na tela com Freezer ativo
   hasteSpeedBonus: 0.5, // Aumento relativo (+0.5) de velocidade com a habilidade Pontos em Dobro
   padX: 14,
-  progressPenalty: 3,
+  progressPenalty: 1,
   startLives: 3,
   wordsPerPhase: 3,
   wordSkillChance: 0.06,  // Rare on words — primary source is the shop
@@ -44,7 +44,7 @@ const DIFFICULTY_CONFIG = {
     name: 'normal',
     initialSpeed: 1.0,
     speedErrorPenalty: 0,
-    progressErrorPenalty: 3,
+    progressErrorPenalty: 1,
     startLives: 3,
   },
   hard: {
@@ -52,7 +52,7 @@ const DIFFICULTY_CONFIG = {
     name: 'hard',
     initialSpeed: 1.5,
     speedErrorPenalty: 0.05,
-    progressErrorPenalty: 3,
+    progressErrorPenalty: 1,
     startLives: 3,
   },
 };

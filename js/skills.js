@@ -9,10 +9,12 @@ function wildcardExplode(wildcardItem) {
   showFeedback(typeof t === 'function' ? t('fb_wildcard_clean') : '💥 WILDCARD! TOTAL CLEAR!', 'special');
 
   let totalPts = 10;
+  let destroyedChars = 0;
   state.activeItems.forEach(other => {
     if (other.id === wildcardItem.id) return;
     const pts = other.type === 'letter' ? 1 : other.type === 'syllable' ? 3 : wordPts(other.text);
     totalPts += pts;
+    destroyedChars += (other.text?.length || 1);
     other.removing = true;
     other.el.classList.add('destroying');
     spawnParticles(other.el, 3);
@@ -23,7 +25,7 @@ function wildcardExplode(wildcardItem) {
   if ((state.activeTimers?.haste || 0) > 0) totalPts = Math.floor(totalPts * 2);
   state.phasePts += totalPts;
   state.totalScore = (state.totalScore || 0) + totalPts;
-  state.progress += totalPts;
+  state.progress = Math.min(phaseGoal(), (state.progress || 0) + destroyedChars);
 
   document.body.style.animation = 'screenShake .4s ease';
   setTimeout(() => { document.body.style.animation = ''; }, 420);
@@ -98,6 +100,7 @@ function triggerBombAreaExplosion(sourceItem) {
   createExplosionRing(cx, cy, radius, sourceItem.type === 'word' || numLetters >= 4);
 
   let extraPts = 0;
+  let destroyedChars = 0;
   state.activeItems.forEach(other => {
     if (other.id === sourceItem.id || other.removing) return;
     const or   = other.el.getBoundingClientRect();
@@ -109,6 +112,7 @@ function triggerBombAreaExplosion(sourceItem) {
     // Destrói dentro do raio expansivo ou dentro da faixa vertical de linhas correspondente
     if (dist <= radius || vertDist <= (numLetters * LINE_HEIGHT / 2)) {
       extraPts += other.type === 'letter' ? 1 : other.type === 'syllable' ? 3 : wordPts(other.text);
+      destroyedChars += (other.text?.length || 1);
       other.removing = true;
       other.el.classList.add('destroying');
       spawnParticles(other.el, 3);
@@ -121,7 +125,7 @@ function triggerBombAreaExplosion(sourceItem) {
   if (extraPts > 0) {
     if (state.activeTimers.haste > 0) extraPts = Math.floor(extraPts * 2);
     state.phasePts += extraPts;
-    state.progress += extraPts;
+    state.progress = Math.min(phaseGoal(), (state.progress || 0) + destroyedChars);
     const msg = (typeof t === 'function')
       ? t('fb_bomb_explosion', { lines: numLetters, pts: extraPts })
       : `💥 Explosion (${numLetters} lines)! +${extraPts}`;
@@ -148,7 +152,7 @@ function triggerVortexDevour() {
   if (state.activeTimers.haste > 0) pts = Math.floor(pts * 2);
 
   state.phasePts += pts;
-  state.progress += pts;
+  state.progress = Math.min(phaseGoal(), (state.progress || 0) + (victim.text?.length || 1));
 
   const vortexMsg = typeof t === 'function'
     ? t('fb_vortex_devour', { text: victim.text, pts })
