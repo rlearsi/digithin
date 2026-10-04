@@ -333,7 +333,7 @@ Ao pausar a partida (<kbd>ESC</kbd>), a tela aplica a regra padrão de design tr
   - `Voltar pro Menu Principal`: Exibe confirmação in-game segura antes de retornar à tela inicial.
 - **Painel de Configurações Dedicado:**
   - **Efeitos Sonoros (SFX):** Alterna o áudio do jogo entre `🔊 Ligado` e `🔇 Mudo`, com corte imediato da síntese sonora e persistência no `localStorage`.
-  - **Posição da Fila:** Alterna entre `⬆️ Topo (Padrão)` e `⬇️ Base`.
+  - **Posição da Fila:** Alterna entre `⬆️ Topo` e `⬇️ Base`.
   - **Tema Visual:** Alterna entre os temas `🌙 Escuro` e `☀️ Claro`.
   - Navegação intuitiva com botão `⬅️ Voltar ao Menu` ou tecla <kbd>ESC</kbd>.
 

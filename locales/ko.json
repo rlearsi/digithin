@@ -148,7 +148,7 @@
         "settings_sound_on": "켜짐",
         "settings_sound_off": "음소거",
         "settings_queue": "대기열 위치",
-        "settings_queue_top": "상단 (기본)",
+        "settings_queue_top": "상단",
         "settings_queue_bottom": "하단",
         "settings_theme": "인터페이스 테마",
         "settings_theme_dark": "다크",

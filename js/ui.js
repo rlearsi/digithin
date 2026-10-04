@@ -107,28 +107,6 @@ function setQueuePosition(pos) {
 
   localStorage.setItem('digitinho_queue_pos', finalPos);
 
-  const qBtnText = isTop
-    ? (typeof t === 'function' ? t('queue_top') : 'Top')
-    : (typeof t === 'function' ? t('queue_bottom') : 'Bottom');
-  const qBtnIcon = isTop ? '⬆️' : '⬇️';
-
-  const barToggle = $('btn-toggle-queue-pos');
-  if (barToggle) {
-    const qTitle = isTop
-      ? (typeof t === 'function' ? t('queue_toggle_to_bottom') : 'Queue at Top (click to move to bottom)')
-      : (typeof t === 'function' ? t('queue_toggle_to_top') : 'Queue at Bottom (click to move to top)');
-    barToggle.setAttribute('title', qTitle);
-    const iconEl = barToggle.querySelector('.queue-pos-icon');
-    const textEl = barToggle.querySelector('.queue-pos-text');
-    if (iconEl) iconEl.textContent = qBtnIcon;
-    if (textEl) textEl.textContent = qBtnText;
-  }
-
-  const startToggle = $('start-queue-pos-text');
-  if (startToggle) {
-    startToggle.textContent = `${typeof t === 'function' ? t('settings_queue') : 'Queue'}: ${qBtnText}`;
-  }
-
   if (typeof updateSettingsUI === 'function') {
     updateSettingsUI();
   }
@@ -183,7 +161,7 @@ function updateSettingsUI() {
       ? `<svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>`
       : `<svg class="btn-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`;
     const label = isTop
-      ? (typeof t === 'function' ? t('settings_queue_top') : 'Top (Default)')
+      ? (typeof t === 'function' ? t('settings_queue_top') : 'Top')
       : (typeof t === 'function' ? t('settings_queue_bottom') : 'Bottom');
     settingsQueueVal.innerHTML = `${iconSvg} <span>${label}</span>`;
   }
