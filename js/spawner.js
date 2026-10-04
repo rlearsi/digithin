@@ -116,7 +116,11 @@ function spawnItem() {
   refillQueue();
   const next = state.spawnQueue.shift();
   refillQueue();
-  renderQueue();
+  if (typeof animateQueueShift === 'function') {
+    animateQueueShift();
+  } else {
+    renderQueue();
+  }
 
   const boardW = gameArea.clientWidth || 420;
   const el     = document.createElement('div');

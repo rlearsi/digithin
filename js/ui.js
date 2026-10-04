@@ -761,8 +761,14 @@ function updateSkillPill(pill, slot, idx, def) {
   }
 }
 
+let queueShiftTimer = null;
+
 // Render upcoming queue bar
 function renderQueue() {
+  if (queueShiftTimer) {
+    clearTimeout(queueShiftTimer);
+    queueShiftTimer = null;
+  }
   if (!queueItemsEl) return;
   queueItemsEl.innerHTML = '';
   if (state.bossBattle && state.bossBattle.active) {
@@ -786,6 +792,57 @@ function renderQueue() {
     el.textContent = qi.text;
     queueItemsEl.appendChild(el);
   }
+}
+
+// Animate smooth leftward shift when an item leaves the upcoming queue
+function animateQueueShift() {
+  if (!queueItemsEl) return;
+
+  if (queueShiftTimer) {
+    clearTimeout(queueShiftTimer);
+    queueShiftTimer = null;
+  }
+  const prevLeaving = queueItemsEl.querySelector('.qi-leaving');
+  if (prevLeaving) {
+    prevLeaving.remove();
+  }
+
+  // If in boss battle, empty queue, or boss indicator is showing, fallback to normal render
+  if ((state.bossBattle && state.bossBattle.active) || !queueItemsEl.firstElementChild || queueItemsEl.querySelector('.queue-boss-indicator')) {
+    renderQueue();
+    return;
+  }
+
+  const firstEl = queueItemsEl.firstElementChild;
+  const firstWidth = firstEl.offsetWidth || 28;
+  const shiftWidth = firstWidth + 6; // item box width + 6px flex gap
+
+  firstEl.classList.add('qi-leaving');
+  firstEl.style.marginLeft = `-${shiftWidth}px`;
+
+  queueShiftTimer = setTimeout(() => {
+    queueShiftTimer = null;
+    if (firstEl && firstEl.parentNode === queueItemsEl) {
+      firstEl.remove();
+    }
+
+    // After moving, append the next upcoming vocable at the end of the queue (if applicable)
+    const maxVisible = 6;
+    if (state.spawnQueue && state.spawnQueue.length >= maxVisible) {
+      const qi = state.spawnQueue[maxVisible - 1];
+      if (qi && queueItemsEl.children.length < maxVisible) {
+        const newEl = document.createElement('div');
+        let cls = `qi ${qi.type} qi-entering`;
+        if (qi.skill) cls += ' has-skill-q';
+        newEl.className = cls;
+        newEl.textContent = qi.text;
+        queueItemsEl.appendChild(newEl);
+        setTimeout(() => {
+          if (newEl.parentNode) newEl.classList.remove('qi-entering');
+        }, 240);
+      }
+    }
+  }, 240);
 }
 
 // Temporary feedback message in game board

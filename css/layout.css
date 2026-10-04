@@ -740,8 +740,9 @@
   white-space: nowrap;
   border: none;
   color: #FFFFFF;
-  transition: opacity 0.3s;
+  transition: opacity 0.25s ease, margin-left 0.24s cubic-bezier(0.4, 0, 0.2, 1), transform 0.24s ease;
   flex-shrink: 0;
+  will-change: margin-left, opacity, transform;
 }
 .qi.letter {
   width: 28px;
@@ -773,6 +774,34 @@
 .qi:nth-child(4) { opacity: 0.45; }
 .qi:nth-child(5) { opacity: 0.30; }
 .qi:nth-child(n+6) { opacity: 0.18; }
+
+/* Leaving queue item transition */
+.qi.qi-leaving {
+  opacity: 0 !important;
+  transform: scale(0.72) !important;
+  pointer-events: none !important;
+}
+
+/* Sibling queue items brighten smoothly while the first item exits */
+#queue-items .qi.qi-leaving + .qi { opacity: 1; }
+#queue-items .qi.qi-leaving + .qi + .qi { opacity: 0.85; }
+#queue-items .qi.qi-leaving + .qi + .qi + .qi { opacity: 0.65; }
+#queue-items .qi.qi-leaving + .qi + .qi + .qi + .qi { opacity: 0.45; }
+#queue-items .qi.qi-leaving + .qi + .qi + .qi + .qi + .qi { opacity: 0.30; }
+
+@keyframes qiPopIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.35);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.qi.qi-entering {
+  animation: qiPopIn 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
 
 /* ======================================================
    PERFORMANCE STATS GRID (PPM / PRECISÃO / COMBO)
