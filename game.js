@@ -13,6 +13,7 @@ function startGame(mode = 'classic') {
   const pauseOverlay = $('pause-overlay');
   if (pauseOverlay) pauseOverlay.classList.add('hidden');
 
+  if (typeof resetHUDScore === 'function') resetHUDScore();
   state = defaultState();
   state.gameMode  = mode;
   state.startTime = Date.now();
@@ -43,6 +44,7 @@ function startTrainingWorld(worldId = 1) {
   const pauseOverlay = $('pause-overlay');
   if (pauseOverlay) pauseOverlay.classList.add('hidden');
 
+  if (typeof resetHUDScore === 'function') resetHUDScore();
   state = defaultState();
   state.gameMode = 'training';
   state.trainingWorld = parseInt(worldId, 10) || 1;
@@ -84,6 +86,7 @@ function restartGame() {
 
 function goToMainMenu() {
   if (typeof cancelResumeCountdown === 'function') cancelResumeCountdown();
+  if (typeof resetHUDScore === 'function') resetHUDScore();
   if (state.rafId) cancelAnimationFrame(state.rafId);
   if (state.spawnTimer) clearTimeout(state.spawnTimer);
   if (state.timeAttackTimerId) clearInterval(state.timeAttackTimerId);
@@ -194,7 +197,11 @@ function gameOver() {
   const currentScore = state.totalScore || 0;
   const recordResult = typeof updateHighScore === 'function' ? updateHighScore(currentScore) : { best: currentScore, isNew: false };
 
-  $('go-score').textContent  = formatScore(currentScore);
+  if (typeof animateScoreElement === 'function') {
+    animateScoreElement($('go-score'), currentScore, 650);
+  } else {
+    $('go-score').textContent = formatScore(currentScore);
+  }
   const bestScoreEl = $('go-best-score');
   if (bestScoreEl) {
     bestScoreEl.textContent = formatScore(recordResult.best);

@@ -345,11 +345,108 @@ function phaseGoal() {
   return calcPhaseGoal(state.phase);
 }
 
+// Animated Score Logic
+let hudDisplayedScore = 0;
+let hudTargetScore = 0;
+let hudScoreAnimInterval = null;
+
+function resetHUDScore() {
+  if (hudScoreAnimInterval) {
+    clearInterval(hudScoreAnimInterval);
+    hudScoreAnimInterval = null;
+  }
+  hudDisplayedScore = 0;
+  hudTargetScore = 0;
+  if (hudTotal) {
+    hudTotal.textContent = formatScore(0);
+    hudTotal.classList.remove('score-counting');
+  }
+}
+
+function animateHUDScore(targetVal) {
+  if (!hudTotal) return;
+  targetVal = Math.max(0, Math.floor(targetVal || 0));
+
+  // Reset or drop in score: snap immediately without animation
+  if (targetVal < hudDisplayedScore) {
+    if (hudScoreAnimInterval) {
+      clearInterval(hudScoreAnimInterval);
+      hudScoreAnimInterval = null;
+    }
+    hudDisplayedScore = targetVal;
+    hudTargetScore = targetVal;
+    hudTotal.textContent = formatScore(targetVal);
+    hudTotal.classList.remove('score-counting');
+    return;
+  }
+
+  // Already displaying target and no animation running
+  if (targetVal === hudDisplayedScore && !hudScoreAnimInterval) {
+    hudTotal.textContent = formatScore(targetVal);
+    return;
+  }
+
+  hudTargetScore = targetVal;
+  hudTotal.classList.add('score-counting');
+
+  if (hudScoreAnimInterval) {
+    // An ongoing interval will dynamically target hudTargetScore
+    return;
+  }
+
+  const tickInterval = 20; // 50 updates per second
+  hudScoreAnimInterval = setInterval(() => {
+    const diff = hudTargetScore - hudDisplayedScore;
+    if (diff <= 0) {
+      clearInterval(hudScoreAnimInterval);
+      hudScoreAnimInterval = null;
+      hudDisplayedScore = hudTargetScore;
+      hudTotal.textContent = formatScore(hudDisplayedScore);
+      hudTotal.classList.remove('score-counting');
+      return;
+    }
+
+    // Dynamic ease-out: larger jumps start quickly and decelerate smoothly into target
+    const step = Math.max(1, Math.ceil(diff / 8));
+    hudDisplayedScore = Math.min(hudTargetScore, hudDisplayedScore + step);
+    hudTotal.textContent = formatScore(hudDisplayedScore);
+
+    if (hudDisplayedScore >= hudTargetScore) {
+      clearInterval(hudScoreAnimInterval);
+      hudScoreAnimInterval = null;
+      hudDisplayedScore = hudTargetScore;
+      hudTotal.textContent = formatScore(hudDisplayedScore);
+      hudTotal.classList.remove('score-counting');
+    }
+  }, tickInterval);
+}
+
+function animateScoreElement(el, targetVal, durationMs = 650) {
+  if (!el) return;
+  targetVal = Math.max(0, Math.floor(targetVal || 0));
+  if (targetVal <= 0) {
+    el.textContent = formatScore(0);
+    return;
+  }
+  let currentVal = 0;
+  el.textContent = formatScore(0);
+  const totalTicks = Math.min(35, targetVal);
+  const step = Math.max(1, Math.ceil(targetVal / totalTicks));
+  const tickInterval = Math.max(16, Math.min(35, Math.round(durationMs / totalTicks)));
+
+  const timer = setInterval(() => {
+    currentVal = Math.min(targetVal, currentVal + step);
+    el.textContent = formatScore(currentVal);
+    if (currentVal >= targetVal) {
+      clearInterval(timer);
+    }
+  }, tickInterval);
+}
+
 // Update HUD & Side Panels
 function updateHUD() {
   if (typeof state === 'undefined' || !state) return;
-  const formattedScore = formatScore(state.totalScore);
-  if (hudTotal) hudTotal.textContent = formattedScore;
+  animateHUDScore(state.totalScore);
   if (hudCoins) hudCoins.textContent = String(state.coins || 0);
   if (typeof updateShopBalanceDisplay === 'function') updateShopBalanceDisplay();
 
