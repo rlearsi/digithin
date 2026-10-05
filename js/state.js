@@ -83,6 +83,7 @@ function defaultState() {
     progress:          0,
     hitsPhase:         0,
     totalHits:         0,
+    currentAccuracy:   0,       // Real-time accuracy % for the current phase/match
     speedMultiplier:   diffCfg.initialSpeed,     // Resets to initial speed each phase
     typedBuffer:       '',
     activeItems:       [],

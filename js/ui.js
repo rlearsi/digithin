@@ -328,7 +328,6 @@ function clearArea() {
 
 // Global PPM (Words Per Minute / Palavras por Minuto) Calculator
 function calcPPM() {
-  if (state && state.currentWpm) return state.currentWpm;
   if (!state || !state.startTime) return 0;
   const elapsedMin = Math.max(0.08, (Date.now() - state.startTime) / 60000);
   return Math.round(((state.charsTyped || 0) / 5) / elapsedMin) || 0;
@@ -486,11 +485,11 @@ function updateHUD() {
     }
   }
 
-  // Real-time Accuracy %
+  // Real-time Accuracy % (acompanha a fase/partida atual: inicia em 0% e recalcula com acertos e erros da fase)
   const accuracyDisplay = $('accuracy-display');
   if (accuracyDisplay) {
-    const totalAttempts = (state.totalHits || 0) + (state.totalErrors || 0);
-    const acc = totalAttempts > 0 ? Math.round(((state.totalHits || 0) / totalAttempts) * 100) : 100;
+    const totalAttempts = (state.hitsPhase || 0) + (state.errorsPhase || 0);
+    const acc = totalAttempts > 0 ? Math.round(((state.hitsPhase || 0) / totalAttempts) * 100) : 0;
     state.currentAccuracy = acc;
     accuracyDisplay.textContent = `${acc}%`;
   }

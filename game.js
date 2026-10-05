@@ -122,6 +122,9 @@ function goToMainMenu() {
     hiddenInput.blur();
   }
 
+  state = defaultState();
+  if (typeof updateHUD === 'function') updateHUD();
+
   if (typeof playSound === 'function') playSound('click');
 }
 
