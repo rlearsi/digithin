@@ -218,6 +218,32 @@ document.addEventListener('keydown', e => {
     }
   }
 
+  // If Game Over modal is open, Enter restarts the game (triggers "Jogar Novamente")
+  const modalGameoverEl = typeof modalGameover !== 'undefined' ? modalGameover : $('modal-gameover');
+  const isGameOverOpen = modalGameoverEl && !modalGameoverEl.classList.contains('hidden');
+  if (isGameOverOpen) {
+    // Check if other overlay modals are open on top of Game Over (Library, Achievements, Settings)
+    const isSubModalOpen =
+      (typeof isSettingsOpen === 'function' && isSettingsOpen()) ||
+      Boolean($('modal-settings') && !$('modal-settings').classList.contains('hidden')) ||
+      Boolean($('modal-biblioteca') && !$('modal-biblioteca').classList.contains('hidden')) ||
+      Boolean($('modal-conquistas') && !$('modal-conquistas').classList.contains('hidden'));
+
+    if (!isSubModalOpen && (e.key === 'Enter' || e.code === 'Enter' || e.code === 'NumpadEnter')) {
+      const restartBtn = (typeof btnGoRestart !== 'undefined' && btnGoRestart) || $('btn-go-restart') || modalGameoverEl.querySelector('.btn-go-primary');
+      if (document.activeElement && document.activeElement.tagName === 'BUTTON' && document.activeElement !== restartBtn) {
+        return;
+      }
+      e.preventDefault();
+      if (restartBtn) {
+        restartBtn.click();
+      } else if (typeof restartGame === 'function') {
+        restartGame();
+      }
+      return;
+    }
+  }
+
   if (e.key === 'Escape') {
     e.preventDefault();
     togglePause();

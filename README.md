@@ -357,6 +357,7 @@ Ao pausar a partida (<kbd>ESC</kbd>), a tela aplica a regra padrão de design tr
 | <kbd>A</kbd> – <kbd>Z</kbd> | Digitação direta dos rúnicos em queda (sem necessidade de campo de input visível) |
 | <kbd>Backspace</kbd> | Limpa o buffer de digitação atual e cancela a mira |
 | <kbd>ESC</kbd> | Pausa ou retoma o jogo imediatamente |
+| <kbd>Enter</kbd> | Inicia modo clássico na tela inicial, avança de fase, retoma partida no pause e joga novamente no Game Over |
 | <kbd>1</kbd>, <kbd>2</kbd>, <kbd>3</kbd>, <kbd>4</kbd> | Ativa a habilidade arcana do respectivo Slot 1 a 4 |
 | **Clique do Mouse** | Clica diretamente no card de qualquer habilidade na lista lateral para ativá-la |
 

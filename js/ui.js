@@ -28,6 +28,7 @@ const queueItemsEl   = $('queue-items');
 const modalPhase     = $('modal-phase');
 const modalShop      = $('modal-shop');
 const modalGameover  = $('modal-gameover');
+const btnGoRestart   = $('btn-go-restart');
 const modalLib         = $('modal-biblioteca');
 const modalConquistas  = $('modal-conquistas');
 const modalSettings    = $('modal-settings');
