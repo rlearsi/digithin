@@ -148,128 +148,124 @@ function updateWordPoolLanguage(lang) {
 // - cosmos:    Stellar Nebula & Cosmic Void (Astrophysics, Stars & Gravity)
 // - volcano:   Volcanic Caldera & Igneous Core (Magma, Lava & Geology)
 
+const BossPrototype = {
+  get name() {
+    const base = (typeof t === 'function' && this.nameKey) ? t(this.nameKey) : '';
+    if (this.level && this.level > 1 && typeof t === 'function') {
+      const tag = t('boss_level_tag', { level: this.level });
+      return `${base}${tag}`;
+    }
+    return base;
+  },
+  get namePt() { return this.name; },
+  get title() { return (typeof t === 'function' && this.titleKey) ? t(this.titleKey) : ''; },
+  get titlePt() { return this.title; },
+  get scenario() { return (typeof t === 'function' && this.scenarioKey) ? t(this.scenarioKey) : ''; },
+  get scenarioPt() { return this.scenario; },
+  get scenarioDesc() { return (typeof t === 'function' && this.scenarioDescKey) ? t(this.scenarioDescKey) : ''; },
+  get scenarioDescPt() { return this.scenarioDesc; },
+  get badgeText() { return (typeof t === 'function' && this.badgeKey) ? t(this.badgeKey) : ''; },
+  get badgeTextPt() { return this.badgeText; },
+  get lore() { return (typeof t === 'function' && this.loreKey) ? t(this.loreKey) : ''; },
+  get lorePt() { return this.lore; }
+};
+
 const BOSS_DEFS = [
   {
     id: 'cyber_titan',
     type: 'robot',
-    name: 'Cyber-Titan Lexis',
-    namePt: 'Cyber-Titã Lexis',
-    title: 'Autonomous Cyber Sentinel',
-    titlePt: 'Sentinela Cibernético Autônomo',
-    scenario: 'Cybernetic Metropolis',
-    scenarioPt: 'Metrópole Cibernética',
-    scenarioDesc: 'Mega-city of glowing servers, neural processors and automated drone grids.',
-    scenarioDescPt: 'Mega-cidade de servidores luminosos, processadores neurais e malhas autônomas.',
     icon: '🤖',
     color: '#06B6D4',
-    badgeText: 'ROBOT • TECH',
-    badgeTextPt: 'ROBÔ • TECH',
     lives: 3,
     maxLives: 3,
-    lore: 'Master of algorithms, computational logic, and digital networks.',
-    lorePt: 'Mestre dos algoritmos, lógica computacional e redes de alta frequência.'
+    nameKey: 'boss_cyber_titan_name',
+    titleKey: 'boss_cyber_titan_title',
+    scenarioKey: 'boss_cyber_titan_scenario',
+    scenarioDescKey: 'boss_cyber_titan_scenario_desc',
+    badgeKey: 'boss_cyber_titan_badge',
+    loreKey: 'boss_cyber_titan_lore'
   },
   {
     id: 'feral_apex',
     type: 'beast',
-    name: 'Rex-Primus, the Feral Apex',
-    namePt: 'Rex-Primus, o Soberano Feral',
-    title: 'Ancient Apex Predator',
-    titlePt: 'Predador Ancestral da Savana',
-    scenario: 'Primordial Savanna',
-    scenarioPt: 'Savana Primordial',
-    scenarioDesc: 'Vast wild plains where primal beasts rule through pure instinct and strength.',
-    scenarioDescPt: 'Planícies selvagens onde feras ancestrais reinam pela força e instinto.',
     icon: '🦁',
     color: '#F59E0B',
-    badgeText: 'FAUNA • BEAST',
-    badgeTextPt: 'FAUNA • FERA',
     lives: 3,
     maxLives: 3,
-    lore: 'Emperor of wild herds, razor talons, and coordinated pack hunters.',
-    lorePt: 'Soberano das manadas selvagens, garras afiadas e alcateias implacáveis.'
+    nameKey: 'boss_feral_apex_name',
+    titleKey: 'boss_feral_apex_title',
+    scenarioKey: 'boss_feral_apex_scenario',
+    scenarioDescKey: 'boss_feral_apex_scenario_desc',
+    badgeKey: 'boss_feral_apex_badge',
+    loreKey: 'boss_feral_apex_lore'
   },
   {
     id: 'arcane_chimera',
     type: 'mythology',
-    name: 'Arcane Chimera of Delphi',
-    namePt: 'Quimera Arcana de Delfos',
-    title: 'Guardian of the Sacred Pantheon',
-    titlePt: 'Guardião do Panteão Sagrado',
-    scenario: 'Mystic Olympus Temple',
-    scenarioPt: 'Templo Místico de Delfos',
-    scenarioDesc: 'Ancient sanctuary of high columns, sacred oracles, and mythical creatures.',
-    scenarioDescPt: 'Santuário de colunas monumentais, oráculos sagrados e criaturas lendárias.',
     icon: '🐲',
     color: '#A855F7',
-    badgeText: 'MYTHOLOGY • LEGEND',
-    badgeTextPt: 'MITOLOGIA • LENDA',
     lives: 3,
     maxLives: 3,
-    lore: 'Forged from mythological fire, riddling sphinxes, and hydra heads.',
-    lorePt: 'Forjado no fogo mitológico, enigmas de esfinge e lendas dos deuses antigos.'
+    nameKey: 'boss_arcane_chimera_name',
+    titleKey: 'boss_arcane_chimera_title',
+    scenarioKey: 'boss_arcane_chimera_scenario',
+    scenarioDescKey: 'boss_arcane_chimera_scenario_desc',
+    badgeKey: 'boss_arcane_chimera_badge',
+    loreKey: 'boss_arcane_chimera_lore'
   },
   {
     id: 'abyssal_leviathan',
     type: 'ocean',
-    name: 'Deep Abyss Leviathan',
-    namePt: 'Leviatã do Abismo Profundo',
-    title: 'Monarch of the Pelagic Trenches',
-    titlePt: 'Monarca das Trincheiras Abissais',
-    scenario: 'Pelagic Ocean Trench',
-    scenarioPt: 'Fossa Oceânica Abissal',
-    scenarioDesc: 'Crushing deep sea where bioluminescent organisms glide in absolute darkness.',
-    scenarioDescPt: 'Profundezas oceânicas onde seres bioluminescentes reinam na escuridão total.',
     icon: '🐙',
     color: '#0EA5E9',
-    badgeText: 'OCEAN • ABYSS',
-    badgeTextPt: 'OCEANO • ABISMO',
     lives: 3,
     maxLives: 3,
-    lore: 'Commander of tidal waves, colossal sharks, and deep-sea trenches.',
-    lorePt: 'Comandante das marés, tsunamis, recifes de corais e fossas submarinas.'
+    nameKey: 'boss_abyssal_leviathan_name',
+    titleKey: 'boss_abyssal_leviathan_title',
+    scenarioKey: 'boss_abyssal_leviathan_scenario',
+    scenarioDescKey: 'boss_abyssal_leviathan_scenario_desc',
+    badgeKey: 'boss_abyssal_leviathan_badge',
+    loreKey: 'boss_abyssal_leviathan_lore'
   },
   {
     id: 'cosmic_chronos',
     type: 'cosmos',
-    name: 'Astro-Titan Chronos',
-    namePt: 'Astro-Titã Cronos',
-    title: 'Weaver of Galaxies & Nebulae',
-    titlePt: 'Tecedor das Galáxias e Nebulosas',
-    scenario: 'Stellar Nebula & Cosmic Void',
-    scenarioPt: 'Nebulosa Estelar & Vácuo Cósmico',
-    scenarioDesc: 'Infinite cosmic void swirling with ionized star clouds and gravitational orbits.',
-    scenarioDescPt: 'Vácuo estelar infinito com nuvens de plasma ionizado e órbitas gravitacionais.',
     icon: '🌌',
     color: '#6366F1',
-    badgeText: 'COSMOS • SPACE',
-    badgeTextPt: 'COSMOS • ESPAÇO',
     lives: 3,
     maxLives: 3,
-    lore: 'Ruler of thermonuclear star cores, pulsar beacons, and cosmic gravitational pulls.',
-    lorePt: 'Regente da fusão estelar, pulsares rítmicos e gravidade orbital.'
+    nameKey: 'boss_cosmic_chronos_name',
+    titleKey: 'boss_cosmic_chronos_title',
+    scenarioKey: 'boss_cosmic_chronos_scenario',
+    scenarioDescKey: 'boss_cosmic_chronos_scenario_desc',
+    badgeKey: 'boss_cosmic_chronos_badge',
+    loreKey: 'boss_cosmic_chronos_lore'
   },
   {
     id: 'magma_vulcanus',
     type: 'volcano',
-    name: 'Vulcanus, the Magma Colossus',
-    namePt: 'Vulcanus, o Colosso de Magma',
-    title: 'Lord of the Tectonic Caldera',
-    titlePt: 'Senhor da Caldeira Tectônica',
-    scenario: 'Volcanic Caldera & Igneous Core',
-    scenarioPt: 'Caldeira Vulcânica & Núcleo Ígneo',
-    scenarioDesc: 'Incandescent sea of subterranean lava, basalt pillars, and smoking craters.',
-    scenarioDescPt: 'Mar subterrâneo de lava incandescente, colunas de basalto e crateras fumegantes.',
     icon: '🌋',
     color: '#EF4444',
-    badgeText: 'VOLCANO • MAGMA',
-    badgeTextPt: 'VULCÃO • MAGMA',
     lives: 3,
     maxLives: 3,
-    lore: 'Incarnation of tectonic eruption, pyroclastic surges, and liquid rock.',
-    lorePt: 'Encarnação das erupções tectônicas, nuvens piroclásticas e rochas fundidas.'
+    nameKey: 'boss_magma_vulcanus_name',
+    titleKey: 'boss_magma_vulcanus_title',
+    scenarioKey: 'boss_magma_vulcanus_scenario',
+    scenarioDescKey: 'boss_magma_vulcanus_scenario_desc',
+    badgeKey: 'boss_magma_vulcanus_badge',
+    loreKey: 'boss_magma_vulcanus_lore'
   }
 ];
+
+BOSS_DEFS.forEach(b => Object.setPrototypeOf(b, BossPrototype));
+
+function createBossInstance(base, level = 1) {
+  const boss = Object.create(base);
+  boss.level = level;
+  boss.lives = 3;
+  boss.maxLives = 3;
+  return boss;
+}
 
 function getRandomBoss(level = 1, excludeTypes = []) {
   let pool = BOSS_DEFS;
@@ -278,24 +274,12 @@ function getRandomBoss(level = 1, excludeTypes = []) {
     if (filtered.length > 0) pool = filtered;
   }
   const base = pool[Math.floor(Math.random() * pool.length)];
-  return {
-    ...base,
-    name: level > 1 ? `${base.name} (Lv. ${level})` : base.name,
-    namePt: level > 1 ? `${base.namePt || base.name} (Nv. ${level})` : (base.namePt || base.name),
-    lives: 3,
-    maxLives: 3
-  };
+  return createBossInstance(base, level);
 }
 
 function getBossByType(bossType, level = 1) {
   const base = BOSS_DEFS.find(b => b.type === bossType) || BOSS_DEFS[0];
-  return {
-    ...base,
-    name: level > 1 ? `${base.name} (Lv. ${level})` : base.name,
-    namePt: level > 1 ? `${base.namePt || base.name} (Nv. ${level})` : (base.namePt || base.name),
-    lives: 3,
-    maxLives: 3
-  };
+  return createBossInstance(base, level);
 }
 
 function getBossForPhase(phase, learnedWords = null, excludeTypes = []) {
@@ -320,13 +304,7 @@ function getBossForPhase(phase, learnedWords = null, excludeTypes = []) {
         if (notDefeated.length > 0) eligible = notDefeated;
       }
       const base = eligible[Math.floor(Math.random() * eligible.length)];
-      return {
-        ...base,
-        name: level > 1 ? `${base.name} (Lv. ${level})` : base.name,
-        namePt: level > 1 ? `${base.namePt || base.name} (Nv. ${level})` : (base.namePt || base.name),
-        lives: 3,
-        maxLives: 3
-      };
+      return createBossInstance(base, level);
     }
   }
 
@@ -357,8 +335,10 @@ const SKILLS_CONFIG = {
   freezer: {
     id: 'freezer',
     icon: '❄️',
-    name: 'Freeze',        // fallback only — real label via t('skill_name_freezer')
-    desc: 'Freeze all runics for 10s',
+    nameKey: 'skill_name_freezer',
+    descKey: 'skill_desc_freezer',
+    get name() { return (typeof t === 'function') ? t(this.nameKey) : ''; },
+    get desc() { return (typeof t === 'function') ? t(this.descKey) : ''; },
     duration: 10000,
     basePrice: 300,
     color: '#06B6D4',
@@ -373,8 +353,10 @@ const SKILLS_CONFIG = {
   bomb: {
     id: 'bomb',
     icon: '💣',
-    name: 'Bomb',
-    desc: 'Multi-line area blast wave for 10s',
+    nameKey: 'skill_name_bomb',
+    descKey: 'skill_desc_bomb',
+    get name() { return (typeof t === 'function') ? t(this.nameKey) : ''; },
+    get desc() { return (typeof t === 'function') ? t(this.descKey) : ''; },
     duration: 10000,
     basePrice: 450,
     color: '#FF4757',
@@ -387,8 +369,10 @@ const SKILLS_CONFIG = {
   shield: {
     id: 'shield',
     icon: '🛡️',
-    name: 'Runic Shield',
-    desc: 'Protect against dropped runics and typos for 10s',
+    nameKey: 'skill_name_shield',
+    descKey: 'skill_desc_shield',
+    get name() { return (typeof t === 'function') ? t(this.nameKey) : ''; },
+    get desc() { return (typeof t === 'function') ? t(this.descKey) : ''; },
     duration: 10000,
     basePrice: 390,
     color: '#10B981',
@@ -399,8 +383,10 @@ const SKILLS_CONFIG = {
   vortex: {
     id: 'vortex',
     icon: '🌀',
-    name: 'Vortex',
-    desc: 'Devour the lowest runic every 2s for 10s',
+    nameKey: 'skill_name_vortex',
+    descKey: 'skill_desc_vortex',
+    get name() { return (typeof t === 'function') ? t(this.nameKey) : ''; },
+    get desc() { return (typeof t === 'function') ? t(this.descKey) : ''; },
     duration: 10000,
     basePrice: 420,
     color: '#8B5CF6',
@@ -413,8 +399,10 @@ const SKILLS_CONFIG = {
   slowdown: {
     id: 'slowdown',
     icon: '⏱️',
-    name: 'Slow-Mo',
-    desc: 'Slow runic fall speed by 50% for 15s',
+    nameKey: 'skill_name_slowdown',
+    descKey: 'skill_desc_slowdown',
+    get name() { return (typeof t === 'function') ? t(this.nameKey) : ''; },
+    get desc() { return (typeof t === 'function') ? t(this.descKey) : ''; },
     duration: 15000,
     basePrice: 240,
     color: '#3B82F6',
@@ -431,8 +419,10 @@ const SKILLS_CONFIG = {
   haste: {
     id: 'haste',
     icon: '⚡',
-    name: 'Double Points',
-    desc: '+0.5 speed and 2× points for 15s',
+    nameKey: 'skill_name_haste',
+    descKey: 'skill_desc_haste',
+    get name() { return (typeof t === 'function') ? t(this.nameKey) : ''; },
+    get desc() { return (typeof t === 'function') ? t(this.descKey) : ''; },
     duration: 15000,
     basePrice: 240,
     speedBonus: 0.5,
@@ -444,8 +434,10 @@ const SKILLS_CONFIG = {
   speedlock: {
     id: 'speedlock',
     icon: '🔒',
-    name: 'Speed Lock',
-    desc: 'Lock speed at 1.0× for 60s',
+    nameKey: 'skill_name_speedlock',
+    descKey: 'skill_desc_speedlock',
+    get name() { return (typeof t === 'function') ? t(this.nameKey) : ''; },
+    get desc() { return (typeof t === 'function') ? t(this.descKey) : ''; },
     duration: 60000,
     basePrice: 540,
     color: '#38BDF8',
@@ -458,8 +450,10 @@ const SKILLS_CONFIG = {
   dilation: {
     id: 'dilation',
     icon: '🌌',
-    name: 'Spacing',
-    desc: 'Increase vertical distance between runics for 45s',
+    nameKey: 'skill_name_dilation',
+    descKey: 'skill_desc_dilation',
+    get name() { return (typeof t === 'function') ? t(this.nameKey) : ''; },
+    get desc() { return (typeof t === 'function') ? t(this.descKey) : ''; },
     duration: 45000,
     basePrice: 480,
     color: '#A855F7',
@@ -475,8 +469,10 @@ const SHOP_ITEMS_CONFIG = {
   continue: {
     id: 'continue',
     icon: '🪙',
-    name: 'Continue Token',
-    desc: 'Instant revival on Game Over in same phase',
+    nameKey: 'skill_name_continue',
+    descKey: 'skill_desc_continue',
+    get name() { return (typeof t === 'function') ? t(this.nameKey) : ''; },
+    get desc() { return (typeof t === 'function') ? t(this.descKey) : ''; },
     basePrice: 900,
     color: '#EAB308',
     isItem: true,
@@ -485,8 +481,10 @@ const SHOP_ITEMS_CONFIG = {
   wordpack: {
     id: 'wordpack',
     icon: '📦',
-    name: 'Mystery Pack',
-    desc: 'Instantly unlocks 3 random words for your Library',
+    nameKey: 'skill_name_wordpack',
+    descKey: 'skill_desc_wordpack',
+    get name() { return (typeof t === 'function') ? t(this.nameKey) : ''; },
+    get desc() { return (typeof t === 'function') ? t(this.descKey) : ''; },
     basePrice: 330,
     color: '#EC4899',
     isItem: true,
@@ -495,8 +493,10 @@ const SHOP_ITEMS_CONFIG = {
   extralife: {
     id: 'extralife',
     icon: '❤️',
-    name: '+1 Life',
-    desc: '+1 permanent life for this run (up to 6)',
+    nameKey: 'skill_name_extralife',
+    descKey: 'skill_desc_extralife',
+    get name() { return (typeof t === 'function') ? t(this.nameKey) : ''; },
+    get desc() { return (typeof t === 'function') ? t(this.descKey) : ''; },
     basePrice: 600,
     color: '#EF4444',
     isItem: true,
@@ -511,12 +511,66 @@ const SKILLS_ALL = [...SKILLS_LIST, ...SHOP_ITEMS_LIST];
 
 // All 6 Achievements (including the new Typography Master!)
 const ACHIEVEMENTS = [
-  { id: 'dedo_veloz',   icon: '⚡', name: 'Speed Demon',        desc: 'Reach 60 WPM.',                              target: 60,  unit: 'WPM' },
-  { id: 'cirurgico',    icon: '🎯', name: 'Surgical',           desc: 'Complete any phase with 100% accuracy.',      target: 100, unit: '%' },
-  { id: 'colecionador', icon: '📖', name: 'Collector',          desc: 'Unlock all words in the Library.',           target: 30,  unit: 'words' },
-  { id: 'mestre_combo', icon: '🔥', name: 'Combo Master',       desc: 'Reach 30 consecutive correct keystrokes.',   target: 30,  unit: 'hits' },
-  { id: 'modo_furia',   icon: '💥', name: 'Fury Mode',          desc: 'Activate Fury Mode with 15 hits in a row.',  target: 15,  unit: 'combo' },
-  { id: 'mestre_tipo',  icon: '✍️', name: 'Typography Master',  desc: 'Complete 100 full words.',                   target: 100, unit: 'words' },
+  {
+    id: 'dedo_veloz',
+    icon: '⚡',
+    nameKey: 'ach_dedo_veloz_name',
+    descKey: 'ach_dedo_veloz_desc',
+    target: 60,
+    unitKey: 'hud_wpm',
+    get name() { return (typeof t === 'function') ? t(this.nameKey) : ''; },
+    get desc() { return (typeof t === 'function') ? t(this.descKey) : ''; }
+  },
+  {
+    id: 'cirurgico',
+    icon: '🎯',
+    nameKey: 'ach_cirurgico_name',
+    descKey: 'ach_cirurgico_desc',
+    target: 100,
+    unit: '%',
+    get name() { return (typeof t === 'function') ? t(this.nameKey) : ''; },
+    get desc() { return (typeof t === 'function') ? t(this.descKey) : ''; }
+  },
+  {
+    id: 'colecionador',
+    icon: '📖',
+    nameKey: 'ach_colecionador_name',
+    descKey: 'ach_colecionador_desc',
+    target: 30,
+    unitKey: 'ach_unit_words',
+    get name() { return (typeof t === 'function') ? t(this.nameKey) : ''; },
+    get desc() { return (typeof t === 'function') ? t(this.descKey) : ''; }
+  },
+  {
+    id: 'mestre_combo',
+    icon: '🔥',
+    nameKey: 'ach_mestre_combo_name',
+    descKey: 'ach_mestre_combo_desc',
+    target: 30,
+    unitKey: 'ach_unit_streak',
+    get name() { return (typeof t === 'function') ? t(this.nameKey) : ''; },
+    get desc() { return (typeof t === 'function') ? t(this.descKey) : ''; }
+  },
+  {
+    id: 'modo_furia',
+    icon: '💥',
+    nameKey: 'ach_modo_furia_name',
+    descKey: 'ach_modo_furia_desc',
+    target: 15,
+    unitKey: 'ach_unit_combo',
+    get name() { return (typeof t === 'function') ? t(this.nameKey) : ''; },
+    get desc() { return (typeof t === 'function') ? t(this.descKey) : ''; }
+  },
+  {
+    id: 'mestre_tipo',
+    icon: '✍️',
+    nameKey: 'ach_mestre_tipo_name',
+    descKey: 'ach_mestre_tipo_desc',
+    target: 100,
+    unitKey: 'ach_unit_words',
+    get name() { return (typeof t === 'function') ? t(this.nameKey) : ''; },
+    get desc() { return (typeof t === 'function') ? t(this.descKey) : ''; }
+  },
 ];
 
 function wordPts(text) {

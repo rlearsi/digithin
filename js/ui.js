@@ -672,8 +672,12 @@ function createSkillPill(slot, idx, def) {
   const pill = document.createElement('div');
   pill.className = 'skill-pill';
   pill.dataset.skillId = slot.id;
-  const sName = (typeof t === 'function' && t('skill_' + slot.id + '_name') !== ('skill_' + slot.id + '_name')) ? t('skill_' + slot.id + '_name') : def.name;
-  const sDesc = (typeof t === 'function' && t('skill_' + slot.id + '_desc') !== ('skill_' + slot.id + '_desc')) ? t('skill_' + slot.id + '_desc') : def.desc;
+  const sName = (typeof t === 'function' && t('skill_name_' + slot.id) !== ('skill_name_' + slot.id))
+    ? t('skill_name_' + slot.id)
+    : (def.name || '');
+  const sDesc = (typeof t === 'function' && t('skill_desc_' + slot.id) !== ('skill_desc_' + slot.id))
+    ? t('skill_desc_' + slot.id)
+    : (def.desc || '');
   pill.title = sDesc;
 
   pill.innerHTML = `
@@ -1120,8 +1124,18 @@ function showAchievementToast(ach) {
   const name = $('at-name');
   const desc = $('at-desc');
   if (icon) icon.textContent = ach.icon || '🏆';
-  if (name) name.textContent = ach.name;
-  if (desc) desc.textContent = ach.desc;
+  if (name) {
+    const achName = (typeof t === 'function' && t('ach_' + ach.id + '_name') !== ('ach_' + ach.id + '_name'))
+      ? t('ach_' + ach.id + '_name')
+      : (ach.name || '');
+    name.textContent = achName;
+  }
+  if (desc) {
+    const achDesc = (typeof t === 'function' && t('ach_' + ach.id + '_desc') !== ('ach_' + ach.id + '_desc'))
+      ? t('ach_' + ach.id + '_desc')
+      : (ach.desc || '');
+    desc.textContent = achDesc;
+  }
 
   toast.classList.remove('hidden');
   playSound('achievement');
@@ -1775,10 +1789,18 @@ function renderBossHud(boss, remainingLives = 3, maxLives = 3) {
 
   const lang = (typeof getLanguage === 'function') ? getLanguage() : 'en';
   const isPt = lang === 'pt';
-  const name = isPt ? (boss.namePt || boss.name) : (boss.name || boss.namePt);
-  const scenario = isPt ? (boss.scenarioPt || boss.scenario) : (boss.scenario || boss.scenarioPt);
-  const badgeLabel = isPt ? (boss.badgeTextPt || boss.badgeText) : (boss.badgeText || boss.badgeTextPt);
-  const desc = isPt ? (boss.scenarioDescPt || boss.lorePt || boss.titlePt) : (boss.scenarioDesc || boss.lore || boss.title);
+  const name = (typeof t === 'function' && boss.nameKey && t(boss.nameKey) !== boss.nameKey)
+    ? boss.name
+    : (isPt ? (boss.namePt || boss.name) : (boss.name || boss.namePt));
+  const scenario = (typeof t === 'function' && boss.scenarioKey && t(boss.scenarioKey) !== boss.scenarioKey)
+    ? boss.scenario
+    : (isPt ? (boss.scenarioPt || boss.scenario) : (boss.scenario || boss.scenarioPt));
+  const badgeLabel = (typeof t === 'function' && boss.badgeKey && t(boss.badgeKey) !== boss.badgeKey)
+    ? boss.badgeText
+    : (isPt ? (boss.badgeTextPt || boss.badgeText) : (boss.badgeText || boss.badgeTextPt));
+  const desc = (typeof t === 'function' && boss.scenarioDescKey && t(boss.scenarioDescKey) !== boss.scenarioDescKey)
+    ? (boss.scenarioDesc || boss.lore || boss.title)
+    : (isPt ? (boss.scenarioDescPt || boss.lorePt || boss.titlePt) : (boss.scenarioDesc || boss.lore || boss.title));
 
   if (bossName) bossName.textContent = name || (typeof t === 'function' ? t('boss_default_name') : 'Boss');
   if (bossDesc) bossDesc.textContent = `${scenario} — ${desc}`;

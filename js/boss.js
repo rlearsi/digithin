@@ -225,12 +225,16 @@ function beginBossPhase() {
 
   const currentLang = typeof getLanguage === 'function' ? getLanguage() : 'en';
   const bossIcon = state.bossBattle.boss.icon || '👾';
-  const bossName = (currentLang === 'pt' && state.bossBattle.boss?.namePt)
-    ? state.bossBattle.boss.namePt
-    : (state.bossBattle.boss?.name || (typeof t === 'function' ? t('boss_default_name') : 'Boss'));
-  const scenarioName = (currentLang === 'pt' && state.bossBattle.boss?.scenarioPt)
-    ? state.bossBattle.boss.scenarioPt
-    : (state.bossBattle.boss?.scenario || 'Scenario');
+  const bossName = (typeof t === 'function' && state.bossBattle.boss?.nameKey && t(state.bossBattle.boss.nameKey) !== state.bossBattle.boss.nameKey)
+    ? state.bossBattle.boss.name
+    : ((currentLang === 'pt' && state.bossBattle.boss?.namePt)
+      ? state.bossBattle.boss.namePt
+      : (state.bossBattle.boss?.name || (typeof t === 'function' ? t('boss_default_name') : 'Boss')));
+  const scenarioName = (typeof t === 'function' && state.bossBattle.boss?.scenarioKey && t(state.bossBattle.boss.scenarioKey) !== state.bossBattle.boss.scenarioKey)
+    ? state.bossBattle.boss.scenario
+    : ((currentLang === 'pt' && state.bossBattle.boss?.scenarioPt)
+      ? state.bossBattle.boss.scenarioPt
+      : (state.bossBattle.boss?.scenario || 'Scenario'));
   showFeedback(`${bossIcon} ${bossName.toUpperCase()} • ${scenarioName.toUpperCase()}!`, 'special');
 
   state.lastTs = null;
@@ -306,9 +310,11 @@ function spawnBossMeaningBox() {
   el.className = cls;
 
   const currentLang = (typeof getLanguage === 'function') ? getLanguage() : 'en';
-  const scenarioName = (currentLang === 'pt' && state.bossBattle.boss.scenarioPt)
-    ? state.bossBattle.boss.scenarioPt
-    : (state.bossBattle.boss.scenario || 'Scenario');
+  const scenarioName = (typeof t === 'function' && state.bossBattle.boss?.scenarioKey && t(state.bossBattle.boss.scenarioKey) !== state.bossBattle.boss.scenarioKey)
+    ? state.bossBattle.boss.scenario
+    : ((currentLang === 'pt' && state.bossBattle.boss?.scenarioPt)
+      ? state.bossBattle.boss.scenarioPt
+      : (state.bossBattle.boss?.scenario || 'Scenario'));
 
   const solvedNum = Math.min(3, (state.bossBattle.solvedCount || 0) + 1);
   const totalEnigmas = state.bossBattle.boss?.maxLives || 3;
@@ -522,9 +528,11 @@ function defeatBoss() {
   launchConfetti();
 
   const currentLang = typeof getLanguage === 'function' ? getLanguage() : 'en';
-  const bossName = (currentLang === 'pt' && state.bossBattle.boss?.namePt)
-    ? state.bossBattle.boss.namePt
-    : (state.bossBattle.boss?.name || (typeof t === 'function' ? t('boss_default_name') : 'Boss'));
+  const bossName = (typeof t === 'function' && state.bossBattle.boss?.nameKey && t(state.bossBattle.boss.nameKey) !== state.bossBattle.boss.nameKey)
+    ? state.bossBattle.boss.name
+    : ((currentLang === 'pt' && state.bossBattle.boss?.namePt)
+      ? state.bossBattle.boss.namePt
+      : (state.bossBattle.boss?.name || (typeof t === 'function' ? t('boss_default_name') : 'Boss')));
 
   const victoryMsg = typeof t === 'function'
     ? t('fb_boss_defeated', { boss: bossName.toUpperCase() })
