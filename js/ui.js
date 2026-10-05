@@ -420,24 +420,92 @@ function animateHUDScore(targetVal) {
   }, tickInterval);
 }
 
-function animateScoreElement(el, targetVal, durationMs = 650) {
+function cancelScoreElementAnimation(el) {
+  if (!el) return;
+  if (el._scoreAnimTimer) {
+    clearInterval(el._scoreAnimTimer);
+    el._scoreAnimTimer = null;
+  }
+  if (el._scoreAnimTimeout) {
+    clearTimeout(el._scoreAnimTimeout);
+    el._scoreAnimTimeout = null;
+  }
+  el.classList.remove('score-counting');
+}
+
+function animateScoreElement(el, targetVal, durationMs = 750, onComplete = null) {
+  if (!el) {
+    if (typeof onComplete === 'function') onComplete();
+    return;
+  }
+  targetVal = Math.max(0, Math.floor(targetVal || 0));
+  cancelScoreElementAnimation(el);
+  el.textContent = formatScore(0);
+
+  if (targetVal <= 0) {
+    if (typeof onComplete === 'function') onComplete();
+    return;
+  }
+
+  el.classList.add('score-counting');
+
+  // Small delay so the player sees the modal appear before the counter rolls
+  el._scoreAnimTimeout = setTimeout(() => {
+    let currentVal = 0;
+    const isSmallScore = targetVal < 8;
+    const totalTicks = isSmallScore ? targetVal : Math.min(36, Math.max(16, Math.floor(durationMs / 25)));
+    const tickInterval = isSmallScore ? Math.max(100, Math.floor(durationMs / totalTicks)) : Math.max(20, Math.floor(durationMs / totalTicks));
+    let lastSoundTime = 0;
+
+    el._scoreAnimTimer = setInterval(() => {
+      if (isSmallScore) {
+        currentVal++;
+      } else {
+        // Dynamic ease-out deceleration curve: starts fast, then smoothly glides to target
+        const remaining = targetVal - currentVal;
+        const step = Math.max(1, Math.ceil(remaining / 5));
+        currentVal = Math.min(targetVal, currentVal + step);
+      }
+
+      el.textContent = formatScore(currentVal);
+
+      // Play arcade tick sound throttled to ~55ms
+      const now = Date.now();
+      if (now - lastSoundTime >= 55) {
+        if (typeof playSound === 'function') playSound('coin');
+        lastSoundTime = now;
+      }
+
+      if (currentVal >= targetVal) {
+        cancelScoreElementAnimation(el);
+        el.textContent = formatScore(targetVal);
+
+        if (typeof onComplete === 'function') {
+          onComplete();
+        }
+      }
+    }, tickInterval);
+  }, 120);
+}
+
+function animateCoinsElement(el, targetVal, durationMs = 600) {
   if (!el) return;
   targetVal = Math.max(0, Math.floor(targetVal || 0));
   if (targetVal <= 0) {
-    el.textContent = formatScore(0);
+    el.textContent = '+0';
     return;
   }
   let currentVal = 0;
-  el.textContent = formatScore(0);
-  const totalTicks = Math.min(35, targetVal);
+  el.textContent = '+0';
+  const totalTicks = Math.min(25, targetVal);
   const step = Math.max(1, Math.ceil(targetVal / totalTicks));
-  const tickInterval = Math.max(16, Math.min(35, Math.round(durationMs / totalTicks)));
-
+  const tickInterval = Math.max(25, Math.floor(durationMs / totalTicks));
   const timer = setInterval(() => {
     currentVal = Math.min(targetVal, currentVal + step);
-    el.textContent = formatScore(currentVal);
+    el.textContent = `+${currentVal}`;
     if (currentVal >= targetVal) {
       clearInterval(timer);
+      el.textContent = `+${targetVal}`;
     }
   }, tickInterval);
 }

@@ -71,6 +71,9 @@ function startTrainingWorld(worldId = 1) {
 }
 
 function restartGame() {
+  if (typeof cancelScoreElementAnimation === 'function') cancelScoreElementAnimation($('go-score'));
+  const newRecTag = $('go-new-record-tag');
+  if (newRecTag) newRecTag.classList.add('hidden');
   modalGameover.classList.add('hidden');
   clearArea();
   cancelAnimationFrame(state.rafId);
@@ -85,6 +88,9 @@ function restartGame() {
 }
 
 function goToMainMenu() {
+  if (typeof cancelScoreElementAnimation === 'function') cancelScoreElementAnimation($('go-score'));
+  const newRecTag = $('go-new-record-tag');
+  if (newRecTag) newRecTag.classList.add('hidden');
   if (typeof cancelResumeCountdown === 'function') cancelResumeCountdown();
   if (typeof resetHUDScore === 'function') resetHUDScore();
   if (state.rafId) cancelAnimationFrame(state.rafId);
@@ -198,25 +204,33 @@ function gameOver() {
 
   // Populate modern game over arcade dashboard
   const currentScore = state.totalScore || 0;
-  const recordResult = typeof updateHighScore === 'function' ? updateHighScore(currentScore) : { best: currentScore, isNew: false };
+  const recordResult = typeof updateHighScore === 'function' ? updateHighScore(currentScore) : { best: currentScore, isNew: false, previous: currentScore };
 
-  if (typeof animateScoreElement === 'function') {
-    animateScoreElement($('go-score'), currentScore, 650);
-  } else {
-    $('go-score').textContent = formatScore(currentScore);
+  // Calculate overall match accuracy
+  const totalHits = state.totalHits || 0;
+  const totalErrors = state.totalErrors || 0;
+  const totalAttempts = totalHits + totalErrors;
+  const matchAccuracy = totalAttempts > 0 ? Math.round((totalHits / totalAttempts) * 100) : 0;
+
+  const accEl = $('go-accuracy');
+  if (accEl) {
+    accEl.textContent = `${matchAccuracy}%`;
   }
-  const bestScoreEl = $('go-best-score');
-  if (bestScoreEl) {
-    bestScoreEl.textContent = formatScore(recordResult.best);
+
+  const coinsEl = $('go-coins');
+  const sessionCoins = state.totalCoinsEarned || 0;
+  if (coinsEl) {
+    if (typeof animateCoinsElement === 'function' && sessionCoins > 0) {
+      animateCoinsElement(coinsEl, sessionCoins, 650);
+    } else {
+      coinsEl.textContent = `+${sessionCoins}`;
+    }
   }
-  const newRecordTag = $('go-new-record-tag');
-  if (newRecordTag) {
-    newRecordTag.classList.toggle('hidden', !recordResult.isNew);
-  }
-  $('go-hits').textContent   = state.totalHits;
-  $('go-errors').textContent = state.totalErrors;
-  $('go-phase').textContent  = state.phase;
-  $('go-words').textContent  = `${state.unlockedWords.length} / ${WORD_POOL.length}`;
+
+  if ($('go-hits'))   $('go-hits').textContent   = totalHits;
+  if ($('go-errors')) $('go-errors').textContent = totalErrors;
+  if ($('go-phase'))  $('go-phase').textContent  = state.phase || 1;
+  if ($('go-words'))  $('go-words').textContent  = `${(state.unlockedWords || []).length} / ${(typeof WORD_POOL !== 'undefined' ? WORD_POOL.length : 42)}`;
 
   const btnContinue = $('btn-go-continue');
   const countEl     = $('go-continue-count');
@@ -229,11 +243,40 @@ function gameOver() {
     }
   }
 
+  // Decoupled Record Badge & Match Score handling
+  const newRecordTag = $('go-new-record-tag');
+  const goScoreEl    = $('go-score');
+
+  if (newRecordTag) {
+    newRecordTag.classList.add('hidden');
+  }
+
+  // Open Game Over screen
   modalGameover.classList.remove('hidden');
+
+  // Trigger smooth score roll-up animation with arcade sounds & glowing feedback
+  if (typeof animateScoreElement === 'function') {
+    animateScoreElement(goScoreEl, currentScore, 750, () => {
+      if (recordResult.isNew) {
+        if (newRecordTag) {
+          newRecordTag.classList.remove('hidden');
+        }
+        if (typeof playSound === 'function') {
+          playSound('wildcard');
+        }
+      }
+    });
+  } else {
+    if (goScoreEl) goScoreEl.textContent = formatScore(currentScore);
+    if (newRecordTag) newRecordTag.classList.toggle('hidden', !recordResult.isNew);
+  }
 }
 
 function useContinue() {
   if (state.continues <= 0) return;
+  if (typeof cancelScoreElementAnimation === 'function') cancelScoreElementAnimation($('go-score'));
+  const newRecTag = $('go-new-record-tag');
+  if (newRecTag) newRecTag.classList.add('hidden');
   state.continues--;
   playSound('continue');
   const diffCfg = typeof getDifficultyConfig === 'function' ? getDifficultyConfig() : { startLives: 3, initialSpeed: 1.0 };

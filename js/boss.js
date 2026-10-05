@@ -521,6 +521,7 @@ function defeatBoss() {
   const precisionCoins = isPerfectAcc ? 35 : 0;
   const totalBossCoins = bossBonusCoins + precisionCoins;
   state.coins = (state.coins || 0) + totalBossCoins;
+  state.totalCoinsEarned = (state.totalCoinsEarned || 0) + totalBossCoins;
 
   updateHUD();
 

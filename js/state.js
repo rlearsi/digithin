@@ -75,6 +75,7 @@ function defaultState() {
     phasePts:          0,       // Points accumulated in the current phase
     totalScore:        0,       // Banked points from previous phases (run score)
     coins:             0,       // Player coins currency (used exclusively in shop)
+    totalCoinsEarned:  0,       // Total coins accumulated across the entire match
     flawlessStreak:    0,       // Consecutive phases completed without errors
     errorsPhase:       0,       // Errors made in the current phase
     totalErrors:       0,       // Total errors made in this run

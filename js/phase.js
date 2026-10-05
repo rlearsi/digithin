@@ -122,6 +122,7 @@ function showPhaseModal() {
 
   const totalPhaseCoins = completionCoins + precisionCoins;
   state.coins = (state.coins || 0) + totalPhaseCoins;
+  state.totalCoinsEarned = (state.totalCoinsEarned || 0) + totalPhaseCoins;
 
   // Pontos são 100% gerados e acumulados ao vivo durante a partida
   if (typeof updateHUD === 'function') updateHUD();
