@@ -628,6 +628,256 @@
             "text": "antena",
             "type": "tech",
             "meaning": "アンテナ：電磁波を高精度に送受信する通信装置"
+        },
+        {
+            "text": "taiyou",
+            "type": "cosmos",
+            "meaning": "太陽：地球を温め光を注ぐ太陽系の恒星"
+        },
+        {
+            "text": "tsuki",
+            "type": "cosmos",
+            "meaning": "月：夜空に静かに浮かび銀色に輝く衛星"
+        },
+        {
+            "text": "kawa",
+            "type": "nature",
+            "meaning": "川：山から海へと絶え間なく流れる清流"
+        },
+        {
+            "text": "umi",
+            "type": "nature",
+            "meaning": "海：地球の表面を広く覆う広大な塩水域"
+        },
+        {
+            "text": "tori",
+            "type": "animal",
+            "meaning": "鳥：翼を広げて大空を自由に舞う羽毛の生き物"
+        },
+        {
+            "text": "hachi",
+            "type": "nature",
+            "meaning": "蜂：花々を飛び交い甘い黄金の蜜を集める昆虫"
+        },
+        {
+            "text": "oto",
+            "type": "element",
+            "meaning": "音：空気を伝わり耳で感知される音響の振動"
+        },
+        {
+            "text": "hana",
+            "type": "nature",
+            "meaning": "花：色鮮やかで甘い香りを放つ植物の開花部位"
+        },
+        {
+            "text": "kamo",
+            "type": "animal",
+            "meaning": "鴨：水辺を泳ぎ水草を食べる平らなくちばしの水鳥"
+        },
+        {
+            "text": "kaeru",
+            "type": "animal",
+            "meaning": "蛙：水辺で高く跳びはねる緑の肌の両生類"
+        },
+        {
+            "text": "kane",
+            "type": "object",
+            "meaning": "鐘：打つと澄んだ余韻が遠くまで響き渡る金属器"
+        },
+        {
+            "text": "fune",
+            "type": "vehicle",
+            "meaning": "船：海や湖を渡り人々や荷を運ぶ乗り物"
+        },
+        {
+            "text": "kabin",
+            "type": "object",
+            "meaning": "花瓶：摘み取った草花を飾るための美しい器"
+        },
+        {
+            "text": "kin",
+            "type": "element",
+            "meaning": "金：永遠の輝きと高い価値を持つ黄金の貴金属"
+        },
+        {
+            "text": "chizu",
+            "type": "object",
+            "meaning": "地図：陸や海や道を俯瞰して描いた案内図"
+        },
+        {
+            "text": "hon",
+            "type": "object",
+            "meaning": "本：文字や挿絵で知識や物語を伝える綴じ物"
+        },
+        {
+            "text": "hashi",
+            "type": "place",
+            "meaning": "橋：川や谷を越えて両岸をつなぐ建造物"
+        },
+        {
+            "text": "boto",
+            "type": "vehicle",
+            "meaning": "舟：櫂で漕ぎ水面を静かに進む小さな小舟"
+        },
+        {
+            "text": "ha",
+            "type": "nature",
+            "meaning": "葉：日光を受けて光合成を行う植物の緑の葉"
+        },
+        {
+            "text": "kagi",
+            "type": "object",
+            "meaning": "鍵：扉や錠前を開け閉めするための金属具"
+        },
+        {
+            "text": "yume",
+            "type": "feeling",
+            "meaning": "夢：眠りの中で心が見る幻想的な情景"
+        },
+        {
+            "text": "kusa",
+            "type": "nature",
+            "meaning": "草：大地を青々と覆い爽やかに茂る植物"
+        },
+        {
+            "text": "uta",
+            "type": "art",
+            "meaning": "歌：リズムと調べに乗せて心をつづる言葉"
+        },
+        {
+            "text": "kanmuri",
+            "type": "object",
+            "meaning": "冠：王や女王の頭上を飾る宝石入りの金冠"
+        },
+        {
+            "text": "shinju",
+            "type": "object",
+            "meaning": "真珠：貝の体内で育まれる気品ある虹色の玉"
+        },
+        {
+            "text": "niwa",
+            "type": "place",
+            "meaning": "庭：草木や花が美しく整えられた憩いの空間"
+        },
+        {
+            "text": "tera",
+            "type": "place",
+            "meaning": "寺：静寂の中で祈りと修行が行われる聖堂"
+        },
+        {
+            "text": "tobira",
+            "type": "fantasy",
+            "meaning": "扉：異なる世界や次元へと通じる不思議な門"
+        },
+        {
+            "text": "tate",
+            "type": "object",
+            "meaning": "盾：敵の攻撃を防ぎ身を守るための防具"
+        },
+        {
+            "text": "tabi",
+            "type": "experience",
+            "meaning": "旅：見知らぬ土地を巡り見聞を広げる冒険"
+        },
+        {
+            "text": "ya",
+            "type": "object",
+            "meaning": "矢：弓から放たれて標的へと飛ぶ鋭い矢羽"
+        },
+        {
+            "text": "mori",
+            "type": "nature",
+            "meaning": "森：多くの木々が生い茂り野鳥がさえずる林"
+        },
+        {
+            "text": "suisei",
+            "type": "cosmos",
+            "meaning": "彗星：氷と塵でできた長い光の尾を引く天体"
+        },
+        {
+            "text": "shiro",
+            "type": "place",
+            "meaning": "城：石垣と天守を備えた堂々たる要塞"
+        },
+        {
+            "text": "ginga",
+            "type": "cosmos",
+            "meaning": "銀河：無数の星々と星雲が渦を巻く大宇宙の群れ"
+        },
+        {
+            "text": "kioku",
+            "type": "mind",
+            "meaning": "記憶：経験した出来事や知識を心にとどめる力"
+        },
+        {
+            "text": "uchuu",
+            "type": "cosmos",
+            "meaning": "宇宙：時間と空間、物質とエネルギーの無限の広がり"
+        },
+        {
+            "text": "meiro",
+            "type": "place",
+            "meaning": "迷路：入り組んだ通路で行く手を惑わす仕掛け"
+        },
+        {
+            "text": "chou",
+            "type": "animal",
+            "meaning": "蝶：羽に美しい紋様を持ちひらひらと舞う昆虫"
+        },
+        {
+            "text": "arashi",
+            "type": "nature",
+            "meaning": "嵐：強い風と激しい雨が吹き荒れる気象現象"
+        },
+        {
+            "text": "seiza",
+            "type": "cosmos",
+            "meaning": "星座：夜空の星々を結んで神話を描いた図形"
+        },
+        {
+            "text": "inazuma",
+            "type": "element",
+            "meaning": "稲妻：雷雲から大地へと一瞬で閃く光の放電"
+        },
+        {
+            "text": "chiheisen",
+            "type": "nature",
+            "meaning": "地平線：大地と天空が遠くで交わるように見える境界"
+        },
+        {
+            "text": "uchusen",
+            "type": "tech",
+            "meaning": "宇宙船：星々の海を航行するために作られた探査船"
+        },
+        {
+            "text": "gijutsu",
+            "type": "tech",
+            "meaning": "技術：人々の暮らしを豊かにする科学の応用力"
+        },
+        {
+            "text": "kenchiku",
+            "type": "art",
+            "meaning": "建築：美と実用性を兼ね備えた建物を設計する術"
+        },
+        {
+            "text": "sokudo",
+            "type": "concept",
+            "meaning": "速度：単位時間あたりに進む動きの速さ"
+        },
+        {
+            "text": "nazo",
+            "type": "mystery",
+            "meaning": "謎：好奇心をかき立てる不可思議な秘密"
+        },
+        {
+            "text": "shinse",
+            "type": "music",
+            "meaning": "シンセ：多彩な波形から新しい音色を創る電子楽器"
+        },
+        {
+            "text": "telepasi",
+            "type": "mind",
+            "meaning": "テレパシー：言葉を使わずに心と心を通わせる能力"
         }
     ],
     "bossWords": {

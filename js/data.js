@@ -6,10 +6,13 @@
 
 const CFG = {
   baseSpeed: 52,
-  speedBonusLetter: 0.008,
-  speedBonusSyl: 0.02,
-  speedBonusWord: 0.04,
-  speedErrorPenalty: 0.1,   // +0.1x per typo error
+  speedBonusLetter: 0,      // Não aumenta mais ao acertar letra/item
+  speedBonusSyl: 0,         // Não aumenta mais ao acertar sílaba
+  speedBonusWord: 0,        // Não aumenta mais ao acertar palavra
+  speedTimerInterval: 5.0,  // Intervalo em segundos para aumento progressivo
+  speedTimerIncrement: 0.01,// Aumento de +0.01x a cada 5 segundos
+  speedMaxIncrease: 2.0,    // Limite máximo de aumento (+2.0x sobre a velocidade inicial)
+  speedErrorPenalty: 0,     // Não aumenta mais ao errar
   maxSpeedMult: 4.0,
   spawnBase: 2100,
   spawnMin: 500,
@@ -51,11 +54,26 @@ const DIFFICULTY_CONFIG = {
     id: 'hard',
     name: 'hard',
     initialSpeed: 1.5,
-    speedErrorPenalty: 0.05,
+    speedErrorPenalty: 0,
     progressErrorPenalty: 1,
     startLives: 3,
   },
 };
+
+// Limites e filtros de tamanho de palavras por dificuldade
+function getMaxWordLengthForDifficulty(difficulty) {
+  const diff = difficulty || (typeof state !== 'undefined' && state.difficulty) || 'normal';
+  if (diff === 'easy') return 4;   // Fácil: palavras de no máximo 4 letras
+  if (diff === 'normal') return 6; // Normal: palavras de até 6 letras
+  return Infinity;                 // Difícil: sem limite de tamanho (palavras complexas e longas)
+}
+
+function getWordPoolForDifficulty(pool, difficulty) {
+  const p = pool || (typeof WORD_POOL !== 'undefined' ? WORD_POOL : []);
+  const maxLen = getMaxWordLengthForDifficulty(difficulty);
+  if (!isFinite(maxLen)) return p;
+  return p.filter(w => (w.text || '').length <= maxLen);
+}
 
 // Phase goal: Phase 1 = 10, Phase 2 = 20, Phase 3 = 30, Phase 4 = 40, Phase 5 = 50, Phase 6 = 60... (+10 per phase)
 function calcPhaseGoal(phase) {

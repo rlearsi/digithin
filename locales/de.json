@@ -612,6 +612,256 @@
             "text": "antenne",
             "type": "tech",
             "meaning": "Vorrichtung zum Senden und Empfangen elektromagnetischer Funkwellen"
+        },
+        {
+            "text": "sonne",
+            "type": "cosmos",
+            "meaning": "Strahlender Zentralstern, der die Planeten wärmt und erhellt"
+        },
+        {
+            "text": "mond",
+            "type": "cosmos",
+            "meaning": "Natürlicher Himmelskörper, der nachts silbern leuchtet"
+        },
+        {
+            "text": "fluss",
+            "type": "natur",
+            "meaning": "Stetiger Süßwasserlauf, der sich seinen Weg zum Meere bahnt"
+        },
+        {
+            "text": "meer",
+            "type": "natur",
+            "meaning": "Weite Salzflut, die Küsten und Kontinente umschließt"
+        },
+        {
+            "text": "vogel",
+            "type": "tier",
+            "meaning": "Befiedertes Lebewesen, das mit Schwingen durch die Lüfte zieht"
+        },
+        {
+            "text": "honig",
+            "type": "natur",
+            "meaning": "Süßer goldener Nektar, von fleißigen Bienen im Stock geerntet"
+        },
+        {
+            "text": "klang",
+            "type": "element",
+            "meaning": "Harmonische Schallwelle, die wohltuend an das Ohr dringt"
+        },
+        {
+            "text": "blume",
+            "type": "natur",
+            "meaning": "Duftende Blüte mit bunten Blättern, die den Garten schmückt"
+        },
+        {
+            "text": "ente",
+            "type": "tier",
+            "meaning": "Wasservogel mit Schwimmhäuten und breitem Schnabel auf dem See"
+        },
+        {
+            "text": "frosch",
+            "type": "tier",
+            "meaning": "Flink hüpfende Amphibie mit glatter Haut an Feuchtgebieten"
+        },
+        {
+            "text": "glocke",
+            "type": "gegenstand",
+            "meaning": "Hohles Metallgefäß, das beim Anschlag wohlklingend tönt"
+        },
+        {
+            "text": "schiff",
+            "type": "fahrzeug",
+            "meaning": "Großes Wasserfahrzeug zur Reise über Meere und Häfen"
+        },
+        {
+            "text": "vase",
+            "type": "gegenstand",
+            "meaning": "Kunstvolles Ziergefäß aus Ton oder Glas für Blumensträuße"
+        },
+        {
+            "text": "gold",
+            "type": "element",
+            "meaning": "Glänzendes Edelmetall von unvergänglichem gelbem Glanz"
+        },
+        {
+            "text": "karte",
+            "type": "gegenstand",
+            "meaning": "Geografische Zeichnung von Ländern, Meeren und Wegen"
+        },
+        {
+            "text": "buch",
+            "type": "gegenstand",
+            "meaning": "Gebundenes Schriftwerk voller Weisheit und Abenteuer"
+        },
+        {
+            "text": "bruecke",
+            "type": "ort",
+            "meaning": "Kühnes Bauwerk, das zwei getrennte Ufer sicher verbindet"
+        },
+        {
+            "text": "boot",
+            "type": "fahrzeug",
+            "meaning": "Wendiges kleines Wasserfahrzeug für Seen und stille Flüsse"
+        },
+        {
+            "text": "blatt",
+            "type": "natur",
+            "meaning": "Grüner Pflanzenteil, der das Sonnenlicht in Energie wandelt"
+        },
+        {
+            "text": "schluessel",
+            "type": "gegenstand",
+            "meaning": "Metallwerkzeug zum Schließen und Öffnen schwerer Schlösser"
+        },
+        {
+            "text": "traum",
+            "type": "gefuehl",
+            "meaning": "Bilderreiches Gedankenwerk des Geistes während des Schlafes"
+        },
+        {
+            "text": "gras",
+            "type": "natur",
+            "meaning": "Frischer grüner Pflanzenteppich auf Almen und Wiesen"
+        },
+        {
+            "text": "vers",
+            "type": "kunst",
+            "meaning": "Rhythmische Zeile eines Gedichts mit klangvollem Reim"
+        },
+        {
+            "text": "krone",
+            "type": "gegenstand",
+            "meaning": "Edler Stirnschmuck herrschender Häupter mit Juwelen"
+        },
+        {
+            "text": "perle",
+            "type": "gegenstand",
+            "meaning": "Schimmerndes Naturjuwel aus dem Inneren der Muschelschale"
+        },
+        {
+            "text": "garten",
+            "type": "ort",
+            "meaning": "Gepflegtes Areal mit Blumenbeeten, Sträuchern und Spazierwegen"
+        },
+        {
+            "text": "tempel",
+            "type": "ort",
+            "meaning": "Weihestätte der Einkehr, Stille und geistigen Sammlung"
+        },
+        {
+            "text": "portal",
+            "type": "fantasie",
+            "meaning": "Magischer Dimensionseingang in ferne Zeiten und Welten"
+        },
+        {
+            "text": "schild",
+            "type": "gegenstand",
+            "meaning": "Rüstungsteil zur Abwehr feindlicher Schläge im Gefecht"
+        },
+        {
+            "text": "reise",
+            "type": "erfahrung",
+            "meaning": "Fahrt in unbekannte Länder zur Erweiterung des Horizonts"
+        },
+        {
+            "text": "pfeil",
+            "type": "gegenstand",
+            "meaning": "Spitze Schusswaffe, die vom Bogen geschwind davonschnellt"
+        },
+        {
+            "text": "hain",
+            "type": "natur",
+            "meaning": "Kleiner lichter Wald mit ehrwürdigen schattigen Bäumen"
+        },
+        {
+            "text": "komet",
+            "type": "cosmos",
+            "meaning": "Schweifstern aus Eis und Gestein auf ferner Sonnenbahn"
+        },
+        {
+            "text": "burg",
+            "type": "ort",
+            "meaning": "Wehrhafte Festung aus Stein mit Zinnen und tiefem Graben"
+        },
+        {
+            "text": "galaxie",
+            "type": "cosmos",
+            "meaning": "Riesiges Sternsystem aus Milliarden Sonnen und Nebeln"
+        },
+        {
+            "text": "gedanke",
+            "type": "geist",
+            "meaning": "Geistiger Funke des Verstandes und der schöpferischen Kraft"
+        },
+        {
+            "text": "weltall",
+            "type": "cosmos",
+            "meaning": "Das unendliche Gefüge aus Raum, Materie und Zeit"
+        },
+        {
+            "text": "labyrinth",
+            "type": "ort",
+            "meaning": "Verschlungenes Wegenetz mit trügerischen Abzweigungen"
+        },
+        {
+            "text": "falter",
+            "type": "tier",
+            "meaning": "Zartes Insekt mit farbenfroh gemusterten Schwingen"
+        },
+        {
+            "text": "sturm",
+            "type": "natur",
+            "meaning": "Brausendes Unwetter mit stürmischem Wind und Regengüssen"
+        },
+        {
+            "text": "sternbild",
+            "type": "cosmos",
+            "meaning": "Figürliche Gruppe von Fixsternen am nächtlichen Firmament"
+        },
+        {
+            "text": "blitz",
+            "type": "element",
+            "meaning": "Zündende Himmelsentladung bei gewittrigem Wetter"
+        },
+        {
+            "text": "horizont",
+            "type": "natur",
+            "meaning": "Scheinbare Grenze, wo Himmel und Erde ineinander übergehen"
+        },
+        {
+            "text": "raumschiff",
+            "type": "tech",
+            "meaning": "Kosmische Erkundungsfähre für Flüge durch Sternensysteme"
+        },
+        {
+            "text": "technik",
+            "type": "tech",
+            "meaning": "Wissenschaftlich begründete Verfahren zur Arbeitserleichterung"
+        },
+        {
+            "text": "baukunst",
+            "type": "kunst",
+            "meaning": "Hohe Schule der Gestaltung formschöner und dauerhafter Werke"
+        },
+        {
+            "text": "tempo",
+            "type": "konzept",
+            "meaning": "Rasche Fortbewegung und Schnelligkeit im Lauf der Zeit"
+        },
+        {
+            "text": "raetsel",
+            "type": "geheimnis",
+            "meaning": "Geheimnisvolle Begebenheit, die Scharfsinn erfordert"
+        },
+        {
+            "text": "synthesizer",
+            "type": "musik",
+            "meaning": "Klangsynthesegerät zur Erzeugung facettenreicher Tonwellen"
+        },
+        {
+            "text": "telepathie",
+            "type": "geist",
+            "meaning": "Gedankenübertragung ohne Worte von Geist zu Geist"
         }
     ],
     "bossWords": {

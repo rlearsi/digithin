@@ -330,7 +330,10 @@ function buyShopItem(skillId, price) {
   } else if (skillId === 'wordpack') {
     // Unlock 3 random locked words from pool
     const unlockedTexts = new Set(state.unlockedWords.map(w => w.text.toLowerCase()));
-    const lockedPool    = WORD_POOL.filter(w => !unlockedTexts.has(w.text.toLowerCase()));
+    const eligiblePool  = (typeof getWordPoolForDifficulty === 'function')
+      ? getWordPoolForDifficulty(WORD_POOL, state.difficulty)
+      : WORD_POOL;
+    const lockedPool    = eligiblePool.filter(w => !unlockedTexts.has(w.text.toLowerCase()));
     const picked        = shuffle(lockedPool).slice(0, 3);
 
     if (picked.length > 0) {
@@ -339,7 +342,7 @@ function buyShopItem(skillId, price) {
       const unlLabel = typeof t === 'function' ? t('library_unlocked') : 'Unlocked';
       showShopFeedback(`${unlLabel}: ${names}!`, 'success');
       playSound('skill');
-      if (state.unlockedWords.length >= WORD_POOL.length) {
+      if (state.unlockedWords.length >= eligiblePool.length) {
         if (typeof unlockAchievement === 'function') unlockAchievement('colecionador');
       }
     } else {

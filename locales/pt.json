@@ -633,6 +633,256 @@
             "text": "antena",
             "type": "tech",
             "meaning": "Dispositivo condutor que emite e capta ondas eletromagnéticas de telecomunicação"
+        },
+        {
+            "text": "sol",
+            "type": "cosmos",
+            "meaning": "Astro central do sistema solar que emite luz e aquece o nosso planeta"
+        },
+        {
+            "text": "lua",
+            "type": "cosmos",
+            "meaning": "Satélite natural que orbita a Terra e brilha prateado no céu noturno"
+        },
+        {
+            "text": "rio",
+            "type": "natureza",
+            "meaning": "Curso contínuo de água doce que serpenteia até desaguar no oceano"
+        },
+        {
+            "text": "mar",
+            "type": "natureza",
+            "meaning": "Vasta extensão de água salgada que banha litorais e praias do mundo"
+        },
+        {
+            "text": "ave",
+            "type": "animal",
+            "meaning": "Criatura bípede de penas e asas que plana veloz pelas correntes de ar"
+        },
+        {
+            "text": "mel",
+            "type": "natureza",
+            "meaning": "Substância doce e viscosa produzida pelas abelhas a partir do néctar"
+        },
+        {
+            "text": "som",
+            "type": "elemento",
+            "meaning": "Vibração acústica que se propaga pelo ar e é percebida pela audição"
+        },
+        {
+            "text": "flor",
+            "type": "natureza",
+            "meaning": "Estrutura reprodutiva aromática e colorida que embeleza as plantas"
+        },
+        {
+            "text": "pato",
+            "type": "animal",
+            "meaning": "Ave aquática nadadora de bico chato e penas impermeáveis em lagos"
+        },
+        {
+            "text": "sapo",
+            "type": "animal",
+            "meaning": "Anfíbio saltador de pele rugosa que captura insetos com sua língua"
+        },
+        {
+            "text": "sino",
+            "type": "objeto",
+            "meaning": "Instrumento metálico oco que ressoa notas sonoras ao ser tocado"
+        },
+        {
+            "text": "nave",
+            "type": "cosmos",
+            "meaning": "Veículo aeroespacial blindado concebido para navegar entre estrelas"
+        },
+        {
+            "text": "vaso",
+            "type": "objeto",
+            "meaning": "Recipiente de cerâmica ou vidro para cultivar plantas e flores"
+        },
+        {
+            "text": "ouro",
+            "type": "elemento",
+            "meaning": "Metal nobre reluzente e valioso de alta pureza e tom amarelado"
+        },
+        {
+            "text": "mapa",
+            "type": "objeto",
+            "meaning": "Representação gráfica detalhada de continentes, rotas e relevos"
+        },
+        {
+            "text": "livro",
+            "type": "objeto",
+            "meaning": "Volume encadernado com folhas impressas repleto de conhecimentos"
+        },
+        {
+            "text": "ponte",
+            "type": "lugar",
+            "meaning": "Estrutura elevada de engenharia que conecta dois lados separados"
+        },
+        {
+            "text": "barco",
+            "type": "objeto",
+            "meaning": "Embarcação desenhada para flutuar e transportar pessoas na água"
+        },
+        {
+            "text": "folha",
+            "type": "natureza",
+            "meaning": "Órgão verde das árvores que capta energia solar pela fotossíntese"
+        },
+        {
+            "text": "chave",
+            "type": "objeto",
+            "meaning": "Peça metálica esculpida com dentes para destravar fechaduras"
+        },
+        {
+            "text": "sonho",
+            "type": "sentimento",
+            "meaning": "Enredos visuais e desejos criativos gerados pela mente ao adormecer"
+        },
+        {
+            "text": "relva",
+            "type": "natureza",
+            "meaning": "Camada rasteira de gramíneas verdes que forra vales e jardins"
+        },
+        {
+            "text": "trova",
+            "type": "arte",
+            "meaning": "Composição poética rimada entoada ao som de instrumentos musicais"
+        },
+        {
+            "text": "coroa",
+            "type": "objeto",
+            "meaning": "Adorno circular real incrustado com pedras preciosas e ouro"
+        },
+        {
+            "text": "perola",
+            "type": "objeto",
+            "meaning": "Gema orgânica esférica nacarada formada no interior de conchas"
+        },
+        {
+            "text": "jardim",
+            "type": "lugar",
+            "meaning": "Espaço verde planejado repleto de canteiros floridos e alamedas"
+        },
+        {
+            "text": "templo",
+            "type": "lugar",
+            "meaning": "Monumento arquitetônico sagrado erguido para reflexão e paz interior"
+        },
+        {
+            "text": "portal",
+            "type": "fantasia",
+            "meaning": "Passagem mágica de energia translúcida que liga diferentes épocas"
+        },
+        {
+            "text": "escudo",
+            "type": "objeto",
+            "meaning": "Equipamento defensivo para amortecer impactos e salvaguardar o herói"
+        },
+        {
+            "text": "viagem",
+            "type": "experiencia",
+            "meaning": "Expedição desafiadora para explorar novas fronteiras e horizontes"
+        },
+        {
+            "text": "flecha",
+            "type": "objeto",
+            "meaning": "Projétil veloz com ponta de metal disparado com maestria por arcos"
+        },
+        {
+            "text": "bosque",
+            "type": "natureza",
+            "meaning": "Povoamento denso de árvores frondosas que abriga pássaros canoros"
+        },
+        {
+            "text": "cometa",
+            "type": "cosmos",
+            "meaning": "Corpo celeste de gelo e poeira que desenvolve uma cauda luminescente"
+        },
+        {
+            "text": "castelo",
+            "type": "lugar",
+            "meaning": "Fortaleza imponente de pedras com fosso, muralhas e altas torres"
+        },
+        {
+            "text": "galaxia",
+            "type": "cosmos",
+            "meaning": "Vasto turbilhão gravitacional contendo bilhões de estrelas e nebulosas"
+        },
+        {
+            "text": "memoria",
+            "type": "mente",
+            "meaning": "Capacidade biológica e neural de reter saberes, eventos e recordações"
+        },
+        {
+            "text": "universo",
+            "type": "cosmos",
+            "meaning": "A totalidade de toda a matéria, energia, tempo e espaço dimensional"
+        },
+        {
+            "text": "labirinto",
+            "type": "lugar",
+            "meaning": "Emaranhado enigmático de passagens e bifurcações com uma única saída"
+        },
+        {
+            "text": "borboleta",
+            "type": "animal",
+            "meaning": "Inseto gracioso com asas simétricas pintadas por escamas reluzentes"
+        },
+        {
+            "text": "tempestade",
+            "type": "natureza",
+            "meaning": "Perturbação atmosférica vigorosa com ventos fortes, raios e trovoadas"
+        },
+        {
+            "text": "constelacao",
+            "type": "cosmos",
+            "meaning": "Agrupamento aparente de estrelas que desenha mitos na abóbada celeste"
+        },
+        {
+            "text": "relampago",
+            "type": "elemento",
+            "meaning": "Clarão elétrico ofuscante que corta os céus em frações de segundo"
+        },
+        {
+            "text": "horizonte",
+            "type": "natureza",
+            "meaning": "Linha infinita onde a curvatura do planeta aparenta tocar o firmamento"
+        },
+        {
+            "text": "astronave",
+            "type": "tech",
+            "meaning": "Veículo espacial autônomo com motores de dobra para viagens cósmicas"
+        },
+        {
+            "text": "tecnologia",
+            "type": "tech",
+            "meaning": "Conjunto de métodos científicos que transformam o cotidiano humano"
+        },
+        {
+            "text": "arquitetura",
+            "type": "arte",
+            "meaning": "Ciência artística e técnica de projetar espaços habitáveis harmoniosos"
+        },
+        {
+            "text": "velocidade",
+            "type": "conceito",
+            "meaning": "Grande rapidez de movimento medida pelo espaço percorrido no tempo"
+        },
+        {
+            "text": "misterioso",
+            "type": "misterio",
+            "meaning": "Fenômeno fascinante encoberto por segredos profundos e desconhecidos"
+        },
+        {
+            "text": "sintetizador",
+            "type": "musica",
+            "meaning": "Instrumento eletrônico capaz de esculpir formas de onda e timbres sonoros"
+        },
+        {
+            "text": "telepatia",
+            "type": "mente",
+            "meaning": "Transmissão direta de ideias e sensações entre mentes à distância"
         }
     ],
     "bossWords": {

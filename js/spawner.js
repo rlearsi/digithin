@@ -64,7 +64,12 @@ function genQueueItem() {
       text = randLetter();
       return { text, type: 'letter', skill: null };
     }
-    text = pick(state.unlockedWords).text.toUpperCase();
+    const maxLen = (typeof getMaxWordLengthForDifficulty === 'function')
+      ? getMaxWordLengthForDifficulty(state.difficulty)
+      : Infinity;
+    const eligibleWords = state.unlockedWords.filter(w => (w.text || '').length <= maxLen);
+    const candidatePool = eligibleWords.length > 0 ? eligibleWords : state.unlockedWords;
+    text = pick(candidatePool).text.toUpperCase();
     // Rare chance to contain skill
     if (Math.random() < CFG.wordSkillChance) {
       const avail = SKILLS_ALL.filter(s => !s.isItem && s.id !== 'extralife');

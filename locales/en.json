@@ -624,6 +624,256 @@
             "text": "antenna",
             "type": "tech",
             "meaning": "Conductive apparatus that transmits and receives electromagnetic waves"
+        },
+        {
+            "text": "sun",
+            "type": "cosmos",
+            "meaning": "Glowing celestial star illuminating and warming our planetary system"
+        },
+        {
+            "text": "moon",
+            "type": "cosmos",
+            "meaning": "Natural celestial satellite orbiting Earth and shining in the night"
+        },
+        {
+            "text": "sea",
+            "type": "nature",
+            "meaning": "Vast expanse of salt water that borders coasts and islands"
+        },
+        {
+            "text": "wave",
+            "type": "nature",
+            "meaning": "Rolling crest of water travelling across the surface of the sea"
+        },
+        {
+            "text": "bird",
+            "type": "animal",
+            "meaning": "Winged creature covered in feathers gliding across open skies"
+        },
+        {
+            "text": "hive",
+            "type": "nature",
+            "meaning": "Natural dwelling of worker bees crafting golden honeycomb"
+        },
+        {
+            "text": "tone",
+            "type": "element",
+            "meaning": "Acoustic vibration carrying melodic pitch and acoustic timbre"
+        },
+        {
+            "text": "rose",
+            "type": "nature",
+            "meaning": "Fragrant blossom of rich velvety petals growing upon garden bushes"
+        },
+        {
+            "text": "duck",
+            "type": "animal",
+            "meaning": "Waterfowl with webbed swimming feet and waterproof plumage"
+        },
+        {
+            "text": "frog",
+            "type": "animal",
+            "meaning": "Amphibian with agile hind legs that leaps across lily pads in ponds"
+        },
+        {
+            "text": "bell",
+            "type": "object",
+            "meaning": "Hollow metallic instrument that chimes resonant tones when struck"
+        },
+        {
+            "text": "ship",
+            "type": "vehicle",
+            "meaning": "Large seafaring vessel designed to navigate oceans and harbors"
+        },
+        {
+            "text": "vase",
+            "type": "object",
+            "meaning": "Ornamental glazed vessel crafted to hold decorative floral bouquets"
+        },
+        {
+            "text": "gold",
+            "type": "element",
+            "meaning": "Radiant precious metal celebrated for enduring value and brilliance"
+        },
+        {
+            "text": "map",
+            "type": "object",
+            "meaning": "Visual cartographic chart displaying lands, frontiers and routes"
+        },
+        {
+            "text": "crown",
+            "type": "object",
+            "meaning": "Regal golden headpiece studded with sparkling precious jewels"
+        },
+        {
+            "text": "bridge",
+            "type": "place",
+            "meaning": "Suspended architectural crossing joining two distant banks"
+        },
+        {
+            "text": "canoe",
+            "type": "vehicle",
+            "meaning": "Slender paddle-powered watercraft gliding over tranquil rivers"
+        },
+        {
+            "text": "plant",
+            "type": "nature",
+            "meaning": "Botanical organism absorbing rays of sunlight through green foliage"
+        },
+        {
+            "text": "clock",
+            "type": "object",
+            "meaning": "Mechanical or quartz timepiece recording the steady flow of hours"
+        },
+        {
+            "text": "dream",
+            "type": "feeling",
+            "meaning": "Vivid imaginative visions and stories experienced during slumber"
+        },
+        {
+            "text": "grass",
+            "type": "nature",
+            "meaning": "Vibrant carpet of short green vegetation covering lush hills"
+        },
+        {
+            "text": "verse",
+            "type": "art",
+            "meaning": "Rhythmic line of lyrical poetry composed with metric rhyme"
+        },
+        {
+            "text": "pearl",
+            "type": "object",
+            "meaning": "Luminous iridescent sphere formed within marine mollusk shells"
+        },
+        {
+            "text": "garden",
+            "type": "place",
+            "meaning": "Enclosed landscape cultivated with fragrant flowers and stone paths"
+        },
+        {
+            "text": "temple",
+            "type": "place",
+            "meaning": "Sacred sanctuary built for contemplative silence and inner peace"
+        },
+        {
+            "text": "portal",
+            "type": "fantasy",
+            "meaning": "Ethereal vortex gateway opening transit between separate realms"
+        },
+        {
+            "text": "shield",
+            "type": "object",
+            "meaning": "Stout piece of protective equipment carried to deflect heavy blows"
+        },
+        {
+            "text": "travel",
+            "type": "experience",
+            "meaning": "Exciting expedition undertaken to uncover wonders across the world"
+        },
+        {
+            "text": "beacon",
+            "type": "place",
+            "meaning": "Guiding tower light illuminating safe paths for navigators at sea"
+        },
+        {
+            "text": "forest",
+            "type": "nature",
+            "meaning": "Dense ancient woodland home to towering canopies and wildlife"
+        },
+        {
+            "text": "sphere",
+            "type": "cosmos",
+            "meaning": "Perfect three-dimensional round orb revolving in space orbit"
+        },
+        {
+            "text": "shadow",
+            "type": "element",
+            "meaning": "Dark silhouette cast upon the floor where light has been blocked"
+        },
+        {
+            "text": "fortress",
+            "type": "place",
+            "meaning": "Massive stone citadel fortified with defensive walls and towers"
+        },
+        {
+            "text": "cluster",
+            "type": "cosmos",
+            "meaning": "Gravitationally bound swarm of radiant stars gathered in space"
+        },
+        {
+            "text": "thought",
+            "type": "mind",
+            "meaning": "Mental spark of cognitive reasoning, insight and remembered idea"
+        },
+        {
+            "text": "universe",
+            "type": "cosmos",
+            "meaning": "The boundless totality of matter, stars, energy and spacetime"
+        },
+        {
+            "text": "labyrinth",
+            "type": "place",
+            "meaning": "Intricate network of winding corridors challenging explorers"
+        },
+        {
+            "text": "butterfly",
+            "type": "animal",
+            "meaning": "Graceful pollinator adorned with kaleidoscope patterned wings"
+        },
+        {
+            "text": "lightning",
+            "type": "element",
+            "meaning": "Fierce electrical spark illuminating thunderous clouds in seconds"
+        },
+        {
+            "text": "hurricane",
+            "type": "nature",
+            "meaning": "Catastrophic swirling ocean storm unleashing torrential rain and gale"
+        },
+        {
+            "text": "constellation",
+            "type": "cosmos",
+            "meaning": "Celestial formation of stellar lights tracing mythological shapes"
+        },
+        {
+            "text": "horizon",
+            "type": "nature",
+            "meaning": "Limitless vista line where the earthly curve meets the infinite sky"
+        },
+        {
+            "text": "starship",
+            "type": "tech",
+            "meaning": "Interstellar exploration cruiser equipped for deep cosmos voyages"
+        },
+        {
+            "text": "technology",
+            "type": "tech",
+            "meaning": "The practical application of scientific knowledge to innovate tools"
+        },
+        {
+            "text": "architecture",
+            "type": "art",
+            "meaning": "The disciplined art of designing beautiful and enduring structures"
+        },
+        {
+            "text": "velocity",
+            "type": "concept",
+            "meaning": "Rapid measurement of kinetic speed propelled in a set vector"
+        },
+        {
+            "text": "mysterious",
+            "type": "mystery",
+            "meaning": "Fascinating puzzle veiled in secrecy that stirs boundless curiosity"
+        },
+        {
+            "text": "synthesizer",
+            "type": "music",
+            "meaning": "Electronic audio console creating custom soundwaves and harmonic tones"
+        },
+        {
+            "text": "telepathy",
+            "type": "mind",
+            "meaning": "Direct mental transmission of thought and vision across space"
         }
     ],
     "bossWords": {

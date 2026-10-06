@@ -62,11 +62,11 @@ function beginPhase() {
   const diffCfg = typeof getDifficultyConfig === 'function' ? getDifficultyConfig() : { initialSpeed: 1.0 };
   if (state._resumedFromSave) {
     delete state._resumedFromSave;
-  } else if (state.gameMode !== 'training' && typeof state.speedMultiplier === 'number' && state.phase > 1) {
-    // Keep speed progression across phases
   } else {
+    // Requisitos 4 e 6: Velocidade reseta em cada nova fase (checkpoint) para o padrão inicial da dificuldade
     state.speedMultiplier = state.gameMode === 'training' ? (state.phase === 3 ? 1.1 : 1.0) : diffCfg.initialSpeed;
   }
+  state.speedAccum      = 0;
   state.combo           = 0;   // Reseta o combo a cada nova fase!
   state.maxComboPhase   = 0;   // Reseta o combo maximo atingido na fase!
   state.phaseComplete   = false;
@@ -91,6 +91,11 @@ function checkPhaseComplete() {
     state.paused        = true;
     cancelAnimationFrame(state.rafId);
     clearTimeout(state.spawnTimer);
+    // Requisito 4: Fase concluída, velocidade volta ao padrão inicial da dificuldade
+    const diffCfg = typeof getDifficultyConfig === 'function' ? getDifficultyConfig() : { initialSpeed: 1.0 };
+    state.speedMultiplier = state.gameMode === 'training' ? (state.phase === 3 ? 1.1 : 1.0) : diffCfg.initialSpeed;
+    state.speedAccum = 0;
+    updateHUD();
     showPhaseModal();
   }
 }
@@ -386,11 +391,14 @@ function showPhaseModal() {
   // Unlock new words: only starting from the completion of Phase 2 (to be displayed starting at Phase 3)
   let toUnlock = [];
   if (state.phase >= 2) {
-    const pool     = WORD_POOL.filter(w => !state.unlockedWords.find(u => u.text === w.text));
+    const eligiblePool = (typeof getWordPoolForDifficulty === 'function')
+      ? getWordPoolForDifficulty(WORD_POOL, state.difficulty)
+      : WORD_POOL;
+    const pool = eligiblePool.filter(w => !state.unlockedWords.find(u => u.text === w.text));
     toUnlock = shuffle(pool).slice(0, CFG.wordsPerPhase);
     toUnlock.forEach(w => state.unlockedWords.push({ ...w, phase: state.phase }));
 
-    if (state.unlockedWords.length >= WORD_POOL.length) {
+    if (state.unlockedWords.length >= eligiblePool.length) {
       unlockAchievement('colecionador');
     }
   }

@@ -35,6 +35,7 @@ function startGame(mode = 'classic', slotId = null) {
     state.timeAttackSecs = 60;
   }
   state.speedMultiplier = diffCfg.initialSpeed;
+  state.speedAccum      = 0;
   screenStart.classList.remove('active');
   screenGame.classList.add('active');
   hiddenInput.focus();
@@ -354,6 +355,7 @@ function useContinue() {
   state.lives           = diffCfg.startLives;
   state.progress        = 0;
   state.speedMultiplier = diffCfg.initialSpeed;
+  state.speedAccum      = 0;
   state.activeItems.forEach(i => i.el?.parentNode?.removeChild(i.el));
   state.activeItems     = [];
   modalGameover.classList.add('hidden');
@@ -414,6 +416,26 @@ function gameLoop(ts) {
   }
 
   if (timersChanged && typeof renderSkills === 'function') renderSkills();
+
+  // Progressive speed increase: a cada 5 segundos aumenta +0.01x (limite até velocidade inicial + 2.0x)
+  if (state.gameMode !== 'training' && (!state.bossBattle || !state.bossBattle.active)) {
+    state.speedAccum = (state.speedAccum || 0) + dt;
+    const interval = (typeof CFG !== 'undefined' && CFG.speedTimerInterval) ? CFG.speedTimerInterval : 5.0;
+    if (state.speedAccum >= interval) {
+      state.speedAccum -= interval;
+      if ((state.activeTimers?.speedlock || 0) <= 0) {
+        const diffCfg = typeof getDifficultyConfig === 'function' ? getDifficultyConfig() : { initialSpeed: 1.0 };
+        const baseSpeed = (typeof diffCfg.initialSpeed === 'number') ? diffCfg.initialSpeed : 1.0;
+        const maxAllowed = Math.round((baseSpeed + ((typeof CFG !== 'undefined' && CFG.speedMaxIncrease) ? CFG.speedMaxIncrease : 2.0)) * 100) / 100;
+        const curSpeed = (typeof state.speedMultiplier === 'number') ? state.speedMultiplier : baseSpeed;
+        const step = (typeof CFG !== 'undefined' && CFG.speedTimerIncrement) ? CFG.speedTimerIncrement : 0.01;
+        if (curSpeed < maxAllowed) {
+          state.speedMultiplier = Math.min(maxAllowed, Math.round((curSpeed + step) * 100) / 100);
+          updateHUD();
+        }
+      }
+    }
+  }
 
   // Multipliers & effective speed
   const isFrozen = (state.activeTimers.freezer || 0) > 0;
@@ -583,35 +605,24 @@ function handleLetterTyped(char) {
         showFeedback(typeof t === 'function' ? t('fb_combo_broken') : 'Combo broken!', 'error');
       }
 
-      // Typo: -1 penalty at phase end + 1 point deduction from progress bar
+      // Typo: -1 penalty at phase end + 1 point deduction from progress bar (sem penalidade de velocidade)
       state.errorsPhase++;
       state.totalErrors++;
       const diffCfg = typeof getDifficultyConfig === 'function' ? getDifficultyConfig() : { speedErrorPenalty: 0, progressErrorPenalty: 1 };
       if (state.gameMode !== 'training' && diffCfg.progressErrorPenalty > 0) {
         state.progress = Math.max(0, (state.progress || 0) - diffCfg.progressErrorPenalty);
       }
-      if (state.gameMode !== 'training' && (state.activeTimers?.speedlock || 0) <= 0 && diffCfg.speedErrorPenalty > 0) {
-        state.speedMultiplier = Math.min(CFG.maxSpeedMult, (state.speedMultiplier || 1.0) + diffCfg.speedErrorPenalty);
-      }
 
       if (progressFill && diffCfg.progressErrorPenalty > 0) {
         progressFill.classList.add('err-flash');
         setTimeout(() => progressFill.classList.remove('err-flash'), 320);
-      }
-      if (speedDisplay && diffCfg.speedErrorPenalty > 0) {
-        speedDisplay.classList.add('speed-up-flash');
-        setTimeout(() => speedDisplay.classList.remove('speed-up-flash'), 320);
       }
 
       state.typedBuffer = '';
       clearHighlight();
       playSound('error');
       const errLbl = typeof t === 'function' ? t('fb_error') : '❌ Error';
-      if (diffCfg.speedErrorPenalty > 0) {
-        showFeedback(`${errLbl} (+${diffCfg.speedErrorPenalty}x)`, 'error');
-      } else {
-        showFeedback(errLbl, 'error');
-      }
+      showFeedback(errLbl, 'error');
       updateHUD();
     }
   }
@@ -664,14 +675,7 @@ function completeItem(item) {
   item.el.classList.add('destroying');
   spawnParticles(item.el, item.text.length * 2);
 
-  // Speed progression during the match
-  if (item.type === 'letter') {
-    state.speedMultiplier = Math.min(CFG.maxSpeedMult, (state.speedMultiplier || 1.0) + CFG.speedBonusLetter);
-  } else if (item.type === 'syllable') {
-    state.speedMultiplier = Math.min(CFG.maxSpeedMult, (state.speedMultiplier || 1.0) + CFG.speedBonusSyl);
-  } else {
-    state.speedMultiplier = Math.min(CFG.maxSpeedMult, (state.speedMultiplier || 1.0) + CFG.speedBonusWord);
-  }
+  // Velocidade NÃO aumenta ao acertar elementos (progressão controlada a cada 5s pelo gameLoop)
 
   // Handle Wildcard
   if (item.type === 'wildcard') {

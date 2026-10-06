@@ -575,14 +575,17 @@ function grantRewardSkill(skill) {
     showFeedback(typeof t === 'function' ? t('fb_continue_obtained') : '🪙 +1 Continue token obtained!', 'special');
   } else if (skill.id === 'wordpack') {
     const unlockedTexts = new Set(state.unlockedWords.map(w => w.text.toLowerCase()));
-    const lockedPool    = WORD_POOL.filter(w => !unlockedTexts.has(w.text.toLowerCase()));
+    const eligiblePool  = (typeof getWordPoolForDifficulty === 'function')
+      ? getWordPoolForDifficulty(WORD_POOL, state.difficulty)
+      : WORD_POOL;
+    const lockedPool    = eligiblePool.filter(w => !unlockedTexts.has(w.text.toLowerCase()));
     const picked        = shuffle(lockedPool).slice(0, 3);
     if (picked.length > 0) {
       picked.forEach(w => state.unlockedWords.push({ ...w, phase: state.phase }));
       const names = picked.map(w => w.text.toUpperCase()).join(', ');
       const unlLabel = typeof t === 'function' ? t('library_unlocked') : 'Unlocked';
       showFeedback(`📦 ${unlLabel}: ${names}!`, 'special');
-      if (state.unlockedWords.length >= WORD_POOL.length) {
+      if (state.unlockedWords.length >= eligiblePool.length) {
         if (typeof unlockAchievement === 'function') unlockAchievement('colecionador');
       }
     }

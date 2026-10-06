@@ -619,6 +619,256 @@
             "text": "tianxian",
             "type": "tech",
             "meaning": "天线：发射和接收电磁无线电波信号的高频导电装置"
+        },
+        {
+            "text": "taiyang",
+            "type": "cosmos",
+            "meaning": "太阳：温暖照耀大地、维系星系运转的中心恒星"
+        },
+        {
+            "text": "yue",
+            "type": "cosmos",
+            "meaning": "月亮：夜空中散发柔和银辉的天然卫星"
+        },
+        {
+            "text": "he",
+            "type": "nature",
+            "meaning": "江河：自崇山峻岭奔流向海的清澈水系"
+        },
+        {
+            "text": "hai",
+            "type": "nature",
+            "meaning": "大海：环绕辽阔陆地的无垠蔚蓝咸水水域"
+        },
+        {
+            "text": "niao",
+            "type": "animal",
+            "meaning": "飞鸟：披覆羽毛、展翅在晴空翱翔的生灵"
+        },
+        {
+            "text": "mi",
+            "type": "nature",
+            "meaning": "蜂蜜：勤劳工蜂采集百花酿成的金色甘饴"
+        },
+        {
+            "text": "sheng",
+            "type": "element",
+            "meaning": "声音：通过空气介质传播并被双耳感知的波动"
+        },
+        {
+            "text": "hua",
+            "type": "nature",
+            "meaning": "鲜花：色彩娇艳、芬芳怡人的植物绽放部位"
+        },
+        {
+            "text": "ya",
+            "type": "animal",
+            "meaning": "鸭子：扁平嘴喙、在水波中自在浮游的水禽"
+        },
+        {
+            "text": "wa",
+            "type": "animal",
+            "meaning": "青蛙：在池塘荷叶间敏捷跳跃捕食的双栖动物"
+        },
+        {
+            "text": "zhong",
+            "type": "object",
+            "meaning": "铜钟：敲击时回荡悠长清脆余音的中空金属乐器"
+        },
+        {
+            "text": "chuan",
+            "type": "vehicle",
+            "meaning": "舟船：承载旅人与行囊在江海之上平稳航行的船只"
+        },
+        {
+            "text": "ping",
+            "type": "object",
+            "meaning": "花瓶：精工烧制、用以盛水供奉雅致花枝的瓷器"
+        },
+        {
+            "text": "jin",
+            "type": "element",
+            "meaning": "黄金：色泽恒久璀璨、珍贵且极具保值价值的贵金属"
+        },
+        {
+            "text": "ditu",
+            "type": "object",
+            "meaning": "地图：俯瞰描绘山川疆域、道路走向的指引图卷"
+        },
+        {
+            "text": "shu",
+            "type": "object",
+            "meaning": "书卷：装订成册、记载人类智慧与故事的典籍"
+        },
+        {
+            "text": "qiao",
+            "type": "place",
+            "meaning": "桥梁：飞架于峡谷或水流之上沟通两岸的枢纽建筑"
+        },
+        {
+            "text": "xiaozhou",
+            "type": "vehicle",
+            "meaning": "小舟：轻巧灵活、以双桨划行在碧波之上的小艇"
+        },
+        {
+            "text": "ye",
+            "type": "nature",
+            "meaning": "绿叶：吸收阳光并进行光合作用的植物青翠叶片"
+        },
+        {
+            "text": "yaoshi",
+            "type": "object",
+            "meaning": "钥匙：雕有特制齿痕、用来开启重重门锁的金属器具"
+        },
+        {
+            "text": "meng",
+            "type": "feeling",
+            "meaning": "梦境：沉睡时心灵深处展开的斑斓奇妙幻象"
+        },
+        {
+            "text": "cao",
+            "type": "nature",
+            "meaning": "芳草：铺满原野、生机盎然的青翠地被植物"
+        },
+        {
+            "text": "shi",
+            "type": "art",
+            "meaning": "诗歌：饱含节奏旋律与真挚意境的优美韵文"
+        },
+        {
+            "text": "guan",
+            "type": "object",
+            "meaning": "王冠：缀满璀璨宝石与赤金、象征尊荣的冠冕"
+        },
+        {
+            "text": "zhenzhu",
+            "type": "object",
+            "meaning": "珍珠：在母贝温润蚌体深处孕育而出的虹光宝珠"
+        },
+        {
+            "text": "huayuan",
+            "type": "place",
+            "meaning": "花园：花木扶疏、修葺整齐用以漫步赏景的庭院"
+        },
+        {
+            "text": "simiao",
+            "type": "place",
+            "meaning": "寺庙：庄严宁静、供人冥想祈福与修身养性的古刹"
+        },
+        {
+            "text": "men",
+            "type": "fantasy",
+            "meaning": "星门：穿透虚空、连接遥远时空与奇境的神奇通道"
+        },
+        {
+            "text": "dun",
+            "type": "object",
+            "meaning": "坚盾：用以格挡敌方利刃攻势、守护周全的护具"
+        },
+        {
+            "text": "lvxing",
+            "type": "experience",
+            "meaning": "旅行：探索未知风物、领略广袤天地的心灵漫游"
+        },
+        {
+            "text": "jian",
+            "type": "object",
+            "meaning": "飞箭：以紧绷弓弦强力射出、疾速正中靶心的锐利箭头"
+        },
+        {
+            "text": "lin",
+            "type": "nature",
+            "meaning": "树林：乔木丛生、鸟鸣幽幽的苍翠自然林地"
+        },
+        {
+            "text": "huixing",
+            "type": "cosmos",
+            "meaning": "彗星：拖着修长冰雪光芒尘尾掠过深空的奇异天体"
+        },
+        {
+            "text": "chengbao",
+            "type": "place",
+            "meaning": "城堡：耸立着坚固石墙与高耸箭塔的宏伟中世纪要塞"
+        },
+        {
+            "text": "xingxi",
+            "type": "cosmos",
+            "meaning": "星系：由数百亿恒星与星云在重力下交织的巨大漩涡"
+        },
+        {
+            "text": "jiyi",
+            "type": "mind",
+            "meaning": "记忆：储存在脑海深处的往事经验与宝贵认知"
+        },
+        {
+            "text": "yuzhou",
+            "type": "cosmos",
+            "meaning": "宇宙：包含一切时空、物质与浩瀚星辰的无限整体"
+        },
+        {
+            "text": "migong",
+            "type": "place",
+            "meaning": "迷宫：曲折盘旋、令人迷失方向而探寻唯一出口的通道"
+        },
+        {
+            "text": "hudie",
+            "type": "animal",
+            "meaning": "蝴蝶：破茧而出、展动如画绚烂双翅起舞的花间昆虫"
+        },
+        {
+            "text": "baofeng",
+            "type": "nature",
+            "meaning": "风暴：伴随狂风呼啸、电闪雷鸣的剧烈气象动荡"
+        },
+        {
+            "text": "xingzuo",
+            "type": "cosmos",
+            "meaning": "星座：在夜空中相映成趣、寄托神话传说的恒星图景"
+        },
+        {
+            "text": "shandian",
+            "type": "element",
+            "meaning": "闪电：瞬间划破浓云夜空、爆发出万丈光芒的高压电火"
+        },
+        {
+            "text": "dipingxian",
+            "type": "nature",
+            "meaning": "地平线：极目远眺时广袤大地与苍穹遥遥相接的视界"
+        },
+        {
+            "text": "feichuan",
+            "type": "tech",
+            "meaning": "飞船：航行于浩渺星海之间的先进深空探险巡航舰"
+        },
+        {
+            "text": "keji",
+            "type": "tech",
+            "meaning": "科技：推动人类文明革新与生活便捷的科学成果"
+        },
+        {
+            "text": "jianzhu",
+            "type": "art",
+            "meaning": "建筑：兼顾稳固功能与空间美学意境的造物艺术"
+        },
+        {
+            "text": "sudu",
+            "type": "concept",
+            "meaning": "速度：衡量物体在单位时间内位移快慢的物理概念"
+        },
+        {
+            "text": "mimi",
+            "type": "mystery",
+            "meaning": "秘密：深藏不露、令人无限神往猜度的未解之谜"
+        },
+        {
+            "text": "hechenggi",
+            "type": "music",
+            "meaning": "合成器：通过电子电路调制各种奇妙声波音色的现代乐器"
+        },
+        {
+            "text": "xinyin",
+            "type": "mind",
+            "meaning": "心灵感应：不假言语而直接在心灵之间传递念想的默契能力"
         }
     ],
     "bossWords": {

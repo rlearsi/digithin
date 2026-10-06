@@ -624,6 +624,256 @@
             "text": "antenne",
             "type": "tech",
             "meaning": "Dispositif métallique émettant et recevant les ondes radio haute fréquence"
+        },
+        {
+            "text": "soleil",
+            "type": "cosmos",
+            "meaning": "Étoile lumineuse réchauffant et éclairant notre système solaire"
+        },
+        {
+            "text": "lune",
+            "type": "cosmos",
+            "meaning": "Satellite naturel de la Terre illuminant doucement la nuit"
+        },
+        {
+            "text": "fleuve",
+            "type": "nature",
+            "meaning": "Grand cours d'eau naturelle se jetant dans la mer"
+        },
+        {
+            "text": "mer",
+            "type": "nature",
+            "meaning": "Vaste étendue d'eau salée bordant rivages et îles"
+        },
+        {
+            "text": "oiseau",
+            "type": "animal",
+            "meaning": "Animal ailé et emplumé volant librement dans les cieux"
+        },
+        {
+            "text": "miel",
+            "type": "nature",
+            "meaning": "Substance dorée et sucrée confectionnée par les abeilles"
+        },
+        {
+            "text": "son",
+            "type": "element",
+            "meaning": "Onde vibratoire acoustique captée avec clarté par l'ouïe"
+        },
+        {
+            "text": "fleur",
+            "type": "nature",
+            "meaning": "Corolle végétale colorée et parfumée qui orne les plantes"
+        },
+        {
+            "text": "canard",
+            "type": "animal",
+            "meaning": "Oiseau aquatique au bec aplati qui nage paisiblement sur l'eau"
+        },
+        {
+            "text": "crapaud",
+            "type": "animal",
+            "meaning": "Amphibien à peau rugueuse sautant au bord des étangs"
+        },
+        {
+            "text": "cloche",
+            "type": "objet",
+            "meaning": "Objet métallique creux sonnant des mélodies en vibrant"
+        },
+        {
+            "text": "navire",
+            "type": "cosmos",
+            "meaning": "Grand vaisseau spatial conçu pour traverser les galaxies"
+        },
+        {
+            "text": "vase",
+            "type": "objet",
+            "meaning": "Récipient d'art décoratif conçu pour accueillir des fleurs"
+        },
+        {
+            "text": "or",
+            "type": "element",
+            "meaning": "Métal précieux brillant et inaltérable à l'éclat jaune"
+        },
+        {
+            "text": "carte",
+            "type": "objet",
+            "meaning": "Représentation graphique des continents et des chemins"
+        },
+        {
+            "text": "livre",
+            "type": "objet",
+            "meaning": "Recueil relié de pages écrites recelant le savoir"
+        },
+        {
+            "text": "pont",
+            "type": "lieu",
+            "meaning": "Ouvrage suspendu reliant deux rives au-dessus des flots"
+        },
+        {
+            "text": "bateau",
+            "type": "objet",
+            "meaning": "Embarcation conçue pour voguer sur les eaux des rivières"
+        },
+        {
+            "text": "feuille",
+            "type": "nature",
+            "meaning": "Organe végétal vert captant la lumière pour la photosynthèse"
+        },
+        {
+            "text": "cle",
+            "type": "objet",
+            "meaning": "Outil métallique gravé servant à ouvrir verrous et serrures"
+        },
+        {
+            "text": "reve",
+            "type": "sentiment",
+            "meaning": "Images poétiques et songes créés par l'esprit endormi"
+        },
+        {
+            "text": "herbe",
+            "type": "nature",
+            "meaning": "Tapis végétal ras et verdoyant tapissant les prés"
+        },
+        {
+            "text": "vers",
+            "type": "art",
+            "meaning": "Ligne rythmée de poésie cadencée par des rimes musicales"
+        },
+        {
+            "text": "couronne",
+            "type": "objet",
+            "meaning": "Ornement royal circulaire serti d'or et de gemmes rares"
+        },
+        {
+            "text": "perle",
+            "type": "objet",
+            "meaning": "Gemme nacrée naturelle produite au sein des huîtres marines"
+        },
+        {
+            "text": "jardin",
+            "type": "lieu",
+            "meaning": "Enclos cultivé orné de parterres fleuris et d'allées"
+        },
+        {
+            "text": "temple",
+            "type": "lieu",
+            "meaning": "Édifice monumental dressé pour le recueillement et la paix"
+        },
+        {
+            "text": "portail",
+            "type": "fantasy",
+            "meaning": "Entrée dimensionnelle magique reliant des époques lointaines"
+        },
+        {
+            "text": "bouclier",
+            "type": "objet",
+            "meaning": "Armure protectrice portée au bras pour stopper les coups"
+        },
+        {
+            "text": "voyage",
+            "type": "experience",
+            "meaning": "Expédition vers des contrées neuves et dépaysantes"
+        },
+        {
+            "text": "fleche",
+            "type": "objet",
+            "meaning": "Tige pointue et légère projetée par la corde d'un arc"
+        },
+        {
+            "text": "bosquet",
+            "type": "nature",
+            "meaning": "Petit ensemble boisé d'arbres feuillus abritant des oiseaux"
+        },
+        {
+            "text": "comete",
+            "type": "cosmos",
+            "meaning": "Corps glacé voyageant dans l'espace avec une traînée étincelante"
+        },
+        {
+            "text": "chateau",
+            "type": "lieu",
+            "meaning": "Grande forteresse seigneuriale flanquée de hautes tours"
+        },
+        {
+            "text": "galaxie",
+            "type": "cosmos",
+            "meaning": "Tourbillon cosmique de milliards d'étoiles et de nébuleuses"
+        },
+        {
+            "text": "memoire",
+            "type": "esprit",
+            "meaning": "Faculté cognitive de conserver et rappeler des souvenirs"
+        },
+        {
+            "text": "univers",
+            "type": "cosmos",
+            "meaning": "Ensemble complet et infini de l'espace, matière et temps"
+        },
+        {
+            "text": "labyrinthe",
+            "type": "lieu",
+            "meaning": "Réseau enchevêtré de couloirs et impasses à issue unique"
+        },
+        {
+            "text": "papillon",
+            "type": "animal",
+            "meaning": "Insecte volant gracieux aux ailes ornées de vives couleurs"
+        },
+        {
+            "text": "tempete",
+            "type": "nature",
+            "meaning": "Tourmente climatique violente mêlant bourrasques et pluie"
+        },
+        {
+            "text": "constellation",
+            "type": "cosmos",
+            "meaning": "Regroupement stellaire traçant des figures mythiques"
+        },
+        {
+            "text": "eclair",
+            "type": "element",
+            "meaning": "Trait lumineux foudroyant perçant le ciel lors d'un orage"
+        },
+        {
+            "text": "horizon",
+            "type": "nature",
+            "meaning": "Ligne visuelle lointaine où la terre semble joindre le ciel"
+        },
+        {
+            "text": "astronef",
+            "type": "tech",
+            "meaning": "Navette interstellaire équipée pour franchir les nébuleuses"
+        },
+        {
+            "text": "technologie",
+            "type": "tech",
+            "meaning": "Application moderne des découvertes scientifiques utiles"
+        },
+        {
+            "text": "architecture",
+            "type": "art",
+            "meaning": "Art noble de concevoir des édifices pérennes et élégants"
+        },
+        {
+            "text": "vitesse",
+            "type": "concept",
+            "meaning": "Rapidité cinétique de déplacement mesurée dans le temps"
+        },
+        {
+            "text": "mystere",
+            "type": "mystere",
+            "meaning": "Réalité impénétrable qui intrigue et fascine l'esprit"
+        },
+        {
+            "text": "synthetiseur",
+            "type": "musique",
+            "meaning": "Console électronique sculptant des timbres sonores variés"
+        },
+        {
+            "text": "telepathie",
+            "type": "esprit",
+            "meaning": "Faculté d'échanger pensées et images d'esprit à esprit"
         }
     ],
     "bossWords": {

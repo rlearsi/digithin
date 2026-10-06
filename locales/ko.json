@@ -618,6 +618,256 @@
             "text": "antena",
             "type": "tech",
             "meaning": "안테나: 무선 전자기파를 송수신하는 통신 기기"
+        },
+        {
+            "text": "taeyang",
+            "type": "cosmos",
+            "meaning": "태양: 지구를 따뜻하게 비추는 태양계의 중심 항성"
+        },
+        {
+            "text": "dal",
+            "type": "cosmos",
+            "meaning": "달: 밤하늘을 은은한 은빛으로 밝히는 천연 위성"
+        },
+        {
+            "text": "gang",
+            "type": "nature",
+            "meaning": "강: 산에서 바다로 쉼 없이 흘러가는 맑은 물줄기"
+        },
+        {
+            "text": "bada",
+            "type": "nature",
+            "meaning": "바다: 지구 표면의 대부분을 덮고 있는 거대한 짠물"
+        },
+        {
+            "text": "sae",
+            "type": "animal",
+            "meaning": "새: 깃털 달린 날개를 펴고 푸른 하늘을 나는 생물"
+        },
+        {
+            "text": "kkul",
+            "type": "nature",
+            "meaning": "꿀: 벌들이 꽃에서 모아 만든 달콤하고 황금빛의 꿀"
+        },
+        {
+            "text": "sori",
+            "type": "element",
+            "meaning": "소리: 공기를 타고 전해져 귀로 듣는 맑은 음향 진동"
+        },
+        {
+            "text": "kkot",
+            "type": "nature",
+            "meaning": "꽃: 화사한 색채와 은은한 향기를 피워내는 식물의 꽃"
+        },
+        {
+            "text": "ori",
+            "type": "animal",
+            "meaning": "오리: 물 위를 헤엄치며 물풀을 먹는 납작한 부리의 물새"
+        },
+        {
+            "text": "gaeguri",
+            "type": "animal",
+            "meaning": "개구리: 물가에서 높이 뛰어오르는 긴 다리의 양서류"
+        },
+        {
+            "text": "jong",
+            "type": "object",
+            "meaning": "종: 치면 맑고 깊은 울림이 은은하게 퍼지는 금속 악기"
+        },
+        {
+            "text": "bae",
+            "type": "vehicle",
+            "meaning": "배: 강과 바다 위를 떠다니며 사람과 짐을 나르는 운송 수단"
+        },
+        {
+            "text": "hwabyeong",
+            "type": "object",
+            "meaning": "화병: 꽃을 정성껏 꽂아 방을 장식하는 도자기 그릇"
+        },
+        {
+            "text": "geum",
+            "type": "element",
+            "meaning": "금: 영원히 변치 않는 광채를 지닌 귀한 황금빛 금속"
+        },
+        {
+            "text": "jido",
+            "type": "object",
+            "meaning": "지도: 산과 강, 길의 위치를 한눈에 알아볼 수 있게 그린 그림"
+        },
+        {
+            "text": "chaek",
+            "type": "object",
+            "meaning": "책: 지식과 이야기를 가득 담아 종이로 엮어 낸 책자"
+        },
+        {
+            "text": "dari",
+            "type": "place",
+            "meaning": "다리: 강이나 골짜기를 건널 수 있게 양쪽을 이은 건축물"
+        },
+        {
+            "text": "boteu",
+            "type": "vehicle",
+            "meaning": "보트: 노를 저어 잔잔한 호수나 강을 건너는 작은 배"
+        },
+        {
+            "text": "ip",
+            "type": "nature",
+            "meaning": "잎: 햇빛을 흡수하여 광합성을 하는 식물의 푸른 잎사귀"
+        },
+        {
+            "text": "yeolsoe",
+            "type": "object",
+            "meaning": "열쇠: 자물쇠를 돌려 문을 열고 잠그는 정교한 쇠붙이"
+        },
+        {
+            "text": "kkum",
+            "type": "feeling",
+            "meaning": "꿈: 잠든 사이에 마음속에 펼쳐지는 신비로운 상상"
+        },
+        {
+            "text": "pul",
+            "type": "nature",
+            "meaning": "풀: 들판을 싱그럽게 뒤덮으며 자라나는 푸른 식물"
+        },
+        {
+            "text": "si",
+            "type": "art",
+            "meaning": "시: 운율과 감동을 담아 마음을 노래하는 아름다운 글"
+        },
+        {
+            "text": "wanggwan",
+            "type": "object",
+            "meaning": "왕관: 보석과 황금으로 장식하여 머리에 쓰는 왕의 관"
+        },
+        {
+            "text": "jinju",
+            "type": "object",
+            "meaning": "진주: 조개 속에서 영롱하게 자라난 무지갯빛 보석"
+        },
+        {
+            "text": "jeong-won",
+            "type": "place",
+            "meaning": "정원: 꽃과 나무를 곱게 가꾸어 쉬어갈 수 있게 만든 마당"
+        },
+        {
+            "text": "jeolsa",
+            "type": "place",
+            "meaning": "절: 고요함 속에서 명상과 수양이 이루어지는 사찰"
+        },
+        {
+            "text": "mun",
+            "type": "fantasy",
+            "meaning": "문: 다른 차원과 미지의 세계로 연결되는 신비로운 통로"
+        },
+        {
+            "text": "bangpae",
+            "type": "object",
+            "meaning": "방패: 적의 공격을 튼튼히 막아내는 방어용 무구"
+        },
+        {
+            "text": "yeohaeng",
+            "type": "experience",
+            "meaning": "여행: 낯선 고장을 찾아 떠나며 견문을 넓히는 여정"
+        },
+        {
+            "text": "hwasal",
+            "type": "object",
+            "meaning": "화살: 활시위를 당겨 멀리 있는 표적을 맞히는 뾰족한 살"
+        },
+        {
+            "text": "sup",
+            "type": "nature",
+            "meaning": "숲: 울창한 나무들이 우거져 맑은 숨을 내쉬는 곳"
+        },
+        {
+            "text": "hyeseong",
+            "type": "cosmos",
+            "meaning": "혜성: 얼음과 먼지로 이루어져 빛나는 꼬리를 끄는 천체"
+        },
+        {
+            "text": "seong",
+            "type": "place",
+            "meaning": "성: 돌벽과 망루를 높이 쌓아 지은 견고한 요새"
+        },
+        {
+            "text": "eunha",
+            "type": "cosmos",
+            "meaning": "은하: 수천억 개의 별과 성운이 거대하게 모인 우주 집단"
+        },
+        {
+            "text": "gieok",
+            "type": "mind",
+            "meaning": "기억: 지나간 일이나 배운 지식을 머릿속에 간직하는 능력"
+        },
+        {
+            "text": "uju",
+            "type": "cosmos",
+            "meaning": "우주: 시간과 공간, 모든 물질과 에너지가 끝없이 펼쳐진 세상"
+        },
+        {
+            "text": "miro",
+            "type": "place",
+            "meaning": "미로: 복잡하게 얽혀 길을 찾기 힘든 신비로운 통로"
+        },
+        {
+            "text": "nabi",
+            "type": "animal",
+            "meaning": "나비: 화려한 날개를 팔랑이며 꽃 사이를 나는 곤충"
+        },
+        {
+            "text": "pokpung",
+            "type": "nature",
+            "meaning": "폭풍: 강한 비바람과 번개가 사납게 몰아치는 날씨"
+        },
+        {
+            "text": "byeoljari",
+            "type": "cosmos",
+            "meaning": "별자리: 밤하늘의 별들을 이어 신화 속 형상을 그린 것"
+        },
+        {
+            "text": "beongae",
+            "type": "element",
+            "meaning": "번개: 먹구름 사이로 눈부시게 번쩍이는 강력한 전기 방전"
+        },
+        {
+            "text": "jipyeongseon",
+            "type": "nature",
+            "meaning": "지평선: 하늘과 대지가 아득히 맞닿아 보이는 경계선"
+        },
+        {
+            "text": "ujujeonham",
+            "type": "tech",
+            "meaning": "우주선: 성간 우주를 비행할 수 있도록 설계된 첨단 탐사선"
+        },
+        {
+            "text": "gisul",
+            "type": "tech",
+            "meaning": "기술: 인류의 삶을 편리하게 발전시키는 과학의 응용"
+        },
+        {
+            "text": "geonchuk",
+            "type": "art",
+            "meaning": "건축: 튼튼하고 아름다운 공간을 창조하는 종합 예술"
+        },
+        {
+            "text": "sokdo",
+            "type": "concept",
+            "meaning": "속도: 일정한 시간 동안 물체가 나아가는 빠르기"
+        },
+        {
+            "text": "bimil",
+            "type": "mystery",
+            "meaning": "비밀: 감추어져 있어 호기심을 자극하는 깊은 수수께끼"
+        },
+        {
+            "text": "sinseusaijeo",
+            "type": "music",
+            "meaning": "합성기: 전자 회로로 다채로운 음색을 창조하는 전자 악기"
+        },
+        {
+            "text": "telepasi",
+            "type": "mind",
+            "meaning": "텔레파시: 말하지 않고도 마음에서 마음으로 생각을 전하는 능력"
         }
     ],
     "bossWords": {
