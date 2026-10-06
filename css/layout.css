@@ -306,6 +306,9 @@
 .hud-mobile-lives {
   display: none;
 }
+.hud-mobile-stats {
+  display: none;
+}
 
 .hud-center-block {
   display: flex;
@@ -666,6 +669,18 @@
 #game-column.has-finger-guide.queue-pos-bottom::after {
   bottom: 106px;
 }
+#game-column.has-virtual-keyboard::after {
+  bottom: var(--vk-height, 144px);
+}
+#game-column.has-virtual-keyboard.has-mobile-skills::after {
+  bottom: calc(var(--vk-height, 144px) + var(--msb-height, 38px));
+}
+#game-column.has-virtual-keyboard.queue-pos-bottom::after {
+  bottom: calc(var(--vk-height, 144px) + 52px);
+}
+#game-column.has-virtual-keyboard.queue-pos-bottom.has-mobile-skills::after {
+  bottom: calc(var(--vk-height, 144px) + 52px + var(--msb-height, 38px));
+}
 
 #game-area {
   position: relative;
@@ -702,6 +717,18 @@
 #game-column.has-finger-guide.queue-pos-bottom .shield-aura {
   bottom: 106px;
 }
+#game-column.has-virtual-keyboard .shield-aura {
+  bottom: var(--vk-height, 144px);
+}
+#game-column.has-virtual-keyboard.has-mobile-skills .shield-aura {
+  bottom: calc(var(--vk-height, 144px) + var(--msb-height, 38px));
+}
+#game-column.has-virtual-keyboard.queue-pos-bottom .shield-aura {
+  bottom: calc(var(--vk-height, 144px) + 52px);
+}
+#game-column.has-virtual-keyboard.queue-pos-bottom.has-mobile-skills .shield-aura {
+  bottom: calc(var(--vk-height, 144px) + 52px + var(--msb-height, 38px));
+}
 
 @keyframes shieldPulse {
   0%   { filter: brightness(1); }
@@ -735,7 +762,8 @@
   border-radius: 0 0 24px 24px;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
 }
-#game-column.has-finger-guide.queue-pos-bottom #queue-bar {
+#game-column.has-finger-guide.queue-pos-bottom #queue-bar,
+#game-column.has-virtual-keyboard.queue-pos-bottom #queue-bar {
   border-radius: 0;
 }
 
@@ -984,6 +1012,244 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   line-height: 1.2;
+}
+
+/* ======================================================
+   ON-SCREEN VIRTUAL KEYBOARD (TECLADO VIRTUAL MOBILE)
+   ====================================================== */
+:root {
+  --vk-height: 144px;
+  --msb-height: 38px;
+}
+
+#virtual-keyboard {
+  flex-shrink: 0;
+  width: 100%;
+  padding: 8px 8px 12px;
+  background: var(--glass-queue);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 6;
+  order: 4; /* Docked at the bottom of the game column */
+  border-radius: 0 0 24px 24px;
+  border: none !important;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+  transition: opacity 0.25s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+#virtual-keyboard.hidden {
+  display: none !important;
+}
+
+#game-column.queue-pos-bottom #virtual-keyboard {
+  order: 3;
+}
+
+.vk-row {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.vk-key {
+  flex: 1;
+  max-width: 42px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass-card);
+  backdrop-filter: var(--glass-card-blur);
+  -webkit-backdrop-filter: var(--glass-card-blur);
+  border-radius: 9px;
+  border: none !important;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--t1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background 0.1s ease, filter 0.1s ease, color 0.1s ease, box-shadow 0.1s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  padding: 0;
+  transform: none !important;
+}
+
+[data-theme="light"] .vk-key {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.vk-key:hover {
+  background: var(--glass-hover);
+  filter: brightness(1.15);
+  transform: none !important;
+}
+
+.vk-key.vk-pressed,
+.vk-key:active {
+  background: var(--glass-active);
+  color: var(--accent-cyan);
+  filter: brightness(1.25);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: none !important;
+}
+
+.vk-key-backspace {
+  flex: 1.4;
+  max-width: 52px;
+  color: var(--accent-coral);
+}
+
+.vk-key-backspace svg {
+  display: block;
+}
+
+/* ======================================================
+   MOBILE QUICK-CAST SKILLS BAR (MAGIAS NO MOBILE)
+   ====================================================== */
+.mobile-skills-bar {
+  display: none; /* Hidden on desktop screens (>700px) */
+  flex-shrink: 0;
+  width: 100%;
+  padding: 4px 8px;
+  background: var(--glass-queue);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  z-index: 6;
+  order: 2;
+  border-radius: 0;
+  border: none !important;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.12);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.mobile-skills-bar.hidden {
+  display: none !important;
+}
+
+.mobile-skills-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 6px;
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.mobile-skills-list::-webkit-scrollbar {
+  display: none;
+}
+
+.msb-pill {
+  position: relative;
+  flex: 0 1 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: var(--glass-card);
+  backdrop-filter: var(--glass-card-blur);
+  -webkit-backdrop-filter: var(--glass-card-blur);
+  border-radius: var(--r-pill);
+  border: none !important;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--t1);
+  cursor: pointer;
+  transform: none !important;
+  transition: background 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+}
+
+.msb-pill:hover {
+  background: var(--glass-hover);
+  filter: brightness(1.15);
+  transform: none !important;
+}
+
+.msb-pill:active {
+  background: var(--glass-active);
+  filter: brightness(1.25);
+  transform: none !important;
+}
+
+.msb-pill.msb-is-active {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(99, 102, 241, 0.25)), var(--glass-card);
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.45);
+}
+
+.msb-pill.msb-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+}
+
+.msb-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.msb-svg {
+  display: block;
+}
+
+.msb-label {
+  white-space: nowrap;
+  max-width: 65px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.msb-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 1px 5px;
+  border-radius: 6px;
+  background: var(--glass-sub-card);
+  color: var(--accent-cyan);
+}
+
+.msb-pill.msb-is-active .msb-badge {
+  background: var(--accent-primary);
+  color: #FFFFFF;
+}
+
+.msb-dur-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  background: rgba(255, 255, 255, 0.15);
+  display: none;
+}
+
+.msb-pill.msb-is-active .msb-dur-track {
+  display: block;
+}
+
+.msb-dur-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-emerald));
+  transition: width 0.1s linear;
 }
 
 /* ======================================================

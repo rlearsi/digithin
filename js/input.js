@@ -290,6 +290,11 @@ document.addEventListener('keydown', e => {
   // Backspace clears buffer (or last char during boss battle)
   if (e.key === 'Backspace') {
     e.preventDefault();
+    const vkBack = document.querySelector('.vk-key[data-key="BACKSPACE"]');
+    if (vkBack) {
+      vkBack.classList.add('vk-pressed');
+      setTimeout(() => vkBack.classList.remove('vk-pressed'), 120);
+    }
     if (state.bossBattle && state.bossBattle.active) {
       if (state.typedBuffer.length > 0) {
         state.typedBuffer = state.typedBuffer.slice(0, -1);
@@ -308,11 +313,21 @@ document.addEventListener('keydown', e => {
   if (!/^[a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ?!,.:;]$/.test(e.key)) return;
   e.preventDefault();
 
+  const vkBtn = document.querySelector(`.vk-key[data-key="${e.key.toUpperCase()}"]`);
+  if (vkBtn) {
+    vkBtn.classList.add('vk-pressed');
+    setTimeout(() => vkBtn.classList.remove('vk-pressed'), 120);
+  }
+
   handleLetterTyped(e.key.toUpperCase());
 });
 
-gameArea?.addEventListener('click', () => hiddenInput?.focus());
+gameArea?.addEventListener('click', () => {
+  if (typeof isVirtualKeyboardActive === 'function' && isVirtualKeyboardActive()) return;
+  hiddenInput?.focus();
+});
 gameArea?.addEventListener('touchstart', () => {
+  if (typeof isVirtualKeyboardActive === 'function' && isVirtualKeyboardActive()) return;
   if (hiddenInput && document.activeElement !== hiddenInput) {
     hiddenInput.focus();
   }

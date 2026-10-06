@@ -36,16 +36,70 @@
   }
   #hud {
     max-width: calc(100% - 16px);
-    margin: 8px auto 0 auto;
-    padding: 6px 12px;
+    margin: 6px auto 0 auto;
+    padding: 5px 12px;
+  }
+  .hud-mobile-stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 2px;
+    padding: 0 2px;
+  }
+  .hms-left-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hms-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 3.5px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--t2);
+  }
+  .hms-svg {
+    display: block;
+    color: var(--accent-cyan);
+  }
+  .hms-score .hms-svg {
+    color: var(--accent-cyan);
+  }
+  .hms-val {
+    font-family: inherit;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--t1);
+  }
+  .hms-val.text-amber {
+    color: #FBBF24;
   }
   .hud-mobile-lives {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 5px;
-    font-size: 0.95rem;
-    margin-top: 4px;
+    justify-content: flex-end;
+    gap: 3px;
+    font-size: 0.85rem;
+    margin-top: 0;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .hud-mobile-lives .heart-icon {
+    line-height: 1;
+    transition: opacity 0.2s ease, filter 0.2s ease;
+  }
+  .hud-mobile-lives .heart-icon.lost {
+    opacity: 0.25;
+    filter: grayscale(1);
+  }
+  .mobile-skills-bar {
+    display: flex;
+  }
+  .mobile-skills-bar.hidden {
+    display: none !important;
   }
   #queue-bar {
     height: 44px;
@@ -87,6 +141,43 @@
   }
   #game-column.has-finger-guide.queue-pos-bottom .shield-aura {
     bottom: 90px;
+  }
+  #virtual-keyboard {
+    padding: 6px 4px 8px;
+    border-radius: 0 0 18px 18px;
+    gap: 4px;
+  }
+  .vk-row {
+    gap: 3px;
+  }
+  .vk-key {
+    height: 36px;
+    font-size: 0.88rem;
+    border-radius: 7px;
+  }
+  #game-column.has-virtual-keyboard::after {
+    bottom: 128px;
+  }
+  #game-column.has-virtual-keyboard.has-mobile-skills::after {
+    bottom: 164px;
+  }
+  #game-column.has-virtual-keyboard.queue-pos-bottom::after {
+    bottom: 172px;
+  }
+  #game-column.has-virtual-keyboard.queue-pos-bottom.has-mobile-skills::after {
+    bottom: 208px;
+  }
+  #game-column.has-virtual-keyboard .shield-aura {
+    bottom: 128px;
+  }
+  #game-column.has-virtual-keyboard.has-mobile-skills .shield-aura {
+    bottom: 164px;
+  }
+  #game-column.has-virtual-keyboard.queue-pos-bottom .shield-aura {
+    bottom: 172px;
+  }
+  #game-column.has-virtual-keyboard.queue-pos-bottom.has-mobile-skills .shield-aura {
+    bottom: 208px;
   }
 }
 
@@ -139,7 +230,16 @@
     height: 16px;
   }
   #hud {
-    padding: 5px 8px;
+    padding: 4px 8px;
+  }
+  .hms-left-group {
+    gap: 6px;
+  }
+  .hms-item {
+    font-size: 0.72rem;
+  }
+  .hud-mobile-lives {
+    font-size: 0.76rem;
   }
   #phase-num {
     font-size: 0.75rem;
@@ -150,6 +250,46 @@
   }
   .badge-stat strong {
     font-size: 0.75rem;
+  }
+  #virtual-keyboard {
+    padding: 5px 3px 6px;
+    gap: 3.5px;
+  }
+  .vk-row {
+    gap: 2px;
+  }
+  .vk-key {
+    height: 33px;
+    font-size: 0.82rem;
+    border-radius: 6px;
+  }
+  .vk-key-backspace svg {
+    width: 15px;
+    height: 15px;
+  }
+  #game-column.has-virtual-keyboard::after {
+    bottom: 116px;
+  }
+  #game-column.has-virtual-keyboard.has-mobile-skills::after {
+    bottom: 150px;
+  }
+  #game-column.has-virtual-keyboard.queue-pos-bottom::after {
+    bottom: 160px;
+  }
+  #game-column.has-virtual-keyboard.queue-pos-bottom.has-mobile-skills::after {
+    bottom: 194px;
+  }
+  #game-column.has-virtual-keyboard .shield-aura {
+    bottom: 116px;
+  }
+  #game-column.has-virtual-keyboard.has-mobile-skills .shield-aura {
+    bottom: 150px;
+  }
+  #game-column.has-virtual-keyboard.queue-pos-bottom .shield-aura {
+    bottom: 160px;
+  }
+  #game-column.has-virtual-keyboard.queue-pos-bottom.has-mobile-skills .shield-aura {
+    bottom: 194px;
   }
 }
 

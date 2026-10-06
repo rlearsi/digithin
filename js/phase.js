@@ -81,6 +81,8 @@ function beginPhase() {
   state.lastTs = null;
   state.rafId  = requestAnimationFrame(gameLoop);
   updateHUD();
+  if (typeof updateVirtualKeyboardVisibility === 'function') updateVirtualKeyboardVisibility();
+  if (typeof updateFingerGuideVisibility === 'function') updateFingerGuideVisibility();
   if (typeof saveGameProgress === 'function') saveGameProgress();
 }
 

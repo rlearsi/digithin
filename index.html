@@ -166,6 +166,32 @@
 
     <!-- HUD (Centered Phase & Progress Bar, aligned to game column) -->
     <div id="hud">
+      <!-- Mobile Quick Stats: Coins & Score (Left) + Lives (Right) -->
+      <div id="hud-mobile-stats" class="hud-mobile-stats">
+        <div class="hms-left-group">
+          <div class="hms-item hms-score" title="Total Score">
+            <svg class="hms-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+              <path d="M4 22h16"/>
+              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>
+            </svg>
+            <span id="hms-score-val" class="hms-val">0</span>
+          </div>
+          <div class="hms-item hms-coins" title="Coins">
+            <svg class="hms-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color:#FBBF24">
+              <circle cx="12" cy="12" r="9"/>
+              <circle cx="12" cy="12" r="5"/>
+              <path d="M12 9v6"/>
+            </svg>
+            <span id="hms-coins-val" class="hms-val text-amber">0</span>
+          </div>
+        </div>
+        <div id="hud-mobile-lives" class="hud-mobile-lives"></div>
+      </div>
+
       <div class="hud-center-block">
         <div class="phase-tag"><span data-i18n="hud_phase">PHASE</span> <span id="phase-num">1</span></div>
         <div id="progress-wrap"><div id="progress-fill"></div></div>
@@ -174,7 +200,6 @@
           <span id="zen-fixed-badge" class="zen-fixed-badge hidden" data-i18n="hud_zen_badge">🧘 Zen Mode: no lives lost</span>
         </div>
       </div>
-      <div id="hud-mobile-lives" class="hud-mobile-lives"></div>
     </div>
 
     <!-- Layout: Left | Game Column | Right -->
@@ -311,6 +336,12 @@
         <div id="game-area">
           <div id="feedback-msg"></div>
         </div>
+
+        <!-- Barra Rápida de Habilidades no Tabuleiro (Mobile Quick-Cast Bar) -->
+        <div id="mobile-skills-bar" class="mobile-skills-bar hidden" aria-label="Mobile Skills">
+          <div id="mobile-skills-list" class="mobile-skills-list"></div>
+        </div>
+
         <!-- Upcoming items queue -->
         <div id="queue-bar">
           <div class="queue-label-wrap">
@@ -347,6 +378,53 @@
               <span class="fg-finger-name" id="fg-finger-name" data-i18n="finger_ready">Resting Position</span>
               <span class="fg-hand-sub" id="fg-hand-sub" data-i18n="finger_guide_title">Finger Guide</span>
             </div>
+          </div>
+        </div>
+
+        <!-- Teclado Virtual On-Screen para Dispositivos Móveis -->
+        <div id="virtual-keyboard" class="virtual-keyboard hidden" aria-label="Virtual Keyboard">
+          <!-- Linha 1: 10 teclas -->
+          <div class="vk-row" data-row="1">
+            <button type="button" class="vk-key" data-key="Q">Q</button>
+            <button type="button" class="vk-key" data-key="W">W</button>
+            <button type="button" class="vk-key" data-key="E">E</button>
+            <button type="button" class="vk-key" data-key="R">R</button>
+            <button type="button" class="vk-key" data-key="T">T</button>
+            <button type="button" class="vk-key" data-key="Y">Y</button>
+            <button type="button" class="vk-key" data-key="U">U</button>
+            <button type="button" class="vk-key" data-key="I">I</button>
+            <button type="button" class="vk-key" data-key="O">O</button>
+            <button type="button" class="vk-key" data-key="P">P</button>
+          </div>
+          <!-- Linha 2: 10 teclas -->
+          <div class="vk-row" data-row="2">
+            <button type="button" class="vk-key" data-key="A">A</button>
+            <button type="button" class="vk-key" data-key="S">S</button>
+            <button type="button" class="vk-key" data-key="D">D</button>
+            <button type="button" class="vk-key" data-key="F">F</button>
+            <button type="button" class="vk-key" data-key="G">G</button>
+            <button type="button" class="vk-key" data-key="H">H</button>
+            <button type="button" class="vk-key" data-key="J">J</button>
+            <button type="button" class="vk-key" data-key="K">K</button>
+            <button type="button" class="vk-key" data-key="L">L</button>
+            <button type="button" class="vk-key" data-key="Ç">Ç</button>
+          </div>
+          <!-- Linha 3: 7 teclas + Backspace -->
+          <div class="vk-row" data-row="3">
+            <button type="button" class="vk-key" data-key="Z">Z</button>
+            <button type="button" class="vk-key" data-key="X">X</button>
+            <button type="button" class="vk-key" data-key="C">C</button>
+            <button type="button" class="vk-key" data-key="V">V</button>
+            <button type="button" class="vk-key" data-key="B">B</button>
+            <button type="button" class="vk-key" data-key="N">N</button>
+            <button type="button" class="vk-key" data-key="M">M</button>
+            <button type="button" class="vk-key vk-key-backspace" data-key="BACKSPACE" aria-label="Backspace" title="Backspace">
+              <svg class="btn-svg-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/>
+                <line x1="18" y1="9" x2="12" y2="15"/>
+                <line x1="12" y1="9" x2="18" y2="15"/>
+              </svg>
+            </button>
           </div>
         </div>
       </div>
@@ -1087,6 +1165,16 @@
               <option value="off" data-i18n="settings_finger_guide_off">Disabled</option>
             </select>
           </div>
+
+          <!-- Setting: Virtual Keyboard -->
+          <div class="settings-opt-row">
+            <span class="settings-opt-label" data-i18n="settings_virtual_keyboard">Virtual Keyboard</span>
+            <select id="settings-virtual-keyboard-select" class="settings-opt-select" onchange="changeVirtualKeyboardSetting(this.value)">
+              <option value="auto" data-i18n="settings_virtual_keyboard_auto">Auto (Mobile Only)</option>
+              <option value="always" data-i18n="settings_virtual_keyboard_always">Always Active</option>
+              <option value="off" data-i18n="settings_virtual_keyboard_off">Disabled</option>
+            </select>
+          </div>
         </div>
 
         <!-- Grupo 2: Batalhas de Chefão -->
@@ -1186,7 +1274,7 @@
   <script src="js/i18n.js?v=4.3"></script>
   <script src="js/data.js?v=4.3"></script>
   <script src="js/state.js?v=4.3"></script>
-  <script src="js/ui.js?v=4.4"></script>
+  <script src="js/ui.js?v=4.5"></script>
   <script src="js/shop.js?v=4.3"></script>
   <script src="js/library.js?v=3.3"></script>
   <script src="js/spawner.js?v=4.3"></script>
@@ -1194,7 +1282,7 @@
   <script src="js/boss.js?v=4.4"></script>
   <script src="js/pause.js?v=4.0"></script>
   <script src="js/phase.js?v=4.3"></script>
-  <script src="game.js?v=4.4"></script>
-  <script src="js/input.js?v=4.0"></script>
+  <script src="game.js?v=4.5"></script>
+  <script src="js/input.js?v=4.1"></script>
 </body>
 </html>

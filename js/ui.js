@@ -192,6 +192,11 @@ function updateSettingsUI() {
   if (fingerSelect && typeof getFingerGuideSetting === 'function') {
     fingerSelect.value = getFingerGuideSetting();
   }
+
+  const vkSelect = $('settings-virtual-keyboard-select');
+  if (vkSelect && typeof getVirtualKeyboardSetting === 'function') {
+    vkSelect.value = getVirtualKeyboardSetting();
+  }
 }
 
 function isBossBattlesEnabled() {
@@ -249,6 +254,10 @@ function changeFingerGuideSetting(mode) {
 }
 
 function isFingerGuideActive() {
+  // Regra Estrita: Se o teclado virtual estiver ativo no celular/jogo, o guia de dedos é SEMPRE desativado
+  if (typeof isVirtualKeyboardActive === 'function' && isVirtualKeyboardActive()) {
+    return false;
+  }
   const mode = getFingerGuideSetting();
   if (mode === 'off') return false;
   if (mode === 'always') return true;
@@ -260,7 +269,8 @@ function updateFingerGuideVisibility() {
   const guideEl = $('finger-guide');
   const gameCol = $('game-column');
   const inMatch = typeof isMatchInProgress === 'function' ? isMatchInProgress() : false;
-  const active = inMatch && isFingerGuideActive();
+  const vkActive = typeof isVirtualKeyboardActive === 'function' && isVirtualKeyboardActive();
+  const active = inMatch && !vkActive && isFingerGuideActive();
 
   if (guideEl) {
     guideEl.classList.toggle('hidden', !active);
@@ -273,6 +283,142 @@ function updateFingerGuideVisibility() {
   } else {
     lastFgChar = undefined;
   }
+}
+
+// ============================================================
+// ON-SCREEN VIRTUAL KEYBOARD (TECLADO VIRTUAL MOBILE)
+// ============================================================
+function isMobileDevice() {
+  if (typeof window === 'undefined') return false;
+  const isCoarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  const hasTouch = (navigator.maxTouchPoints && navigator.maxTouchPoints > 0) || ('ontouchstart' in window);
+  const isSmallScreen = window.innerWidth <= 880;
+  const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent || '');
+  return Boolean(isCoarse || (hasTouch && isSmallScreen) || isMobileUA);
+}
+
+function getVirtualKeyboardSetting() {
+  try {
+    const saved = localStorage.getItem('digitinho_virtual_keyboard');
+    if (saved && (saved === 'always' || saved === 'off' || saved === 'auto')) {
+      return saved;
+    }
+  } catch (_) {}
+  return 'auto'; // Ativado automaticamente no mobile
+}
+
+function changeVirtualKeyboardSetting(mode) {
+  const valid = (mode === 'always' || mode === 'off') ? mode : 'auto';
+  try {
+    localStorage.setItem('digitinho_virtual_keyboard', valid);
+  } catch (_) {}
+  if (typeof updateVirtualKeyboardVisibility === 'function') {
+    updateVirtualKeyboardVisibility();
+  }
+  if (typeof updateFingerGuideVisibility === 'function') {
+    updateFingerGuideVisibility();
+  }
+  if (typeof updateSettingsUI === 'function') {
+    updateSettingsUI();
+  }
+}
+
+function isVirtualKeyboardActive() {
+  const setting = getVirtualKeyboardSetting();
+  if (setting === 'off') return false;
+  if (setting === 'always') return true;
+  // 'auto': ativo em dispositivos móveis
+  return isMobileDevice();
+}
+
+function updateVirtualKeyboardVisibility() {
+  const vkEl = $('virtual-keyboard');
+  const gameCol = $('game-column');
+  const inMatch = typeof isMatchInProgress === 'function' ? isMatchInProgress() : false;
+  const active = inMatch && isVirtualKeyboardActive();
+
+  if (vkEl) {
+    vkEl.classList.toggle('hidden', !active);
+  }
+  if (gameCol) {
+    gameCol.classList.toggle('has-virtual-keyboard', active);
+  }
+
+  // Com teclado virtual ativo, o guia visual de dedos é SEMPRE removido
+  if (typeof updateFingerGuideVisibility === 'function') {
+    updateFingerGuideVisibility();
+  }
+}
+
+function triggerVirtualKey(rawKey, keyBtn) {
+  if (!rawKey) return;
+
+  // Feedback visual luminoso (Zero deslocamento vertical / transform)
+  if (keyBtn) {
+    keyBtn.classList.add('vk-pressed');
+    setTimeout(() => keyBtn.classList.remove('vk-pressed'), 120);
+  }
+
+  // Se o jogo estiver pausado ou fase concluída, não processa
+  if (typeof state !== 'undefined' && state && (state.paused || state.phaseComplete)) {
+    return;
+  }
+
+  // Tecla BACKSPACE
+  if (rawKey === 'BACKSPACE') {
+    if (typeof playSound === 'function') playSound('click');
+    if (typeof state !== 'undefined' && state) {
+      if (state.bossBattle && state.bossBattle.active) {
+        if (state.typedBuffer && state.typedBuffer.length > 0) {
+          state.typedBuffer = state.typedBuffer.slice(0, -1);
+          if (state.bossBattle.boxItem?.el && state.bossBattle.currentWord && typeof renderBossMeaningSlots === 'function') {
+            renderBossMeaningSlots(state.bossBattle.boxItem.el, state.bossBattle.currentWord.text.toUpperCase(), state.typedBuffer);
+          }
+        }
+        return;
+      }
+      state.typedBuffer = '';
+      if (typeof clearHighlight === 'function') clearHighlight();
+    }
+    return;
+  }
+
+  // Teclas normais (Letras, Pontuação, Espaço)
+  let charToSend = rawKey.toUpperCase();
+
+  // Smart Accent Mapping: se o próximo caractere do alvo for uma versão acentuada da tecla (ex: 'Á', 'Ã' para 'A'), envia a letra correta
+  if (typeof state !== 'undefined' && state && typeof getActiveTargetChar === 'function') {
+    const nextChar = getActiveTargetChar();
+    if (nextChar) {
+      const deaccented = nextChar.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      if (deaccented === charToSend) {
+        charToSend = nextChar;
+      }
+    }
+  }
+
+  if (typeof handleLetterTyped === 'function') {
+    handleLetterTyped(charToSend);
+  }
+}
+
+let vkInitialized = false;
+function initVirtualKeyboard() {
+  if (vkInitialized) return;
+  const vkEl = $('virtual-keyboard');
+  if (!vkEl) return;
+  vkInitialized = true;
+
+  // Uso de pointerdown para resposta ultra-rápida sem delay de clique ou rolagem no celular
+  vkEl.addEventListener('pointerdown', (e) => {
+    const keyBtn = e.target.closest('.vk-key');
+    if (!keyBtn) return;
+    e.preventDefault();
+    e.stopPropagation();
+
+    const key = keyBtn.getAttribute('data-key');
+    triggerVirtualKey(key, keyBtn);
+  });
 }
 
 const FINGER_MAP = {
@@ -639,6 +785,12 @@ function resetHUDScore() {
   }
 }
 
+function syncHUDScoreDisplays(val) {
+  if (hudTotal) hudTotal.textContent = formatScore(val);
+  const mobileScore = $('hms-score-val');
+  if (mobileScore) mobileScore.textContent = Number(val || 0).toLocaleString();
+}
+
 function animateHUDScore(targetVal) {
   if (!hudTotal) return;
   targetVal = Math.max(0, Math.floor(targetVal || 0));
@@ -651,14 +803,14 @@ function animateHUDScore(targetVal) {
     }
     hudDisplayedScore = targetVal;
     hudTargetScore = targetVal;
-    hudTotal.textContent = formatScore(targetVal);
+    syncHUDScoreDisplays(targetVal);
     hudTotal.classList.remove('score-counting');
     return;
   }
 
   // Already displaying target and no animation running
   if (targetVal === hudDisplayedScore && !hudScoreAnimInterval) {
-    hudTotal.textContent = formatScore(targetVal);
+    syncHUDScoreDisplays(targetVal);
     return;
   }
 
@@ -677,7 +829,7 @@ function animateHUDScore(targetVal) {
       clearInterval(hudScoreAnimInterval);
       hudScoreAnimInterval = null;
       hudDisplayedScore = hudTargetScore;
-      hudTotal.textContent = formatScore(hudDisplayedScore);
+      syncHUDScoreDisplays(hudDisplayedScore);
       hudTotal.classList.remove('score-counting');
       return;
     }
@@ -685,13 +837,13 @@ function animateHUDScore(targetVal) {
     // Dynamic ease-out: larger jumps start quickly and decelerate smoothly into target
     const step = Math.max(1, Math.ceil(diff / 8));
     hudDisplayedScore = Math.min(hudTargetScore, hudDisplayedScore + step);
-    hudTotal.textContent = formatScore(hudDisplayedScore);
+    syncHUDScoreDisplays(hudDisplayedScore);
 
     if (hudDisplayedScore >= hudTargetScore) {
       clearInterval(hudScoreAnimInterval);
       hudScoreAnimInterval = null;
       hudDisplayedScore = hudTargetScore;
-      hudTotal.textContent = formatScore(hudDisplayedScore);
+      syncHUDScoreDisplays(hudDisplayedScore);
       hudTotal.classList.remove('score-counting');
     }
   }, tickInterval);
@@ -791,7 +943,10 @@ function animateCoinsElement(el, targetVal, durationMs = 600) {
 function updateHUD() {
   if (typeof state === 'undefined' || !state) return;
   animateHUDScore(state.totalScore);
-  if (hudCoins) hudCoins.textContent = String(state.coins || 0);
+  const coinsStr = String(state.coins || 0);
+  if (hudCoins) hudCoins.textContent = coinsStr;
+  const hmsCoins = $('hms-coins-val');
+  if (hmsCoins) hmsCoins.textContent = coinsStr;
   if (typeof updateShopBalanceDisplay === 'function') updateShopBalanceDisplay();
 
   if (phaseNumEl) {
@@ -979,10 +1134,39 @@ function updateHUD() {
   }
 }
 
-// Render skill slots cleanly with persistent active state and duration bar
+// Vector SVG Icons for Mobile Skills (Rule 11: 100% SVG, strictly no emojis)
+function getSkillSvgIcon(skillId) {
+  switch (skillId) {
+    case 'freezer':
+      return `<svg class="msb-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2v20M2 12h20M4.93 4.93l14.14 14.14M4.93 19.07l14.14-14.14"/></svg>`;
+    case 'bomb':
+      return `<svg class="msb-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="13" r="8"/><path d="m17 7 3-3M19 4h2M20 7V5"/></svg>`;
+    case 'shield':
+      return `<svg class="msb-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`;
+    case 'vortex':
+      return `<svg class="msb-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7a5 5 0 1 0 5 5"/></svg>`;
+    case 'slowdown':
+      return `<svg class="msb-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M10 2h4"/></svg>`;
+    case 'haste':
+      return `<svg class="msb-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`;
+    case 'speedlock':
+      return `<svg class="msb-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`;
+    case 'dilation':
+      return `<svg class="msb-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/></svg>`;
+    default:
+      return `<svg class="msb-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+  }
+}
+
+// Render skill slots cleanly (Desktop Sidebar & Mobile Quick-Cast Bar)
 function renderSkills() {
-  if (!skillsCont) return;
   if (typeof state === 'undefined' || !state || !Array.isArray(state.skillSlots)) return;
+  renderDesktopSkills();
+  renderMobileSkills();
+}
+
+function renderDesktopSkills() {
+  if (!skillsCont) return;
 
   if (state.skillSlots.length === 0) {
     const emptyHint = typeof t === 'function' ? t('hud_skills_empty_hint') : 'Buy in the shop<br/>or complete words <strong>⚡</strong>';
@@ -1013,6 +1197,115 @@ function renderSkills() {
       if (!def) return;
       updateSkillPill(existingPills[idx], slot, idx, def);
     });
+  }
+}
+
+function renderMobileSkills() {
+  const mBar = $('mobile-skills-bar');
+  const mList = $('mobile-skills-list');
+  const gameCol = $('game-column');
+  if (!mBar || !mList) return;
+
+  const validSlots = (state.skillSlots || []).filter(s => s && (s.count > 0 || (state.activeTimers && state.activeTimers[s.id] > 0)));
+
+  if (validSlots.length === 0) {
+    mBar.classList.add('hidden');
+    mList.innerHTML = '';
+    if (gameCol) gameCol.classList.remove('has-mobile-skills');
+    return;
+  }
+
+  mBar.classList.remove('hidden');
+  if (gameCol) gameCol.classList.add('has-mobile-skills');
+
+  const existingPills = Array.from(mList.querySelectorAll('.msb-pill'));
+  const needsRebuild = existingPills.length !== validSlots.length ||
+    existingPills.some((p, i) => p.dataset.skillId !== validSlots[i].id);
+
+  if (needsRebuild) {
+    mList.innerHTML = '';
+    validSlots.forEach((slot) => {
+      const realIdx = state.skillSlots.indexOf(slot);
+      const def = (typeof SKILLS_CONFIG !== 'undefined' && SKILLS_CONFIG[slot.id]) || SKILLS_ALL.find(s => s.id === slot.id);
+      if (!def) return;
+      const pill = createMobileSkillPill(slot, realIdx, def);
+      mList.appendChild(pill);
+    });
+  } else {
+    validSlots.forEach((slot, idx) => {
+      const realIdx = state.skillSlots.indexOf(slot);
+      const def = (typeof SKILLS_CONFIG !== 'undefined' && SKILLS_CONFIG[slot.id]) || SKILLS_ALL.find(s => s.id === slot.id);
+      if (!def) return;
+      updateMobileSkillPill(existingPills[idx], slot, realIdx, def);
+    });
+  }
+}
+
+function createMobileSkillPill(slot, realIdx, def) {
+  const pill = document.createElement('button');
+  pill.type = 'button';
+  pill.className = 'msb-pill';
+  pill.dataset.skillId = slot.id;
+
+  const sName = (typeof t === 'function' && t('skill_name_' + slot.id) !== ('skill_name_' + slot.id))
+    ? t('skill_name_' + slot.id)
+    : (def.name || slot.id);
+  const sDesc = (typeof t === 'function' && t('skill_desc_' + slot.id) !== ('skill_desc_' + slot.id))
+    ? t('skill_desc_' + slot.id)
+    : (def.desc || '');
+
+  pill.title = `${sName}: ${sDesc}`;
+  pill.setAttribute('aria-label', sName);
+
+  pill.innerHTML = `
+    <span class="msb-icon" style="color:${def.color || 'var(--accent-cyan)'}">${getSkillSvgIcon(slot.id)}</span>
+    <span class="msb-label">${sName}</span>
+    <span class="msb-badge">×${slot.count}</span>
+    <div class="msb-dur-track"><div class="msb-dur-fill"></div></div>
+  `;
+
+  updateMobileSkillPill(pill, slot, realIdx, def);
+  return pill;
+}
+
+function updateMobileSkillPill(pill, slot, realIdx, def) {
+  const timer = (state.activeTimers && state.activeTimers[slot.id]) || 0;
+  const isActive = timer > 0;
+  const totalDur = def.duration || 10000;
+  const pct = Math.min(100, Math.max(0, (timer / totalDur) * 100));
+
+  pill.classList.toggle('msb-is-active', isActive);
+
+  if (slot.count > 0) {
+    pill.onclick = (e) => {
+      e.preventDefault();
+      activateSkill(realIdx);
+    };
+    pill.classList.remove('msb-disabled');
+  } else {
+    pill.onclick = null;
+    pill.classList.toggle('msb-disabled', !isActive);
+  }
+
+  const badge = pill.querySelector('.msb-badge');
+  if (badge) {
+    if (isActive) {
+      badge.textContent = `${(timer / 1000).toFixed(1)}s`;
+    } else {
+      badge.textContent = `×${slot.count}`;
+    }
+  }
+
+  const track = pill.querySelector('.msb-dur-track');
+  const fill = pill.querySelector('.msb-dur-fill');
+  if (track && fill) {
+    track.style.display = isActive ? 'block' : 'none';
+    if (isActive) {
+      fill.style.width = pct.toFixed(1) + '%';
+      if (def.color) {
+        fill.style.background = def.color;
+      }
+    }
   }
 }
 
@@ -1819,11 +2112,21 @@ if (window.visualViewport) {
     updateMobileViewport();
   });
 }
-window.addEventListener('resize', updateMobileViewport);
-window.addEventListener('orientationchange', () => setTimeout(updateMobileViewport, 250));
+window.addEventListener('resize', () => {
+  updateMobileViewport();
+  if (typeof updateVirtualKeyboardVisibility === 'function') updateVirtualKeyboardVisibility();
+});
+window.addEventListener('orientationchange', () => {
+  setTimeout(() => {
+    updateMobileViewport();
+    if (typeof updateVirtualKeyboardVisibility === 'function') updateVirtualKeyboardVisibility();
+  }, 250);
+});
 
 // Initial call
 updateMobileViewport();
+if (typeof initVirtualKeyboard === 'function') initVirtualKeyboard();
+if (typeof updateVirtualKeyboardVisibility === 'function') updateVirtualKeyboardVisibility();
 
 // ============================================================
 // BOSS BATTLE UI RENDERING (MONSTER / ROBOT WITH LIVES: |||)
