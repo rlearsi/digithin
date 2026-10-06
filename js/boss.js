@@ -7,7 +7,7 @@
 function getLearnedWords() {
   if (!state) return [];
 
-  const currentLang = typeof getLanguage === 'function' ? getLanguage() : 'pt';
+  const currentLang = typeof getLanguage === 'function' ? getLanguage() : 'en';
   const activePool = (typeof WORD_POOLS !== 'undefined' && WORD_POOLS[currentLang])
     ? WORD_POOLS[currentLang]
     : (typeof WORD_POOL !== 'undefined' ? WORD_POOL : []);
@@ -61,6 +61,10 @@ const BOSS_THEME_INDICES = {
 };
 
 function getWordConceptIndex(text) {
+  if (typeof findWordConcept === 'function') {
+    const concept = findWordConcept(text);
+    return concept ? concept.index : -1;
+  }
   if (!text) return -1;
   const lower = text.toLowerCase();
   if (typeof WORD_POOLS !== 'undefined') {
@@ -77,7 +81,7 @@ function getWordConceptIndex(text) {
 
 function isWordThematicallyRelatedToBoss(wordObj, bossType) {
   if (!wordObj || !bossType) return false;
-  const currentLang = typeof getLanguage === 'function' ? getLanguage() : 'pt';
+  const currentLang = typeof getLanguage === 'function' ? getLanguage() : 'en';
   const type = (wordObj.type || '').toLowerCase();
   const text = (wordObj.text || '').toLowerCase();
 
@@ -366,6 +370,59 @@ function spawnBossMeaningBox() {
   updateHUD();
 }
 
+/**
+ * Updates the active boss battle vocabulary and UI when game language changes mid-battle
+ */
+function updateBossLanguage(lang) {
+  if (!state || !state.bossBattle || !state.bossBattle.active) return;
+  const currentLang = lang || (typeof getLanguage === 'function' ? getLanguage() : 'en');
+
+  // Re-render boss HUD with localized boss name and scenario
+  if (state.bossBattle.boss && typeof renderBossHud === 'function') {
+    renderBossHud(state.bossBattle.boss, state.bossBattle.boss.lives, state.bossBattle.boss.maxLives || 3);
+  }
+
+  // Migrate pool of remaining words for this boss
+  if (Array.isArray(state.bossBattle.pool) && typeof migrateUnlockedWordsToActiveLanguage === 'function') {
+    state.bossBattle.pool = migrateUnlockedWordsToActiveLanguage(state.bossBattle.pool, currentLang);
+  }
+
+  // Migrate current target word and update meaning box
+  if (state.bossBattle.currentWord && typeof migrateWordToLanguage === 'function') {
+    state.bossBattle.currentWord = migrateWordToLanguage(state.bossBattle.currentWord, currentLang);
+    const targetWord = (state.bossBattle.currentWord.text || '').toUpperCase();
+
+    if (state.bossBattle.boxItem && state.bossBattle.boxItem.el) {
+      const el = state.bossBattle.boxItem.el;
+      state.bossBattle.boxItem.text = targetWord;
+
+      const scenarioName = (typeof t === 'function' && state.bossBattle.boss?.scenarioKey && t(state.bossBattle.boss.scenarioKey) !== state.bossBattle.boss.scenarioKey)
+        ? state.bossBattle.boss.scenario
+        : (state.bossBattle.boss?.scenario || 'Scenario');
+
+      const solvedNum = Math.min(3, (state.bossBattle.solvedCount || 0) + 1);
+      const totalEnigmas = state.bossBattle.boss?.maxLives || 3;
+
+      const badgeText = typeof t === 'function'
+        ? t('boss_enigma_badge', { num: solvedNum, total: totalEnigmas, scenario: scenarioName.toUpperCase() })
+        : `📜 ENIGMA ${solvedNum} / ${totalEnigmas} • ${scenarioName.toUpperCase()}`;
+      const lettersText = typeof t === 'function'
+        ? t('boss_enigma_letters', { count: targetWord.length })
+        : `${targetWord.length} LETTERS`;
+
+      const badgeEl = el.querySelector('.bmb-badge');
+      if (badgeEl) badgeEl.textContent = badgeText;
+      const lenEl = el.querySelector('.bmb-length');
+      if (lenEl) lenEl.textContent = lettersText;
+      const meaningEl = el.querySelector('.bmb-meaning');
+      if (meaningEl) meaningEl.textContent = `"${state.bossBattle.currentWord.meaning}"`;
+
+      state.typedBuffer = '';
+      renderBossMeaningSlots(el, targetWord, '');
+    }
+  }
+}
+
 function handleBossLetterTyped(char) {
   if (!state.bossBattle?.active || !state.bossBattle.currentWord || !state.bossBattle.boxItem) return;
   const boxItem = state.bossBattle.boxItem;
@@ -652,7 +709,7 @@ function testBossBattle(phaseOverride) {
   const matchingThemed = currentLearned.filter(w => isWordThematicallyRelatedToBoss(w, bossType));
 
   if (matchingThemed.length < 3) {
-    const curLang = typeof getLanguage === 'function' ? getLanguage() : 'pt';
+    const curLang = typeof getLanguage === 'function' ? getLanguage() : 'en';
     const activePool = (typeof WORD_POOLS !== 'undefined' && WORD_POOLS[curLang])
       ? WORD_POOLS[curLang]
       : (typeof WORD_POOL !== 'undefined' ? WORD_POOL : []);
@@ -694,7 +751,7 @@ function startBossTest() {
   state.pendingBossPhase = state.phase;
   const bossType = candidateBoss?.type || 'robot';
 
-  const curLang = typeof getLanguage === 'function' ? getLanguage() : 'pt';
+  const curLang = typeof getLanguage === 'function' ? getLanguage() : 'en';
   const activePool = (typeof WORD_POOLS !== 'undefined' && WORD_POOLS[curLang])
     ? WORD_POOLS[curLang]
     : (typeof WORD_POOL !== 'undefined' ? WORD_POOL : []);

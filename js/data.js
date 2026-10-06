@@ -156,6 +156,177 @@ function updateWordPoolLanguage(lang) {
 }
 
 // ================================================
+// MULTI-LANGUAGE VOCABULARY MIGRATION & RECOVERY
+// Enables seamless word switching when changing language or resuming saves
+// ================================================
+
+/**
+ * Finds the canonical concept index of any word across ALL supported languages.
+ * Returns { category: 'normal' | 'boss', index: number, bossType?: string } or null.
+ */
+function findWordConcept(text) {
+  if (!text || typeof text !== 'string') return null;
+  const lower = text.trim().toLowerCase();
+
+  // 1. Check active & all registered WORD_POOLS
+  if (typeof WORD_POOLS !== 'undefined') {
+    for (const lang in WORD_POOLS) {
+      const pool = WORD_POOLS[lang];
+      if (Array.isArray(pool)) {
+        const idx = pool.findIndex(w => w && w.text && w.text.toLowerCase() === lower);
+        if (idx !== -1) {
+          return { category: 'normal', index: idx };
+        }
+      }
+    }
+  }
+
+  // 2. Check window.GAME_DATA_WORDS fallback in case WORD_POOLS was not yet populated
+  if (typeof window !== 'undefined' && window.GAME_DATA_WORDS) {
+    for (const lang in window.GAME_DATA_WORDS) {
+      const words = window.GAME_DATA_WORDS[lang]?.words;
+      if (Array.isArray(words)) {
+        const idx = words.findIndex(w => w && w.text && w.text.toLowerCase() === lower);
+        if (idx !== -1) {
+          return { category: 'normal', index: idx };
+        }
+      }
+    }
+  }
+
+  // 3. Check thematic boss vocabulary across all boss archetypes and languages
+  const bossTypes = ['robot', 'beast', 'mythology', 'ocean', 'cosmos', 'volcano'];
+  if (typeof BOSS_WORDS_BY_TYPE !== 'undefined') {
+    for (const bType of bossTypes) {
+      const dict = BOSS_WORDS_BY_TYPE[bType];
+      if (dict) {
+        for (const lang in dict) {
+          const list = dict[lang];
+          if (Array.isArray(list)) {
+            const idx = list.findIndex(w => w && w.text && w.text.toLowerCase() === lower);
+            if (idx !== -1) {
+              return { category: 'boss', index: idx, bossType: bType };
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Retrieves the localized word object for a concept in the requested target language.
+ */
+function getWordForLanguage(concept, targetLang) {
+  if (!concept) return null;
+  const lang = targetLang || (typeof getLanguage === 'function' ? getLanguage() : 'en');
+  const fallbackLang = 'en';
+
+  if (concept.category === 'normal') {
+    const pool = (typeof WORD_POOLS !== 'undefined' && WORD_POOLS[lang])
+      ? WORD_POOLS[lang]
+      : ((typeof window !== 'undefined' && window.GAME_DATA_WORDS?.[lang]?.words) || WORD_POOLS?.[fallbackLang] || []);
+    return pool[concept.index] || null;
+  }
+
+  if (concept.category === 'boss' && concept.bossType) {
+    const bossPool = (typeof BOSS_WORDS_BY_TYPE !== 'undefined' && BOSS_WORDS_BY_TYPE[concept.bossType]?.[lang])
+      ? BOSS_WORDS_BY_TYPE[concept.bossType][lang]
+      : (typeof BOSS_WORDS_BY_TYPE !== 'undefined' && BOSS_WORDS_BY_TYPE[concept.bossType]?.[fallbackLang]) || [];
+    return bossPool[concept.index] || null;
+  }
+
+  return null;
+}
+
+/**
+ * Migrates a single word object to the target language while strictly preserving game progression (phase, etc.).
+ */
+function migrateWordToLanguage(wordObj, targetLang) {
+  if (!wordObj || !wordObj.text) return wordObj;
+  const lang = targetLang || (typeof getLanguage === 'function' ? getLanguage() : 'en');
+
+  let concept = null;
+  if (wordObj.conceptIndex !== undefined && wordObj.conceptIndex !== null && wordObj.conceptIndex >= 0) {
+    concept = {
+      category: wordObj.conceptCategory || 'normal',
+      index: wordObj.conceptIndex,
+      bossType: wordObj.bossType
+    };
+  } else {
+    concept = findWordConcept(wordObj.text);
+  }
+
+  if (!concept) {
+    return wordObj;
+  }
+
+  const localized = getWordForLanguage(concept, lang);
+  if (!localized || !localized.text) {
+    return wordObj;
+  }
+
+  return {
+    ...wordObj,
+    text: localized.text,
+    meaning: localized.meaning || wordObj.meaning || '',
+    type: localized.type || wordObj.type || '',
+    category: localized.type || wordObj.category || '',
+    phase: wordObj.phase || 1,
+    conceptIndex: concept.index,
+    conceptCategory: concept.category,
+    bossType: concept.bossType
+  };
+}
+
+/**
+ * Migrates an entire array of unlocked words into the target language without loss or duplication.
+ */
+function migrateUnlockedWordsToActiveLanguage(unlockedWordsList, targetLang) {
+  if (!Array.isArray(unlockedWordsList)) return [];
+  const lang = targetLang || (typeof getLanguage === 'function' ? getLanguage() : 'en');
+
+  const seenTexts = new Set();
+  const migratedList = [];
+
+  for (const w of unlockedWordsList) {
+    if (!w) continue;
+    const migrated = migrateWordToLanguage(w, lang);
+    const key = (migrated.text || '').toLowerCase();
+    if (!seenTexts.has(key)) {
+      seenTexts.add(key);
+      migratedList.push(migrated);
+    }
+  }
+
+  return migratedList;
+}
+
+/**
+ * Migrates wordStats dictionary keys to match target language vocabulary.
+ */
+function migrateWordStatsToLanguage(statsObj, targetLang) {
+  if (!statsObj || typeof statsObj !== 'object') return {};
+  const lang = targetLang || (typeof getLanguage === 'function' ? getLanguage() : 'en');
+  const migrated = {};
+
+  for (const key in statsObj) {
+    const concept = findWordConcept(key);
+    if (concept) {
+      const loc = getWordForLanguage(concept, lang);
+      const newKey = loc && loc.text ? loc.text.toLowerCase() : key;
+      migrated[newKey] = statsObj[key];
+    } else {
+      migrated[key] = statsObj[key];
+    }
+  }
+
+  return migrated;
+}
+
+// ================================================
 // BOSS SYSTEM: SCENARIOS, UNIQUE TYPES & THEMATIC ENIGMAS
 // ================================================
 // 6 authentic boss archetypes appearing randomly at phase multiples of 10:

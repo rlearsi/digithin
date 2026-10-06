@@ -61,7 +61,7 @@ async function loadLocale(lang) {
   }
 
   try {
-    const response = await fetch(`locales/${lang}.json?v=2.3`);
+    const response = await fetch(`locales/${lang}.json?v=4.3`);
     if (!response.ok) {
       throw new Error(`HTTP ${response.status} loading locales/${lang}.json`);
     }
@@ -99,16 +99,88 @@ async function setLanguage(lang) {
     localStorage.setItem('digitinho_language', lang);
   } catch (_) {}
 
-  if (typeof state !== 'undefined' && state) {
-    state.language = lang;
-  }
-
   // Ensure this language pack is loaded
   await loadLocale(lang);
 
   // Update active word pool, syllables and training worlds
   if (typeof updateWordPoolLanguage === 'function') {
     updateWordPoolLanguage(lang);
+  }
+
+  // Migra dinamicamente o estado da partida em andamento para o novo idioma
+  if (typeof state !== 'undefined' && state) {
+    state.language = lang;
+
+    // 1. Migra palavras desbloqueadas para o novo idioma
+    if (Array.isArray(state.unlockedWords) && state.unlockedWords.length > 0 && typeof migrateUnlockedWordsToActiveLanguage === 'function') {
+      state.unlockedWords = migrateUnlockedWordsToActiveLanguage(state.unlockedWords, lang);
+    }
+
+    // 2. Migra estatísticas de palavras digitadas
+    if (state.wordStats && typeof migrateWordStatsToLanguage === 'function') {
+      state.wordStats = migrateWordStatsToLanguage(state.wordStats, lang);
+    }
+
+    // 3. Migra itens na fila da esteira (spawnQueue)
+    if (Array.isArray(state.spawnQueue) && state.spawnQueue.length > 0) {
+      state.spawnQueue = state.spawnQueue.map(item => {
+        if (!item) return item;
+        if (item.type === 'word' && typeof migrateWordToLanguage === 'function') {
+          const mig = migrateWordToLanguage({ text: item.text }, lang);
+          return { ...item, text: (mig?.text || item.text).toUpperCase() };
+        }
+        if (item.type === 'syllable' && typeof ALL_SYLLABLES !== 'undefined' && Array.isArray(ALL_SYLLABLES) && ALL_SYLLABLES.length > 0) {
+          const freshSyl = (typeof pick === 'function') ? pick(ALL_SYLLABLES) : ALL_SYLLABLES[0];
+          return { ...item, text: freshSyl.toUpperCase() };
+        }
+        return item;
+      });
+      if (typeof renderQueue === 'function') {
+        renderQueue();
+      }
+    }
+
+    // 4. Migra palavras ativas atualmente em queda na tela
+    if (Array.isArray(state.activeItems) && state.activeItems.length > 0) {
+      state.activeItems.forEach(item => {
+        if (!item || item.removing) return;
+        if (item.type === 'word' && typeof migrateWordToLanguage === 'function') {
+          const mig = migrateWordToLanguage({ text: item.text }, lang);
+          if (mig && mig.text) {
+            item.text = mig.text.toUpperCase();
+            if (item.el) {
+              item.el.textContent = item.text;
+              if (item.skill) {
+                const b = document.createElement('div');
+                b.className = 'skill-badge'; b.textContent = '⚡';
+                item.el.appendChild(b);
+              }
+              if (item.type === 'wildcard') {
+                const b = document.createElement('div');
+                b.className = 'wildcard-badge'; b.textContent = '💥';
+                item.el.appendChild(b);
+              }
+            }
+          }
+        }
+      });
+      if (state.typedBuffer) {
+        state.typedBuffer = '';
+        if (typeof clearHighlight === 'function') clearHighlight();
+      }
+    }
+
+    // 5. Migra batalha de chefão caso esteja em curso
+    if (state.bossBattle && state.bossBattle.active && typeof updateBossLanguage === 'function') {
+      updateBossLanguage(lang);
+    }
+
+    // 6. Atualiza salvamento do slot ativo se a partida estiver em curso
+    if (typeof isMatchInProgress === 'function' && isMatchInProgress() && state.gameMode === 'classic') {
+      if (typeof saveGameProgress === 'function') {
+        saveGameProgress();
+      }
+    }
   }
 
   applyTranslations();
@@ -209,15 +281,16 @@ async function initLocaleSystem() {
   const initial = detectInitialLanguage();
   currentLanguage = initial;
 
-  // Always preload English as primary fallback, plus active language
+  // Carrega todos os pacotes de idiomas em paralelo para permitir migração instantânea de vocabulário
   try {
-    if (initial !== 'en') {
-      await Promise.all([loadLocale('en'), loadLocale(initial)]);
-    } else {
-      await loadLocale('en');
-    }
+    await Promise.all(SUPPORTED_LANGUAGES.map(lang => loadLocale(lang)));
   } catch (err) {
     console.error('[i18n] Error during initial locale bootstrap:', err);
+    // Garantia de fallback para inglês e idioma ativo
+    try {
+      if (!LOADED_LOCALES.en) await loadLocale('en');
+      if (!LOADED_LOCALES[initial]) await loadLocale(initial);
+    } catch (_) {}
   }
 
   // Re-sync game data structures

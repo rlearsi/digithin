@@ -358,12 +358,21 @@ function saveGameProgress(slotId) {
     continues: state.continues || 0,
     trainingWorld: state.trainingWorld || 1,
     trainingLesson: state.trainingLesson || 1,
-    unlockedWords: (state.unlockedWords || []).map(w => ({
-      text: w.text,
-      meaning: w.meaning || '',
-      category: w.category || '',
-      phase: w.phase || 1
-    })),
+    saveLanguage: (typeof getLanguage === 'function') ? getLanguage() : 'en',
+    unlockedWords: (state.unlockedWords || []).map(w => {
+      const concept = (w.conceptIndex !== undefined && w.conceptIndex !== null && w.conceptIndex >= 0)
+        ? { index: w.conceptIndex, category: w.conceptCategory || 'normal', bossType: w.bossType }
+        : (typeof findWordConcept === 'function' ? findWordConcept(w.text) : null);
+      return {
+        text: w.text,
+        meaning: w.meaning || '',
+        category: w.category || '',
+        phase: w.phase || 1,
+        conceptIndex: concept ? concept.index : undefined,
+        conceptCategory: concept ? concept.category : 'normal',
+        bossType: concept ? concept.bossType : undefined
+      };
+    }),
     wordStats: state.wordStats ? { ...state.wordStats } : {},
     skillSlots: (state.skillSlots || []).map(s => ({ id: s.id, count: s.count })),
     defeatedBossTypes: Array.isArray(state.defeatedBossTypes) ? [...state.defeatedBossTypes] : [],
@@ -415,8 +424,23 @@ function loadSaveDataIntoState(save) {
   state.continues = save.continues || 0;
   state.trainingWorld = save.trainingWorld || 1;
   state.trainingLesson = save.trainingLesson || 1;
-  state.unlockedWords = Array.isArray(save.unlockedWords) ? [...save.unlockedWords] : [];
-  state.wordStats = save.wordStats ? { ...save.wordStats } : {};
+
+  // Sincroniza e migra rigorosamente para o idioma ativo selecionado pelo jogador
+  const curLang = typeof getLanguage === 'function' ? getLanguage() : 'en';
+  state.language = curLang;
+
+  if (Array.isArray(save.unlockedWords) && typeof migrateUnlockedWordsToActiveLanguage === 'function') {
+    state.unlockedWords = migrateUnlockedWordsToActiveLanguage(save.unlockedWords, curLang);
+  } else {
+    state.unlockedWords = Array.isArray(save.unlockedWords) ? [...save.unlockedWords] : [];
+  }
+
+  if (save.wordStats && typeof migrateWordStatsToLanguage === 'function') {
+    state.wordStats = migrateWordStatsToLanguage(save.wordStats, curLang);
+  } else {
+    state.wordStats = save.wordStats ? { ...save.wordStats } : {};
+  }
+
   state.skillSlots = Array.isArray(save.skillSlots) ? [...save.skillSlots] : [];
   state.defeatedBossTypes = Array.isArray(save.defeatedBossTypes) ? [...save.defeatedBossTypes] : [];
   state.charsTyped = save.charsTyped || 0;
