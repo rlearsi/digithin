@@ -57,6 +57,7 @@ function confirmShopExit() {
   if (shopFeedbackTimer) clearTimeout(shopFeedbackTimer);
   if (modalShop) modalShop.classList.add('hidden');
   state.phaseComplete = false;
+  if (typeof saveGameProgress === 'function') saveGameProgress();
   if (typeof goToMainMenu === 'function') {
     goToMainMenu();
   }
@@ -313,6 +314,7 @@ function buyShopItem(skillId, price) {
     return;
   }
   state.coins -= price;
+  if (typeof deductSharedCoins === 'function') deductSharedCoins(price);
   state.shopPurchaseCount++;
   state.currentShopPurchases = (state.currentShopPurchases || 0) + 1;
   state.selectedShopIndex = -1;
@@ -362,6 +364,7 @@ function buyShopItem(skillId, price) {
   renderShopItems();
   updateShopSelectionVisual();
   updateHUD();
+  if (typeof saveGameProgress === 'function') saveGameProgress();
 }
 
 function closeShop() {

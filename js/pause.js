@@ -33,6 +33,7 @@ function confirmGoToMainMenu() {
 
 function executeExitToMainMenu() {
   cancelExitConfirm();
+  if (typeof saveGameProgress === 'function') saveGameProgress();
   goToMainMenu();
 }
 

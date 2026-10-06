@@ -522,6 +522,9 @@ function defeatBoss() {
   const totalBossCoins = bossBonusCoins + precisionCoins;
   state.coins = (state.coins || 0) + totalBossCoins;
   state.totalCoinsEarned = (state.totalCoinsEarned || 0) + totalBossCoins;
+  if (typeof addSharedCoins === 'function') addSharedCoins(totalBossCoins);
+  if (typeof updateHighCoins === 'function') updateHighCoins(state.totalCoinsEarned);
+  if (typeof saveGameProgress === 'function') saveGameProgress();
 
   updateHUD();
 

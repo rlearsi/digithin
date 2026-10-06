@@ -69,13 +69,14 @@ function changeDifficulty(diff) {
 function defaultState() {
   const diffKey = getDifficulty();
   const diffCfg = getDifficultyConfig(diffKey);
+  const sharedCoins = (typeof getSharedCoins === 'function') ? getSharedCoins() : 0;
   return {
     difficulty:        diffKey,
     phase:             1,
     phasePts:          0,       // Points accumulated in the current phase
     totalScore:        0,       // Banked points from previous phases (run score)
-    coins:             0,       // Player coins currency (used exclusively in shop)
-    totalCoinsEarned:  0,       // Total coins accumulated across the entire match
+    coins:             sharedCoins, // Player starts with shared coins bank across matches
+    totalCoinsEarned:  0,       // Total coins accumulated across this run
     flawlessStreak:    0,       // Consecutive phases completed without errors
     errorsPhase:       0,       // Errors made in the current phase
     totalErrors:       0,       // Total errors made in this run
@@ -200,3 +201,232 @@ function getFlawlessStreakCoins(streak) {
   return 0;
 }
 
+// ================================================
+// HIGH COINS & SHARED COINS PERSISTENCE
+// ================================================
+function getHighCoins() {
+  try {
+    const val = localStorage.getItem('digitinho_highcoins');
+    return val ? parseInt(val, 10) || 0 : 0;
+  } catch (_) {
+    return 0;
+  }
+}
+
+function updateHighCoins(coins) {
+  const currentBest = getHighCoins();
+  const numCoins = Math.max(0, Math.floor(coins || 0));
+  const isNew = numCoins > currentBest && numCoins > 0;
+  const best = isNew ? numCoins : currentBest;
+  if (isNew) {
+    try {
+      localStorage.setItem('digitinho_highcoins', String(numCoins));
+    } catch (_) {}
+  }
+  return { best, isNew, previous: currentBest };
+}
+
+function getSharedCoins() {
+  try {
+    const val = localStorage.getItem('digitinho_shared_coins');
+    return val ? parseInt(val, 10) || 0 : 0;
+  } catch (_) {
+    return 0;
+  }
+}
+
+function setSharedCoins(val) {
+  const num = Math.max(0, Math.floor(val || 0));
+  try {
+    localStorage.setItem('digitinho_shared_coins', String(num));
+  } catch (_) {}
+  return num;
+}
+
+function addSharedCoins(amount) {
+  const num = Math.max(0, Math.floor(amount || 0));
+  if (num <= 0) return getSharedCoins();
+  const updated = getSharedCoins() + num;
+  setSharedCoins(updated);
+  return updated;
+}
+
+function deductSharedCoins(amount) {
+  const num = Math.max(0, Math.floor(amount || 0));
+  if (num <= 0) return getSharedCoins();
+  const updated = Math.max(0, getSharedCoins() - num);
+  setSharedCoins(updated);
+  return updated;
+}
+
+// ================================================
+// SAVE SLOTS PROGRESS MANAGEMENT
+// ================================================
+const MAX_SAVE_SLOTS = 3;
+
+function getActiveSlot() {
+  try {
+    const s = parseInt(localStorage.getItem('digitinho_active_slot') || '1', 10);
+    return (s >= 1 && s <= MAX_SAVE_SLOTS) ? s : 1;
+  } catch (_) {
+    return 1;
+  }
+}
+
+function setActiveSlot(slotId) {
+  const id = (slotId >= 1 && slotId <= MAX_SAVE_SLOTS) ? slotId : 1;
+  try {
+    localStorage.setItem('digitinho_active_slot', String(id));
+  } catch (_) {}
+  return id;
+}
+
+function getSaveSlot(slotId) {
+  const id = (slotId !== undefined && slotId !== null) ? slotId : getActiveSlot();
+  try {
+    const raw = localStorage.getItem(`digitinho_save_slot_${id}`);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    return (parsed && parsed.phase && !parsed.isFinished) ? parsed : null;
+  } catch (_) {
+    return null;
+  }
+}
+
+function hasActiveSave(slotId) {
+  const save = getSaveSlot(slotId);
+  return !!(save && save.phase && !save.isFinished);
+}
+
+function getAllSaveSlots() {
+  const currentActive = getActiveSlot();
+  const slots = [];
+  for (let i = 1; i <= MAX_SAVE_SLOTS; i++) {
+    slots.push({
+      slotId: i,
+      data: getSaveSlot(i),
+      isActive: i === currentActive
+    });
+  }
+  return slots;
+}
+
+function getLatestSaveSlot() {
+  let latest = null;
+  for (let i = 1; i <= MAX_SAVE_SLOTS; i++) {
+    const s = getSaveSlot(i);
+    if (s && s.phase && !s.isFinished) {
+      if (!latest || (s.savedAt || 0) > (latest.savedAt || 0)) {
+        latest = s;
+      }
+    }
+  }
+  return latest;
+}
+
+function saveGameProgress(slotId) {
+  if (!state) return false;
+  // Slots de salvamento operam exclusivamente no modo clássico
+  if (state.gameMode !== 'classic') return false;
+  // If lives are depleted, match is finished — do not record as active in-flight save
+  if (state.lives <= 0) return false;
+
+  const id = (slotId !== undefined && slotId !== null) ? slotId : getActiveSlot();
+  const payload = {
+    slotId: id,
+    version: 1,
+    savedAt: Date.now(),
+    isFinished: false,
+    gameMode: state.gameMode || 'classic',
+    difficulty: state.difficulty || 'normal',
+    phase: state.phase || 1,
+    phasePts: state.phasePts || 0,
+    totalScore: state.totalScore || 0,
+    speedMultiplier: (typeof state.speedMultiplier === 'number' && !isNaN(state.speedMultiplier))
+      ? Number(state.speedMultiplier.toFixed(2))
+      : 1.0,
+    coins: (state.coins !== undefined) ? state.coins : getSharedCoins(),
+    totalCoinsEarned: state.totalCoinsEarned || 0,
+    lives: state.lives,
+    maxLives: state.maxLives,
+    flawlessStreak: state.flawlessStreak || 0,
+    totalErrors: state.totalErrors || 0,
+    totalHits: state.totalHits || 0,
+    currentAccuracy: state.currentAccuracy || 0,
+    maxCombo: state.maxCombo || 0,
+    continues: state.continues || 0,
+    trainingWorld: state.trainingWorld || 1,
+    trainingLesson: state.trainingLesson || 1,
+    unlockedWords: (state.unlockedWords || []).map(w => ({
+      text: w.text,
+      meaning: w.meaning || '',
+      category: w.category || '',
+      phase: w.phase || 1
+    })),
+    wordStats: state.wordStats ? { ...state.wordStats } : {},
+    skillSlots: (state.skillSlots || []).map(s => ({ id: s.id, count: s.count })),
+    defeatedBossTypes: Array.isArray(state.defeatedBossTypes) ? [...state.defeatedBossTypes] : [],
+    charsTyped: state.charsTyped || 0
+  };
+
+  try {
+    localStorage.setItem(`digitinho_save_slot_${id}`, JSON.stringify(payload));
+    setActiveSlot(id);
+    return true;
+  } catch (err) {
+    console.warn('[Digitinho] Error saving progress in slot', id, err);
+    return false;
+  }
+}
+
+function deleteSaveSlot(slotId) {
+  const id = (slotId !== undefined && slotId !== null) ? slotId : getActiveSlot();
+  try {
+    localStorage.removeItem(`digitinho_save_slot_${id}`);
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
+function clearActiveSlotRun() {
+  const id = getActiveSlot();
+  deleteSaveSlot(id);
+}
+
+function loadSaveDataIntoState(save) {
+  if (!save || !save.phase) return false;
+  state = defaultState();
+  state.gameMode = save.gameMode || 'classic';
+  state.difficulty = save.difficulty || 'normal';
+  state.phase = save.phase || 1;
+  state.phasePts = save.phasePts || 0;
+  state.totalScore = save.totalScore || 0;
+  state.coins = (save.coins !== undefined) ? save.coins : getSharedCoins();
+  state.totalCoinsEarned = save.totalCoinsEarned || 0;
+  state.lives = (save.lives !== undefined) ? save.lives : 3;
+  state.maxLives = save.maxLives || 3;
+  state.flawlessStreak = save.flawlessStreak || 0;
+  state.totalErrors = save.totalErrors || 0;
+  state.totalHits = save.totalHits || 0;
+  state.currentAccuracy = save.currentAccuracy || 0;
+  state.maxCombo = save.maxCombo || 0;
+  state.continues = save.continues || 0;
+  state.trainingWorld = save.trainingWorld || 1;
+  state.trainingLesson = save.trainingLesson || 1;
+  state.unlockedWords = Array.isArray(save.unlockedWords) ? [...save.unlockedWords] : [];
+  state.wordStats = save.wordStats ? { ...save.wordStats } : {};
+  state.skillSlots = Array.isArray(save.skillSlots) ? [...save.skillSlots] : [];
+  state.defeatedBossTypes = Array.isArray(save.defeatedBossTypes) ? [...save.defeatedBossTypes] : [];
+  state.charsTyped = save.charsTyped || 0;
+  state.startTime = Date.now();
+
+  const diffCfg = (typeof getDifficultyConfig === 'function') ? getDifficultyConfig(state.difficulty) : { initialSpeed: 1.0 };
+  if (save.speedMultiplier !== undefined && save.speedMultiplier !== null && !isNaN(save.speedMultiplier)) {
+    state.speedMultiplier = Number(save.speedMultiplier);
+    state._resumedFromSave = true;
+  } else {
+    state.speedMultiplier = diffCfg.initialSpeed;
+  }
+  return true;
+}

@@ -2244,4 +2244,224 @@
   width: 100%;
 }
 
+/* ======================================================
+   SAVE SLOTS MODAL — FROSTED GLASS & ZERO BORDERS
+   ====================================================== */
+.modal-slots-box {
+  max-width: 640px;
+  width: 94%;
+  text-align: left;
+}
+
+.slots-modal-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+  margin-top: 14px;
+}
+
+@media (max-width: 620px) {
+  .slots-modal-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.slot-card {
+  background: var(--glass-card);
+  backdrop-filter: var(--glass-card-blur);
+  -webkit-backdrop-filter: var(--glass-card-blur);
+  border-radius: 14px;
+  padding: 12px;
+  border: none !important;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-height: 160px;
+  cursor: default;
+  transition: background 0.18s ease, filter 0.18s ease;
+  transform: none !important;
+}
+
+.slot-card-active {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.16), rgba(16, 185, 129, 0.10)), var(--glass-card);
+}
+
+.slot-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.slot-card-title {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: var(--t1);
+}
+
+.slot-diff-badge {
+  font-size: 0.64rem;
+  font-weight: 800;
+  padding: 3px 7px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--glass-sub-card);
+  color: var(--t2);
+  line-height: 1;
+}
+
+.slot-diff-easy {
+  color: #10B981;
+  background: rgba(16, 185, 129, 0.16);
+}
+
+.slot-diff-normal {
+  color: #38BDF8;
+  background: rgba(56, 189, 248, 0.16);
+}
+
+.slot-diff-hard {
+  color: #F59E0B;
+  background: rgba(245, 158, 11, 0.16);
+}
+
+.slot-score-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1px 2px;
+}
+
+.slot-score-lbl {
+  font-size: 0.60rem;
+  font-weight: 700;
+  color: var(--t2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.slot-score-val {
+  font-size: 0.88rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.slot-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  background: var(--glass-sub-card);
+  border-radius: 10px;
+  padding: 6px 10px;
+  text-align: center;
+}
+
+.slot-stat-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.slot-stat-lbl {
+  font-size: 0.56rem;
+  color: var(--t2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.slot-stat-val {
+  font-size: 0.84rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.slot-date-text {
+  font-size: 0.66rem;
+  color: var(--t2);
+  font-weight: 500;
+  margin-top: 1px;
+}
+
+.slot-empty-spacer {
+  flex: 1;
+  min-height: 38px;
+}
+
+.slot-card-actions {
+  margin-top: auto;
+  display: flex;
+  gap: 6px;
+  width: 100%;
+}
+
+.slot-actions-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.btn-slot-action {
+  height: 36px;
+  border-radius: 10px;
+  border: none !important;
+  font-weight: 800;
+  font-size: 0.84rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: filter 0.18s ease, background 0.18s ease;
+  transform: none !important;
+}
+
+.btn-slot-continue {
+  flex: 1;
+  background: linear-gradient(135deg, #10B981, #059669);
+  color: #FFFFFF;
+}
+
+.btn-slot-continue:hover {
+  background: linear-gradient(135deg, #059669, #34D399);
+  filter: brightness(1.12);
+}
+
+.btn-slot-start {
+  width: 100%;
+  background: linear-gradient(135deg, #4F46E5, #6366F1);
+  color: #FFFFFF;
+}
+
+.btn-slot-start:hover {
+  background: linear-gradient(135deg, #6366F1, #818CF8);
+  filter: brightness(1.12);
+}
+
+.btn-slot-delete-square {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: none !important;
+  background: var(--glass-sub-card);
+  color: var(--t2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s ease, color 0.18s ease, filter 0.18s ease;
+  transform: none !important;
+}
+
+.btn-slot-delete-square:hover {
+  background: rgba(239, 68, 68, 0.18);
+  color: #EF4444;
+  filter: brightness(1.15);
+}
+
+
 

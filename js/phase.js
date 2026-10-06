@@ -60,7 +60,13 @@ function beginPhase() {
   state.errorsPhase     = 0;
   state.phasePts        = 0;
   const diffCfg = typeof getDifficultyConfig === 'function' ? getDifficultyConfig() : { initialSpeed: 1.0 };
-  state.speedMultiplier = state.gameMode === 'training' ? (state.phase === 3 ? 1.1 : 1.0) : diffCfg.initialSpeed;
+  if (state._resumedFromSave) {
+    delete state._resumedFromSave;
+  } else if (state.gameMode !== 'training' && typeof state.speedMultiplier === 'number' && state.phase > 1) {
+    // Keep speed progression across phases
+  } else {
+    state.speedMultiplier = state.gameMode === 'training' ? (state.phase === 3 ? 1.1 : 1.0) : diffCfg.initialSpeed;
+  }
   state.combo           = 0;   // Reseta o combo a cada nova fase!
   state.maxComboPhase   = 0;   // Reseta o combo maximo atingido na fase!
   state.phaseComplete   = false;
@@ -75,6 +81,7 @@ function beginPhase() {
   state.lastTs = null;
   state.rafId  = requestAnimationFrame(gameLoop);
   updateHUD();
+  if (typeof saveGameProgress === 'function') saveGameProgress();
 }
 
 function checkPhaseComplete() {
@@ -123,6 +130,9 @@ function showPhaseModal() {
   const totalPhaseCoins = completionCoins + precisionCoins;
   state.coins = (state.coins || 0) + totalPhaseCoins;
   state.totalCoinsEarned = (state.totalCoinsEarned || 0) + totalPhaseCoins;
+  if (typeof addSharedCoins === 'function') addSharedCoins(totalPhaseCoins);
+  if (typeof updateHighCoins === 'function') updateHighCoins(state.totalCoinsEarned);
+  if (typeof saveGameProgress === 'function') saveGameProgress();
 
   // Pontos são 100% gerados e acumulados ao vivo durante a partida
   if (typeof updateHUD === 'function') updateHUD();
@@ -454,6 +464,7 @@ function exitPhaseToMainMenu() {
   stopConfetti();
   if (typeof cancelPhaseExitConfirm === 'function') cancelPhaseExitConfirm();
   if (modalPhase) modalPhase.classList.add('hidden');
+  if (typeof saveGameProgress === 'function') saveGameProgress();
   goToMainMenu();
 }
 

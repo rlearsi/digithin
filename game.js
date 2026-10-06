@@ -7,11 +7,16 @@
 // ============================================================
 // 1. GAME LIFECYCLE
 // ============================================================
-function startGame(mode = 'classic') {
+function startGame(mode = 'classic', slotId = null) {
   if (typeof isLocaleReady !== 'undefined' && !isLocaleReady) return;
   if (typeof closeSettings === 'function') closeSettings();
+  if (typeof closeSlotsModal === 'function') closeSlotsModal();
   const pauseOverlay = $('pause-overlay');
   if (pauseOverlay) pauseOverlay.classList.add('hidden');
+
+  if (slotId !== null && slotId !== undefined) {
+    if (typeof setActiveSlot === 'function') setActiveSlot(slotId);
+  }
 
   if (typeof resetHUDScore === 'function') resetHUDScore();
   state = defaultState();
@@ -36,6 +41,67 @@ function startGame(mode = 'classic') {
   refillQueue();
   updateHUD();
   beginPhase();
+  if (typeof saveGameProgress === 'function') saveGameProgress();
+}
+
+function resumeSavedGame(slotId = null) {
+  if (typeof isLocaleReady !== 'undefined' && !isLocaleReady) return;
+  const targetId = (slotId !== undefined && slotId !== null)
+    ? slotId
+    : (typeof getLatestSaveSlot === 'function' ? (getLatestSaveSlot()?.slotId || getActiveSlot()) : getActiveSlot());
+  const save = typeof getSaveSlot === 'function' ? getSaveSlot(targetId) : null;
+  if (!save) {
+    startGame('classic', targetId);
+    return;
+  }
+  if (typeof closeSettings === 'function') closeSettings();
+  if (typeof closeSlotsModal === 'function') closeSlotsModal();
+  const pauseOverlay = $('pause-overlay');
+  if (pauseOverlay) pauseOverlay.classList.add('hidden');
+  if (typeof resetHUDScore === 'function') resetHUDScore();
+
+  if (typeof setActiveSlot === 'function') setActiveSlot(targetId);
+  if (typeof loadSaveDataIntoState === 'function') {
+    loadSaveDataIntoState(save);
+  }
+
+  screenStart.classList.remove('active');
+  screenGame.classList.add('active');
+  hiddenInput.focus();
+  refillQueue();
+  updateHUD();
+  beginPhase();
+
+  const phaseNum = state.phase || 1;
+  const msg = typeof t === 'function' ? t('fb_game_resumed', { phase: phaseNum }) : `Partida retomada! Fase ${phaseNum}`;
+  showFeedback(msg, 'special');
+  if (typeof playSound === 'function') playSound('phaseStart');
+}
+
+function promptOrStartNewGame(slotId = null) {
+  if (slotId !== null && slotId !== undefined) {
+    startGame('classic', slotId);
+    return;
+  }
+  const activeId = typeof getActiveSlot === 'function' ? getActiveSlot() : 1;
+  const hasActive = typeof hasActiveSave === 'function' ? hasActiveSave(activeId) : false;
+  if (!hasActive) {
+    startGame('classic', activeId);
+    return;
+  }
+  if (typeof getAllSaveSlots === 'function') {
+    const slots = getAllSaveSlots();
+    const emptySlot = slots.find(s => !s.data);
+    if (emptySlot) {
+      startGame('classic', emptySlot.slotId);
+      return;
+    }
+  }
+  if (typeof openSlotsModal === 'function') {
+    openSlotsModal();
+  } else {
+    startGame('classic', activeId);
+  }
 }
 
 function startTrainingWorld(worldId = 1) {
@@ -83,7 +149,8 @@ function restartGame() {
   if (state.gameMode === 'training') {
     startTrainingWorld(state.trainingWorld || 1);
   } else {
-    startGame(state.gameMode || 'classic');
+    const activeSlot = (typeof getActiveSlot === 'function') ? getActiveSlot() : 1;
+    startGame(state.gameMode || 'classic', activeSlot);
   }
 }
 
@@ -131,6 +198,7 @@ function goToMainMenu() {
   state = defaultState();
   if (typeof updateHUD === 'function') updateHUD();
 
+  if (typeof updateStartScreenUI === 'function') updateStartScreenUI();
   if (typeof playSound === 'function') playSound('click');
 }
 
@@ -205,6 +273,10 @@ function gameOver() {
   // Populate modern game over arcade dashboard
   const currentScore = state.totalScore || 0;
   const recordResult = typeof updateHighScore === 'function' ? updateHighScore(currentScore) : { best: currentScore, isNew: false, previous: currentScore };
+  const sessionCoins = state.totalCoinsEarned || 0;
+  if (typeof updateHighCoins === 'function') updateHighCoins(sessionCoins);
+  if (typeof clearActiveSlotRun === 'function') clearActiveSlotRun();
+  if (typeof updateStartScreenUI === 'function') updateStartScreenUI();
 
   // Calculate overall match accuracy
   const totalHits = state.totalHits || 0;
@@ -218,7 +290,6 @@ function gameOver() {
   }
 
   const coinsEl = $('go-coins');
-  const sessionCoins = state.totalCoinsEarned || 0;
   if (coinsEl) {
     if (typeof animateCoinsElement === 'function' && sessionCoins > 0) {
       animateCoinsElement(coinsEl, sessionCoins, 650);
@@ -711,4 +782,25 @@ function completeItem(item) {
 
   updateHUD();
   checkPhaseComplete();
+}
+
+// Auto-save on page unload if match is in progress
+if (typeof window !== 'undefined') {
+  window.addEventListener('beforeunload', () => {
+    if (typeof isMatchInProgress === 'function' && isMatchInProgress()) {
+      if (typeof saveGameProgress === 'function') {
+        saveGameProgress();
+      }
+    }
+  });
+
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        if (typeof updateStartScreenUI === 'function') updateStartScreenUI();
+      });
+    } else {
+      if (typeof updateStartScreenUI === 'function') updateStartScreenUI();
+    }
+  }
 }

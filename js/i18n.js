@@ -176,6 +176,10 @@ function applyTranslations() {
   if (typeof renderBibliotecaModal === 'function') {
     try { renderBibliotecaModal(); } catch (e) { console.warn('[i18n] renderBibliotecaModal error:', e); }
   }
+  // Update Start Screen UI & Save Slots if rendered
+  if (typeof updateStartScreenUI === 'function') {
+    try { updateStartScreenUI(); } catch (e) { console.warn('[i18n] updateStartScreenUI error:', e); }
+  }
 
   // Update HUD ONLY IF game match is currently in progress
   if (typeof isMatchInProgress === 'function' && isMatchInProgress() && typeof updateHUD === 'function') {

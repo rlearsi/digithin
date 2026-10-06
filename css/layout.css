@@ -58,10 +58,13 @@
   line-height: 1.35;
 }
 
-/* Hero Play Button */
+/* Hero Start & Continue Action */
 .start-hero-action {
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
+
 .hero-start-btn {
   width: 100%;
   height: 56px;
@@ -84,9 +87,20 @@
 }
 .hero-start-btn:hover {
   background: linear-gradient(135deg, #6366F1, #818CF8);
-  filter: brightness(1.10);
+  filter: brightness(1.12);
   box-shadow: 0 8px 26px rgba(99, 102, 241, 0.48);
 }
+
+.hero-continue-btn {
+  background: linear-gradient(135deg, #10B981, #059669);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.38);
+}
+.hero-continue-btn:hover {
+  background: linear-gradient(135deg, #059669, #34D399);
+  filter: brightness(1.12);
+  box-shadow: 0 8px 26px rgba(16, 185, 129, 0.48);
+}
+
 .hero-play-icon {
   width: 28px;
   height: 28px;

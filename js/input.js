@@ -15,13 +15,30 @@ document.addEventListener('keydown', e => {
     }
   }
 
-  // If Start Screen is active, pressing Enter starts Classic match
+  // If Save Slots modal is open, ESC closes it
+  const modalSlotsEl = $('modal-slots');
+  if (modalSlotsEl && !modalSlotsEl.classList.contains('hidden')) {
+    if (e.key === 'Escape' || e.code === 'Escape') {
+      e.preventDefault();
+      if (typeof closeSlotsModal === 'function') closeSlotsModal();
+      return;
+    }
+  }
+
+  // If Start Screen is active, pressing Enter triggers the hero button (starts or opens slots)
   const screenStartEl = $('screen-start');
   if (screenStartEl && screenStartEl.classList.contains('active')) {
     const isAnyModalOpen = document.querySelector('.modal:not(.hidden)');
     if (!isAnyModalOpen && (e.key === 'Enter' || e.code === 'Enter' || e.code === 'NumpadEnter')) {
       e.preventDefault();
-      startGame('classic');
+      const hasSaves = typeof getAllSaveSlots === 'function'
+        ? getAllSaveSlots().some(s => !!s.data)
+        : false;
+      if (hasSaves) {
+        if (typeof openSlotsModal === 'function') openSlotsModal();
+      } else {
+        if (typeof startGame === 'function') startGame('classic');
+      }
       return;
     }
   }
@@ -106,7 +123,7 @@ document.addEventListener('keydown', e => {
 
     if (e.key === 'Enter' || e.code === 'Enter' || e.code === 'NumpadEnter') {
       e.preventDefault();
-      if (state.selectedShopIndex !== undefined && state.selectedShopIndex >= 0) {
+      if (typeof state !== 'undefined' && state && state.selectedShopIndex !== undefined && state.selectedShopIndex >= 0) {
         if (typeof buySelectedShopItem === 'function') buySelectedShopItem();
       } else {
         if (typeof closeShop === 'function') closeShop();
@@ -116,7 +133,7 @@ document.addEventListener('keydown', e => {
 
     if (e.key === 'Escape' || e.code === 'Escape') {
       e.preventDefault();
-      if (state.selectedShopIndex !== undefined && state.selectedShopIndex >= 0) {
+      if (typeof state !== 'undefined' && state && state.selectedShopIndex !== undefined && state.selectedShopIndex >= 0) {
         state.selectedShopIndex = -1;
         if (typeof updateShopSelectionVisual === 'function') updateShopSelectionVisual();
       } else {
