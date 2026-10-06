@@ -187,6 +187,11 @@ function updateSettingsUI() {
       diffSelect.title = '';
     }
   }
+
+  const fingerSelect = $('settings-finger-guide-select');
+  if (fingerSelect && typeof getFingerGuideSetting === 'function') {
+    fingerSelect.value = getFingerGuideSetting();
+  }
 }
 
 function isBossBattlesEnabled() {
@@ -217,6 +222,277 @@ function updateBossBattlesUI() {
   }
   if (btn) {
     btn.classList.toggle('is-disabled', !isEnabled);
+  }
+}
+
+// ============================================================
+// VISUAL FINGER GUIDE (MINI MAPA SUTIL DE DIGITAÇÃO)
+// ============================================================
+function getFingerGuideSetting() {
+  try {
+    const saved = localStorage.getItem('digitinho_finger_guide');
+    if (saved && (saved === 'always' || saved === 'off' || saved === 'training')) {
+      return saved;
+    }
+  } catch (_) {}
+  return 'training'; // Ativado por padrão no modo treinamento
+}
+
+function changeFingerGuideSetting(mode) {
+  const valid = (mode === 'always' || mode === 'off') ? mode : 'training';
+  try {
+    localStorage.setItem('digitinho_finger_guide', valid);
+  } catch (_) {}
+  if (typeof updateFingerGuideVisibility === 'function') {
+    updateFingerGuideVisibility();
+  }
+}
+
+function isFingerGuideActive() {
+  const mode = getFingerGuideSetting();
+  if (mode === 'off') return false;
+  if (mode === 'always') return true;
+  // 'training': ativo estritamente no modo treinamento
+  return typeof state !== 'undefined' && state && state.gameMode === 'training';
+}
+
+function updateFingerGuideVisibility() {
+  const guideEl = $('finger-guide');
+  const gameCol = $('game-column');
+  const inMatch = typeof isMatchInProgress === 'function' ? isMatchInProgress() : false;
+  const active = inMatch && isFingerGuideActive();
+
+  if (guideEl) {
+    guideEl.classList.toggle('hidden', !active);
+  }
+  if (gameCol) {
+    gameCol.classList.toggle('has-finger-guide', active);
+  }
+  if (active) {
+    updateFingerGuide();
+  } else {
+    lastFgChar = undefined;
+  }
+}
+
+const FINGER_MAP = {
+  // Mão Esquerda: Mindinho
+  'Q': { id: 'fg-finger-l-pinky', handKey: 'hand_left', nameKey: 'finger_l_pinky' },
+  'A': { id: 'fg-finger-l-pinky', handKey: 'hand_left', nameKey: 'finger_l_pinky' },
+  'Z': { id: 'fg-finger-l-pinky', handKey: 'hand_left', nameKey: 'finger_l_pinky' },
+  '1': { id: 'fg-finger-l-pinky', handKey: 'hand_left', nameKey: 'finger_l_pinky' },
+  '!': { id: 'fg-finger-l-pinky', handKey: 'hand_left', nameKey: 'finger_l_pinky' },
+  '`': { id: 'fg-finger-l-pinky', handKey: 'hand_left', nameKey: 'finger_l_pinky' },
+  '~': { id: 'fg-finger-l-pinky', handKey: 'hand_left', nameKey: 'finger_l_pinky' },
+  'Á': { id: 'fg-finger-l-pinky', handKey: 'hand_left', nameKey: 'finger_l_pinky' },
+  'À': { id: 'fg-finger-l-pinky', handKey: 'hand_left', nameKey: 'finger_l_pinky' },
+  'Â': { id: 'fg-finger-l-pinky', handKey: 'hand_left', nameKey: 'finger_l_pinky' },
+  'Ã': { id: 'fg-finger-l-pinky', handKey: 'hand_left', nameKey: 'finger_l_pinky' },
+  'Ä': { id: 'fg-finger-l-pinky', handKey: 'hand_left', nameKey: 'finger_l_pinky' },
+
+  // Mão Esquerda: Anelar
+  'W': { id: 'fg-finger-l-ring', handKey: 'hand_left', nameKey: 'finger_l_ring' },
+  'S': { id: 'fg-finger-l-ring', handKey: 'hand_left', nameKey: 'finger_l_ring' },
+  'X': { id: 'fg-finger-l-ring', handKey: 'hand_left', nameKey: 'finger_l_ring' },
+  '2': { id: 'fg-finger-l-ring', handKey: 'hand_left', nameKey: 'finger_l_ring' },
+  '@': { id: 'fg-finger-l-ring', handKey: 'hand_left', nameKey: 'finger_l_ring' },
+
+  // Mão Esquerda: Médio
+  'E': { id: 'fg-finger-l-middle', handKey: 'hand_left', nameKey: 'finger_l_middle' },
+  'D': { id: 'fg-finger-l-middle', handKey: 'hand_left', nameKey: 'finger_l_middle' },
+  'C': { id: 'fg-finger-l-middle', handKey: 'hand_left', nameKey: 'finger_l_middle' },
+  '3': { id: 'fg-finger-l-middle', handKey: 'hand_left', nameKey: 'finger_l_middle' },
+  '#': { id: 'fg-finger-l-middle', handKey: 'hand_left', nameKey: 'finger_l_middle' },
+  'É': { id: 'fg-finger-l-middle', handKey: 'hand_left', nameKey: 'finger_l_middle' },
+  'È': { id: 'fg-finger-l-middle', handKey: 'hand_left', nameKey: 'finger_l_middle' },
+  'Ê': { id: 'fg-finger-l-middle', handKey: 'hand_left', nameKey: 'finger_l_middle' },
+
+  // Mão Esquerda: Indicador
+  'R': { id: 'fg-finger-l-index', handKey: 'hand_left', nameKey: 'finger_l_index' },
+  'T': { id: 'fg-finger-l-index', handKey: 'hand_left', nameKey: 'finger_l_index' },
+  'F': { id: 'fg-finger-l-index', handKey: 'hand_left', nameKey: 'finger_l_index' },
+  'G': { id: 'fg-finger-l-index', handKey: 'hand_left', nameKey: 'finger_l_index' },
+  'V': { id: 'fg-finger-l-index', handKey: 'hand_left', nameKey: 'finger_l_index' },
+  'B': { id: 'fg-finger-l-index', handKey: 'hand_left', nameKey: 'finger_l_index' },
+  '4': { id: 'fg-finger-l-index', handKey: 'hand_left', nameKey: 'finger_l_index' },
+  '5': { id: 'fg-finger-l-index', handKey: 'hand_left', nameKey: 'finger_l_index' },
+  '$': { id: 'fg-finger-l-index', handKey: 'hand_left', nameKey: 'finger_l_index' },
+  '%': { id: 'fg-finger-l-index', handKey: 'hand_left', nameKey: 'finger_l_index' },
+
+  // Polegares (Barra de Espaço)
+  ' ': { id: ['fg-finger-l-thumb', 'fg-finger-r-thumb'], handKey: 'hand_both', nameKey: 'finger_thumb' },
+
+  // Mão Direita: Indicador
+  'Y': { id: 'fg-finger-r-index', handKey: 'hand_right', nameKey: 'finger_r_index' },
+  'U': { id: 'fg-finger-r-index', handKey: 'hand_right', nameKey: 'finger_r_index' },
+  'H': { id: 'fg-finger-r-index', handKey: 'hand_right', nameKey: 'finger_r_index' },
+  'J': { id: 'fg-finger-r-index', handKey: 'hand_right', nameKey: 'finger_r_index' },
+  'N': { id: 'fg-finger-r-index', handKey: 'hand_right', nameKey: 'finger_r_index' },
+  'M': { id: 'fg-finger-r-index', handKey: 'hand_right', nameKey: 'finger_r_index' },
+  '6': { id: 'fg-finger-r-index', handKey: 'hand_right', nameKey: 'finger_r_index' },
+  '7': { id: 'fg-finger-r-index', handKey: 'hand_right', nameKey: 'finger_r_index' },
+  '&': { id: 'fg-finger-r-index', handKey: 'hand_right', nameKey: 'finger_r_index' },
+  'Ú': { id: 'fg-finger-r-index', handKey: 'hand_right', nameKey: 'finger_r_index' },
+  'Ù': { id: 'fg-finger-r-index', handKey: 'hand_right', nameKey: 'finger_r_index' },
+  'Ü': { id: 'fg-finger-r-index', handKey: 'hand_right', nameKey: 'finger_r_index' },
+
+  // Mão Direita: Médio
+  'I': { id: 'fg-finger-r-middle', handKey: 'hand_right', nameKey: 'finger_r_middle' },
+  'K': { id: 'fg-finger-r-middle', handKey: 'hand_right', nameKey: 'finger_r_middle' },
+  ',': { id: 'fg-finger-r-middle', handKey: 'hand_right', nameKey: 'finger_r_middle' },
+  '<': { id: 'fg-finger-r-middle', handKey: 'hand_right', nameKey: 'finger_r_middle' },
+  '8': { id: 'fg-finger-r-middle', handKey: 'hand_right', nameKey: 'finger_r_middle' },
+  '*': { id: 'fg-finger-r-middle', handKey: 'hand_right', nameKey: 'finger_r_middle' },
+  'Í': { id: 'fg-finger-r-middle', handKey: 'hand_right', nameKey: 'finger_r_middle' },
+  'Ì': { id: 'fg-finger-r-middle', handKey: 'hand_right', nameKey: 'finger_r_middle' },
+  'Î': { id: 'fg-finger-r-middle', handKey: 'hand_right', nameKey: 'finger_r_middle' },
+
+  // Mão Direita: Anelar
+  'O': { id: 'fg-finger-r-ring', handKey: 'hand_right', nameKey: 'finger_r_ring' },
+  'L': { id: 'fg-finger-r-ring', handKey: 'hand_right', nameKey: 'finger_r_ring' },
+  '.': { id: 'fg-finger-r-ring', handKey: 'hand_right', nameKey: 'finger_r_ring' },
+  '>': { id: 'fg-finger-r-ring', handKey: 'hand_right', nameKey: 'finger_r_ring' },
+  '9': { id: 'fg-finger-r-ring', handKey: 'hand_right', nameKey: 'finger_r_ring' },
+  '(': { id: 'fg-finger-r-ring', handKey: 'hand_right', nameKey: 'finger_r_ring' },
+  'Ó': { id: 'fg-finger-r-ring', handKey: 'hand_right', nameKey: 'finger_r_ring' },
+  'Ò': { id: 'fg-finger-r-ring', handKey: 'hand_right', nameKey: 'finger_r_ring' },
+  'Ô': { id: 'fg-finger-r-ring', handKey: 'hand_right', nameKey: 'finger_r_ring' },
+  'Õ': { id: 'fg-finger-r-ring', handKey: 'hand_right', nameKey: 'finger_r_ring' },
+  'Ö': { id: 'fg-finger-r-ring', handKey: 'hand_right', nameKey: 'finger_r_ring' },
+
+  // Mão Direita: Mindinho
+  'P': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  'Ç': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  '0': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  ')': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  '-': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  '_': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  '=': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  '+': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  '[': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  '{': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  ']': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  '}': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  ';': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  ':': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  '\'': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  '"': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  '/': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  '?': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  '\\': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+  '|': { id: 'fg-finger-r-pinky', handKey: 'hand_right', nameKey: 'finger_r_pinky' },
+};
+
+function getFingerInfo(rawChar) {
+  if (!rawChar) return null;
+  const upper = rawChar.toUpperCase();
+  if (FINGER_MAP[upper]) return FINGER_MAP[upper];
+  const deaccented = upper.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  if (FINGER_MAP[deaccented]) return FINGER_MAP[deaccented];
+  return null;
+}
+
+function getActiveTargetChar() {
+  if (typeof state === 'undefined' || !state) return null;
+
+  // 1. Boss battle
+  if (state.bossBattle && state.bossBattle.active) {
+    if (state.bossBattle.currentWord) {
+      const targetWord = (state.bossBattle.currentWord.text || '').toUpperCase();
+      const buf = (state.typedBuffer || '').toUpperCase();
+      if (targetWord.startsWith(buf) && buf.length < targetWord.length) {
+        return targetWord[buf.length];
+      }
+      return targetWord[0] || null;
+    }
+    return null;
+  }
+
+  // 2. Active falling items no tabuleiro
+  const activeTokens = (state.activeItems || []).filter(item => !item.removing);
+  if (activeTokens.length > 0) {
+    const buf = (state.typedBuffer || '').toUpperCase();
+    if (buf.length > 0) {
+      const matching = activeTokens.filter(item => (item.text || '').toUpperCase().startsWith(buf));
+      if (matching.length > 0) {
+        const target = matching.reduce((lowest, item) => item.y > lowest.y ? item : lowest);
+        const upperText = (target.text || '').toUpperCase();
+        if (upperText.length > buf.length) {
+          return upperText[buf.length];
+        }
+      }
+    }
+    // Rúnico mais próximo do fundo é o perigo iminente
+    const target = activeTokens.reduce((lowest, item) => item.y > lowest.y ? item : lowest);
+    const upperText = (target.text || '').toUpperCase();
+    return upperText[0] || null;
+  }
+
+  // 3. Fallback para próximo elemento na esteira
+  if (state.spawnQueue && state.spawnQueue.length > 0) {
+    const nextItem = state.spawnQueue[0];
+    if (nextItem && nextItem.text) {
+      return (nextItem.text[0] || '').toUpperCase() || null;
+    }
+  }
+
+  return null;
+}
+
+let lastFgChar = undefined;
+
+function updateFingerGuide() {
+  const guideEl = $('finger-guide');
+  if (!guideEl || guideEl.classList.contains('hidden')) return;
+
+  const targetChar = getActiveTargetChar();
+  if (targetChar === lastFgChar) return;
+  lastFgChar = targetChar;
+
+  const keyCap = $('fg-key-cap');
+  const fingerName = $('fg-finger-name');
+  const handSub = $('fg-hand-sub');
+
+  // Limpa dedos ativos anteriores
+  const allFingers = guideEl.querySelectorAll('.fg-finger');
+  allFingers.forEach(f => f.classList.remove('fg-active'));
+
+  if (!targetChar) {
+    if (keyCap) {
+      keyCap.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M6 12h.01M10 12h.01M14 12h.01M18 12h.01M8 16h8"/></svg>`;
+      keyCap.classList.remove('active');
+    }
+    if (fingerName) fingerName.textContent = typeof t === 'function' ? t('finger_ready') : 'Resting Position';
+    if (handSub) handSub.textContent = typeof t === 'function' ? t('finger_guide_title') : 'Finger Guide';
+    return;
+  }
+
+  const info = getFingerInfo(targetChar);
+  if (keyCap) {
+    keyCap.textContent = targetChar === ' ' ? (typeof t === 'function' ? t('finger_space_bar') : 'Space') : targetChar;
+    keyCap.classList.add('active');
+  }
+
+  if (info) {
+    if (Array.isArray(info.id)) {
+      info.id.forEach(id => {
+        const el = $(id);
+        if (el) el.classList.add('fg-active');
+      });
+    } else {
+      const el = $(info.id);
+      if (el) el.classList.add('fg-active');
+    }
+
+    if (fingerName) {
+      fingerName.textContent = typeof t === 'function' ? t(info.nameKey) : info.nameKey;
+    }
+    if (handSub) {
+      handSub.textContent = typeof t === 'function' ? t(info.handKey) : info.handKey;
+    }
+  } else {
+    if (fingerName) fingerName.textContent = targetChar;
+    if (handSub) handSub.textContent = typeof t === 'function' ? t('finger_guide_title') : 'Finger Guide';
   }
 }
 
@@ -698,6 +974,9 @@ function updateHUD() {
   }
 
   renderSkills();
+  if (typeof updateFingerGuideVisibility === 'function') {
+    updateFingerGuideVisibility();
+  }
 }
 
 // Render skill slots cleanly with persistent active state and duration bar

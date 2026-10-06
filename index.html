@@ -10,10 +10,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/variables.css?v=2.9" />
   <link rel="stylesheet" href="css/components.css?v=3.3" />
-  <link rel="stylesheet" href="css/layout.css?v=4.0" />
+  <link rel="stylesheet" href="css/layout.css?v=4.4" />
   <link rel="stylesheet" href="css/gameplay.css?v=3.3" />
   <link rel="stylesheet" href="css/modals.css?v=4.0" />
-  <link rel="stylesheet" href="css/responsive.css?v=3.3" />
+  <link rel="stylesheet" href="css/responsive.css?v=4.4" />
 </head>
 <body>
   <!-- Ambient Saturated Canvas (vibrant ambient landscape, mesh orbs & topography) -->
@@ -317,6 +317,37 @@
             <span class="queue-label" data-i18n="hud_upcoming">UPCOMING</span>
           </div>
           <div id="queue-items"></div>
+        </div>
+
+        <!-- Guia Visual de Dedos (Mini mapa sutil de digitação) -->
+        <div id="finger-guide" class="finger-guide hidden">
+          <div class="fg-hands-container">
+            <svg class="fg-hand-svg fg-hand-l" viewBox="0 0 92 84" aria-label="Left Hand">
+              <path class="fg-palm" d="M 10 50 C 9 60, 14 74, 22 78 C 32 80, 46 80, 54 78 C 63 74, 70 65, 70 58 C 70 52, 66 48, 62 46 L 14 46 C 12 48, 10 50, 10 50 Z" />
+              <rect id="fg-finger-l-pinky" class="fg-finger" x="10" y="26" width="10" height="34" rx="5" />
+              <rect id="fg-finger-l-ring" class="fg-finger" x="23" y="14" width="10" height="46" rx="5" />
+              <rect id="fg-finger-l-middle" class="fg-finger" x="36" y="8" width="10" height="52" rx="5" />
+              <rect id="fg-finger-l-index" class="fg-finger" x="49" y="14" width="10" height="46" rx="5" />
+              <rect id="fg-finger-l-thumb" class="fg-finger" x="58" y="44" width="11" height="26" rx="5.5" transform="rotate(36 63 57)" />
+            </svg>
+            <svg class="fg-hand-svg fg-hand-r" viewBox="0 0 92 84" aria-label="Right Hand">
+              <g transform="translate(92, 0) scale(-1, 1)">
+                <path class="fg-palm" d="M 10 50 C 9 60, 14 74, 22 78 C 32 80, 46 80, 54 78 C 63 74, 70 65, 70 58 C 70 52, 66 48, 62 46 L 14 46 C 12 48, 10 50, 10 50 Z" />
+                <rect id="fg-finger-r-pinky" class="fg-finger" x="10" y="26" width="10" height="34" rx="5" />
+                <rect id="fg-finger-r-ring" class="fg-finger" x="23" y="14" width="10" height="46" rx="5" />
+                <rect id="fg-finger-r-middle" class="fg-finger" x="36" y="8" width="10" height="52" rx="5" />
+                <rect id="fg-finger-r-index" class="fg-finger" x="49" y="14" width="10" height="46" rx="5" />
+                <rect id="fg-finger-r-thumb" class="fg-finger" x="58" y="44" width="11" height="26" rx="5.5" transform="rotate(36 63 57)" />
+              </g>
+            </svg>
+          </div>
+          <div class="fg-info-wrap">
+            <div class="fg-key-cap" id="fg-key-cap">-</div>
+            <div class="fg-text-wrap">
+              <span class="fg-finger-name" id="fg-finger-name" data-i18n="finger_ready">Resting Position</span>
+              <span class="fg-hand-sub" id="fg-hand-sub" data-i18n="finger_guide_title">Finger Guide</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1046,6 +1077,16 @@
               <span id="settings-theme-val">Dark</span>
             </button>
           </div>
+
+          <!-- Setting: Visual Finger Guide -->
+          <div class="settings-opt-row">
+            <span class="settings-opt-label" data-i18n="settings_finger_guide">Visual Finger Guide</span>
+            <select id="settings-finger-guide-select" class="settings-opt-select" onchange="changeFingerGuideSetting(this.value)">
+              <option value="training" data-i18n="settings_finger_guide_training">Training Only (Default)</option>
+              <option value="always" data-i18n="settings_finger_guide_always">Always Active</option>
+              <option value="off" data-i18n="settings_finger_guide_off">Disabled</option>
+            </select>
+          </div>
         </div>
 
         <!-- Grupo 2: Batalhas de Chefão -->
@@ -1145,15 +1186,15 @@
   <script src="js/i18n.js?v=4.3"></script>
   <script src="js/data.js?v=4.3"></script>
   <script src="js/state.js?v=4.3"></script>
-  <script src="js/ui.js?v=4.0"></script>
+  <script src="js/ui.js?v=4.4"></script>
   <script src="js/shop.js?v=4.3"></script>
   <script src="js/library.js?v=3.3"></script>
   <script src="js/spawner.js?v=4.3"></script>
   <script src="js/skills.js?v=3.5"></script>
-  <script src="js/boss.js?v=4.3"></script>
+  <script src="js/boss.js?v=4.4"></script>
   <script src="js/pause.js?v=4.0"></script>
   <script src="js/phase.js?v=4.3"></script>
-  <script src="game.js?v=4.3"></script>
+  <script src="game.js?v=4.4"></script>
   <script src="js/input.js?v=4.0"></script>
 </body>
 </html>

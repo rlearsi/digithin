@@ -477,6 +477,10 @@ function handleBossLetterTyped(char) {
     renderBossMeaningSlots(boxItem.el, targetWord, '');
     updateHUD();
   }
+
+  if (typeof updateFingerGuide === 'function' && typeof isFingerGuideActive === 'function' && isFingerGuideActive()) {
+    updateFingerGuide();
+  }
 }
 
 function completeBossMeaning() {

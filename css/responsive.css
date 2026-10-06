@@ -56,6 +56,38 @@
     height: 26px;
     font-size: 0.72rem;
   }
+  #finger-guide {
+    height: 46px;
+    padding: 0 10px;
+    gap: 8px;
+  }
+  .fg-hand-svg {
+    width: 38px;
+    height: 32px;
+  }
+  .fg-key-cap {
+    min-width: 28px;
+    height: 28px;
+    font-size: 0.82rem;
+  }
+  .fg-finger-name {
+    font-size: 0.70rem;
+  }
+  .fg-hand-sub {
+    font-size: 0.55rem;
+  }
+  #game-column.has-finger-guide::after {
+    bottom: 46px;
+  }
+  #game-column.has-finger-guide.queue-pos-bottom::after {
+    bottom: 90px;
+  }
+  #game-column.has-finger-guide .shield-aura {
+    bottom: 46px;
+  }
+  #game-column.has-finger-guide.queue-pos-bottom .shield-aura {
+    bottom: 90px;
+  }
 }
 
 /* Very Small Mobile Screens (max-width: 440px) */

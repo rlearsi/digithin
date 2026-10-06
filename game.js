@@ -198,6 +198,7 @@ function goToMainMenu() {
 
   state = defaultState();
   if (typeof updateHUD === 'function') updateHUD();
+  if (typeof updateFingerGuideVisibility === 'function') updateFingerGuideVisibility();
 
   if (typeof updateStartScreenUI === 'function') updateStartScreenUI();
   if (typeof playSound === 'function') playSound('click');
@@ -519,6 +520,10 @@ function gameLoop(ts) {
     }
   }
 
+  if (typeof updateFingerGuide === 'function' && typeof isFingerGuideActive === 'function' && isFingerGuideActive()) {
+    updateFingerGuide();
+  }
+
   state.rafId = requestAnimationFrame(gameLoop);
 }
 
@@ -625,6 +630,10 @@ function handleLetterTyped(char) {
       showFeedback(errLbl, 'error');
       updateHUD();
     }
+  }
+
+  if (typeof updateFingerGuide === 'function' && typeof isFingerGuideActive === 'function' && isFingerGuideActive()) {
+    updateFingerGuide();
   }
 }
 
