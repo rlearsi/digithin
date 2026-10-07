@@ -2444,21 +2444,22 @@ function renderBossHud(boss, remainingLives = 3, maxLives = 3) {
     ? boss.name
     : (isPt ? (boss.namePt || boss.name) : (boss.name || boss.namePt));
   const scenario = (typeof t === 'function' && boss.scenarioKey && t(boss.scenarioKey) !== boss.scenarioKey)
-    ? boss.scenario
-    : (isPt ? (boss.scenarioPt || boss.scenario) : (boss.scenario || boss.scenarioPt));
+    ? (boss.scenario || '')
+    : (isPt ? (boss.scenarioPt || boss.scenario || '') : (boss.scenario || boss.scenarioPt || ''));
   const badgeLabel = (typeof t === 'function' && boss.badgeKey && t(boss.badgeKey) !== boss.badgeKey)
     ? boss.badgeText
     : (isPt ? (boss.badgeTextPt || boss.badgeText) : (boss.badgeText || boss.badgeTextPt));
   const desc = (typeof t === 'function' && boss.scenarioDescKey && t(boss.scenarioDescKey) !== boss.scenarioDescKey)
-    ? (boss.scenarioDesc || boss.lore || boss.title)
-    : (isPt ? (boss.scenarioDescPt || boss.lorePt || boss.titlePt) : (boss.scenarioDesc || boss.lore || boss.title));
+    ? (boss.scenarioDesc || boss.lore || boss.title || '')
+    : (isPt ? (boss.scenarioDescPt || boss.lorePt || boss.titlePt || '') : (boss.scenarioDesc || boss.lore || boss.title || ''));
 
   if (bossName) bossName.textContent = name || (typeof t === 'function' ? t('boss_default_name') : 'Boss');
-  if (bossDesc) bossDesc.textContent = `${scenario} — ${desc}`;
+  if (bossDesc) bossDesc.textContent = scenario ? (desc ? `${scenario} — ${desc}` : scenario) : (desc || '');
 
   const badgeEl = $('boss-badge');
   if (badgeEl) {
-    badgeEl.textContent = `${badgeLabel || (typeof t === 'function' ? t('boss_default_name').toUpperCase() : 'BOSS')} • ${scenario.toUpperCase()}`;
+    const scUp = scenario ? ` • ${scenario.toUpperCase()}` : '';
+    badgeEl.textContent = `${badgeLabel || (typeof t === 'function' ? t('boss_default_name').toUpperCase() : 'BOSS')}${scUp}`;
     const clr = boss.color || '#06B6D4';
     badgeEl.style.background = `linear-gradient(135deg, ${clr}, #3B82F6)`;
     badgeEl.style.boxShadow = `0 0 10px ${clr}55`;

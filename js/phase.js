@@ -127,12 +127,16 @@ function showPhaseModal() {
   const accPct   = Math.round(acc);
 
   // Coins Mechanic:
-  // Regra 3: partida/fase concluída = +10 moedas
-  const completionCoins = 10;
+  // Nova Regra: +5 moedas base e +1 moeda por fase concluída (+1 a cada nova fase, teto máximo de 50 moedas)
+  // Exemplo: Fase 1 = +6 moedas, Fase 2 = +7 moedas, Fase 3 = +8 moedas ... até o teto de 50 moedas (na fase 50)
+  const completionCoins = (typeof calcPhaseCompletionCoins === 'function')
+    ? calcPhaseCompletionCoins(state.phase)
+    : Math.min(50, 5 + Math.max(1, parseInt(state.phase, 10) || 1));
 
   // Regra 4: 100% precisão = +35 moedas
   const isPerfectAcc = (accPct === 100 && errs === 0);
-  const precisionCoins = isPerfectAcc ? 35 : 0;
+  const precisionBonus = (typeof CFG !== 'undefined' && CFG.perfectAccuracyCoins !== undefined) ? CFG.perfectAccuracyCoins : 35;
+  const precisionCoins = isPerfectAcc ? precisionBonus : 0;
 
   const totalPhaseCoins = completionCoins + precisionCoins;
   state.coins = (state.coins || 0) + totalPhaseCoins;

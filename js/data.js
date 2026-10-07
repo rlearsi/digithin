@@ -28,6 +28,10 @@ const CFG = {
   shopEvery: 3,     // Shop appears every N completed phases
   shopPriceFactor: 1.45,  // Exponential price escalation
   queueSize: 6,     // Items previewed in the bottom queue
+  phaseBaseCoins: 5,        // Moedas base ao concluir uma fase
+  phaseCoinIncrement: 1,    // Acréscimo de +1 moeda a cada nova fase concluída
+  phaseMaxCoins: 50,        // Teto máximo de moedas por fase concluída (atingido na fase 50)
+  perfectAccuracyCoins: 35, // Bônus de 100% de precisão (0 erros)
 };
 
 // ================================================
@@ -79,6 +83,15 @@ function getWordPoolForDifficulty(pool, difficulty) {
 function calcPhaseGoal(phase) {
   const p = Math.max(1, parseInt(phase, 10) || 1);
   return p * 10;
+}
+
+// Phase completion coins: Base 5 + 1 per completed phase, capped at 50 coins (Fase 1 = 6, Fase 2 = 7, Fase 3 = 8 ... máx 50 na Fase 50)
+function calcPhaseCompletionCoins(phase) {
+  const p = Math.max(1, parseInt(phase, 10) || 1);
+  const base = (typeof CFG !== 'undefined' && CFG.phaseBaseCoins !== undefined) ? CFG.phaseBaseCoins : 5;
+  const inc = (typeof CFG !== 'undefined' && CFG.phaseCoinIncrement !== undefined) ? CFG.phaseCoinIncrement : 1;
+  const max = (typeof CFG !== 'undefined' && CFG.phaseMaxCoins !== undefined) ? CFG.phaseMaxCoins : 50;
+  return Math.min(max, base + (p * inc));
 }
 
 // ================================================

@@ -139,6 +139,17 @@ A barra de progresso no centro do HUD avança conforme os rúnicos são digitado
 - **Fase 5:** **50 pontos**
 - **Fase 6 em diante:** **Progressão linear (+10 pontos a cada nova fase)**: $\text{Meta} = \text{Fase} \times 10$
 
+#### Recompensas de Moedas ao Concluir Fases:
+- **Moedas de Fase Concluída:** Progressão escalonada com base de **+5 moedas** e acréscimo de **+1 moeda por fase concluída** (+1 a cada nova fase), limitado ao **teto máximo de 50 moedas** (atingido na fase 50):
+  $$\text{Moedas da Fase} = \min(50, 5 + \text{Fase})$$
+  - Concluir Fase 1: **+6 moedas**
+  - Concluir Fase 2: **+7 moedas**
+  - Concluir Fase 3: **+8 moedas**
+  - Concluir Fase 4: **+9 moedas**
+  - ...
+  - Concluir Fase 45 a 50+: **+50 moedas** (teto máximo)
+- **Bônus de Precisão 100%:** **+35 moedas** adicionais concedidas ao concluir qualquer fase com precisão perfeita (100% de acertos e zero erros).
+
 ### 3.3 Sistema de Pontuação Dupla e Penalidades
 
 1. **Pontos da Fase (`FASE`):**
