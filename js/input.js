@@ -62,7 +62,8 @@ document.addEventListener('keydown', e => {
       return;
     }
 
-    if (e.key === 'Enter' || e.code === 'Enter' || e.code === 'NumpadEnter') {
+    const isSpaceKey = e.key === ' ' || e.code === 'Space';
+    if (e.key === 'Enter' || e.code === 'Enter' || e.code === 'NumpadEnter' || (isSpaceKey && state.gameMode === 'training')) {
       e.preventDefault();
       continueToNextPhase();
       return;
