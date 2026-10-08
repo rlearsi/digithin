@@ -35,6 +35,7 @@ function wildcardExplode(wildcardItem) {
 }
 
 function gainSkill(skillId) {
+  if (state.gameMode === 'training') return;
   // Only activatable skills can occupy slots (items like wordpack/extralife/continue are handled directly)
   if (typeof SKILLS_CONFIG !== 'undefined' && !SKILLS_CONFIG[skillId]) return;
 
@@ -55,6 +56,7 @@ function gainSkill(skillId) {
 }
 
 function activateSkill(idx) {
+  if (state.gameMode === 'training') return;
   const slot = state.skillSlots[idx];
   if (!slot || slot.count <= 0) return;
 

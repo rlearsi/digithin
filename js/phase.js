@@ -138,12 +138,15 @@ function showPhaseModal() {
   const precisionBonus = (typeof CFG !== 'undefined' && CFG.perfectAccuracyCoins !== undefined) ? CFG.perfectAccuracyCoins : 35;
   const precisionCoins = isPerfectAcc ? precisionBonus : 0;
 
-  const totalPhaseCoins = completionCoins + precisionCoins;
-  state.coins = (state.coins || 0) + totalPhaseCoins;
-  state.totalCoinsEarned = (state.totalCoinsEarned || 0) + totalPhaseCoins;
-  if (typeof addSharedCoins === 'function') addSharedCoins(totalPhaseCoins);
-  if (typeof updateHighCoins === 'function') updateHighCoins(state.totalCoinsEarned);
-  if (typeof saveGameProgress === 'function') saveGameProgress();
+  const isTrainingMode = state.gameMode === 'training';
+  const totalPhaseCoins = isTrainingMode ? 0 : completionCoins + precisionCoins;
+  if (!isTrainingMode) {
+    state.coins = (state.coins || 0) + totalPhaseCoins;
+    state.totalCoinsEarned = (state.totalCoinsEarned || 0) + totalPhaseCoins;
+    if (typeof addSharedCoins === 'function') addSharedCoins(totalPhaseCoins);
+    if (typeof updateHighCoins === 'function') updateHighCoins(state.totalCoinsEarned);
+    if (typeof saveGameProgress === 'function') saveGameProgress();
+  }
 
   // Pontos são 100% gerados e acumulados ao vivo durante a partida
   if (typeof updateHUD === 'function') updateHUD();
