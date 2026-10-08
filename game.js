@@ -478,12 +478,23 @@ function gameLoop(ts) {
     }
   }
 
+  // Training Mode: hold everything while an item rests at the bottom
+  const trainingHold = state.gameMode === 'training' && items.some(it => it.landed && !it.removing);
+  state.trainingHold = trainingHold;
+  gameArea.classList.toggle('training-hold', trainingHold);
+  document.body.classList.toggle('training-hold-active', trainingHold);
+
   for (let i = items.length - 1; i >= 0; i--) {
     const item = items[i];
     if (item.removing) continue;
 
+    if (item.landed) {
+      item.el.classList.add('training-landed');
+      continue;
+    }
+
     // Movement
-    if (!isFrozen) {
+    if (!isFrozen && !trainingHold) {
       const spd = item.baseSpeed || CFG.baseSpeed;
       item.y += spd * effectiveSpeed * dt;
       item.el.style.top = item.y + 'px';
@@ -491,10 +502,22 @@ function gameLoop(ts) {
 
     // Danger cue near bottom
     const h = item.el.offsetHeight || 36;
+    const dangerCls = state.gameMode === 'training' ? 'training-near' : 'danger';
     if (item.y + h >= boardH - 90) {
-      item.el.classList.add('danger');
+      item.el.classList.add(dangerCls);
     } else {
+      item.el.classList.remove(dangerCls);
+    }
+
+    // Training Mode: lock at the bottom instead of destroying
+    if (state.gameMode === 'training' && item.y >= boardH - 24 - h) {
+      item.y = boardH - 24 - h;
+      item.el.style.top = item.y + 'px';
+      item.landed = true;
       item.el.classList.remove('danger');
+      item.el.classList.add('training-landed');
+      playSound('fall');
+      continue;
     }
 
     // Fall out of board

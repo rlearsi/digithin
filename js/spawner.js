@@ -109,6 +109,7 @@ function scheduleSpawn() {
 
 function spawnItem() {
   if (state.bossBattle && state.bossBattle.active) return false;
+  if (state.gameMode === 'training' && state.trainingHold) return false;
   const isFrozen = (state.activeTimers?.freezer || 0) > 0;
   if (isFrozen) {
     const activeCount = state.activeItems.filter(i => !i.removing).length;

@@ -927,18 +927,26 @@
 }
 
 .fg-finger.fg-active {
-  fill: #38BDF8 !important;
-  stroke: #0284C7 !important;
+  fill: #FFFFFF !important;
+  stroke: #FFFFFF !important;
   stroke-width: 2 !important;
-  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.9));
-  animation: fgPulse 0.9s ease-in-out infinite alternate;
+  filter: none;
+  animation: none;
 }
 
 [data-theme="light"] .fg-finger.fg-active {
-  fill: #0284C7 !important;
-  stroke: #0369A1 !important;
+  fill: #0F172A !important;
+  stroke: #0F172A !important;
   stroke-width: 2 !important;
-  filter: drop-shadow(0 0 6px rgba(2, 132, 199, 0.7));
+  filter: none;
+}
+
+body.training-hold-active .fg-finger.fg-active,
+body.training-hold-active[data-theme="light"] .fg-finger.fg-active {
+  fill: #38BDF8 !important;
+  stroke: #0284C7 !important;
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.9));
+  animation: fgPulse 0.9s ease-in-out infinite alternate;
 }
 
 @keyframes fgPulse {
@@ -981,9 +989,24 @@
 }
 
 .fg-key-cap.active {
-  color: var(--accent-cyan);
-  text-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+  color: #FFFFFF;
+  text-shadow: none;
   background: var(--glass-hover);
+}
+
+[data-theme="light"] .fg-key-cap.active {
+  color: #0F172A;
+}
+
+body.training-hold-active .fg-key-cap.active,
+body.training-hold-active[data-theme="light"] .fg-key-cap.active {
+  color: #38BDF8;
+  animation: fgKeyPulse 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes fgKeyPulse {
+  0%   { text-shadow: 0 0 4px rgba(56, 189, 248, 0.6); }
+  100% { text-shadow: 0 0 10px rgba(56, 189, 248, 1); }
 }
 
 .fg-text-wrap {
