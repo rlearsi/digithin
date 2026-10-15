@@ -1,5 +1,9 @@
 # ⌨️ Digitinho — Jogo de Digitação Arcade
 
+[![Versão](https://img.shields.io/badge/versão-v1.0-6366F1?style=for-the-badge&logo=gamepad)](https://github.com/)
+[![Status](https://img.shields.io/badge/status-estável-10B981?style=for-the-badge)](https://github.com/)
+[![Licença](https://img.shields.io/badge/licença-MIT-38BDF8?style=for-the-badge)](https://github.com/)
+
 > **Digitinho** é um jogo de digitação arcade moderno, dinâmico e polido construído em **HTML5**, **CSS3 Vanilla** e **JavaScript modular**. Rúnicos (letras, sílabas e palavras) caem em uma coluna inspirada em Tetris enquanto o jogador digita velozmente para acumular pontos, subir de fase, desbloquear palavras em sua Biblioteca e adquirir habilidades arcanas na Loja de Habilidades.
 
 ---
@@ -18,6 +22,7 @@
 - [7. Design, UI e Experiência do Jogador](#7-design-ui-e-experiência-do-jogador)
 - [8. Controles e Atalhos de Teclado](#8-controles-e-atalhos-de-teclado)
 - [9. Como Executar](#9-como-executar)
+- [10. Histórico de Versões (Changelog)](#10-histórico-de-versões-changelog)
 
 ---
 
@@ -397,3 +402,22 @@ Ou utilizando o servidor embutido do Python na pasta do projeto:
 python3 -m http.server 8000
 # Acesse no navegador: http://localhost:8000
 ```
+
+---
+
+## 10. Histórico de Versões (Changelog)
+
+### 🚀 v1.0 — Lançamento Oficial (Release Estável)
+- **Marco Inicial (v1.0)**: Consolidação completa de toda a arquitetura de jogo arcade e publicação para GitHub Pages.
+- **Versionamento Unificado (`v=1.0`)**: Todos os módulos de scripts (`./js/*.js?v=1.0`), folhas de estilo (`./css/*.css?v=1.0`) e pacotes de tradução (`./locales/*.json?v=1.0`) padronizados na versão base 1.0.
+- **Suporte a GitHub Pages**: Caminhos relativos explícitos (`./`), arquivo `.nojekyll` e Favicon SVG vetorial inline.
+- **Modos de Jogo**:
+  - **Modo Clássico**: Progressão infinita com velocidade crescente, penalidades de erro e chefões a cada 10 fases.
+  - **Modo Treinamento**: 10 mundos com destaque limpo de rúnico no fundo (pulso + ondas ripple) e teclado sincronizado.
+  - **Modo Sobrevivência**: Batalha cronometrada contra o tempo com rúnicos velozes.
+- **Recursos Principais**:
+  - 6 Habilidades arcanas desbloqueáveis na Loja Mágica com economia de moedas escalonada.
+  - Teclado Virtual On-Screen com mapeamento inteligente de acentos para celulares.
+  - Guia Visual de Dedos ergonômico para aprendizado de digitação tátil (*Touch Typing*).
+  - Web Audio API com síntese em tempo real sem latência.
+  - Internacionalização nativa em 7 idiomas (`pt`, `en`, `fr`, `de`, `ja`, `ko`, `zh`).
