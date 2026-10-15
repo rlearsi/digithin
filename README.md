@@ -1,6 +1,6 @@
 # ⌨️ Digitinho — Jogo de Digitação Arcade
 
-[![Versão](https://img.shields.io/badge/versão-v1.0-6366F1?style=for-the-badge&logo=gamepad)](https://github.com/)
+[![Versão](https://img.shields.io/badge/versão-v1.1-6366F1?style=for-the-badge&logo=gamepad)](https://github.com/)
 [![Status](https://img.shields.io/badge/status-estável-10B981?style=for-the-badge)](https://github.com/)
 [![Licença](https://img.shields.io/badge/licença-MIT-38BDF8?style=for-the-badge)](https://github.com/)
 
@@ -406,6 +406,13 @@ python3 -m http.server 8000
 ---
 
 ## 10. Histórico de Versões (Changelog)
+
+### 🚀 v1.1 — Supressão Definitiva do Teclado do Sistema Android & Exclusividade do Teclado Virtual
+- **Desabilitação do Teclado Nativo do Sistema Operacional no Mobile**: Bloqueio estrito da abertura involuntária do teclado nativo do sistema Android/iOS ao iniciar, pausar, despausar, reiniciar, enfrentar chefões ou tocar na tela do jogo.
+- **Controle Centralizado de Foco (`focusGameInput`)**: Centralização segura do foco que detecta dispositivos móveis e estado do teclado virtual, suprimindo o foco do input oculto e impedindo a sobreposição indesejada de 50% da tela pelo teclado do sistema.
+- **Proteção Completa no Elemento de Entrada**: Configuração de `inputmode="none"`, `readonly` e `disabled` no elemento `#hidden-input` quando em dispositivos móveis, garantindo total conformidade com padrões W3C/HTML5 para teclados virtuais customizados em navegadores mobile.
+- **Experiência Mobile 100% Imersiva**: Manutenção exclusiva do teclado virtual discreto e compacto com resposta instantânea e mapeamento inteligente de acentuação.
+- **Versionamento Unificado (`v=1.1`)**: Sincronização do cache busting de todos os estilos CSS (`./css/*.css?v=1.1`), módulos JavaScript (`./js/*.js?v=1.1` e `./game.js?v=1.1`) e arquivos de tradução (`./locales/*.json?v=1.1`).
 
 ### 🚀 v1.0 — Lançamento Oficial (Release Estável)
 - **Marco Inicial (v1.0)**: Consolidação completa de toda a arquitetura de jogo arcade e publicação para GitHub Pages.

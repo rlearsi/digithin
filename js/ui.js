@@ -321,6 +321,9 @@ function changeVirtualKeyboardSetting(mode) {
   if (typeof updateSettingsUI === 'function') {
     updateSettingsUI();
   }
+  if (typeof applyMobileInputRestrictions === 'function') {
+    applyMobileInputRestrictions();
+  }
 }
 
 function isVirtualKeyboardActive() {
@@ -329,6 +332,41 @@ function isVirtualKeyboardActive() {
   if (setting === 'always') return true;
   // 'auto': ativo em dispositivos móveis
   return isMobileDevice();
+}
+
+function applyMobileInputRestrictions() {
+  if (!hiddenInput) return;
+  const isMobile = (typeof isMobileDevice === 'function' && isMobileDevice()) ||
+                   (typeof isVirtualKeyboardActive === 'function' && isVirtualKeyboardActive());
+  if (isMobile) {
+    hiddenInput.setAttribute('inputmode', 'none');
+    hiddenInput.setAttribute('readonly', 'readonly');
+    hiddenInput.setAttribute('tabindex', '-1');
+    hiddenInput.disabled = true;
+    if (document.activeElement === hiddenInput) {
+      hiddenInput.blur();
+    }
+  } else {
+    hiddenInput.removeAttribute('disabled');
+    hiddenInput.removeAttribute('readonly');
+    hiddenInput.removeAttribute('inputmode');
+  }
+}
+
+function focusGameInput() {
+  // Se estiver no mobile ou com teclado virtual ativo, o teclado nativo do sistema Android/iOS NUNCA deve ser invocado
+  if ((typeof isMobileDevice === 'function' && isMobileDevice()) ||
+      (typeof isVirtualKeyboardActive === 'function' && isVirtualKeyboardActive())) {
+    if (hiddenInput && document.activeElement === hiddenInput) {
+      hiddenInput.blur();
+    }
+    return;
+  }
+  try {
+    hiddenInput?.focus({ preventScroll: true });
+  } catch (_) {
+    hiddenInput?.focus();
+  }
 }
 
 function updateVirtualKeyboardVisibility() {
@@ -348,6 +386,8 @@ function updateVirtualKeyboardVisibility() {
   if (typeof updateFingerGuideVisibility === 'function') {
     updateFingerGuideVisibility();
   }
+
+  applyMobileInputRestrictions();
 }
 
 function triggerVirtualKey(rawKey, keyBtn) {
@@ -408,6 +448,16 @@ function initVirtualKeyboard() {
   const vkEl = $('virtual-keyboard');
   if (!vkEl) return;
   vkInitialized = true;
+
+  // Previne que qualquer foco acidental no hiddenInput abra o teclado nativo do Android
+  if (hiddenInput) {
+    hiddenInput.addEventListener('focus', () => {
+      if ((typeof isMobileDevice === 'function' && isMobileDevice()) ||
+          (typeof isVirtualKeyboardActive === 'function' && isVirtualKeyboardActive())) {
+        hiddenInput.blur();
+      }
+    });
+  }
 
   // Uso de pointerdown para resposta ultra-rápida sem delay de clique ou rolagem no celular
   vkEl.addEventListener('pointerdown', (e) => {
@@ -703,7 +753,7 @@ function closeSettings() {
       if (!state.bossBattle || !state.bossBattle.active) {
         scheduleSpawn();
       }
-      hiddenInput?.focus();
+      focusGameInput();
     }
   }
 }
@@ -1850,7 +1900,7 @@ function closeConquistas() {
       if (!state.bossBattle || !state.bossBattle.active) {
         scheduleSpawn();
       }
-      hiddenInput?.focus();
+      focusGameInput();
     }
   }
 }
@@ -2115,11 +2165,13 @@ if (window.visualViewport) {
 window.addEventListener('resize', () => {
   updateMobileViewport();
   if (typeof updateVirtualKeyboardVisibility === 'function') updateVirtualKeyboardVisibility();
+  if (typeof applyMobileInputRestrictions === 'function') applyMobileInputRestrictions();
 });
 window.addEventListener('orientationchange', () => {
   setTimeout(() => {
     updateMobileViewport();
     if (typeof updateVirtualKeyboardVisibility === 'function') updateVirtualKeyboardVisibility();
+    if (typeof applyMobileInputRestrictions === 'function') applyMobileInputRestrictions();
   }, 250);
 });
 
@@ -2127,6 +2179,7 @@ window.addEventListener('orientationchange', () => {
 updateMobileViewport();
 if (typeof initVirtualKeyboard === 'function') initVirtualKeyboard();
 if (typeof updateVirtualKeyboardVisibility === 'function') updateVirtualKeyboardVisibility();
+if (typeof applyMobileInputRestrictions === 'function') applyMobileInputRestrictions();
 
 // ============================================================
 // BOSS BATTLE UI RENDERING (MONSTER / ROBOT WITH LIVES: |||)

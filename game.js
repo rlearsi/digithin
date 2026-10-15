@@ -38,11 +38,15 @@ function startGame(mode = 'classic', slotId = null) {
   state.speedAccum      = 0;
   screenStart.classList.remove('active');
   screenGame.classList.add('active');
-  hiddenInput.focus();
-  refillQueue();
-  updateHUD();
   if (typeof updateVirtualKeyboardVisibility === 'function') updateVirtualKeyboardVisibility();
   if (typeof updateFingerGuideVisibility === 'function') updateFingerGuideVisibility();
+  if (typeof focusGameInput === 'function') {
+    focusGameInput();
+  } else {
+    hiddenInput?.focus();
+  }
+  refillQueue();
+  updateHUD();
   beginPhase();
   if (typeof saveGameProgress === 'function') saveGameProgress();
 }
@@ -70,11 +74,15 @@ function resumeSavedGame(slotId = null) {
 
   screenStart.classList.remove('active');
   screenGame.classList.add('active');
-  hiddenInput.focus();
-  refillQueue();
-  updateHUD();
   if (typeof updateVirtualKeyboardVisibility === 'function') updateVirtualKeyboardVisibility();
   if (typeof updateFingerGuideVisibility === 'function') updateFingerGuideVisibility();
+  if (typeof focusGameInput === 'function') {
+    focusGameInput();
+  } else {
+    hiddenInput?.focus();
+  }
+  refillQueue();
+  updateHUD();
   beginPhase();
 
   const phaseNum = state.phase || 1;
@@ -130,11 +138,15 @@ function startTrainingWorld(worldId = 1) {
 
   screenStart.classList.remove('active');
   screenGame.classList.add('active');
-  hiddenInput.focus();
-  refillQueue();
-  updateHUD();
   if (typeof updateVirtualKeyboardVisibility === 'function') updateVirtualKeyboardVisibility();
   if (typeof updateFingerGuideVisibility === 'function') updateFingerGuideVisibility();
+  if (typeof focusGameInput === 'function') {
+    focusGameInput();
+  } else {
+    hiddenInput?.focus();
+  }
+  refillQueue();
+  updateHUD();
   beginPhase();
 
   const worldData = (typeof TRAINING_WORLDS !== 'undefined' && TRAINING_WORLDS[state.trainingWorld]) || { name: 'Mundo 1' };

@@ -325,11 +325,19 @@ document.addEventListener('keydown', e => {
 
 gameArea?.addEventListener('click', () => {
   if (typeof isVirtualKeyboardActive === 'function' && isVirtualKeyboardActive()) return;
-  hiddenInput?.focus();
+  if (typeof isMobileDevice === 'function' && isMobileDevice()) return;
+  if (typeof focusGameInput === 'function') {
+    focusGameInput();
+  } else {
+    hiddenInput?.focus();
+  }
 });
 gameArea?.addEventListener('touchstart', () => {
   if (typeof isVirtualKeyboardActive === 'function' && isVirtualKeyboardActive()) return;
-  if (hiddenInput && document.activeElement !== hiddenInput) {
+  if (typeof isMobileDevice === 'function' && isMobileDevice()) return;
+  if (typeof focusGameInput === 'function') {
+    focusGameInput();
+  } else if (hiddenInput && document.activeElement !== hiddenInput) {
     hiddenInput.focus();
   }
 }, { passive: true });

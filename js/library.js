@@ -120,7 +120,11 @@ function closeBiblioteca() {
       if (!state.bossBattle || !state.bossBattle.active) {
         scheduleSpawn();
       }
-      hiddenInput?.focus();
+      if (typeof focusGameInput === 'function') {
+        focusGameInput();
+      } else {
+        hiddenInput?.focus();
+      }
     }
   }
 }

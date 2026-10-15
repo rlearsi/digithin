@@ -698,7 +698,11 @@ function testBossBattle(phaseOverride) {
   if (screenStart?.classList.contains('active')) {
     screenStart.classList.remove('active');
     screenGame.classList.add('active');
-    hiddenInput.focus();
+    if (typeof focusGameInput === 'function') {
+      focusGameInput();
+    } else {
+      hiddenInput?.focus();
+    }
   }
   const testIdx = currentBossTestIndex++;
   const testBosses = typeof BOSS_DEFS !== 'undefined' ? BOSS_DEFS : [];
@@ -773,6 +777,10 @@ function startBossTest() {
 
   screenStart.classList.remove('active');
   screenGame.classList.add('active');
-  hiddenInput.focus();
+  if (typeof focusGameInput === 'function') {
+    focusGameInput();
+  } else {
+    hiddenInput?.focus();
+  }
   beginBossPhase();
 }

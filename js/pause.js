@@ -87,7 +87,11 @@ function resumeGame() {
         spawnBossMeaningBox();
       }
     }
-    hiddenInput?.focus();
+    if (typeof focusGameInput === 'function') {
+      focusGameInput();
+    } else {
+      hiddenInput?.focus();
+    }
   });
 }
 
