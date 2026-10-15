@@ -9,9 +9,9 @@
    - css/responsive.css : Media queries & responsive viewport rules
    ====================================================== */
 
-@import url('css/variables.css');
-@import url('css/components.css');
-@import url('css/layout.css');
-@import url('css/gameplay.css');
-@import url('css/modals.css');
-@import url('css/responsive.css');
+@import url('./css/variables.css');
+@import url('./css/components.css');
+@import url('./css/layout.css');
+@import url('./css/gameplay.css');
+@import url('./css/modals.css');
+@import url('./css/responsive.css');
