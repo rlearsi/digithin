@@ -281,6 +281,44 @@
   color: #4F46E5;
 }
 
+.settings-version-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-check-update-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: var(--r-pill);
+  background: var(--glass-btn-sec);
+  color: var(--t2);
+  font-size: 0.76rem;
+  font-weight: 700;
+  border: none !important;
+  cursor: pointer;
+  transition: background 0.18s ease, filter 0.18s ease, color 0.18s ease;
+  transform: none !important;
+}
+
+.settings-check-update-btn:hover {
+  background: var(--glass-hover);
+  filter: brightness(1.12);
+  color: var(--t1);
+}
+
+.settings-check-update-btn.has-update {
+  background: linear-gradient(135deg, #4F46E5, #06B6D4);
+  color: #FFFFFF;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.35);
+}
+
+.settings-check-update-btn.updating svg {
+  animation: spinUpdate 0.8s linear infinite;
+}
+
 .settings-opt-link {
   cursor: pointer;
 }

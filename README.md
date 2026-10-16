@@ -1,6 +1,6 @@
 # ⌨️ Digitinho — Jogo de Digitação Arcade
 
-[![Versão](https://img.shields.io/badge/versão-v1.5-6366F1?style=for-the-badge&logo=gamepad)](https://github.com/)
+[![Versão](https://img.shields.io/badge/versão-v1.6-6366F1?style=for-the-badge&logo=gamepad)](https://github.com/)
 [![Status](https://img.shields.io/badge/status-estável-10B981?style=for-the-badge)](https://github.com/)
 [![Licença](https://img.shields.io/badge/licença-MIT-38BDF8?style=for-the-badge)](https://github.com/)
 
@@ -407,6 +407,14 @@ python3 -m http.server 8000
 ---
 
 ## 10. Histórico de Versões (Changelog)
+
+### 🚀 v1.6 — Sistema de Notificação de Atualização & Limpeza Automática de Cache
+- **Detecção Automática de Atualizações (`version.json`)**: Verificação assíncrona periódica do arquivo `version.json` na raiz da hospedagem com parâmetros anti-cache. Caso uma nova versão seja disponibilizada, o jogo avisa o jogador através de um banner dinâmico e sutil.
+- **Botão de Atualização no Menu Inicial**: Banner de alta fidelidade visual em vidro translúcido (*glassmorphism*), 100% sem bordas (`border: none !important`), sem elevação no hover (`transform: none !important`) e ícones vetoriais modernos em SVG inline, com ação de "Atualizar".
+- **Purga de Cache Cirúrgica sem Perda de Dados**: Limpeza de `CacheStorage` e desregistro de service workers forçando a busca do novo HTML e scripts via query string (`_t`). **Preservação total de dados**: moedas compartilhadas, palavras desbloqueadas na Biblioteca, recordes e conquistas em `localStorage` permanecem 100% intactos.
+- **Botão "Verificar" nas Configurações**: Opção no menu de Configurações sob "Sobre o App" para checagem manual imediata de novidades com status em tempo real.
+- **Internacionalização Completa (i18n)**: Suporte completo em todos os 7 idiomas (`pt`, `en`, `fr`, `de`, `ja`, `ko`, `zh`).
+- **Cache-Busting Cirúrgico (`v=1.6`)**: `css/layout.css?v=1.6`, `css/modals.css?v=1.6`, `js/i18n.js?v=1.6` e `js/ui.js?v=1.6`.
 
 ### 🚀 v1.5 — Moedas Compartilhadas Entre Todos os Slots
 - **Banco único de moedas**: o saldo exibido, gasto e ganho em qualquer slot vem sempre do banco global (`digitinho_shared_coins`); o slot não guarda mais saldo próprio (`loadSaveDataIntoState` e `saveGameProgress`).

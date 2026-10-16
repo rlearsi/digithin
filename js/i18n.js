@@ -6,7 +6,7 @@
    ================================================ */
 'use strict';
 
-const APP_VERSION = window.APP_VERSION = '1.5';
+const APP_VERSION = window.APP_VERSION = '1.6';
 const SUPPORTED_LANGUAGES = ['en', 'pt', 'fr', 'de', 'ja', 'ko', 'zh'];
 
 // Aggregated dictionaries loaded from locales/{lang}.json
@@ -62,7 +62,7 @@ async function loadLocale(lang) {
   }
 
   try {
-    const response = await fetch(`./locales/${lang}.json?v=1.4`);
+    const response = await fetch(`./locales/${lang}.json?v=${APP_VERSION}`);
     if (!response.ok) {
       throw new Error(`HTTP ${response.status} loading locales/${lang}.json`);
     }
