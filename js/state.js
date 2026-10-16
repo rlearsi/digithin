@@ -347,7 +347,7 @@ function saveGameProgress(slotId) {
     speedMultiplier: (typeof state.speedMultiplier === 'number' && !isNaN(state.speedMultiplier))
       ? Number(state.speedMultiplier.toFixed(2))
       : 1.0,
-    coins: (state.coins !== undefined) ? state.coins : getSharedCoins(),
+    coins: getSharedCoins(), // Moedas são compartilhadas entre todos os slots (banco global)
     totalCoinsEarned: state.totalCoinsEarned || 0,
     lives: state.lives,
     maxLives: state.maxLives,
@@ -413,7 +413,8 @@ function loadSaveDataIntoState(save) {
   state.phase = save.phase || 1;
   state.phasePts = save.phasePts || 0;
   state.totalScore = save.totalScore || 0;
-  state.coins = (save.coins !== undefined) ? save.coins : getSharedCoins();
+  // Moedas compartilhadas: o saldo vem sempre do banco global, nunca do slot
+  state.coins = getSharedCoins();
   state.totalCoinsEarned = save.totalCoinsEarned || 0;
   state.lives = (save.lives !== undefined) ? save.lives : 3;
   state.maxLives = save.maxLives || 3;
@@ -456,3 +457,21 @@ function loadSaveDataIntoState(save) {
   }
   return true;
 }
+
+// Migração única: saldos antigos por slot -> banco global compartilhado (mantém o maior saldo existente)
+(function migrateSlotCoinsToShared() {
+  try {
+    if (localStorage.getItem('digitinho_coins_unified') === '1') return;
+    let best = getSharedCoins();
+    for (let i = 1; i <= MAX_SAVE_SLOTS; i++) {
+      const raw = localStorage.getItem(`digitinho_save_slot_${i}`);
+      if (!raw) continue;
+      const parsed = JSON.parse(raw);
+      const c = Math.max(0, Math.floor(parsed?.coins || 0));
+      if (c > best) best = c;
+    }
+    setSharedCoins(best);
+    localStorage.setItem('digitinho_coins_unified', '1');
+    if (state) state.coins = best;
+  } catch (_) {}
+})();

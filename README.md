@@ -1,6 +1,6 @@
 # ⌨️ Digitinho — Jogo de Digitação Arcade
 
-[![Versão](https://img.shields.io/badge/versão-v1.4-6366F1?style=for-the-badge&logo=gamepad)](https://github.com/)
+[![Versão](https://img.shields.io/badge/versão-v1.5-6366F1?style=for-the-badge&logo=gamepad)](https://github.com/)
 [![Status](https://img.shields.io/badge/status-estável-10B981?style=for-the-badge)](https://github.com/)
 [![Licença](https://img.shields.io/badge/licença-MIT-38BDF8?style=for-the-badge)](https://github.com/)
 
@@ -407,6 +407,11 @@ python3 -m http.server 8000
 ---
 
 ## 10. Histórico de Versões (Changelog)
+
+### 🚀 v1.5 — Moedas Compartilhadas Entre Todos os Slots
+- **Banco único de moedas**: o saldo exibido, gasto e ganho em qualquer slot vem sempre do banco global (`digitinho_shared_coins`); o slot não guarda mais saldo próprio (`loadSaveDataIntoState` e `saveGameProgress`).
+- **Migração única**: ao atualizar, o banco global assume o maior saldo encontrado entre o banco e os slots antigos (sem somar, para não duplicar moedas copiadas entre slots).
+- **Cache-Busting Cirúrgico (`v=1.5`)**: `js/state.js` e `js/i18n.js`.
 
 ### 🚀 v1.4 — Chefões Garantidos a Cada 8 Fases, Ordem Fixa & Correção do Chefão Estático
 - **Chefão sempre presente**: o chefão agora aparece, sem falta, a cada 8 fases (8, 16, 24…), eliminando o antigo comportamento que ignorava o chefão quando faltavam palavras temáticas.

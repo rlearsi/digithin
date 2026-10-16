@@ -6,7 +6,7 @@
    ================================================ */
 'use strict';
 
-const APP_VERSION = window.APP_VERSION = '1.4';
+const APP_VERSION = window.APP_VERSION = '1.5';
 const SUPPORTED_LANGUAGES = ['en', 'pt', 'fr', 'de', 'ja', 'ko', 'zh'];
 
 // Aggregated dictionaries loaded from locales/{lang}.json
@@ -217,7 +217,7 @@ function applyTranslations() {
   // Sync settings app version
   const versionEl = document.getElementById('settings-app-version');
   if (versionEl) {
-    versionEl.textContent = `v${window.APP_VERSION || '1.4'}`;
+    versionEl.textContent = `v${window.APP_VERSION || '1.5'}`;
   }
 
   const inMatch = typeof isMatchInProgress === 'function' ? isMatchInProgress() : false;
