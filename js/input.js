@@ -15,6 +15,16 @@ document.addEventListener('keydown', e => {
     }
   }
 
+  // If Privacy Policy modal is open, ESC closes it
+  const modalPrivacyEl = $('modal-privacy');
+  if (modalPrivacyEl && !modalPrivacyEl.classList.contains('hidden')) {
+    if (e.key === 'Escape' || e.code === 'Escape') {
+      e.preventDefault();
+      if (typeof closePrivacyModal === 'function') closePrivacyModal();
+      return;
+    }
+  }
+
   // If Save Slots modal is open, ESC closes it
   const modalSlotsEl = $('modal-slots');
   if (modalSlotsEl && !modalSlotsEl.classList.contains('hidden')) {

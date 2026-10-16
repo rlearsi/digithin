@@ -43,6 +43,70 @@ function closeRulesModal() {
   const m = modalRules || $('modal-rules');
   if (m) m.classList.add('hidden');
 }
+
+let privacyOpenedFromPause = false;
+let privacyOpenedFromSettings = false;
+let privacyPaused = false;
+
+function openPrivacyModal() {
+  if (typeof state !== 'undefined' && state && screenGame?.classList.contains('active') && !state.paused && !state.phaseComplete) {
+    privacyPaused = true;
+    state.paused   = true;
+    cancelAnimationFrame(state.rafId);
+    clearTimeout(state.spawnTimer);
+  }
+
+  const pOverlay = $('pause-overlay');
+  if (pOverlay && !pOverlay.classList.contains('hidden')) {
+    privacyOpenedFromPause = true;
+    pOverlay.classList.add('hidden');
+  } else {
+    privacyOpenedFromPause = false;
+  }
+
+  const mSettings = $('modal-settings');
+  if (mSettings && !mSettings.classList.contains('hidden')) {
+    privacyOpenedFromSettings = true;
+    mSettings.classList.add('hidden');
+  } else {
+    privacyOpenedFromSettings = false;
+  }
+
+  const m = $('modal-privacy');
+  if (m) m.classList.remove('hidden');
+  if (typeof playSound === 'function') playSound('click');
+}
+
+function closePrivacyModal() {
+  const m = $('modal-privacy');
+  if (m) m.classList.add('hidden');
+
+  if (privacyOpenedFromSettings) {
+    privacyOpenedFromSettings = false;
+    const mSettings = $('modal-settings');
+    if (mSettings) mSettings.classList.remove('hidden');
+    return;
+  }
+
+  if (privacyOpenedFromPause) {
+    privacyOpenedFromPause = false;
+    const pOverlay = $('pause-overlay');
+    if (pOverlay) pOverlay.classList.remove('hidden');
+    return;
+  }
+
+  if (privacyPaused) {
+    privacyPaused = false;
+    if (typeof state !== 'undefined' && state && !state.escPaused && !state.phaseComplete) {
+      state.paused = false;
+      state.lastTs = null;
+      if (typeof gameLoop === 'function') state.rafId = requestAnimationFrame(gameLoop);
+      if (!state.bossBattle || !state.bossBattle.active) {
+        if (typeof scheduleNextSpawn === 'function') state.spawnTimer = setTimeout(scheduleNextSpawn, 1000);
+      }
+    }
+  }
+}
 const achievementsGrid = $('achievements-grid');
 const pauseOverlay     = $('pause-overlay');
 const bossHud          = $('boss-hud');

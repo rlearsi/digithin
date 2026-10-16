@@ -1,6 +1,6 @@
 # ⌨️ Digitinho — Jogo de Digitação Arcade
 
-[![Versão](https://img.shields.io/badge/versão-v1.1-6366F1?style=for-the-badge&logo=gamepad)](https://github.com/)
+[![Versão](https://img.shields.io/badge/versão-v1.2-6366F1?style=for-the-badge&logo=gamepad)](https://github.com/)
 [![Status](https://img.shields.io/badge/status-estável-10B981?style=for-the-badge)](https://github.com/)
 [![Licença](https://img.shields.io/badge/licença-MIT-38BDF8?style=for-the-badge)](https://github.com/)
 
@@ -43,6 +43,7 @@ A base de código foi completamente desacoplada em módulos de responsabilidade 
 ```
 digitinho/
 ├── index.html            # Estrutura do jogo, HUD, modais e scripts
+├── privacy.html          # Política de Privacidade & Transparência (LGPD, GitHub Pages)
 ├── style.css             # Agregador mestre (@import) dos submódulos de estilo
 ├── game.js               # Orquestrador central: ciclo de jogo, loop RAF e matching de digitação
 ├── about.md              # Requisitos e brainstorm inicial
@@ -407,7 +408,13 @@ python3 -m http.server 8000
 
 ## 10. Histórico de Versões (Changelog)
 
-### 🚀 v1.1 — Supressão Definitiva do Teclado do Sistema Android & Exclusividade do Teclado Virtual
+### 🚀 v1.2 — Política de Privacidade (LGPD/ANPD) & Atualização de Cache
+- **Política de Privacidade & Transparência (LGPD/ANPD)**: Criação de página estática dedicada (`privacy.html`) e modal in-game (`#modal-privacy`) detalhando zero coleta de dados pessoais, armazenamento local no navegador (`localStorage`), registros técnicos de IP do GitHub Pages e links para fontes oficiais (ANPD, LGPD e GitHub Pages).
+- **Acessibilidade & Navegação**: Atalhos diretos para a Política de Privacidade no rodapé da tela inicial e no menu de Configurações, com suporte a rolagem vertical suave no desktop e mobile.
+- **Internacionalização Completa (i18n)**: Tradução integral da política em 7 idiomas (`pt`, `en`, `fr`, `de`, `ja`, `ko`, `zh`) mantendo conformidade estrita de zero textos hardcoded na interface.
+- **Cache-Busting Cirúrgico (`v=1.2`)**: Atualização do parâmetro de versão (`?v=1.2`) nos arquivos CSS alterados (`css/layout.css`, `css/modals.css`), nos scripts modificados (`js/i18n.js`, `js/ui.js`, `js/input.js`) e no carregador dinâmico de pacotes de tradução (`./locales/${lang}.json?v=1.2`).
+
+### 🚀 v1.1 — Supressão Definitiva do Teclado Nativo no Mobile
 - **Desabilitação do Teclado Nativo do Sistema Operacional no Mobile**: Bloqueio estrito da abertura involuntária do teclado nativo do sistema Android/iOS ao iniciar, pausar, despausar, reiniciar, enfrentar chefões ou tocar na tela do jogo.
 - **Controle Centralizado de Foco (`focusGameInput`)**: Centralização segura do foco que detecta dispositivos móveis e estado do teclado virtual, suprimindo o foco do input oculto e impedindo a sobreposição indesejada de 50% da tela pelo teclado do sistema.
 - **Proteção Completa no Elemento de Entrada**: Configuração de `inputmode="none"`, `readonly` e `disabled` no elemento `#hidden-input` quando em dispositivos móveis, garantindo total conformidade com padrões W3C/HTML5 para teclados virtuais customizados em navegadores mobile.
