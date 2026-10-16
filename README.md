@@ -1,6 +1,6 @@
 # ⌨️ Digitinho — Jogo de Digitação Arcade
 
-[![Versão](https://img.shields.io/badge/versão-v1.2-6366F1?style=for-the-badge&logo=gamepad)](https://github.com/)
+[![Versão](https://img.shields.io/badge/versão-v1.3-6366F1?style=for-the-badge&logo=gamepad)](https://github.com/)
 [![Status](https://img.shields.io/badge/status-estável-10B981?style=for-the-badge)](https://github.com/)
 [![Licença](https://img.shields.io/badge/licença-MIT-38BDF8?style=for-the-badge)](https://github.com/)
 
@@ -407,6 +407,13 @@ python3 -m http.server 8000
 ---
 
 ## 10. Histórico de Versões (Changelog)
+
+### 🚀 v1.3 — Ajustes de Batalhas de Chefão, Teclado Mobile & Seção Sobre o App
+- **Remoção de Acesso de Teste ao Chefão**: Remoção do atalho "Testar Batalha" no menu de Configurações, garantindo que as batalhas de chefão ocorram exclusivamente através da progressão natural das fases (a cada 10 fases).
+- **Exclusividade do Teclado Virtual no Mobile**: Remoção da opção de desativação/configuração do teclado virtual nas Configurações. No ambiente mobile, o teclado nativo do sistema permanece estritamente suprimido e o teclado virtual customizado atua de forma 100% automática e exclusiva.
+- **Seção Sobre o App no Menu de Configurações**: Nova seção informativa ao final de Configurações exibindo a versão atual (v1.3) e autoria (Rlearsi com link direto e ícone vetorial do GitHub).
+- **Internacionalização Completa (i18n)**: Inclusão de chaves de tradução (`settings_cat_about`, `settings_version`, `settings_author`) nos 7 idiomas do projeto (`pt`, `en`, `fr`, `de`, `ja`, `ko`, `zh`).
+- **Cache-Busting Cirúrgico (`v=1.3`)**: Atualização do parâmetro de versão (`?v=1.3`) nos arquivos CSS alterados (`css/modals.css`), nos scripts modificados (`js/i18n.js`, `js/ui.js`) e no carregador dinâmico de pacotes de tradução (`./locales/${lang}.json?v=1.3`).
 
 ### 🚀 v1.2 — Política de Privacidade (LGPD/ANPD) & Atualização de Cache
 - **Política de Privacidade & Transparência (LGPD/ANPD)**: Criação de página estática dedicada (`privacy.html`) e modal in-game (`#modal-privacy`) detalhando zero coleta de dados pessoais, armazenamento local no navegador (`localStorage`), registros técnicos de IP do GitHub Pages e links para fontes oficiais (ANPD, LGPD e GitHub Pages).

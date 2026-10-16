@@ -256,11 +256,6 @@ function updateSettingsUI() {
   if (fingerSelect && typeof getFingerGuideSetting === 'function') {
     fingerSelect.value = getFingerGuideSetting();
   }
-
-  const vkSelect = $('settings-virtual-keyboard-select');
-  if (vkSelect && typeof getVirtualKeyboardSetting === 'function') {
-    vkSelect.value = getVirtualKeyboardSetting();
-  }
 }
 
 function isBossBattlesEnabled() {
@@ -362,28 +357,15 @@ function isMobileDevice() {
 }
 
 function getVirtualKeyboardSetting() {
-  try {
-    const saved = localStorage.getItem('digitinho_virtual_keyboard');
-    if (saved && (saved === 'always' || saved === 'off' || saved === 'auto')) {
-      return saved;
-    }
-  } catch (_) {}
-  return 'auto'; // Ativado automaticamente no mobile
+  return 'auto'; // Sempre automático e exclusivo no mobile
 }
 
 function changeVirtualKeyboardSetting(mode) {
-  const valid = (mode === 'always' || mode === 'off') ? mode : 'auto';
-  try {
-    localStorage.setItem('digitinho_virtual_keyboard', valid);
-  } catch (_) {}
   if (typeof updateVirtualKeyboardVisibility === 'function') {
     updateVirtualKeyboardVisibility();
   }
   if (typeof updateFingerGuideVisibility === 'function') {
     updateFingerGuideVisibility();
-  }
-  if (typeof updateSettingsUI === 'function') {
-    updateSettingsUI();
   }
   if (typeof applyMobileInputRestrictions === 'function') {
     applyMobileInputRestrictions();
@@ -391,11 +373,8 @@ function changeVirtualKeyboardSetting(mode) {
 }
 
 function isVirtualKeyboardActive() {
-  const setting = getVirtualKeyboardSetting();
-  if (setting === 'off') return false;
-  if (setting === 'always') return true;
-  // 'auto': ativo em dispositivos móveis
-  return isMobileDevice();
+  // No mobile, o teclado virtual customizado é estritamente e sempre ativo
+  return typeof isMobileDevice === 'function' ? isMobileDevice() : false;
 }
 
 function applyMobileInputRestrictions() {

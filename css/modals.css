@@ -254,6 +254,48 @@
 .settings-opt-toggle.is-muted {
   opacity: 0.65;
 }
+
+.settings-opt-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--r-pill);
+  background: var(--glass-btn-sec);
+  color: var(--t1);
+  font-size: 0.80rem;
+  font-weight: 800;
+  border: none !important;
+  user-select: none;
+  text-decoration: none;
+  transition: background 0.2s ease, filter 0.2s ease, color 0.2s ease;
+}
+
+.settings-opt-badge-accent {
+  background: rgba(99, 102, 241, 0.22);
+  color: #818CF8;
+}
+
+[data-theme="light"] .settings-opt-badge-accent {
+  background: rgba(99, 102, 241, 0.15);
+  color: #4F46E5;
+}
+
+.settings-opt-link {
+  cursor: pointer;
+}
+
+.settings-opt-link:hover {
+  filter: brightness(1.15);
+  background: var(--glass-hover);
+  color: #A5B4FC;
+  transform: none;
+}
+
+[data-theme="light"] .settings-opt-link:hover {
+  color: #3730A3;
+}
+
 .pause-actions {
   display: flex;
   flex-direction: column;
