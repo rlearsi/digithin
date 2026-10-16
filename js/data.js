@@ -484,34 +484,46 @@ function getBossByType(bossType, level = 1) {
   return createBossInstance(base, level);
 }
 
-function getBossForPhase(phase, learnedWords = null, excludeTypes = []) {
-  const p = parseInt(phase, 10) || 10;
-  const level = Math.max(1, Math.floor(p / 10));
+// ------------------------------------------------
+// DETERMINISTIC BOSS SCHEDULE
+// A boss appears every BOSS_PHASE_INTERVAL phases (8, 16, 24, ...) following a fixed order.
+// Each cycle guarantees at least BOSS_WORDS_PER_CYCLE words of the cycle's boss (see js/boss.js).
+// ------------------------------------------------
+const BOSS_PHASE_INTERVAL = 8;
+const BOSS_WORDS_PER_CYCLE = 3;
+const BOSS_ORDER = ['robot', 'beast', 'mythology', 'ocean', 'cosmos', 'volcano'];
+
+// 1-based cycle number of a phase (phases 1-8 = cycle 1, 9-16 = cycle 2, ...)
+function getBossCycleNumber(phase) {
+  const p = Math.max(1, parseInt(phase, 10) || 1);
+  return Math.ceil(p / BOSS_PHASE_INTERVAL);
+}
+
+// Boss phase that closes the cycle containing the given phase (>= phase)
+function getBossCyclePhase(phase) {
+  return getBossCycleNumber(phase) * BOSS_PHASE_INTERVAL;
+}
+
+function getBossTypeForPhase(phase) {
+  const cycle = getBossCycleNumber(phase);
+  return BOSS_ORDER[(cycle - 1) % BOSS_ORDER.length];
+}
+
+function createBossForPhase(phase) {
+  const cycle = getBossCycleNumber(phase);
+  // Level goes up each time the full roster has been completed
+  const level = Math.floor((cycle - 1) / BOSS_ORDER.length) + 1;
+  return getBossByType(getBossTypeForPhase(phase), level);
+}
+
+function getBossForPhase(phase) {
+  const p = parseInt(phase, 10) || BOSS_PHASE_INTERVAL;
 
   // If active game state has a pending boss already chosen for this phase, preserve it
   if (typeof state !== 'undefined' && state && state.pendingBoss && state.pendingBossPhase === p) {
     return state.pendingBoss;
   }
-
-  // 1. If learned words are provided, find all eligible bosses (player learned >= 3 words)
-  if (Array.isArray(learnedWords) && typeof isWordThematicallyRelatedToBoss === 'function') {
-    let eligible = BOSS_DEFS.filter(b => {
-      const matching = learnedWords.filter(w => isWordThematicallyRelatedToBoss(w, b.type));
-      return matching.length >= 3;
-    });
-
-    if (eligible.length > 0) {
-      if (Array.isArray(excludeTypes) && excludeTypes.length > 0 && excludeTypes.length < eligible.length) {
-        const notDefeated = eligible.filter(b => !excludeTypes.includes(b.type));
-        if (notDefeated.length > 0) eligible = notDefeated;
-      }
-      const base = eligible[Math.floor(Math.random() * eligible.length)];
-      return createBossInstance(base, level);
-    }
-  }
-
-  // 2. Fallback: random boss among archetypes
-  return getRandomBoss(level, excludeTypes);
+  return createBossForPhase(p);
 }
 
 // ================================================

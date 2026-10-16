@@ -141,10 +141,11 @@ function defaultState() {
 
 state = defaultState();
 
-// Check if a phase is a Boss Battle (every 10 phases: 10, 20, 30, ...)
+// Check if a phase is a Boss Battle (every 8 phases: 8, 16, 24, ...)
 function isBossPhase(phase) {
   const p = parseInt(phase, 10) || 0;
-  return p > 0 && p % 10 === 0;
+  const interval = (typeof BOSS_PHASE_INTERVAL !== 'undefined') ? BOSS_PHASE_INTERVAL : 8;
+  return p > 0 && p % interval === 0;
 }
 
 // Random helpers

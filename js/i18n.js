@@ -6,7 +6,7 @@
    ================================================ */
 'use strict';
 
-const APP_VERSION = window.APP_VERSION = '1.3';
+const APP_VERSION = window.APP_VERSION = '1.4';
 const SUPPORTED_LANGUAGES = ['en', 'pt', 'fr', 'de', 'ja', 'ko', 'zh'];
 
 // Aggregated dictionaries loaded from locales/{lang}.json
@@ -62,7 +62,7 @@ async function loadLocale(lang) {
   }
 
   try {
-    const response = await fetch(`./locales/${lang}.json?v=1.3`);
+    const response = await fetch(`./locales/${lang}.json?v=1.4`);
     if (!response.ok) {
       throw new Error(`HTTP ${response.status} loading locales/${lang}.json`);
     }
@@ -217,7 +217,7 @@ function applyTranslations() {
   // Sync settings app version
   const versionEl = document.getElementById('settings-app-version');
   if (versionEl) {
-    versionEl.textContent = `v${window.APP_VERSION || '1.3'}`;
+    versionEl.textContent = `v${window.APP_VERSION || '1.4'}`;
   }
 
   const inMatch = typeof isMatchInProgress === 'function' ? isMatchInProgress() : false;

@@ -163,7 +163,7 @@
         "settings_theme_dark": "다크",
         "settings_theme_light": "라이트",
         "settings_boss": "보스전",
-        "settings_boss_on": "10단계마다 (활성)",
+        "settings_boss_on": "8단계마다 (활성)",
         "settings_boss_off": "비활성",
         "settings_test_boss": "보스전 테스트",
         "settings_face_boss": "보스와 대결",

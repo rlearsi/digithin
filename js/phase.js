@@ -46,7 +46,7 @@ function executePhaseExitToMainMenu() {
 // PHASE PROGRESSION & TRANSITIONS
 // ============================================================
 function beginPhase() {
-  // Check if current phase is a Boss Battle (every 10 phases) - requires at least 3 learned words of that boss
+  // Check if current phase is a Boss Battle (every 8 phases, fixed boss order) - the boss always appears
   if (typeof canTriggerBossBattle === 'function' && canTriggerBossBattle()) {
     beginBossPhase();
     return;
@@ -406,6 +406,11 @@ function showPhaseModal() {
     const pool = eligiblePool.filter(w => !state.unlockedWords.find(u => u.text === w.text));
     toUnlock = shuffle(pool).slice(0, CFG.wordsPerPhase);
     toUnlock.forEach(w => state.unlockedWords.push({ ...w, phase: state.phase }));
+
+    // Garante >= 3 palavras do chefão do ciclo (8 fases) para que ele sempre tenha significados
+    if (typeof unlockBossCycleWords === 'function') {
+      toUnlock = toUnlock.concat(unlockBossCycleWords(state.phase));
+    }
 
     if (state.unlockedWords.length >= eligiblePool.length) {
       unlockAchievement('colecionador');

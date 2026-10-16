@@ -1,6 +1,6 @@
 # ⌨️ Digitinho — Jogo de Digitação Arcade
 
-[![Versão](https://img.shields.io/badge/versão-v1.3-6366F1?style=for-the-badge&logo=gamepad)](https://github.com/)
+[![Versão](https://img.shields.io/badge/versão-v1.4-6366F1?style=for-the-badge&logo=gamepad)](https://github.com/)
 [![Status](https://img.shields.io/badge/status-estável-10B981?style=for-the-badge)](https://github.com/)
 [![Licença](https://img.shields.io/badge/licença-MIT-38BDF8?style=for-the-badge)](https://github.com/)
 
@@ -197,16 +197,16 @@ A barra de progresso no centro do HUD avança conforme os rúnicos são digitado
 4. **Modo Contra o Relógio (Time Attack 60s):** Corrida eletrizante de 60 segundos com cronômetro regressivo. Digite o máximo de palavras e acumule o recorde de pontuação antes do tempo esgotar!
 
 ### 3.7 Batalhas Épicas de Chefões (Boss Battles por Cenário)
-A cada 10 fases da jornada (fases 10, 20, 30, 40, 50, 60…), o fluxo normal de rúnicos é interrompido para o confronto contra um **Chefão Guardião**. Cada chefão representa um **cenário autêntico**, possui um **tipo exclusivo** (apenas 1 chefão por tipo) e apresenta enigmas e vocabulários **estritamente temáticos e compatíveis com a sua natureza**:
+A cada **8 fases** da jornada (fases 8, 16, 24, 32, 40, 48…), o fluxo normal de rúnicos é interrompido para o confronto contra um **Chefão Guardião**. O chefão **sempre aparece** e segue uma **ordem fixa** (sem sorteio): Cyber-Titã → Rex-Primus → Quimera → Leviatã → Astro-Titã → Vulcanus, reiniciando o ciclo (com nível +1) após o sexto. Em cada ciclo de 8 fases, o jogo **garante o desbloqueio de pelo menos 3 palavras temáticas** do chefão daquele ciclo (distribuídas ao longo das fases e exibidas normalmente), de modo que ele sempre possua significados para os enigmas. Cada chefão representa um **cenário autêntico**, possui um **tipo exclusivo** e apresenta enigmas e vocabulários **estritamente temáticos e compatíveis com a sua natureza**:
 
 | Fase | Chefão | Tipo Único | Cenário Temático | Universo dos Enigmas e Significados |
 |:---:|:---|:---:|:---|:---|
-| **10** | **Cyber-Titã Lexis** | `robot` | **Metrópole Cibernética** | **Tecnologia & Computação:** chips de silício, feixes laser, circuitos impressos, redes de alta velocidade, pacotes de dados, robôs autônomos, código binário. |
-| **20** | **Rex-Primus, o Soberano Feral** | `beast` | **Savana Primordial** | **Fauna Selvagem & Predadores:** leões alfas, lobos em alcateia, tigres solitários, águias de rapina, garras de caça, instintos predatórios. |
-| **30** | **Quimera Arcana de Delfos** | `mythology` | **Templo Místico de Delfos** | **Mitologia Clássica & Criaturas Lendárias:** dragões alados, fênix imortais, hidras regenerativas, grifos de ouro, enigmas de esfinge, oráculos sagrados. |
-| **40** | **Leviatã do Abismo Profundo** | `ocean` | **Fossa Oceânica Abissal** | **Biologia Marinha & Abismos Oceânicos:** tubarões elétricos, recifes de coral, fossas pelágicas, cefalópodes inteligentes, baleias titânicas, tsunamis. |
-| **50** | **Astro-Titã Cronos** | `cosmos` | **Nebulosa Estelar & Vácuo** | **Astrofísica, Estrelas & Espaço:** fusão de plasma estelar, órbitas planetárias, galáxias espirais, estrelas pulsar, cometas errantes, gravidade cósmica. |
-| **60** | **Vulcanus, o Colosso de Magma** | `volcano` | **Caldeira Vulcânica & Núcleo** | **Vulcanologia & Geologia Ígnea:** câmaras de magma, fluxos de lava incandescente, nuvens de cinzas, colunas de basalto, crateras ativas, forjas tectônicas. |
+| **8** | **Cyber-Titã Lexis** | `robot` | **Metrópole Cibernética** | **Tecnologia & Computação:** chips de silício, feixes laser, circuitos impressos, redes de alta velocidade, pacotes de dados, robôs autônomos, código binário. |
+| **16** | **Rex-Primus, o Soberano Feral** | `beast` | **Savana Primordial** | **Fauna Selvagem & Predadores:** leões alfas, lobos em alcateia, tigres solitários, águias de rapina, garras de caça, instintos predatórios. |
+| **24** | **Quimera Arcana de Delfos** | `mythology` | **Templo Místico de Delfos** | **Mitologia Clássica & Criaturas Lendárias:** dragões alados, fênix imortais, hidras regenerativas, grifos de ouro, enigmas de esfinge, oráculos sagrados. |
+| **32** | **Leviatã do Abismo Profundo** | `ocean` | **Fossa Oceânica Abissal** | **Biologia Marinha & Abismos Oceânicos:** tubarões elétricos, recifes de coral, fossas pelágicas, cefalópodes inteligentes, baleias titânicas, tsunamis. |
+| **40** | **Astro-Titã Cronos** | `cosmos` | **Nebulosa Estelar & Vácuo** | **Astrofísica, Estrelas & Espaço:** fusão de plasma estelar, órbitas planetárias, galáxias espirais, estrelas pulsar, cometas errantes, gravidade cósmica. |
+| **48** | **Vulcanus, o Colosso de Magma** | `volcano` | **Caldeira Vulcânica & Núcleo** | **Vulcanologia & Geologia Ígnea:** câmaras de magma, fluxos de lava incandescente, nuvens de cinzas, colunas de basalto, crateras ativas, forjas tectônicas. |
 
 #### Dinâmica do Duelo:
 1. **Entrada Triunfal:** O chefão surge flutuando no topo da arena com avatar vetorial em SVG animado, halo luminoso personalizado na cor do seu bioma e medidor arcade de **Pontos de Vida: `|||`**.
@@ -407,6 +407,14 @@ python3 -m http.server 8000
 ---
 
 ## 10. Histórico de Versões (Changelog)
+
+### 🚀 v1.4 — Chefões Garantidos a Cada 8 Fases, Ordem Fixa & Correção do Chefão Estático
+- **Chefão sempre presente**: o chefão agora aparece, sem falta, a cada 8 fases (8, 16, 24…), eliminando o antigo comportamento que ignorava o chefão quando faltavam palavras temáticas.
+- **Ordem fixa de chefões**: `robot → beast → mythology → ocean → cosmos → volcano`, reiniciando com nível +1 após o sexto (sem sorteio aleatório).
+- **Palavras garantidas por ciclo**: em cada ciclo de 8 fases são desbloqueadas pelo menos 3 palavras do chefão do ciclo (distribuídas ao longo das fases e exibidas no resumo de fase), além de uma rede de segurança que completa o pool do chefão caso necessário.
+- **Correção do chefão estático**: o chefão sorteado perdia os getters do protótipo (nome, cenário…) ao ser clonado por spread, o que lançava um erro e impedia a queda dos significados. Agora é criado via protótipo.
+- **Internacionalização**: `settings_boss_on` atualizado nos 7 idiomas ("A cada 8 Fases").
+- **Cache-Busting Cirúrgico (`v=1.4`)**: `js/i18n.js`, `js/data.js`, `js/state.js`, `js/boss.js`, `js/phase.js` e `./locales/${lang}.json?v=1.4`.
 
 ### 🚀 v1.3 — Ajustes de Batalhas de Chefão, Teclado Mobile & Seção Sobre o App
 - **Remoção de Acesso de Teste ao Chefão**: Remoção do atalho "Testar Batalha" no menu de Configurações, garantindo que as batalhas de chefão ocorram exclusivamente através da progressão natural das fases (a cada 10 fases).
